@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Management</title>
+    
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    
+    <!-- External CSS -->
+    <link rel="stylesheet" href="ManageProduct.css"> <!-- Update this with the path to your CSS file -->
+</head>
+<body>
+
+    <div class="container mt-4">
+        <!-- PRODUCT MANAGEMENT SECTION -->
+        <div id="product-management-section" class="product-management" style="display: block;">
+            <div class="table-container">
+                <input type="text" id="search-category" class="form-control mb-3" placeholder="Search by Category">
+                <table id="product-table" class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>InventoryID</th>
+                            <th>Name</th>
+                            <th>Category</th>
+                            <th>Description</th>
+                            <th>Unit Price ₱</th>
+                            <th>Comments</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Rows will be added here dynamically -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    
+    <!-- External JS -->
+    <script src="script.js"></script> <!-- Update this with the path to your JS file -->
+</body>
+</html>

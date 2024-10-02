@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Material Inventory</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="ManageMaterial.css"> <!-- Link to external CSS -->
+</head>
+<body>
+    <!-- Add Material Table -->
+    <section id="material-table" class="container table-container mt-5">
+        <h2 class="text-center">Material Inventory</h2>
+        <button id="edit-button" class="btn btn-primary mb-3 float-end">Edit</button>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Item Name</th>
+                    <th>Description</th>
+                    <th>Category</th>
+                    <th>Unit of Measure</th>
+                    <th>Purchase Price</th>
+                    <th>Reorder Level</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Table rows will be inserted dynamically -->
+            </tbody>
+        </table>
+    </section>
+
+    <!-- Manual Adjust Reorder Levels Form -->
+    <section id="manual-adjust-form" class="container form-container mt-5 hidden">
+        <h2 class="text-center">Manual Adjust Reorder Levels</h2>
+        <form id="adjust-form">
+            <div class="mb-3">
+                <label for="select-item" class="form-label">Select Item:</label>
+                <select id="select-item" class="form-select" name="select-item" required>
+                    <!-- Options will be dynamically added -->
+                </select>
+            </div>
+
+            <div class="mb-3">
+                <label for="current-reorder-level" class="form-label">Current Reorder Level:</label>
+                <input type="text" id="current-reorder-level" class="form-control" name="current-reorder-level" readonly>
+            </div>
+
+            <div class="mb-3">
+                <label for="adjust-quantity" class="form-label">Adjust Reorder Level By:</label>
+                <input type="number" id="adjust-quantity" class="form-control" name="adjust-quantity" required>
+            </div>
+
+            <div class="mb-3">
+                <label for="reason-for-adjustment" class="form-label">Reason for Adjustment:</label>
+                <textarea id="reason-for-adjustment" class="form-control" name="reason-for-adjustment" rows="4"></textarea>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Submit Adjustment</button>
+        </form>
+    </section>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="ManageMaterial.js"></script> <!-- Link to external JS -->
+
+</body>
+</html>
