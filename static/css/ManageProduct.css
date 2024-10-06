@@ -1,0 +1,80 @@
+
+
+.product-management {
+    margin-top: 20px;
+	
+}
+
+#search-category {
+    margin-bottom: 10px;
+    padding: 10px;
+    margin: 20px 0;
+    margin-left: 880px;
+    width: 20%;
+    border: 1px solid var(--dark-grey);
+    border-radius: 4px;
+    box-sizing: border-box; /* Ensures padding is included in the width */
+}
+
+#searchInput {
+    width: 90%;
+    padding: 10px;
+    border: 1px solid #f8f8ff;
+    border-radius: 4px;
+}
+
+/* PRODUCT MANAGEMENT SECTION */
+.product-management {
+    margin-top: 20px;
+}
+
+/* Table Container */
+.table-container {
+    max-width: 1070px;
+    margin: 20px auto;
+    padding: 20px;
+    background: var(--light);
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border: 1px solid var(--dark-grey);
+    background-image: linear-gradient(to bottom right, #fff, #f8f8f8);
+}
+
+.table-container .search-wrapper {
+    width: 100%; /* Full width of the container */
+    display: flex;
+    justify-content: flex-end; /* Aligns the search input to the right */
+    margin-bottom: 20px; /* Space between search input and table */
+}
+
+#search-category {
+    padding: 10px;
+    width: 150px; /* Adjusted width */
+    border: 1px solid var(--dark-grey);
+    border-radius: 4px;
+    box-sizing: border-box; /* Ensures padding is included in the width */
+}
+ 
+/* Table Styling */
+table {
+    width: 100%; /* Full width within its container */
+    border-collapse: collapse;
+    background-color: #fff; /* White background for the table */
+}
+
+table th, table td {
+    padding: 15px;
+    text-align: center;
+    border-bottom: 1px solid #ddd;
+}
+
+thead {
+    background-color: #7b4e83;
+    color: #fff;
+}
+
+
+body, html {
+    height: 100%;
+    margin: 0;
+}
