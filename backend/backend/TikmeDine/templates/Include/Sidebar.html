@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Reservation - Tikme Dine{% endblock %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'css/Sidebar.css' %}">
+{% endblock %}
+
+
+{% block content %}
+
+<div class="wrapper">
+    {% block sidebar %}
+        <div class="sidebar-wrapper">
+            <div class="sidebar">
+                <div class="sidebar-header">
+                    <h2>LOGISTICS MANAGEMENT</h2>
+                    <button class="menu-btn" onclick="toggleSidebar()">
+                        <i class="fa fa-bars"></i>
+                    </button>
+                </div>
+                <a class="active" href="{% url 'home' %}">
+                    <i class="fa fa-fw fa-home"></i><span>Dashboard</span>
+                </a>
+
+                <button class="dropdown-btn">
+                    <i class="fa fa-fw fa-clipboard-list"></i> <span>Order Management</span> 
+                    <i class="fa fa-caret-down"></i> 
+                </button>
+                <div class="dropdown-container">
+                    <a href="{% url 'place-order' %}"><span>Place Order</span></a>
+                    <a href="{% url 'manage-order' %}"><span>Manage Order</span></a>
+                </div>
+
+                <button class="dropdown-btn">
+                    <i class="fa fa-fw fa-boxes"></i> <span>Material Management</span> 
+                    <i class="fa fa-caret-down"></i> 
+                </button>
+                <div class="dropdown-container">
+                    <a href="{% url 'add-material' %}"><span>Add Material</span></a>
+                    <a href="{% url 'manage-material' %}"><span>Manage Material</span></a>
+                    <a href="{% url 'inventory-reports' %}"><span>Inventory Reports</span></a>
+                    <a href="{% url 'expiry-dates' %}"><span>Expiry Dates</span></a>
+                    <a href="{% url 'loss-tracking' %}"><span>Loss and Waste Tracking</span></a>
+                </div>
+
+                <button class="dropdown-btn">
+                    <i class="fa fa-fw fa-box"></i> <span>Product Management</span> 
+                    <i class="fa fa-caret-down"></i> 
+                </button>
+                <div class="dropdown-container">
+                    <a href="{% url 'add-product' %}"><span>Add Product</span></a>
+                    <a href="{% url 'manage-products' %}"><span>Manage Products</span></a>
+                    <a href="{% url 'menu' %}"><span>Menu</span></a>
+                    <a href="{% url 'kitchen-display' %}"><span>Kitchen Display</span></a>
+                </div>
+
+                <button class="dropdown-btn">
+                    <i class="fa fa-fw fa-chart-line"></i> <span>Analytics</span> 
+                    <i class="fa fa-caret-down"></i> 
+                </button>
+                <div class="dropdown-container">
+                    <a href="{% url 'analytics' %}"><span>Analytics</span></a>
+                </div>
+
+                <div class="sidebar-footer">
+                    <img src="{% static 'images/logo.png' %}" alt="Logo">
+                    <p>v1.0.0</p>
+                </div>
+            </div>
+        </div>
+    {% endblock %}
+
+    <div class="content-wrapper">
+        {% block content %}
+        <!-- Main content goes here -->
+        {% endblock %}
+    </div>
+</div>
