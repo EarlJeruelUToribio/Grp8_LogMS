@@ -1,0 +1,49 @@
+{% extends 'Base.html' %}
+{% load static %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'css/ManageProducts.css' %}">
+{% endblock %}
+
+{% block content %}
+        <section class="products-section">
+            <h2 class="text-center mb-4">PRODUCTS MANAGEMENT</h2>
+            <div class="product-header">
+                <input type="text" id="search-bar" placeholder="Search Product" class="search-bar">
+            </div>
+            <table class="table table-striped product-table">
+                <thead>
+                    <tr>
+                        <th>ProductID</th> 
+                        <th>Name</th>
+                        <th>Category</th>
+                        <th>Description</th>
+                        <th>Unit Price ₱</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>00283</td>
+                        <td>Chicken</td>
+                        <td>Agahan</td>
+                        <td>Fried Chicken</td>
+                        <td>₱200.00</td>
+                    </tr>
+                    <tr>
+                        <td>00221</td>
+                        <td>Pork</td>
+                        <td>Inihaw</td>
+                        <td>Pork Inihaw</td>
+                        <td>₱300.00</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+    </div>
+
+    {% endblock %}
+
+
+    {% block extra_js %}
+    <script src="{% static 'js/ManageProduct.js' %}"></script>
+    {% endblock %}

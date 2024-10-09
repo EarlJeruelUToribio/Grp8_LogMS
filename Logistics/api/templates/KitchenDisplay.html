@@ -1,0 +1,107 @@
+{% extends 'Base.html' %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/KitchenDisplay.css' %}">
+
+{% endblock %}
+
+{% block content %}
+
+<div id="kitchen-display" id="title">ORDERS</h2>
+    <hr> <!-- Adds a horizontal line -->
+    <ul id="menu-list">
+        <li>Chicken Curry Sandwich</li>
+        <li>Club Sandwich</li>
+        <li>Italian Spaghetti</li>
+        <li>Pinoy Spaghetti</li>
+        <li>Bacon Burger</li>
+        <li>Halo-Halo</li>
+        <li>Chicken Inasal</li>
+        <li>Grilled Liempo</li>
+        <li>Grilled Bangus</li>
+        <li>Tokwa at Baboy</li>
+        <li>Ginataang Gulay</li>
+        <li>Bicol Express</li>
+        <li>Adobong Manok</li>
+        <li>Chocolate Ice Cream</li>
+    </ul>
+</div>
+
+    </ul>
+</div>
+<div class="kitchen-display-containers">
+    <div class="kitchen-display-container">
+        <h3>IN (#301) Chad <span></span> 00:15:00</h3>
+        <h4>To Cook</h4>
+        <ul>
+            <li>1x Ginataang Gulay</li>
+            <li>1x Bicol Express</li>
+        </ul>
+    </div>
+    <div class="kitchen-display-container">
+        <h3>IN (#301) Sofia <span></span> 00:30:00</h3>
+        <h4>To Cook</h4>
+        <ul>
+            <li>1x Grilled Liempo</li>
+            <li>2x Pinoy Spaghetti</li>
+        </ul>
+    </div>
+    <div class="kitchen-display-container">
+        <h3>T1 (#501) Earl <span></span> 00:15:00</h3>
+        <h4>To Cook</h4>
+        <ul>
+            <li>2x Chicken Inasal</li>
+            <li>1x Tokwa at Baboy</li>
+            <li>4x Italian Spagghetti</li>
+            <li>1x Chocolate Ice Cream</li>
+        </ul>
+    </div>
+    <div class="kitchen-display-container">
+        <h3>T2 (#501) Chad <span></span> 01:00:00</h3>
+        <h4>To Cook</h4>
+        <ul>
+            <li>1x Halo - Halo </li>
+            <li>2x Bacon Burger</li>
+            <li>4x Chicken Curry Sandwich</li>
+            <li>6x Club Sandwich</li>
+            <li>1x Pinoy Spaghetti </li>
+            <li>1x Chicken Inasal</li>
+            <li>1x Grilled Liempo</li>
+            <li>2x Grilled Bangus</li>
+            <li>1x Tokwa at Baboy</li>
+            <li>1x Adobong Manok</li>
+        </ul>
+    </div>
+    <div class="kitchen-display-container">
+        <h3>T4 (#501) Jeff <span></span> 00:15:00</h3>
+        <h4>Completed</h4>
+        <ul>
+            <li>2x Chicken Curry Sandwich </li>
+            <li>1x Halo - Halo</li>
+            <li>1x Bacon Burger</li>
+    </div>
+    <div class="kitchen-display-container">
+        <h3>T1 (#0410) Lexiee <span></span> 00:15:00</h3>
+        <h4>Ready</h4>
+        <ul>
+            <li>2x Chicken</li>
+            <li>1x Matcha</li>
+        </ul>
+    </div>
+</div>
+
+
+<!-- Horizontal Containers Section -->
+<section id="status-containers">
+    <div id="to-cook-status" class="status-container">To Cook: 0</div>
+    <div id="ready-status" class="status-container">Ready: 0</div>
+    <div id="completed-status" class="status-container">Completed: 0</div>
+</section>
+
+
+{% endblock %}
+
+{% block extra_js %}
+    <script src="{% static 'js/KitchenDisplay.js' %}"></script>
+{% endblock %}
