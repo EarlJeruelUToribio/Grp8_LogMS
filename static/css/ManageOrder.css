@@ -1,0 +1,139 @@
+/* Order Status Boxes */
+.order-status-container {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+	margin-top: 20px;
+
+}
+
+.order-status-box {
+    flex: 1;
+    padding: 15px;
+    margin: 0 10px;
+    background-color: #e1c18b;
+    color: #000;
+    text-align: center;
+    border-radius: 5px;
+    font-weight: bold;
+}
+
+/* Orders Section */
+.orders-section {
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 8px;
+    max-width: 90%; /* Reduce the width of the container */
+    margin: 0 auto; /* Center the section horizontally */
+}
+
+.order-status-container {
+    display: flex;
+    justify-content: space-between;
+    background-color: transparent;
+    padding: 8px; /* Reduced padding */
+    border-radius: 4px; /* Reduced border radius */
+    margin-bottom: px; /* Reduced margin */
+    width: 1000px; /* Set a specific width */
+	margin: 0 auto 10px; /* Center horizontally and add margin at the bottom */
+
+}
+
+
+/* Order Status Boxes */
+.order-status-box {
+    background-color: #7b4e83;
+    color: #fff;
+    padding: 25px;
+    border-radius: 8px;
+    flex: 1;
+    margin: 20px 10px; /* Add some space between boxes */
+    text-align: center;
+	
+}
+
+/* Orders Header */
+.orders-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+/* Sort Button */
+.sort-button {
+    background-color: #7b4e83;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+/* Search Bar */
+.search-bar {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+/* Orders Table */
+.orders-table {
+    width: 100%; 
+    border-collapse: collapse;
+}
+
+.orders-table th, .orders-table td {
+    padding: 15px;
+    text-align: center;
+    border-bottom: 1px solid #ddd;
+}
+
+.orders-table th {
+    background-color: #7b4e83;
+    color: #fff;
+}
+
+.orders-table tr:hover {
+    background-color: #f1f1f1;
+}
+
+
+/* Orders Section */
+.orders-section {
+    background-color: #f9f9f9;
+    padding: 30px;
+    border-radius: 8px;
+    max-width: 90%; /* Reduce the width of the container */
+    margin: 50px auto 20px; /* Center the section horizontally and add top margin */
+    /* Ensure it is centered horizontally */
+    display: flex;
+    flex-direction: column;
+}
+
+.order-container {
+    position: relative;
+    width: 800px;
+    background-color: #61396f; /* Your desired background color */
+    color: #f8f8ff; /* Text color */
+    border-radius: 10px;
+    overflow: hidden;
+    margin: 20px auto;
+    padding: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3); /* Shadow effect */
+    cursor: pointer; /* Pointer cursor on hover */
+    display: flex; /* Add flex to control layout */
+    flex-direction: column; /* Align items in a column */
+}
+
+
+.expanded-order-details {
+    display: none;
+    padding: 10px;
+    background-color: transparent;
+    border-radius: 8px;
+    margin-top: 10px;
+    text-align: left;
+	color: #f8f8ff;
+	font-size: larger;
+}

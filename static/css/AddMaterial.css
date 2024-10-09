@@ -1,0 +1,57 @@
+/* FORM CONTAINER */
+.form-container {
+    max-width: 600px; /* Increased width for larger form container */
+    padding: 20px;
+    margin: 0 auto;
+    background: var(--light, #ffffff); /* Defaulting to white if var(--light) not set */
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border: 1px solid var(--dark-grey, #d3d3d3); /* Default grey if var not set */
+    background-image: linear-gradient(to bottom right, #fff, #f8f8f8);
+}
+
+.form-container h2 {
+    margin-bottom: 20px;
+    font-size: 28px;
+    color: var(--blue, #007bff); /* Defaulting to blue */
+    text-align: center;
+    font-weight: 700;
+}
+
+.form-container label {
+    font-weight: 500;
+    color: var(--dark, #333); /* Defaulting to dark color */
+}
+
+.form-container input,
+.form-container textarea,
+.form-container select {
+    border: 1px solid var(--dark-grey, #d3d3d3);
+    border-radius: 6px;
+    padding: 12px;
+    background: var(--light, #ffffff);
+    color: var(--dark, #333);
+    margin-bottom: 16px;
+    width: 100%;
+}
+
+.form-container textarea {
+    resize: vertical;
+    min-height: 100px;
+}
+
+/* Submit Button */
+.form-container button {
+    padding: 12px 20px;
+    background-color: #7b4e83;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.form-container button:hover {
+    background-color: #6a3c6e;
+}

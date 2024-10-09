@@ -1,0 +1,71 @@
+/* FORM CONTAINER */
+.form-container {
+    max-width: 800px; /* Increased width */
+    margin: 0 auto;
+    padding: 30px; /* Increased padding */
+    background: var(--light);
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border: 1px solid var(--dark-grey);
+    background-image: linear-gradient(to bottom right, #fff, #f8f8f8);
+}
+
+.form-container h2 {
+    margin-bottom: 20px;
+    font-size: 28px;
+    color: var(--blue);
+    text-align: center;
+    font-weight: 700;
+}
+
+.form-container label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+    color: var(--dark);
+}
+
+/* FORM ELEMENTS */
+.form-container input,
+.form-container textarea,
+.form-container select {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 16px;
+    border: 2px solid black; /* Set border color to black */
+    border-radius: 6px;
+    background: transparent; /* Remove background color */
+    color: black; /* Set text color to black */
+}
+
+.form-container textarea {
+    resize: vertical;
+    min-height: 100px;
+}
+
+/* BUTTON STYLES */
+.form-container button {
+    padding: 12px 20px;
+   /*  background-color: #7b4e83; */    
+    color: var(--light);
+    border: none;
+    border-radius: 6px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+/* ORDER FORM */
+#order-form {
+    display: none; /* Initially hidden */
+    position: fixed; /* Fixes the form's position to the viewport */
+    top: 50%; /* Centers the form vertically */
+    left: 50%; /* Centers the form horizontally */
+    transform: translate(-50%, -50%); /* Offsets the form by 50% of its width and height */
+    background: var(--light);
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    max-width: 800px; /* Increased width to match container */
+    width: 100%; /* Allows the container to adapt to different screen sizes */
+    padding: 30px; /* Increased padding */
+    box-sizing: border-box; /* Includes padding in the width and height calculations */
+}

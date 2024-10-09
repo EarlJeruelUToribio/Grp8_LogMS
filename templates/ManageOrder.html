@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block extra_css %}
+        <link rel="stylesheet" href="{% static 'ManageOrder.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<!-- Manage Order Section -->
+<section id="manage-order-section">
+    <div class="container mt-5">
+        <!-- Order Status Boxes -->
+        <div class="order-status-container">
+            <div class="order-status-box">Order Placed: {{ order_placed_count }}</div>
+            <div class="order-status-box">Order Shipped: {{ order_shipped_count }}</div>
+            <div class="order-status-box">Order Completed: {{ order_completed_count }}</div>
+        </div>
+
+        <!-- Orders Section -->
+        <section class="orders-section">
+            <h2 class="text-center mb-4">Orders</h2>
+            <div class="orders-header">
+                <button class="sort-button">Sort by</button>
+                <input type="text" id="search-bar" placeholder="Search by Order ID" class="search-bar">
+            </div>
+            <table class="table table-striped orders-table">
+                <thead>
+                    <tr>
+                        <th>Order ID</th>
+                        <th>Items</th>
+                        <th>Quantity</th>
+                        <th>Supplier Name</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for order in orders %}
+                    <tr>
+                        <td>{{ order.id }}</td>
+                        <td>{{ order.items }}</td>
+                        <td>{{ order.quantity }}</td>
+                        <td>{{ order.supplier_name }}</td>
+                        <td>{{ order.status }}</td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="5" class="text-center">No orders found</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </section>
+
+        <!-- Order Container -->
+        <div class="order-container mt-4">
+            <div class="dropdown-btn bg-dark text-white p-2 rounded">Order &#9662;</div>
+            <div class="order-content">
+                <!-- Other order content here -->
+            </div>
+            <div class="expanded-order-details">
+                <p>Order ID: <span id="order-id-summary"></span></p>
+                <p>Item: <span id="order-item-summary"></span></p>
+                <p>Quantity: <span id="order-quantity-summary"></span></p>
+                <p>Supplier Name: <span id="supplier-name-summary"></span></p>
+                <p>Status: <span id="order-status-summary"></span></p>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}
+
+{% block extra_js %}
+    <script src="{% static 'js/ManageOrder.js' %}" defer></script>
+{% endblock %}
