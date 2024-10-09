@@ -11,7 +11,7 @@ urlpatterns = [
     path('ManageMaterial/', views.ManageMaterial_view, name='ManageMaterial'),
     path('ManageOrder/', views.ManageOrder_view, name='ManageOrder'),
     path('ManageProduct/', views.ManageProduct_view, name='ManageProducts'),
-    path('PlaceOrder/', views.PlaceOrder_view, name='PlaceOrder'),
+    path('PlaceOrder/', views.PlaceOrder_view, name='PlacedOrder'),
     path('KitchenDisplay/', views.KitchenDisplay_view, name='KitchenDisplay'),
     
 

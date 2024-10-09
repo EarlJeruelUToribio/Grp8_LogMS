@@ -11,7 +11,7 @@ def Sidebar_view(request):
     return render(request, 'Sidebar.html')
 
 def PlaceOrder_view(request):
-    return render(request, 'PlaceOrder.html')
+    return render(request, 'PlacedOrder.html')
 
 def ManageOrder_view(request):
     return render(request, 'ManageOrder.html')

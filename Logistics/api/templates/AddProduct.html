@@ -1,55 +1,73 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Add Product</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="AddProduct.css"> <!-- Link to your external CSS file -->
-</head>
-<body>
-    <main>
-        <div class="form-container">
-            <h2>Add Product</h2>
-            <form id="add-product-form">
-                <input type="hidden" id="inventory-id-hidden" name="inventory-id-hidden">
-                
-                <label for="name">Name</label>
-                <input type="text" id="name" name="name" required>
+{% extends 'Base.html' %}
+{% load static %}
 
-                <label for="category">Category:</label>
-                <select id="category" name="category" required>
-                    <option value="agahan">Agahan</option>
-                    <option value="noodles">Noodles</option>
-                    <option value="rice">Rice</option>
-                    <option value="sabaw">Sabaw</option>
-                    <option value="gulay">Gulay</option>
-                    <option value="sizzling">Sizzling</option>
-                    <option value="inihaw">Inihaw</option>
-                    <option value="pinirito">Pinirito</option>
-                    <option value="lutong-kakaiba">Lutong Kakaiba</option>
-                    <option value="steak">Steak</option>
-                    <option value="pampagana">Pampagana</option>
-                    <option value="pansit">Pansit</option>
-                    <option value="panghimagas">Panghimagas</option>
-                </select>
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/AddProducts.css' %}">
+{% endblock %}
 
-                <label for="description">Description</label>
-                <textarea id="description" name="description" rows="4"></textarea>
+{% block content %}
 
-                <label for="unit-price">Unit Price ₱</label>
-                <input type="number" id="unit-price" name="unit-price" step="0.01" required>
+<!-- Add Product Form -->
+<section id="add-product-form" class="form-container container mt-5">
+    <h2 class="text-center">ADD PRODUCT</h2>
 
-                <label for="comments">Comments</label>
-                <textarea id="comments" name="comments" rows="4"></textarea>
+    <form id="add-product-form" class="row g-3"> <!-- Form tag added for proper form structure -->
+        <!-- Hidden Product ID (if needed for editing) -->
+        <input type="hidden" id="inventory-id-hidden" name="inventory-id-hidden">
 
-                <button type="submit">Save Product</button>
-            </form>
+        <!-- Product Name -->
+        <div class="col-md-6">
+            <label for="name" class="form-label">Product Name:</label>
+            <input type="text" id="name" name="name" class="form-control" required>
         </div>
-    </main>
 
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script> <!-- Popper.js -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script> <!-- Bootstrap JS -->
-    <script src="script.js"></script> <!-- Link to your external JS file -->
-</body>
-</html>
+        <!-- Product Category -->
+        <div class="col-md-6">
+            <label for="category" class="form-label">Category:</label>
+            <select id="category" name="category" class="form-select" required>
+                <option value="agahan">Agahan</option>
+                <option value="noodles">Noodles</option>
+                <option value="rice">Rice</option>
+                <option value="sabaw">Sabaw</option>
+                <option value="gulay">Gulay</option>
+                <option value="sizzling">Sizzling</option>
+                <option value="inihaw">Inihaw</option>
+                <option value="pinirito">Pinirito</option>
+                <option value="lutong-kakaiba">Lutong Kakaiba</option>
+                <option value="steak">Steak</option>
+                <option value="pampagana">Pampagana</option>
+                <option value="pansit">Pansit</option>
+                <option value="panghimagas">Panghimagas</option>
+            </select>
+        </div>
+
+        <!-- Product Description -->
+        <div class="col-md-6">
+            <label for="description" class="form-label">Description:</label>
+            <input id="description" name="description" rows="2" class="form-control"></textarea>
+        </div>
+
+        <!-- Unit Price -->
+        <div class="col-md-6">
+            <label for="unit-price" class="form-label">Unit Price ₱:</label>
+            <input type="number" id="unit-price" name="unit-price" step="0.01" class="form-control" required>
+        </div>
+
+        <!-- Comments -->
+        <div class="col-md-6">
+            <label for="comments" class="form-label">Comments:</label>
+            <input id="comments" name="comments" rows="2" class="form-control"></textarea>
+        </div>
+
+        <!-- Submit Button -->
+        <div class="col-12">
+            <button type="submit" class="btn btn-primary w-100">Save Product</button>
+        </div>
+    </form> <!-- Closing form tag -->
+</section>
+
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'js/AddMaterial.js' %}"></script>
+{% endblock %}
