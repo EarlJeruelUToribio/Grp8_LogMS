@@ -14,6 +14,11 @@ from pathlib import Path
 from datetime import timedelta
 from dotenv import load_dotenv
 import os
+from django.apps import AppConfig
+
+class TikmeDineConfig(AppConfig):
+    default_auto_field = 'django.db.models.BigAutoField'
+    name = 'backend'  # Ensure this matches the folder name
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -40,9 +45,12 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'rest_framework',   # for using rest framework
-    'backend',              # for the app "api"
+    'rest_framework',
+    'backend',      # Your main backend app
+    'TikmeDine',    # Ensure this is included
 ]
+
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
