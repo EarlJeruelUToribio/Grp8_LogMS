@@ -13,6 +13,12 @@ urlpatterns = [
     path('ManageProduct/', views.ManageProduct_view, name='ManageProducts'),
     path('PlaceOrder/', views.PlaceOrder_view, name='PlacedOrder'),
     path('KitchenDisplay/', views.KitchenDisplay_view, name='KitchenDisplay'),
+    path('AddSupplier/', views.AddSupplier_view, name='AddSupplier'),
+    path('ManageSupplier/', views.ManageSupplier_view, name='ManageSupplier'),
+    path('ExpiryDates/', views.ExpiryDates_view, name='ExpiryDates'),
+
+
+
     
 
     path('inventory/', views.InventoryListCreateView.as_view(), name='inventory-list'),

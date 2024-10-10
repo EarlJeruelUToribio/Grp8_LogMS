@@ -31,6 +31,13 @@ def ManageProduct_view(request):
 def KitchenDisplay_view(request):
     return render(request, 'KitchenDisplay.html')
 
+def AddSupplier_view(request):
+    return render(request, 'AddSupplier.html')
+def ManageSupplier_view(request):
+    return render(request, 'ManageSupplier.html')
+
+def ExpiryDates_view(request):
+    return render(request, 'ExpiryDates.html')
 #Inventory Views
 class InventoryListCreateView(generics.ListCreateAPIView):
     queryset = Inventory.objects.all()

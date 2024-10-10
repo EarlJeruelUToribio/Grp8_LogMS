@@ -1,0 +1,64 @@
+{% extends 'Base.html' %}
+{% load static %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'css/ExpiryDates.css' %}">
+{% endblock %}
+
+{% block content %}
+
+ <!-- Orders Section -->
+ <div class="container">
+    <section class="products-section">
+        <h2 class="text-center mb-4">ITEM EXPIRATION MANAGEMENT</h2>
+        <div class="product-header">
+            <button class="sort-button">Sort by</button>
+            <input type="text" id="search-bar" placeholder="Search Item" class="search-bar">
+        </div>
+        <table class="table table-striped product-table">
+            <thead>
+                <tr>
+                    <th>Item ID</th>
+                    <th>Item Name</th>
+                    <th>Expiration Date</th>
+                    <th>Manage Expiration</th>
+                </tr>
+            </thead>
+            <tbody>
+                    <td>00456</td>
+                    <td>Chicken</td>
+                    <td>2024-08-10</td>
+                    <td>
+                        <button class="manage-btn" onclick="toggleManageOptions(this)">Manage</button>
+                        <div class="manage-options" style="display:none;">
+                            <button class="extend-btn">Extend</button>
+                            <button class="expired-btn">Mark as Expired</button>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>00456</td>
+                    <td>Fish</td>
+                    <td>2024-11-10</td>
+                    <td>
+                        <button class="manage-btn" onclick="toggleManageOptions(this)">Manage</button>
+                        <div class="manage-options" style="display:none;">
+                            <button class="extend-btn">Extend</button>
+                            <button class="expired-btn">Mark as Expired</button>
+                        </div>
+                    </td>
+                </tr>
+                <!-- Additional items can be added here -->
+                <!-- No items found example -->
+            </tbody>
+        </table>
+    </section>
+</div>
+
+
+    {% endblock %}
+
+
+    {% block extra_js %}
+    <script src="{% static 'js/ExpiryDates.js' %}"></script>
+    {% endblock %}
