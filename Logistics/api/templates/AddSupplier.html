@@ -1,0 +1,64 @@
+{% extends 'Base.html' %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/AddMaterials.css' %}">
+{% endblock %}
+
+{% block content %}
+<section id="add-supplier-form" class="form-container container mt-5">
+    <h2 class="text-center">ADD SUPPLIER</h2>
+
+    <form class="row g-3"> <!-- Form tag added for proper form structure -->
+        <!-- Supplier Name -->
+        <div class="col-md-6">
+            <label for="supplier-name" class="form-label">Supplier Name:</label>
+            <input type="text" id="supplier-name" name="supplier-name" class="form-control" required>
+        </div>
+
+        <!-- Supplier Address -->
+        <div class="col-md-6">
+            <label for="supplier-address" class="form-label">Supplier Address:</label>
+            <input type="text" id="supplier-address" name="supplier-address" class="form-control" required>
+        </div>
+
+        <!-- Supplier Email -->
+        <div class="col-md-6">
+            <label for="supplier-email" class="form-label">Supplier Email:</label>
+            <input type="email" id="supplier-email" name="supplier-email" class="form-control" required>
+        </div>
+
+        <!-- Payment Terms -->
+        <div class="col-md-6">
+            <label for="payment-terms" class="form-label">Payment Terms:</label>
+            <select id="payment-terms" name="payment-terms" class="form-select" required>
+                <option value="cash-on-delivery">Cash on Delivery</option>
+                <option value="gcash">Gcash</option>
+                <option value="paymaya">Paymaya</option>
+                <option value="bank-transfer">Bank Transfer</option>
+            </select>
+        </div>
+
+        <!-- Add Product Button -->
+        <div class="col-12">
+            <button type="button" id="add-product-button" class="btn btn-secondary w-100">➕ Add Product</button>
+        </div>
+
+        <div id="products-section" class="col-12 mt-4">
+            <h3 id="products-heading" class="text-center" style="display: none;">PRODUCTS</h3> <!-- Hide initially -->
+            <div id="product-fields-container"></div> <!-- Container for dynamic product fields -->
+        </div>
+        
+    
+        <!-- Submit Button -->
+        <div class="col-12 mt-3">
+            <button type="submit" class="btn btn-primary w-100">Add Supplier</button>
+        </div>
+    </form> <!-- Closing form tag -->
+</section>
+
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'js/AddSuppliers.js' %}"></script>
+{% endblock %}

@@ -139,6 +139,19 @@
 }
 
 
+/* Dropdown Button for Supplier Details */
+#order-details-dropdown {
+    cursor: pointer;
+    color: #f8f8ff; /* White color for text */
+    background-color: #61396f; /* Green background for the button */
+    border: none; /* Remove border */
+    border-radius: 4px; /* Rounded corners */
+    padding: 10px 15px; /* Padding for button */
+    font-size: 16px; /* Adjust font size */
+    margin-bottom: 10px; /* Space below the button */
+    transition: background-color 0.3s ease; /* Smooth transition for hover effect */
+}
+
 .expanded-order-details {
     display: none;
     padding: 10px;

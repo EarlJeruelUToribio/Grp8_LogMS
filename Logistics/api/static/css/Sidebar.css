@@ -51,6 +51,7 @@
 .sidebar-header h2 {
     font-size: 16px;
     margin: 0;
+    text-align: center;
 }
 
 /* Hide the title when the sidebar is collapsed */
@@ -66,69 +67,76 @@
     cursor: pointer;
 }
 
+/* Sidebar link and button styles */
 .sidebar a, .dropdown-btn {
-    padding: 10px 15px;
+    padding: 10px 20px; /* Increase padding to ensure equal spacing */
     text-decoration: none;
     font-size: 18px;
     color: #333;
     display: flex;
-    align-items: center; /* Align items for icon and text */
-    justify-content: flex-start; /* Adjust alignment to the left */
+    align-items: center; /* Align items (icon and text) vertically */
+    justify-content: flex-start; /* Align content horizontally (to the left) */
     width: 100%;
     text-align: left;
     border: none;
     background: none;
     outline: none;
     cursor: pointer;
-    transition: background-color 0.3s, border-radius 0.3s, margin 0.3s; /* Smooth transition */
-    overflow: hidden; /* Prevent background overflow */
-    box-sizing: border-box; /* Ensure padding and border are included in total width */
+    transition: background-color 0.3s, border-radius 0.3s, margin 0.3s;
+    box-sizing: border-box;
 }
 
-/* Apply violet color only on hover */
+/* Consistent hover effects for both links and dropdown buttons */
 .sidebar a:hover, .dropdown-btn:hover {
-    background-color: #61396f; /* Violet color */
+    background-color: #61396f;
     color: white !important;
-    border-radius: 10px; /* Adjust this value for more or less rounding */
-
+    border-radius: 8px; /* Add rounding for visual appeal */
 }
 
-/* Remove the active class background if not needed */
-.sidebar a.active {
-    background-color: none; /* Remove violet background from active state */
-    color: inherit; /* Inherit default color */
+/* Sidebar dropdown container */
+.dropdown-container {
+    display: none;
+    background-color: #f9f9f9;
+    padding-left: 20px; /* Adjust padding for dropdown items */
 }
 
+.dropdown-container a {
+    font-size: 16px;
+    color: #666;
+    padding: 10px 20px; /* Ensure same padding as the main links */
+}
+
+/* Ensure icon alignment */
 .sidebar i {
-    display: flex; /* Use flex to center the icon */
-    align-items: center; /* Center icon vertically */
-    justify-content: center; /* Center icon horizontally */
-    width: 30px; /* Ensure the icon takes the full width of its container */
+    width: 30px; /* Set a consistent width for icons */
+    text-align: center; /* Center icons */
+    margin-right: 10px; /* Add space between icon and text */
 }
 
-/* Adjust icon and text alignment for collapsed sidebar */
-.sidebar.collapsed a, .sidebar.collapsed .dropdown-btn {
-    justify-content: center; /* Center icons */
-    margin-right: 0;
-    align-items: center;
+/* Consistent dropdown icon placement */
+.dropdown-btn .fa-caret-down {
+    margin-left: auto; /* Align caret icon to the right */
+    transition: transform 0.3s;
 }
 
+/* Rotate the caret icon when the dropdown is active */
+.dropdown-btn.active .fa-caret-down {
+    transform: rotate(180deg);
+}
+
+/* Adjust when sidebar is collapsed */
 .sidebar.collapsed a i, .sidebar.collapsed .dropdown-btn i {
     margin-right: 0;
-
-    
 }
-
 
 .sidebar.collapsed a span, .sidebar.collapsed .dropdown-btn span {
-    display: none; /* Hide text */
-    align-items: center;
-
+    display: none; /* Hide text in collapsed mode */
 }
-/* Hide the arrow icon when the sidebar is collapsed */
+
 .sidebar.collapsed .dropdown-btn .fa-caret-down {
     display: none;
 }
+
 
 
 /* Dropdown container */
