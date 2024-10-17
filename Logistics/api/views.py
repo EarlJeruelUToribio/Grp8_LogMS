@@ -46,6 +46,9 @@ def AddMaterial_view(request):
 
 def ManageMaterial_view(request):
     materials = Inventory.objects.all()
+    print(f"Number of materials: {materials.count()}")  # Debug print
+    for material in materials:
+        print(f"Material: {material.ItemName}")  # Debug print
     return render(request, 'ManageMaterial.html', {'materials': materials})
 
 def edit_material(request, pk):

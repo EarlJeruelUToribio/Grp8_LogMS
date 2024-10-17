@@ -10,7 +10,6 @@
     <!-- Material Table -->
     <section id="material-table" class="container table-container mt-5">
         <h2 class="text-center">MATERIAL INVENTORY</h2>
-        <button id="edit-button" class="btn btn-primary mb-3 float-end">Edit</button>
         
         <table class="table table-striped product-table">
             <thead>
@@ -33,86 +32,15 @@
                     <td>{{ material.UnitOfMeasure }}</td>
                     <td>{{ material.PurchasePrice }}</td>
                     <td>{{ material.ReorderLevel }}</td>
-                    <td>
-                        <!-- Note: You can't use material.pk here as we're not retrieving the id -->
-                        <a href="{% url 'update_material' material.ItemName %}" class="btn btn-primary">Edit</a>
-                    </td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-    </section>
-
-    <!-- Edit Material Modal -->
-    <div id="edit-modal" class="modal">
-            {% csrf_token %}
-            <!-- Item Name -->
-            <div class="col-md-6">
-                <label for="item-name" class="form-label">Item Name:</label>
-                <input type="text" id="item-name" name="item-name" class="form-control" value="{{ material.ItemName }}" required>
-            </div>
-
-            <!-- Item Description -->
-            <div class="col-md-6">
-                <label for="item-description" class="form-label">Item Description:</label>
-                <textarea id="item-description" name="item-description" rows="2" class="form-control">{{ material.ItemDescription }}</textarea>
-            </div>
-
-            <!-- Item Category -->
-            <div class="col-md-6">
-                <label for="item-category" class="form-label">Item Category:</label>
-                <select id="item-category" name="item-category" class="form-select" required>
-                    <option value="agahan" {% if material.ItemCategory == 'agahan' %}selected{% endif %}>Agahan</option>
-                    <option value="noodles" {% if material.ItemCategory == 'noodles' %}selected{% endif %}>Noodles</option>
-                    <option value="rice" {% if material.ItemCategory == 'rice' %}selected{% endif %}>Rice</option>
-                    <option value="sabaw" {% if material.ItemCategory == 'sabaw' %}selected{% endif %}>Sabaw</option>
-                    <option value="gulay" {% if material.ItemCategory == 'gulay' %}selected{% endif %}>Gulay</option>
-                    <option value="sizzling" {% if material.ItemCategory == 'sizzling' %}selected{% endif %}>Sizzling</option>
-                    <option value="inihaw" {% if material.ItemCategory == 'inihaw' %}selected{% endif %}>Inihaw</option>
-                    <option value="pinirito" {% if material.ItemCategory == 'pinirito' %}selected{% endif %}>Pinirito</option>
-                    <option value="lutong-kakaiba" {% if material.ItemCategory == 'lut ong-kakaiba' %}selected{% endif %}>Lutong Kakaiba</option>
-                    <option value="steak" {% if material.ItemCategory == 'steak' %}selected{% endif %}>Steak</option>
-                    <option value="pampagana" {% if material.ItemCategory == 'pampagana' %}selected{% endif %}>Pampagana</option>
-                    <option value="pansit" {% if material.ItemCategory == 'pansit' %}selected{% endif %}>Pansit</option>
-                </select>
-            </div>
-
-            <!-- Unit of Measure -->
-            <div class="col-md-6">
-                <label for="unit-of-measure" class="form-label">Unit of Measure:</label>
-                <select id="unit-of-measure" name="unit-of-measure" class="form-select" required>
-                    <option value="kg" {% if material.UnitOfMeasure == 'kg' %}selected{% endif %}>Kilogram (kg)</option>
-                    <option value="g" {% if material.UnitOfMeasure == 'g' %}selected{% endif %}>Gram (g)</option>
-                    <option value="l" {% if material.UnitOfMeasure == 'l' %}selected{% endif %}>Liter (l)</option>
-                    <option value="ml" {% if material.UnitOfMeasure == 'ml' %}selected{% endif %}>Milliliter (ml)</option>
-                    <option value="m" {% if material.UnitOfMeasure == 'm' %}selected{% endif %}>Meter (m)</option>
-                    <option value="cm" {% if material.UnitOfMeasure == 'cm' %}selected{% endif %}>Centimeter (cm)</option>
-                    <option value="pcs" {% if material.UnitOfMeasure == 'pcs' %}selected{% endif %}>Pieces (pcs)</option>
-                    <option value="box" {% if material.UnitOfMeasure == 'box' %}selected{% endif %}>Box (box)</option>
-                </select>
-            </div>
-
-            <!-- Purchase Price -->
-            <div class="col-md-6">
-                <label for="purchase-price" class="form-label">Purchase Price:</label>
-                <input type="number" id="purchase-price" name="purchase-price" step="0.01" class="form-control" value="{{ material.PurchasePrice }}" required>
-            </div>
-
-            <!-- Reorder Level -->
-            <div class="col-md-6">
-                <label for="reorder-level" class="form-label">Reorder Level:</label>
-                <input type="number" id="reorder-level" name="reorder-level" class="form-control" value="{{ material.ReorderLevel }}" required>
-            </div>
-
-            <!-- Submit Button -->
-            <div class="col-12">
-                <button type="submit" class="btn btn-primary w-100">Update Material</button>
-            </div>
-        </form>
-    </div>
-
-{% endblock %}
-
-{% block extra_js %}
-<script src="{% static 'js/ManageMaterials.js' %}"></script>
-{% endblock %}
+                    <td> <a href="{% url 'edit_material' material.Inventory_ID %}" class="btn btn-primary">Edit</a> </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </section>
+    
+    {% endblock %}
+    
+    {% block extra_js %}
+    <script src="{% static 'js/ManageMaterials.js' %}"></script>
+    {% endblock %}

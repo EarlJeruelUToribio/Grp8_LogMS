@@ -22,7 +22,7 @@ class Supplier(models.Model):
     Supplier_ID = models.AutoField(primary_key=True)
     SupplierName = models.CharField(max_length=255)
     SupplierDesc = models.TextField(blank=True, null=True)
-    SupplierNumber = models.CharField(max_laength=15, blank=True, null=True)
+    SupplierNumber = models.CharField(max_length=15, blank=True, null=True)
     Order_ID = models.ForeignKey('Order', on_delete=models.SET_NULL, null=True, blank=True)
     Status = models.CharField(max_length=50, default='Active')
     MinOrderQty = models.IntegerField(default=0)
