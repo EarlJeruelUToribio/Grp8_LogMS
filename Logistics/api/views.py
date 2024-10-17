@@ -1,8 +1,16 @@
+from django.shortcuts import render, redirect
+from django.views.decorators.http import require_http_methods
+from django.contrib import messages
 from rest_framework import generics
-from .models import *
-from .serializers import *
-from django.shortcuts import render
-from rest_framework import views
+from .models import Inventory, Supplier, Order, ProductOrders, Product, Ingredient
+from .serializers import (
+    InventorySerializer, 
+    SupplierSerializer, 
+    OrderSerializer, 
+    ProductOrdersSerializer, 
+    ProductSerializer, 
+    IngredientSerializer
+)
 
 def home_view(request):
     return render(request, 'index.html'),
@@ -16,11 +24,47 @@ def PlaceOrder_view(request):
 def ManageOrder_view(request):
     return render(request, 'ManageOrder.html')
 
+@require_http_methods(["GET", "POST"])
 def AddMaterial_view(request):
+    if request.method == 'POST':
+        try:
+            inventory = Inventory(
+                ItemName=request.POST.get('item-name'),
+                ItemDescription=request.POST.get('item-description'),
+                ItemCategory=request.POST.get('item-category'),
+                UnitOfMeasure=request.POST.get('unit-of-measure'),
+                PurchasePrice=request.POST.get('purchase-price'),
+                ReorderLevel=request.POST.get('reorder-level')
+            )
+            inventory.save()
+            messages.success(request, 'Material added successfully!')
+            return redirect('AddMaterial')
+        except Exception as e:
+            messages.error(request, f'Error adding material: {str(e)}')
+    
     return render(request, 'AddMaterial.html')
 
 def ManageMaterial_view(request):
-    return render(request, 'ManageMaterial.html')
+    materials = Inventory.objects.all()
+    return render(request, 'ManageMaterial.html', {'materials': materials})
+
+def edit_material(request, pk):
+    material = get_object_or_404(Inventory, pk=pk)
+    if request.method == 'POST':
+        material.ItemName = request.POST.get('item-name')
+        material.ItemDescription = request.POST.get('item-description')
+        material.ItemCategory = request.POST.get('item-category')
+        material.UnitOfMeasure = request.POST.get('unit-of-measure')
+        material.PurchasePrice = request.POST.get('purchase-price')
+        material.ReorderLevel = request.POST.get('reorder-level')
+        material.save()
+        messages.success(request, 'Material updated successfully!')
+        return redirect('ManageMaterial')
+    return render(request, 'EditMaterial.html', {'material': material})
+
+@require_http_methods(["POST"])
+def update_material(request, pk):
+    return redirect('ManageMaterial')
 
 def AddProduct_view(request):
     return render(request, 'AddProduct.html')
@@ -47,7 +91,6 @@ class InventoryDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Inventory.objects.all()
     serializer_class = InventorySerializer
 
-# Supplier Views
 class SupplierListCreateView(generics.ListCreateAPIView):
     queryset = Supplier.objects.all()
     serializer_class = SupplierSerializer

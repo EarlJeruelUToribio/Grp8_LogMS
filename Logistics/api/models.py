@@ -1,30 +1,36 @@
 from django.db import models
+from django.utils import timezone
 
-# Inventory Model
 class Inventory(models.Model):
     Inventory_ID = models.AutoField(primary_key=True)
     ItemName = models.CharField(max_length=255)
     ItemDescription = models.TextField()
     ItemCategory = models.CharField(max_length=100)
+    UnitOfMeasure = models.CharField(max_length=50)
     PurchasePrice = models.DecimalField(max_digits=10, decimal_places=2)
-    Supplier_ID = models.ForeignKey('Supplier', on_delete=models.CASCADE)
-    MinStockLevel = models.IntegerField()
-    ItemExpiry = models.DateField()
+    ReorderLevel = models.IntegerField()
     Created_At = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        db_table = 'api_inventory'
+
+    def __str__(self):
+        return self.ItemName
 
 # Supplier Model
 class Supplier(models.Model):
     Supplier_ID = models.AutoField(primary_key=True)
     SupplierName = models.CharField(max_length=255)
-    SupplierDesc = models.TextField()
-    SupplierNumber = models.CharField(max_length=15)
-    Order_ID = models.ForeignKey('Order', on_delete=models.CASCADE)
-    Status = models.CharField(max_length=50)
-    MinOrderQty = models.IntegerField()
-    PaymentTerms = models.CharField(max_length=100)
-    DeliveryTerms = models.CharField(max_length=100)
-    ContractStart = models.DateField()
-    ContractEnd = models.DateField()
+    SupplierDesc = models.TextField(blank=True, null=True)
+    SupplierNumber = models.CharField(max_laength=15, blank=True, null=True)
+    Order_ID = models.ForeignKey('Order', on_delete=models.SET_NULL, null=True, blank=True)
+    Status = models.CharField(max_length=50, default='Active')
+    MinOrderQty = models.IntegerField(default=0)
+    PaymentTerms = models.CharField(max_length=100, blank=True, null=True)
+    DeliveryTerms = models.CharField(max_length=100, blank=True, null=True)
+
+    def __str__(self):
+        return self.SupplierName
 
 # Order Model
 class Order(models.Model):

@@ -6,9 +6,7 @@ urlpatterns = [
     path('home', views.home_view, name='home-view'),
 
     path('', views.Sidebar_view, name='home'),
-    path('AddMaterial/', views.AddMaterial_view, name='AddMaterial'),
     path('AddProduct/', views.AddProduct_view, name='AddProduct'),
-    path('ManageMaterial/', views.ManageMaterial_view, name='ManageMaterial'),
     path('ManageOrder/', views.ManageOrder_view, name='ManageOrder'),
     path('ManageProduct/', views.ManageProduct_view, name='ManageProducts'),
     path('PlaceOrder/', views.PlaceOrder_view, name='PlacedOrder'),
@@ -17,9 +15,10 @@ urlpatterns = [
     path('ManageSupplier/', views.ManageSupplier_view, name='ManageSupplier'),
     path('ExpiryDates/', views.ExpiryDates_view, name='ExpiryDates'),
 
+    path('add-material/', views.AddMaterial_view, name='AddMaterial'),
+    path('manage-material/', views.ManageMaterial_view, name='ManageMaterial'),
+    path('edit-material/<int:pk>/', views.edit_material, name='edit_material'),
 
-
-    
 
     path('inventory/', views.InventoryListCreateView.as_view(), name='inventory-list'),
     path('inventory/<int:pk>/', views.InventoryDetailView.as_view(), name='inventory-detail'),
