@@ -11,6 +11,7 @@
 
     <form class="row g-3" method="POST"> <!-- Ensure the form uses POST method -->
         {% csrf_token %}
+        
         <!-- Supplier Name -->
         <div class="col-md-6">
             <label for="supplier-name" class="form-label">Supplier Name:</label>
@@ -46,7 +47,7 @@
         </div>
 
         <div id="materials-section" class="col-12 mt-4">
-            <h3 id="materials-heading" class="text-center" style="display: none;">MATERIALS</h3> <!-- Hide initially -->
+            <h3 id="materials-heading" class="text-center">MATERIALS</h3> <!-- Always visible -->
             <div id="material-fields-container"></div> <!-- Container for dynamic material fields -->
             <script id="materials-data" type="application/json">{{ materials|safe }}</script> <!-- Pass materials data to JavaScript -->
         </div>
@@ -61,81 +62,5 @@
 {% endblock %}
 
 {% block extra_js %}
-<script>
-// Get the material fields container
-const materialFieldsContainer = document.getElementById('material-fields-container');
-
-// Get the add material button
-const addMaterialButton = document.getElementById('add-material-button');
-
-// Initialize material count
-let materialCount = 0;
-
-// Fetch materials from the server (this should be passed as a JSON object in the template)
-const materials = JSON.parse(document.getElementById('materials-data').textContent);
-
-// Function to add material fields
-function addMaterialField() {
-    // Create a new material field
-    const materialField = document.createElement('div');
-    materialField.classList.add('material-field');
-    materialField.innerHTML = `
-        <div class="row g-3">
-            <div class="col-md-4">
-                <label for="material-name-${materialCount}" class="form-label">Material Name:</label>
-                <select id="material-name-${materialCount}" name="material_name[]" class="form-select" required onchange="updateUnitOfMeasure(${materialCount})">
-                    <option value="">Select Material</option>
-                    ${materials.map(material => `<option value="${material.Inventory_ID}" data-unit="${material.UnitOfMeasure}">${material.ItemName}</option>`).join('')}
-                </select>
-            </div>
-            <div class="col-md-4">
-                <label for="material-unit-of-measure-${materialCount}" class="form-label">Unit of Measure:</label>
-                <input type="text" id="material-unit-of-measure-${materialCount}" name="material_unit_of_measure[]" class="form-control" required readonly>
-            </div>
-            <div class="col-md-3">
-                <label for="material-min-order-qty-${materialCount}" class="form-label">Minimum Order Quantity:</label>
-                <input type="number" id="material-min-order-qty-${materialCount}" name="material_min_order_qty[]" class="form-control" required>
-            </div>
-            <div class="col-md-1">
-                <button type="button" class="btn btn-danger" onclick="deleteMaterialField(${materialCount})">Delete</button>
-            </div>
-        </div>
-    `;
-
-    // Append the material field to the container
-    materialFieldsContainer.appendChild(materialField);
-
-    // Show the materials heading if it's hidden
-    const materialsHeading = document.getElementById('materials-heading');
-    if (materialsHeading.style.display === 'none') {
-        materialsHeading.style.display = 'block';
-    }
-
-    // Increment material count
-    materialCount++;
-}
-
-// Function to update the Unit of Measure based on selected Material
-function updateUnitOfMeasure(index) {
-    const materialSelect = document.getElementById(`material-name-${index}`);
-    const selectedOption = materialSelect.options[materialSelect.selectedIndex];
-    const unitOfMeasureInput = document.getElementById(`material-unit-of-measure-${index}`);
-
-    // Set the unit of measure based on the selected material
-    if (selectedOption.value) {
-        unitOfMeasureInput.value = selectedOption.getAttribute('data-unit');
-    } else {
-        unitOfMeasureInput.value = '';
-    }
-}
-
-// Function to delete a material field
-function deleteMaterialField(index) {
-    const materialField = document.querySelector(`.material-field:nth-child(${index + 1})`);
-    materialField.remove();
-}
-
-// Add event listener to the add material button
-addMaterialButton.addEventListener('click', addMaterialField);
-</script>
+<script src="{% static 'js/AddSupplier.js' %}"></script>
 {% endblock %}

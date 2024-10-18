@@ -14,22 +14,26 @@ const materials = JSON.parse(document.getElementById('materials-data').textConte
 function addMaterialField() {
     // Create a new material field
     const materialField = document.createElement('div');
+    materialField.classList.add('material-field');
     materialField.innerHTML = `
         <div class="row g-3">
-            <div class="col-md-6">
+            <div class="col-md-4">
                 <label for="material-name-${materialCount}" class="form-label">Material Name:</label>
                 <select id="material-name-${materialCount}" name="material_name[]" class="form-select" required onchange="updateUnitOfMeasure(${materialCount})">
                     <option value="">Select Material</option>
                     ${materials.map(material => `<option value="${material.Inventory_ID}" data-unit="${material.UnitOfMeasure}">${material.ItemName}</option>`).join('')}
                 </select>
             </div>
-            <div class="col-md-6">
+            <div class="col-md-4">
                 <label for="material-unit-of-measure-${materialCount}" class="form-label">Unit of Measure:</label>
                 <input type="text" id="material-unit-of-measure-${materialCount}" name="material_unit_of_measure[]" class="form-control" required readonly>
             </div>
-            <div class="col-md-6">
+            <div class="col-md-3">
                 <label for="material-min-order-qty-${materialCount}" class="form-label">Minimum Order Quantity:</label>
                 <input type="number" id="material-min-order-qty-${materialCount}" name="material_min_order_qty[]" class="form-control" required>
+            </div>
+            <div class="col-md-1">
+                <button type="button" class="btn btn-danger" onclick="deleteMaterialField(${materialCount})">Delete</button>
             </div>
         </div>
     `;
@@ -59,6 +63,12 @@ function updateUnitOfMeasure(index) {
     } else {
         unitOfMeasureInput.value = '';
     }
+}
+
+// Function to delete a material field
+function deleteMaterialField(index) {
+    const materialField = document.querySelector(`.material-field:nth-child(${index + 1})`);
+    materialField.remove();
 }
 
 // Add event listener to the add material button
