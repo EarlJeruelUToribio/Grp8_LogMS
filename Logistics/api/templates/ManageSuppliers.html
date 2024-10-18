@@ -16,7 +16,6 @@
                 <th>Supplier Address</th>
                 <th>Supplier Email</th>
                 <th>Payment Terms</th>
-                <th>Minimum Order Quantity</th>
                 <th>Status</th>
                 <th>Actions</th>
             </tr>
@@ -28,7 +27,6 @@
                 <td>{{ supplier.SupplierDesc }}</td>
                 <td>{{ supplier.SupplierNumber }}</td>
                 <td>{{ supplier.PaymentTerms }}</td>
-                <td>{{ supplier.MinOrderQty }}</td>
                 <td>{{ supplier.Status }}</td>
                 <td>
                     <a href="{% url 'edit_supplier' supplier.Supplier_ID %}" class="btn btn-primary">Edit</a>
@@ -38,9 +36,8 @@
         </tbody>
     </table>
 </section>
-
 {% endblock %}
 
 {% block extra_js %}
-<script src="{% static 'js/ManageSuppliers.js' %}"></script>
+<script src="{% static 'js/ManageSupplier.js' %}"></script>
 {% endblock %}

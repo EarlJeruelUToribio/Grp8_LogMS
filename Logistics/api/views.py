@@ -30,16 +30,18 @@ def PlaceOrder_view(request):
         Order.objects.create(
             Items=material_id,  # Adjust how you save the item if necessary
             Quantity=quantity,
-            OrderStatus=status
+            OrderStatus=status,
+            Supplier_id=supplier_name  # Save the supplier ID
         )
 
         messages.success(request, 'Order submitted successfully!')
         return redirect('ManageOrder')  # Redirect to ManageOrder after submission
 
     else:
-        # Retrieve materials from the database
+        # Retrieve materials and suppliers from the database
         materials = Inventory.objects.all()
-        return render(request, 'PlacedOrder.html', {'materials': materials})
+        suppliers = Supplier.objects.all()  # Fetch all suppliers
+        return render(request, 'PlacedOrder.html', {'materials': materials, 'suppliers': suppliers})
     
 def ManageOrder_view(request):
     orders = Order.objects.select_related('Items', 'Supplier').all()  # Ensure related data is fetched
@@ -120,31 +122,45 @@ def AddSupplier_view(request):
         supplier_address = request.POST.get('supplier-address')
         supplier_email = request.POST.get('supplier-email')
         payment_terms = request.POST.get('payment-terms')
-        min_order_qty = request.POST.get('min-order-qty')
-        material_ids = request.POST.getlist('material_name[]')  # Get material IDs from the form
-        material_unit_of_measures = request.POST.getlist('material_unit_of_measure[]')  # Get material unit of measures from the form
-        material_min_order_qtys = request.POST.getlist('material_min_order_qty[]')  # Get material min order qtys from the form
+        material_ids = request.POST.getlist('material_name[]')
+        material_units_of_measure = request.POST.getlist('material_unit_of_measure[]')
+        material_min_order_qtys = request.POST.getlist('material_min_order_qty[]')
 
-        supplier = Supplier(
-            SupplierName=supplier_name,
-            SupplierDesc=supplier_address,
-            SupplierNumber=supplier_email,
-            PaymentTerms=payment_terms,
-            MinOrderQty=min_order_qty
-        )
-        supplier.save()
+        try:
+            supplier = Supplier(
+                SupplierName=supplier_name,
+                SupplierDesc=supplier_address,
+                SupplierNumber=supplier_email,
+                PaymentTerms=payment_terms
+            )
+            supplier.save()
 
-        # Associate materials with the supplier
-        for i, material_id in enumerate(material_ids):
-            material = get_object_or_404(Inventory, pk=material_id)
-            supplier.Products.add(material)  # Replace with the correct field name
+            # Associate materials with the supplier
+            for i in range(len(material_ids)):
+                material_id = material_ids[i]
+                material_unit_of_measure = material_units_of_measure[i]
+                material_min_order_qty = material_min_order_qtys[i]
 
-        messages.success(request, 'Supplier added successfully!')
-        return redirect('ManageSupplier')  # Redirect to ManageSupplier after submission
+                material = get_object_or_404(Inventory, pk=material_id)
+                supplier.Materials.add(material)
+
+                # Save material details
+                material_detail = MaterialDetail(
+                    Material=material,
+                    UnitOfMeasure=material_unit_of_measure,
+                    MinOrderQty=material_min_order_qty
+                )
+                material_detail.save()
+
+            messages.success(request, 'Supplier added successfully!')
+            return redirect('ManageSupplier')  # Redirect to ManageSupplier after submission
+        except Exception as e:
+            messages.error(request, f'Error adding supplier: {str(e)}')
 
     # Fetch all materials (Inventory items) for the dropdown
-    materials = Inventory.objects.all()  # Get all materials from the database
-    return render(request, 'AddSupplier.html', {'materials': materials})  # Pass materials to the template
+    materials = Inventory.objects.all()
+    materials_list = list(materials.values('Inventory_ID', 'ItemName', 'UnitOfMeasure'))  # Convert QuerySet to list of dicts
+    return render(request, 'AddSupplier.html', {'materials': materials_list})
 
 def ManageSupplier_view(request):
     suppliers = Supplier.objects.all()
