@@ -19,10 +19,45 @@ def Sidebar_view(request):
     return render(request, 'Sidebar.html')
 
 def PlaceOrder_view(request):
-    return render(request, 'PlacedOrder.html')
+    if request.method == 'POST':
+        # Handle form submission
+        material_id = request.POST.get('material')
+        quantity = request.POST.get('quantity')
+        supplier_name = request.POST.get('supplier-name')
+        status = request.POST.get('status')
 
+        # Process the order (e.g., save it to the database)
+        Order.objects.create(
+            Items=material_id,  # Adjust how you save the item if necessary
+            Quantity=quantity,
+            OrderStatus=status
+        )
+
+        messages.success(request, 'Order submitted successfully!')
+        return redirect('ManageOrder')  # Redirect to ManageOrder after submission
+
+    else:
+        # Retrieve materials from the database
+        materials = Inventory.objects.all()
+        return render(request, 'PlacedOrder.html', {'materials': materials})
+    
 def ManageOrder_view(request):
-    return render(request, 'ManageOrder.html')
+    orders = Order.objects.select_related('Items', 'Supplier').all()  # Fetch related data
+
+    if request.method == 'POST':
+        # Handle status update
+        order_id = request.POST.get('order_id')
+        new_status = request.POST.get('new_status')
+
+        try:
+            order = Order.objects.get(Order_ID=order_id)
+            order.OrderStatus = new_status
+            order.save()
+            messages.success(request, f'Order status updated to {new_status}.')
+        except Order.DoesNotExist:
+            messages.error(request, 'Order not found.')
+
+    return render(request, 'ManageOrder.html', {'orders': orders})
 
 @require_http_methods(["GET", "POST"])
 def AddMaterial_view(request):
@@ -80,6 +115,7 @@ def KitchenDisplay_view(request):
 
 def AddSupplier_view(request):
     return render(request, 'AddSupplier.html')
+
 def ManageSupplier_view(request):
     return render(request, 'ManageSupplier.html')
 

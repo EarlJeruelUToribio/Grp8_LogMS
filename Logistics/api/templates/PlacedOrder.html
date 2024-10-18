@@ -1,47 +1,48 @@
 {% extends 'Base.html' %}
 {% load static %}
+{% load crispy_forms_tags %}
 
 {% block extra_css %}
 <link rel="stylesheet" href="{% static 'css/PlaceOrder.css' %}">
-
 {% endblock %}
 
 {% block content %}
-
-<!-- Order Form -->
 <div id="order-form" class="form-container container mt-5 d-flex justify-content-center">
-    <div class="order-container col-md-6"> <!-- Updated to use your order-container class -->
+    <div class="order-container col-md-6">
         <h2 class="text-center mb-4">PLACE ORDER</h2>
-        <form class="row g-3">
-            <!-- Hidden Order ID -->
-            <input type="hidden" id="order-id-hidden" name="order-id-hidden">
-
-            <!-- Item Input -->
+        <form method="POST" id="place-order-form" class="row g-3">
+            {% csrf_token %}
             <div class="col-12">
-                <label for="item" class="form-label">Item:</label>
-                <input type="text" class="form-control" id="item" name="item" required>
-            </div>
-
-            <!-- Quantity Input -->
-            <div class="col-12">
-                <label for="quantity" class="form-label">Quantity:</label>
-                <input type="number" class="form-control" id="quantity" name="quantity" required>
-            </div>
-
-            <!-- Supplier Name Dropdown -->
-            <div class="col-12">
-                <label for="supplier-name" class="form-label">Supplier Name:</label>
-                <select id="supplier-name" name="supplier-name" class="form-select" required>
-                    <option value="Supplier 1">Supplier 1</option>
-                    <option value="Supplier 2">Supplier 2</option>
-                    <option value="Supplier 3">Supplier 3</option>
+                <label for="material" class="form-label">Material:</label>
+                <select id="material" name="material" class="form-select" required>
+                    <option value="" disabled selected>Select Material</option>
+                    {% for material in materials %}
+                    <option value="{{ material.Inventory_ID }}" data-price="{{ material.PurchasePrice }}" data-uom="{{ material.UnitOfMeasure }}" data-min-qty="{{ material.ReorderLevel }}">{{ material.ItemName }}</option>
+                    {% endfor %}
+                    <option value="TEST_MATERIAL" data-price="100.00" data-uom="units" data-min-qty="1">TEST_MATERIAL</option>
                 </select>
             </div>
 
-            <!-- Status (Hidden) -->
-            <input type="hidden" id="status" name="status" value="Placed">
+            <div class="col-12">
+                <label for="quantity" class="form-label">Quantity:</label>
+                <input type="number" class="form-control" id="quantity" name="quantity" required>
+                <span id="unit-of-measure"></span>
+            </div>
 
-            <!-- Submit Button -->
+            <div class="col-12">
+                <label for="supplier-name" class="form-label">Supplier Name:</label>
+                <select id="supplier-name" name="supplier-name" class="form-select" required>
+                    <option value="TEST_SUPPLIER">TEST_SUPPLIER</option>
+                    <!-- Future suppliers will be populated here -->
+                </select>
+            </div>
+
+            <input type="hidden" id="status" name="status" value="Placed">
+            <div class="col-12">
+                <p>Base Price: <span id="base-price">0.00</span></p>
+                <p>Total Cost: <span id="total-cost">0.00</span></p>
+            </div>
+
             <div class="col-12">
                 <button type="submit" class="btn btn-primary w-100">Submit Order</button>
             </div>
@@ -49,8 +50,37 @@
     </div>
 </div>
 
+<script>
+    const materialSelect = document.getElementById('material');
+    const quantityInput = document.getElementById('quantity');
+    const basePriceSpan = document.getElementById('base-price');
+    const totalCostSpan = document.getElementById('total-cost');
+    const unitOfMeasureSpan = document.getElementById('unit-of-measure');
+
+    materialSelect.addEventListener('change', () => {
+        const selectedMaterial = materialSelect.options[materialSelect.selectedIndex];
+        const basePrice = selectedMaterial.getAttribute('data-price');
+        const uom = selectedMaterial.getAttribute('data-uom');
+        unitOfMeasureSpan.textContent = uom;
+
+        basePriceSpan.textContent = basePrice;
+        calculateTotalCost();
+    });
+
+    quantityInput.addEventListener('input', () => {
+        calculateTotalCost();
+    });
+
+    function calculateTotalCost() {
+        const quantity = parseInt(quantityInput.value) || 0;  // Default to 0 if NaN
+        const basePrice = parseFloat(basePriceSpan.textContent) || 0;  // Default to 0 if NaN
+        const totalCost = quantity * basePrice;
+        totalCostSpan.textContent = totalCost.toFixed(2);
+    }
+</script>
+
 {% endblock %}
 
 {% block extra_js %}
-    <script src="{% static 'js/PlacedOrder.js' %}"></script>
+<script src="{% static 'js/PlacedOrder.js' %}"></script>
 {% endblock %}

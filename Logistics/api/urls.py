@@ -7,13 +7,18 @@ urlpatterns = [
 
     path('', views.Sidebar_view, name='home'),
     path('AddProduct/', views.AddProduct_view, name='AddProduct'),
+
     path('ManageOrder/', views.ManageOrder_view, name='ManageOrder'),
-    path('ManageProduct/', views.ManageProduct_view, name='ManageProducts'),
     path('PlaceOrder/', views.PlaceOrder_view, name='PlacedOrder'),
+    path('PlaceOrder/', views.PlaceOrder_view, name='PlaceOrder'),
+    
+    path('ManageProduct/', views.ManageProduct_view, name='ManageProducts'),
+
     path('KitchenDisplay/', views.KitchenDisplay_view, name='KitchenDisplay'),
     path('AddSupplier/', views.AddSupplier_view, name='AddSupplier'),
     path('ManageSupplier/', views.ManageSupplier_view, name='ManageSupplier'),
     path('ExpiryDates/', views.ExpiryDates_view, name='ExpiryDates'),
+    
 
     path('add-material/', views.AddMaterial_view, name='AddMaterial'),
     path('manage-material/', views.ManageMaterial_view, name='ManageMaterial'),

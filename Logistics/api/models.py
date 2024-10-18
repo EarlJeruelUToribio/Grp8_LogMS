@@ -35,9 +35,10 @@ class Supplier(models.Model):
 # Order Model
 class Order(models.Model):
     Order_ID = models.AutoField(primary_key=True)
-    Items = models.CharField(max_length=255)
+    Items = models.ForeignKey(Inventory, on_delete=models.CASCADE)  # ForeignKey to Inventory
     Quantity = models.IntegerField()
     OrderStatus = models.CharField(max_length=50)
+    Supplier = models.ForeignKey(Supplier, on_delete=models.CASCADE)  # ForeignKey to Supplier
     Created_At = models.DateTimeField(auto_now_add=True)
 
 # ProductOrders Model
