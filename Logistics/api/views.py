@@ -42,7 +42,7 @@ def PlaceOrder_view(request):
         return render(request, 'PlacedOrder.html', {'materials': materials})
     
 def ManageOrder_view(request):
-    orders = Order.objects.select_related('Items', 'Supplier').all()  # Fetch related data
+    orders = Order.objects.select_related('Items', 'Supplier').all()  # Ensure related data is fetched
 
     if request.method == 'POST':
         # Handle status update
@@ -114,10 +114,55 @@ def KitchenDisplay_view(request):
     return render(request, 'KitchenDisplay.html')
 
 def AddSupplier_view(request):
-    return render(request, 'AddSupplier.html')
+    if request.method == 'POST':
+        # Handle form submission
+        supplier_name = request.POST.get('supplier-name')
+        supplier_address = request.POST.get('supplier-address')
+        supplier_email = request.POST.get('supplier-email')
+        payment_terms = request.POST.get('payment-terms')
+        min_order_qty = request.POST.get('min-order-qty')
+        material_ids = request.POST.getlist('material_name[]')  # Get material IDs from the form
+        material_unit_of_measures = request.POST.getlist('material_unit_of_measure[]')  # Get material unit of measures from the form
+        material_min_order_qtys = request.POST.getlist('material_min_order_qty[]')  # Get material min order qtys from the form
+
+        supplier = Supplier(
+            SupplierName=supplier_name,
+            SupplierDesc=supplier_address,
+            SupplierNumber=supplier_email,
+            PaymentTerms=payment_terms,
+            MinOrderQty=min_order_qty
+        )
+        supplier.save()
+
+        # Associate materials with the supplier
+        for i, material_id in enumerate(material_ids):
+            material = get_object_or_404(Inventory, pk=material_id)
+            supplier.Products.add(material)  # Replace with the correct field name
+
+        messages.success(request, 'Supplier added successfully!')
+        return redirect('ManageSupplier')  # Redirect to ManageSupplier after submission
+
+    # Fetch all materials (Inventory items) for the dropdown
+    materials = Inventory.objects.all()  # Get all materials from the database
+    return render(request, 'AddSupplier.html', {'materials': materials})  # Pass materials to the template
 
 def ManageSupplier_view(request):
-    return render(request, 'ManageSupplier.html')
+    suppliers = Supplier.objects.all()
+    return render(request, 'ManageSuppliers.html', {'suppliers': suppliers})
+
+def edit_supplier(request, pk):
+    supplier = get_object_or_404(Supplier, pk=pk)
+    if request.method == 'POST':
+        supplier.SupplierName = request.POST.get('supplier-name')
+        supplier.SupplierDesc = request.POST .get('supplier-address')
+        supplier.SupplierNumber = request.POST.get('supplier-email')
+        supplier.PaymentTerms = request.POST.get('payment-terms')
+        supplier.MinOrderQty = request.POST.get('min-order-qty')
+        supplier.Status = request.POST.get('status')
+        supplier.save()
+        messages.success(request, 'Supplier updated successfully!')
+        return redirect('ManageSupplier')
+    return render(request, 'EditSupplier.html', {'supplier': supplier})
 
 def ExpiryDates_view(request):
     return render(request, 'ExpiryDates.html')

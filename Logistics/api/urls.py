@@ -15,8 +15,9 @@ urlpatterns = [
     path('ManageProduct/', views.ManageProduct_view, name='ManageProducts'),
 
     path('KitchenDisplay/', views.KitchenDisplay_view, name='KitchenDisplay'),
-    path('AddSupplier/', views.AddSupplier_view, name='AddSupplier'),
-    path('ManageSupplier/', views.ManageSupplier_view, name='ManageSupplier'),
+    path('add-supplier/', views.AddSupplier_view, name='AddSupplier'),
+    path('manage-supplier/', views.ManageSupplier_view, name='ManageSupplier'),
+    path('edit-supplier/<int:pk>/', views.edit_supplier, name='edit_supplier'),
     path('ExpiryDates/', views.ExpiryDates_view, name='ExpiryDates'),
     
 

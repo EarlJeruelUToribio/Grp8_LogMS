@@ -1,70 +1,65 @@
-// Add event listener to the "Add Product" button
-document.getElementById('add-product-button').addEventListener('click', function() {
-    addProductFields(); // Call the function to add new product fields
-});
+// Get the material fields container
+const materialFieldsContainer = document.getElementById('material-fields-container');
 
-// Function to add product fields
-function addProductFields() {
-    const productFieldsContainer = document.getElementById('product-fields-container');
-    const productsHeading = document.getElementById('products-heading');
+// Get the add material button
+const addMaterialButton = document.getElementById('add-material-button');
 
-    // Show the PRODUCTS heading if no products have been added yet
-    if (productFieldsContainer.children.length === 0) {
-        productsHeading.style.display = 'block'; // Show the heading
+// Initialize material count
+let materialCount = 0;
+
+// Fetch materials from the server (this should be passed as a JSON object in the template)
+const materials = JSON.parse(document.getElementById('materials-data').textContent);
+
+// Function to add material fields
+function addMaterialField() {
+    // Create a new material field
+    const materialField = document.createElement('div');
+    materialField.innerHTML = `
+        <div class="row g-3">
+            <div class="col-md-6">
+                <label for="material-name-${materialCount}" class="form-label">Material Name:</label>
+                <select id="material-name-${materialCount}" name="material_name[]" class="form-select" required onchange="updateUnitOfMeasure(${materialCount})">
+                    <option value="">Select Material</option>
+                    ${materials.map(material => `<option value="${material.Inventory_ID}" data-unit="${material.UnitOfMeasure}">${material.ItemName}</option>`).join('')}
+                </select>
+            </div>
+            <div class="col-md-6">
+                <label for="material-unit-of-measure-${materialCount}" class="form-label">Unit of Measure:</label>
+                <input type="text" id="material-unit-of-measure-${materialCount}" name="material_unit_of_measure[]" class="form-control" required readonly>
+            </div>
+            <div class="col-md-6">
+                <label for="material-min-order-qty-${materialCount}" class="form-label">Minimum Order Quantity:</label>
+                <input type="number" id="material-min-order-qty-${materialCount}" name="material_min_order_qty[]" class="form-control" required>
+            </div>
+        </div>
+    `;
+
+    // Append the material field to the container
+    materialFieldsContainer.appendChild(materialField);
+
+    // Show the materials heading if it's hidden
+    const materialsHeading = document.getElementById('materials-heading');
+    if (materialsHeading.style.display === 'none') {
+        materialsHeading.style.display = 'block';
     }
 
-    // Create a new div for the product fields
-    const newProductDiv = document.createElement('div');
-    newProductDiv.classList.add('row', 'g-3', 'mt-3'); // Add classes for styling
-
-    // Raw Materials
-    newProductDiv.innerHTML += `
-        <div class="col-md-6">
-            <label for="raw-materials" class="form-label">Raw Materials:</label>
-            <select id="raw-materials" name="raw-materials" class="form-select" required>
-                <option value="material1">Material 1</option>
-                <option value="material2">Material 2</option>
-                <option value="material3">Material 3</option>
-            </select>
-        </div>
-    `;
-
-    // Products
-    newProductDiv.innerHTML += `
-        <div class="col-md-6">
-            <label for="products" class="form-label">Products:</label>
-            <select id="products" name="products" class="form-select" required>
-                <option value="egg">Egg</option>
-                <option value="chicken">Chicken</option>
-                <option value="pork">Pork</option>
-            </select>
-        </div>
-    `;
-
-    // Minimum Order Quantity
-    newProductDiv.innerHTML += `
-        <div class="col-md-6">
-            <label for="min-order-quantity" class="form-label">Minimum Order Quantity:</label>
-            <input type="number" id="min-order-quantity" name="min-order-quantity" class="form-control" required>
-        </div>
-    `;
-
-    // Unit of Measure
-    newProductDiv.innerHTML += `
-        <div class="col-md-6">
-            <label for="unit-of-measure" class="form-label">Unit of Measure:</label>
-            <select id="unit-of-measure" name="unit-of-measure" class="form-select" required>
-                <option value="g">Gram (g)</option>
-                <option value="kg">Kilogram (kg)</option>
-                <option value="l">Liter (l)</option>
-                <option value="kl">Kiloliter (kl)</option>
-                <option value="m">Meter (m)</option>
-                <option value="cm">Centimeter (cm)</option>
-                <option value="mm">Millimeter (mm)</option>
-            </select>
-        </div>
-    `;
-
-    // Append the new product fields to the container
-    productFieldsContainer.appendChild(newProductDiv);
+    // Increment material count
+    materialCount++;
 }
+
+// Function to update the Unit of Measure based on selected Material
+function updateUnitOfMeasure(index) {
+    const materialSelect = document.getElementById(`material-name-${index}`);
+    const selectedOption = materialSelect.options[materialSelect.selectedIndex];
+    const unitOfMeasureInput = document.getElementById(`material-unit-of-measure-${index}`);
+
+    // Set the unit of measure based on the selected material
+    if (selectedOption.value) {
+        unitOfMeasureInput.value = selectedOption.getAttribute('data-unit');
+    } else {
+        unitOfMeasureInput.value = '';
+    }
+}
+
+// Add event listener to the add material button
+addMaterialButton.addEventListener('click', addMaterialField);

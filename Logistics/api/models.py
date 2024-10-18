@@ -23,11 +23,11 @@ class Supplier(models.Model):
     SupplierName = models.CharField(max_length=255)
     SupplierDesc = models.TextField(blank=True, null=True)
     SupplierNumber = models.CharField(max_length=15, blank=True, null=True)
-    Order_ID = models.ForeignKey('Order', on_delete=models.SET_NULL, null=True, blank=True)
     Status = models.CharField(max_length=50, default='Active')
     MinOrderQty = models.IntegerField(default=0)
     PaymentTerms = models.CharField(max_length=100, blank=True, null=True)
     DeliveryTerms = models.CharField(max_length=100, blank=True, null=True)
+    Materials = models.ManyToManyField('Inventory', blank=True)
 
     def __str__(self):
         return self.SupplierName
