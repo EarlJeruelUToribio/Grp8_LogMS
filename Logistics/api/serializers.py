@@ -9,7 +9,8 @@ class InventorySerializer(serializers.ModelSerializer):
 class SupplierSerializer(serializers.ModelSerializer):
     class Meta:
         model = Supplier
-        fields = '__all__'
+        fields = ['MinOrderQty', ...] 
+
 
 class OrderSerializer(serializers.ModelSerializer):
     class Meta:
@@ -30,3 +31,4 @@ class IngredientSerializer(serializers.ModelSerializer):
     class Meta:
         model = Ingredient
         fields = '__all__'
+

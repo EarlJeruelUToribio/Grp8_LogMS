@@ -58,6 +58,66 @@
     cursor: pointer;
 }
 
-.form-container button:hover {
-    background-color: #37063c;
+/* Container for radio buttons */
+.form-container-radio {
+    display: flex;
+    justify-content: space-between; /* Pushes perishable to the left and non-perishable to the right */
+    align-items: center;
+    padding: 12px;
+    background-color: #f8f8f8;
+    border: 2px solid black;
+    border-radius: 6px;
+    margin-bottom: 16px;
+    width: 100%;
+}
+
+/* Ensure the radio buttons are aligned properly */
+.form-check {
+    display: flex;
+    align-items: center;
+}
+
+/* Styling for radio input */
+.form-check-input {
+    width: 18px;
+    height: 18px;
+    margin-right: 10px;
+    border-radius: 50%;  /* Ensure circular shape */
+    border: 2px solid black; /* Ensure a clear border when not selected */
+}
+
+/* When the radio button is checked, make it purple */
+.form-check-input:checked {
+    background-color: #7b4e83; /* Purple background color when checked */
+    border-color: #000000; /* Purple border when checked */
+}
+
+
+/* Styling for the radio label */
+.form-check-label {
+    font-weight: 500;
+    color: var(--dark, #333);
+    font-size: 16px;
+}
+
+/* Remove hover effect */
+.form-check-input:hover {
+    background-color: transparent; /* No hover effect */
+    border-color: black; /* Keep original border color */
+}
+
+/* Styling for Days before Expiry input */
+#expiry-days {
+    padding: 12px;
+    background-color: #f8f8f8; 
+    border: 2px solid black;
+    border-radius: 6px;
+    color: black; /* Text color black */
+    width: 100%; 
+}
+
+/* Disabled input styling */
+#expiry-days:disabled {
+    background-color: #e9ecef; /* Lighter background when disabled */
+    cursor: not-allowed; /* Show 'not-allowed' cursor when disabled */
 }
