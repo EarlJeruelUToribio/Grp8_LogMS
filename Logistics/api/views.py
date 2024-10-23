@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404  # Add get_object_or_404 here
 from django.views.decorators.http import require_http_methods
 from django.contrib import messages
 from rest_framework import generics
@@ -119,6 +120,7 @@ def AddProduct_view(request):
         material_quantities = request.POST.getlist('material_quantity[]')
 
         try:
+            # Create and save the product
             product = Product(
                 ProductName=product_name,
                 ProductDescription=product_description,
@@ -134,16 +136,20 @@ def AddProduct_view(request):
                 material_unit_of_measure = material_units_of_measure[i]
                 material_quantity = material_quantities[i]
 
+                # Get the material instance
                 material = get_object_or_404(Inventory, pk=material_id)
-                product.Ingredient_ID.add(material)
-
-                # Save material details
-                material_detail = Ingredient(
-                    Material=material,
-                    UnitOfMeasure=material_unit_of_measure,
-                    Quantity=material_quantity
+                
+                # Create Ingredient instance and save it
+                ingredient = Ingredient(
+                    IngredientName=material.ItemName,  # Assuming you want to store the name
+                    ItemUnitMeasure=material_unit_of_measure,
+                    MeasureCount=material_quantity,
+                    Inventory_ID=material  # Set the foreign key
                 )
-                material_detail.save()
+                ingredient.save()
+
+                # Add the ingredient to the product's ingredients
+                product.Ingredients.add(ingredient)  # Use the ManyToManyField relationship
 
             messages.success(request, 'Product added successfully!')
             return redirect('ManageProduct')  # Redirect to ManageProduct after submission
@@ -156,7 +162,21 @@ def AddProduct_view(request):
     return render(request, 'AddProduct.html', {'materials': materials_list})
 
 def ManageProduct_view(request):
-    return render(request, 'ManageProducts.html')
+    products = Product.objects.all()  # Fetch all products
+    return render(request, 'ManageProducts.html', {'products': products})
+
+def EditProduct_view(request, pk):
+    product = get_object_or_404(Product, pk=pk)
+    if request.method == 'POST':
+        product.ProductName = request.POST.get('product-name')
+        product.ProductDescription = request.POST.get('product-description')
+        product.ProductCategory = request.POST.get('product-category')
+        product.ProductImage = request.FILES.get('product-image') if request.FILES.get('product-image') else product.ProductImage
+        product.PurchasePrice = request.POST.get('product-price')
+        product.save()
+        messages.success(request, 'Product updated successfully!')
+        return redirect('ManageProduct')
+    return render(request, 'EditProduct.html', {'product': product})
 
 def KitchenDisplay_view(request):
     return render(request, 'KitchenDisplay.html')

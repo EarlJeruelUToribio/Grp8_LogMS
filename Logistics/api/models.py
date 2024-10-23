@@ -60,8 +60,11 @@ class Product(models.Model):
     ProductCategory = models.CharField(max_length=100)
     ProductImage = models.ImageField(upload_to='product_images/')
     PurchasePrice = models.DecimalField(max_digits=10, decimal_places=2)
-    Ingredient_ID = models.ForeignKey('Ingredient', on_delete=models.CASCADE)
+    Ingredients = models.ManyToManyField('Ingredient', blank=True)  # Changed to ManyToManyField
     Created_At = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.ProductName
 
 # Ingredient Model
 class Ingredient(models.Model):

@@ -23,3 +23,15 @@ document.addEventListener("DOMContentLoaded", () => {
     // Add event listener to the search bar to filter as the user types
     searchBar.addEventListener("input", filterProducts);
 });
+
+// Function to toggle availability
+function toggleAvailability(button) {
+    const currentStatus = button.getAttribute('data-available');
+    const newStatus = currentStatus === 'Active' ? 'Inactive' : 'Active';
+
+    // Update the button text and data attribute
+    button.textContent = newStatus;
+    button.setAttribute('data-available', newStatus);
+
+    // Here you can also add an AJAX call to update the product's status in the database if needed
+}
