@@ -107,7 +107,53 @@ def update_material(request, pk):
     return redirect('ManageMaterial')
 
 def AddProduct_view(request):
-    return render(request, 'AddProduct.html')
+    if request.method == 'POST':
+        # Handle form submission
+        product_name = request.POST.get('product-name')
+        product_description = request.POST.get('product-description')
+        product_category = request.POST.get('product-category')
+        product_image = request.FILES.get('product-image')
+        product_price = request.POST.get('product-price')
+        material_ids = request.POST.getlist('material_name[]')
+        material_units_of_measure = request.POST.getlist('material_unit_of_measure[]')
+        material_quantities = request.POST.getlist('material_quantity[]')
+
+        try:
+            product = Product(
+                ProductName=product_name,
+                ProductDescription=product_description,
+                ProductCategory=product_category,
+                ProductImage=product_image,
+                PurchasePrice=product_price
+            )
+            product.save()
+
+            # Associate materials with the product
+            for i in range(len(material_ids)):
+                material_id = material_ids[i]
+                material_unit_of_measure = material_units_of_measure[i]
+                material_quantity = material_quantities[i]
+
+                material = get_object_or_404(Inventory, pk=material_id)
+                product.Ingredient_ID.add(material)
+
+                # Save material details
+                material_detail = Ingredient(
+                    Material=material,
+                    UnitOfMeasure=material_unit_of_measure,
+                    Quantity=material_quantity
+                )
+                material_detail.save()
+
+            messages.success(request, 'Product added successfully!')
+            return redirect('ManageProduct')  # Redirect to ManageProduct after submission
+        except Exception as e:
+            messages.error(request, f'Error adding product: {str(e)}')
+
+    # Fetch all materials (Inventory items) for the dropdown
+    materials = Inventory.objects.all()
+    materials_list = list(materials.values('Inventory_ID', 'ItemName', 'UnitOfMeasure'))  # Convert QuerySet to list of dicts
+    return render(request, 'AddProduct.html', {'materials': materials_list})
 
 def ManageProduct_view(request):
     return render(request, 'ManageProducts.html')
