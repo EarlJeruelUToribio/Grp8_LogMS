@@ -1,0 +1,43 @@
+{% extends 'Base.html' %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/ManageMaterials.css' %}">
+{% endblock %}
+
+{% block content %}
+<section id="supplier-table" class="container table-container mt-5">
+    <h2 class="text-center">SUPPLIER MANAGEMENT</h2>
+    
+    <table class="table table-striped supplier-table">
+        <thead>
+            <tr>
+                <th>Supplier Name</th>
+                <th>Supplier Address</th>
+                <th>Supplier Email</th>
+                <th>Payment Terms</th>
+                <th>Status</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for supplier in suppliers %}
+            <tr>
+                <td>{{ supplier.SupplierName }}</td>
+                <td>{{ supplier.SupplierDesc }}</td>
+                <td>{{ supplier.SupplierNumber }}</td>
+                <td>{{ supplier.PaymentTerms }}</td>
+                <td>{{ supplier.Status }}</td>
+                <td>
+                    <a href="{% url 'edit_supplier' supplier.Supplier_ID %}" class="btn btn-primary">Edit</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</section>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'js/ManageSupplier.js' %}"></script>
+{% endblock %}

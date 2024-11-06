@@ -2,48 +2,58 @@
 {% load static %}
 
 {% block extra_css %}
-    <link rel="stylesheet" href="{% static 'css/ManageProducts.css' %}">
+    <link rel="stylesheet" href="{% static 'css/ManageProduct.css' %}">
 {% endblock %}
 
 {% block content %}
-        <section class="products-section">
-            <h2 class="text-center mb-4">PRODUCTS MANAGEMENT</h2>
-            <div class="product-header">
-                <input type="text" id="search-bar" placeholder="Search Product" class="search-bar">
-            </div>
-            <table class="table table-striped product-table">
-                <thead>
-                    <tr>
-                        <th>ProductID</th> 
-                        <th>Name</th>
-                        <th>Category</th>
-                        <th>Description</th>
-                        <th>Unit Price ₱</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>00283</td>
-                        <td>Chicken</td>
-                        <td>Agahan</td>
-                        <td>Fried Chicken</td>
-                        <td>₱200.00</td>
-                    </tr>
-                    <tr>
-                        <td>00221</td>
-                        <td>Pork</td>
-                        <td>Inihaw</td>
-                        <td>Pork Inihaw</td>
-                        <td>₱300.00</td>
-                    </tr>
-                </tbody>
-            </table>
-        </section>
+<section class="products-section">
+    <h2 class="text-center mb-4">PRODUCTS MANAGEMENT</h2>
+    <div class="product-header">
+        <input type="text" id="search-bar" placeholder="Search Product" class="search-bar">
     </div>
+    <table class="table table-striped product-table">
+        <thead>
+            <tr>
+                <th>Product ID</th>
+                <th>Name</th>
+                <th>Category</th>
+                <th>Description</th>
+                <th>Unit Price ₱</th>
+                <th>Image</th>
+                <th>Availability</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for product in products %}
+            <tr data-product-id="{{ product.Product_ID }}">
+                <td>{{ product.Product_ID }}</td>
+                <td>{{ product.ProductName }}</td>
+                <td>{{ product.ProductCategory }}</td>
+                <td>{{ product.ProductDescription }}</td>
+                <td>₱{{ product.PurchasePrice }}</td>
+                <td>
+                    {% if product.ProductImage %}
+                        <img src="{{ product.ProductImage.url }}" alt="{{ product.ProductName }}" style="width: 50px; height: 50px;">
+                    {% else %}
+                        No Image
+                    {% endif %}
+                </td>
+                <td>
+                    <button class="btn btn-toggle-availability" data-available="{{ product.Status }}" onclick="toggleAvailability(this)">
+                        {{ product.Status }}
+                    </button>
+                </td>
+                <td>
+                    <a href="{% url 'EditProduct' product.Product_ID %}" class="btn btn-primary">Edit</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</section>
+{% endblock %}
 
-    {% endblock %}
-
-
-    {% block extra_js %}
-    <script src="{% static 'js/ManageProducts.js' %}"></script>
-    {% endblock %}
+{% block extra_js %}
+<script src="{% static 'js/ManageProducts.js' %}"></script>
+{% endblock %}

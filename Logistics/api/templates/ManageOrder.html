@@ -6,18 +6,32 @@
 {% endblock %}
 
 {% block content %}
-
-<!-- Manage Order Section -->
 <section id="manage-order-section">
     <div class="container mt-5">
-        <!-- Order Status Boxes -->
         <div class="order-status-container">
-            <div class="order-status-box">Order Placed: 10</div> <!-- Example value for order_placed_count -->
-            <div class="order-status-box">Order Shipped: 5</div> <!-- Example value for order_shipped_count -->
-            <div class="order-status-box">Order Completed: 7</div> <!-- Example value for order_completed_count -->
+            {% with placed=0 shipped=0 completed=0 cancelled=0 %}
+                {% for order in orders %}
+                    {% if order.OrderStatus == "Placed" %}
+                        {% with placed=placed|add:1 %}
+                        {% endwith %}
+                    {% elif order.OrderStatus == "Shipped" %}
+                        {% with shipped=shipped|add:1 %}
+                        {% endwith %}
+                    {% elif order.OrderStatus == "Completed" %}
+                        {% with completed=completed|add:1 %}
+                        {% endwith %}
+                    {% elif order.OrderStatus == "Cancelled" %}
+                        {% with cancelled=cancelled|add:1 %}
+                        {% endwith %}
+                    {% endif %}
+                {% endfor %}
+                <div class="order-status-box">Order Placed: {{ placed }}</div>
+                <div class="order-status-box">Order Shipped: {{ shipped }}</div>
+                <div class="order-status-box">Order Completed: {{ completed }}</div>
+                <div class="order-status-box">Order Cancelled: {{ cancelled }}</div>
+            {% endwith %}
         </div>
 
-        <!-- Orders Section -->
         <section class="orders-section">
             <h2 class="text-center mb-4">ORDERS MANAGEMENT</h2>
             <div class="orders-header">
@@ -28,67 +42,40 @@
                 <thead>
                     <tr>
                         <th>Order ID</th>
-                        <th>Items</th>
+                        <th>Item</th>
                         <th>Quantity</th>
                         <th>Supplier Name</th>
                         <th>Status</th>
+                        <th>Action</th>
                     </tr>
                 </thead>
-                <tbody>
-                    <!-- Example orders -->
+                <tbody id="orders-table-body">
+                    {% for order in orders %}
                     <tr>
-                        <td>1</td>
-                        <td>Item A, Item B</td>
-                        <td>3</td>
-                        <td>Supplier 1</td>
-                        <td>Placed</td>
+                        <td>{{ order.Order_ID }}</td>
+                        <td>{{ order.Items.ItemName }}</td>  <!-- Display item name -->
+                        <td>{{ order.Quantity }}</td>
+                        <td>{{ order.Supplier.SupplierName }}</td>  <!-- Display supplier name -->
+                        <td>{{ order.OrderStatus }}</td>  <!-- Display status -->
+                        <td>
+                            <form method="POST" action="{% url 'ManageOrder' %}">
+                                {% csrf_token %}
+                                <input type="hidden" name="order_id" value="{{ order.Order_ID }}">
+                                <input type="hidden" name="new_status" value="{% if order.OrderStatus == 'Placed' %}Shipped{% elif order.OrderStatus == 'Shipped' %}Completed{% else %}Placed{% endif %}">
+                                <button type="submit" class="btn btn-primary">Change Status</button>
+                            </form>
+                        </td>
                     </tr>
-                    <tr>
-                        <td>2</td>
-                        <td>Item C</td>
-                        <td>1</td>
-                        <td>Supplier 2</td>
-                        <td>Shipped</td>
-                    </tr>
-                    <tr>
-                        <td>3</td>
-                        <td>Item D, Item E</td>
-                        <td>4</td>
-                        <td>Supplier 3</td>
-                        <td>Completed</td>
-                    </tr>
-                    <tr>
-                        <td>3</td>
-                        <td>Item D, Item E</td>
-                        <td>4</td>
-                        <td>Supplier 3</td>
-                        <td>Placed</td>
-                    </tr>
-                    <!-- No orders found example -->
+                    {% endfor %}
                 </tbody>
             </table>
         </section>
-
-        <div class="order-container">
-            <div id="order-details-dropdown" class="dropdown-btn">Order Details &#9662;</div>
-            <div class="order-content">
-                <!-- Other order content here -->
-            </div>
-            <div class="expanded-order-details" style="display: none;">
-                <p>Order ID: <span id="order-id-summary"></span></p>
-                <p>Item: <span id="order-item-summary"></span></p>
-                <p>Quantity: <span id="order-quantity-summary"></span></p>
-                <p>Supplier Name: <span id="supplier-name-summary"></span></p>
-                <p>Status: <span id="order-status-summary"></span></p>
-            </div>
-        </div>
-        
+    </div>
 </section>
-        
 
+<div id="success-popup" class="popup" style="display:none;">
+    <p>Order submitted successfully!</p>
+    <button onclick="document.getElementById('success-popup').style.display='none'">Close</button>
+</div>
 
-{% endblock %}
-
-{% block extra_js %}
-    <script src="{% static 'js/ManageOrders.js' %}"></script>
 {% endblock %}

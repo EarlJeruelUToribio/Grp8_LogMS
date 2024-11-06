@@ -1,8 +1,15 @@
-const editButton = document.getElementById('edit-button');  // Get the edit button
-const manualAdjustForm = document.getElementById('manual-adjust-form');  // Get the manual adjust form
+// static/js/ManageMaterials.js
 
-// Toggle visibility of the Manual Adjust Reorder Levels form
-editButton.addEventListener('click', function() {
-    // Toggle the "hidden" class on the manual adjust form
-    manualAdjustForm.classList.toggle('hidden');
+document.addEventListener('DOMContentLoaded', function() {
+    // Add any JavaScript functionality for the ManageMaterials page here
+    console.log('ManageMaterials.js loaded');
+
+    // Example: Add event listeners to edit buttons
+    const editButtons = document.querySelectorAll('.btn-primary');
+    editButtons.forEach(button => {
+        button.addEventListener('click', function(event) {
+            const materialId = this.getAttribute('data-material-id');
+            console.log(`Edit button clicked for material ID: ${materialId}`);
+        });
+    });
 });
