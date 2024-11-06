@@ -3,15 +3,13 @@
 
 {% block extra_css %}
 <link rel="stylesheet" href="{% static 'css/ManageMaterials.css' %}">
-
 {% endblock %}
 
 {% block content %}
 
-    <!-- Add Material Table -->
+    <!-- Material Table -->
     <section id="material-table" class="container table-container mt-5">
         <h2 class="text-center">MATERIAL INVENTORY</h2>
-        <button id="edit-button" class="btn btn-primary mb-3 float-end">Edit</button>
         
         <table class="table table-striped product-table">
             <thead>
@@ -22,67 +20,29 @@
                     <th>Unit of Measure</th>
                     <th>Purchase Price</th>
                     <th>Reorder Level</th>
+                    <th>Actions</th>
                 </tr>
             </thead>
             <tbody>
-                <!-- Replace this static example with dynamic content as needed -->
+                {% for material in materials %}
                 <tr>
-                    <td>Material 1</td>
-                    <td>Description of Material 1</td>
-                    <td>Category 1</td>
-                    <td>Kg</td>
-                    <td>$10</td>
-                    <td>5</td>
-                </tr>
-                <tr>
-                    <td>Material 2</td>
-                    <td>Description of Material 2</td>
-                    <td>Category 2</td>
-                    <td>Liter</td>
-                    <td>$20</td>
-                    <td>10</td>
-                </tr>
-                <!-- Example row when no materials are available -->
-            </tbody>
-        </table>
-    </section>
+                    <td>{{ material.ItemName }}</td>
+                    <td>{{ material.ItemDescription }}</td>
+                    <td>{{ material.ItemCategory }}</td>
+                    <td>{{ material.UnitOfMeasure }}</td>
+                    <td>{{ material.PurchasePrice }}</td>
+                    <td>{{ material.ReorderLevel }}</td>
+                    <td> <a href="{% url 'edit_material' material.Inventory_ID %}" class="btn btn-primary">Edit</a> </td>
+                    <td> <a href="{#}" class="btn btn-primary">Delete</a> </td>
 
-  <!-- Manual Adjust Reorder Levels Form -->
-<section id="manual-adjust-form" class="container form-container mt-5 hidden">
-    <h2 class="text-center">Manual Adjust Reorder Levels</h2>
-    <form action="path/to/your_form_handler" method="POST" id="adjustForm">
-        <input type="hidden" name="csrfmiddlewaretoken" value="your-csrf-token-here"> <!-- Replace with actual token -->
-
-        <div class="mb-3">
-            <label for="select-item" class="form-label">Select Item:</label>
-            <select id="select-item" class="form-select" name="select-item" required>
-                <!-- Replace with dynamic options as needed -->
-                <option value="1">Material 1</option>
-                <option value="2">Material 2</option>
-            </select>
-        </div>
-
-        <div class="mb-3">
-            <label for="current-reorder-level" class="form-label">Current Reorder Level:</label>
-            <input type="text" id="current-reorder-level" class="form-control" name="current-reorder-level" readonly>
-        </div>
-
-        <div class="mb-3">
-            <label for="adjust-quantity" class="form-label">Adjust Reorder Level By:</label>
-            <input type="number" id="adjust-quantity" class="form-control" name="adjust-quantity" required>
-        </div>
-
-        <div class="mb-3">
-            <label for="reason-for-adjustment" class="form-label">Reason for Adjustment:</label>
-            <textarea id="reason-for-adjustment" class="form-control" name="reason-for-adjustment" rows="4"></textarea>
-        </div>
-
-        <button type="submit" class="btn btn-primary">Submit Adjustment</button>
-    </form>
-</section>
-
-{% endblock %}
-
-{% block extra_js %}
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </section>
+    
+    {% endblock %}
+    
+    {% block extra_js %}
     <script src="{% static 'js/ManageMaterials.js' %}"></script>
-{% endblock %}
+    {% endblock %}

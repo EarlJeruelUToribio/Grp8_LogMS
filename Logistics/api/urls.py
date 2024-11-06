@@ -6,20 +6,26 @@ urlpatterns = [
     path('home', views.home_view, name='home-view'),
 
     path('', views.Sidebar_view, name='home'),
-    path('AddMaterial/', views.AddMaterial_view, name='AddMaterial'),
     path('AddProduct/', views.AddProduct_view, name='AddProduct'),
-    path('ManageMaterial/', views.ManageMaterial_view, name='ManageMaterial'),
+
     path('ManageOrder/', views.ManageOrder_view, name='ManageOrder'),
-    path('ManageProduct/', views.ManageProduct_view, name='ManageProducts'),
     path('PlaceOrder/', views.PlaceOrder_view, name='PlacedOrder'),
-    path('KitchenDisplay/', views.KitchenDisplay_view, name='KitchenDisplay'),
-    path('AddSupplier/', views.AddSupplier_view, name='AddSupplier'),
-    path('ManageSupplier/', views.ManageSupplier_view, name='ManageSupplier'),
-    path('ExpiryDates/', views.ExpiryDates_view, name='ExpiryDates'),
-
-
-
+    path('PlaceOrder/', views.PlaceOrder_view, name='PlaceOrder'),
     
+    path('ManageProduct/', views.ManageProduct_view, name='ManageProducts'),
+    path('edit_product/<int:pk>/', views.EditProduct_view, name='EditProduct'),
+
+    path('KitchenDisplay/', views.KitchenDisplay_view, name='KitchenDisplay'),
+    path('add-supplier/', views.AddSupplier_view, name='AddSupplier'),
+    path('manage-supplier/', views.ManageSupplier_view, name='ManageSupplier'),
+    path('edit-supplier/<int:pk>/', views.edit_supplier, name='edit_supplier'),
+    path('ExpiryDates/', views.ExpiryDates_view, name='ExpiryDates'),
+    
+
+    path('add-material/', views.AddMaterial_view, name='AddMaterial'),
+    path('manage-material/', views.ManageMaterial_view, name='ManageMaterial'),
+    path('edit-material/<int:pk>/', views.edit_material, name='edit_material'),
+
 
     path('inventory/', views.InventoryListCreateView.as_view(), name='inventory-list'),
     path('inventory/<int:pk>/', views.InventoryDetailView.as_view(), name='inventory-detail'),
@@ -38,4 +44,6 @@ urlpatterns = [
 
     path('ingredients/', views.IngredientListCreateView.as_view(), name='ingredient-list'),
     path('ingredients/<int:pk>/', views.IngredientDetailView.as_view(), name='ingredient-detail'),
+    path('manage-waste/', views.ManageWaste_view, name='ManageWaste'),
+
 ]
