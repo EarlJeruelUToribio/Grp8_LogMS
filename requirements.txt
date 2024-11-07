@@ -1,5 +1,5 @@
 asgiref
-Django==4.4.0
+Django==4.2.16 
 django-cors-headers
 djangorestframework
 djangorestframework-simplejwt
