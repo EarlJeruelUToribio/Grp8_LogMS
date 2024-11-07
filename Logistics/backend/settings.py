@@ -14,6 +14,7 @@ from pathlib import Path
 from datetime import timedelta
 from dotenv import load_dotenv
 import os
+import dj_database_url
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -95,8 +96,8 @@ DATABASES = {
     }
 }
 
+DATABASES[""] = dj_database_url.parse("postgresql://logistic_django_render_user:ckyfkluUiz86Q3zOaGwKGHg8WKeID3S0@dpg-csm83mbtq21c738dq5cg-a.oregon-postgres.render.com/logistic_django_render")
 
-# Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [
