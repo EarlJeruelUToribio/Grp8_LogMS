@@ -9,3 +9,4 @@ sqlparse
 psycopg2-binary
 python-dotenv
 pillow
+gunicorn>=20.1.0
