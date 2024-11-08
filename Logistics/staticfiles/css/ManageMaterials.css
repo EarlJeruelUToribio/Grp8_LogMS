@@ -1,0 +1,85 @@
+/* Table Container */
+.table-container {
+    max-width: 950px;
+    margin: 20px auto;
+    padding: 20px;
+    background: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border: 1px solid #ffffff;
+    margin-left: 300px;
+}
+
+.table-container h2 {
+    margin-bottom: 20px;
+    font-size: 28px;
+    color: #7b4e83; /* Purple heading */
+    font-weight: 700;
+}
+
+/* Table Styles */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #7b4e83; /* Purple table background */
+    color: white; /* White text for contrast */
+}
+
+/* Targeting table headers specifically */
+table th {
+    background-color: #7b4e83 !important; /* Purple background */
+    color: white !important; /* White text */
+    padding: 15px;
+    text-align: center;
+    font-weight: bold; /* Make it bold */
+}
+
+/* Alternating Row Colors */
+table tr:nth-child(even) {
+    background-color: #9b72a1; /* Lighter purple for alternating rows */
+}
+
+#edit-button {
+    background-color: #7b4e83;
+    border: none;
+    color: white;
+    border-radius: 6px;
+    width: 100px;
+}
+
+#edit-button:hover {
+    background-color: #5e3b62;
+}
+
+/* Manual Adjust Form */
+.form-container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    background: #f8f8f8;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-left: 460px;
+}
+
+.form-container h2 {
+    margin-bottom: 20px;
+    font-size: 28px;
+    color: #7b4e83;
+    text-align: center;
+}
+
+#manual-adjust-form button {
+    background-color: #7b4e83;
+    border: none;
+    color: white;
+    border-radius: 6px;
+}
+
+#manual-adjust-form button:hover {
+    background-color: #5e3b62;
+}
+
+.hidden {
+    display: none;
+}
