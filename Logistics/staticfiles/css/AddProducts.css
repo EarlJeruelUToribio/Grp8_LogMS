@@ -1,0 +1,85 @@
+/* CONTENT MAIN */
+#content main {
+    width: 100%;
+    padding: 36px 24px;
+    font-family: var(--poppins);
+    max-height: calc(100vh - 56px);
+    overflow-y: auto;
+}
+
+/* FORM CONTAINER */
+.form-container {
+    max-width: 1000px; 
+    padding: 20px;
+    margin: 0 auto; /* Centers the form */
+    background: white; 
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border: 1px solid var(--dark-grey, #d3d3d3);
+    background-image: linear-gradient(to bottom right, #fff, #f8f8f8);
+    margin-left: 280px; /* Adjust left margin as needed */
+}
+
+/* FORM HEADER */
+.form-container h2 {
+    margin-bottom: 20px;
+    font-size: 28px;
+    color: #7b4e83; /* Use purple color */
+    text-align: center;
+    font-weight: 900;
+}
+
+/* LABEL STYLES */
+.form-container label {
+    display: block; /* Ensures labels are on their own line */
+    font-weight: 500;
+    color: #333; /* Dark text color */
+    margin-bottom: 5px; /* Space between label and input */
+}
+
+/* FORM ELEMENTS */
+.form-container input,
+.form-container textarea,
+.form-container select {
+    width: calc(100% - 24px); /* Full width minus padding */
+    padding: 12px;
+    margin-bottom: 16px;
+    border: 2px solid #d3d3d3; /* Lighter border color */
+    border-radius: 6px;
+    background: #f8f8f8; 
+    color: black; /* Text color */
+    resize: none; /* Prevents resizing for textareas */
+    border: 2px solid black; /* Set border color to black */
+
+}
+
+/* Custom dropdown arrow for select */
+.form-container select {
+    -webkit-appearance: none; /* Removes default dropdown arrow in Safari/Chrome */
+    -moz-appearance: none;    /* Removes default dropdown arrow in Firefox */
+    appearance: none;         /* Removes default dropdown arrow */
+    background-image: url('data:image/svg+xml;charset=US-ASCII,<svg xmlns="http://www.w3.org/2000/svg" width="10" height="6" viewBox="0 0 10 6"><path fill="black" d="M0 0l5 5 5-5z"/></svg>'); /* Custom arrow icon */
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 10px;
+    padding-right: 40px; /* Ensures space for the arrow */
+}
+
+/* BUTTON STYLES */
+.form-container button {
+    padding: 12px 20px;
+    background-color: #7b4e83; /* Button color */
+    color: white; /* Text color */
+    border: none;
+    border-radius: 6px;
+    font-size: 16px;
+    cursor: pointer;
+    display: block; /* Centers button */
+    width: 100%; /* Full width button */
+    margin-top: 10px; /* Space above button */
+}
+
+/* BUTTON HOVER EFFECT */
+.form-container button:hover {
+    background-color: #37063c; /* Darkened color on hover */
+}

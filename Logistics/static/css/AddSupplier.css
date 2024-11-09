@@ -1,0 +1,63 @@
+.form-container {
+    max-width: 1000px; 
+    padding: 20px;
+    margin: 0 auto;
+    background: white; 
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border: 1px solid var(--dark-grey, #d3d3d3);
+    background-image: linear-gradient(to bottom right, #fff, #f8f8f8);
+    margin-left: 280px; /* Adjust the left margin as needed */
+}
+
+.form-container h2 {
+    margin-bottom: 20px;
+    font-size: 28px;
+    color: var(--blue, #7b4e83); 
+    text-align: center;
+    font-weight: 900;
+}
+
+.form-container label {
+    font-weight: 500;
+    color: var(--dark, #333);
+}
+
+.form-container input,
+.form-container textarea,
+.form-container select {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 16px;
+    border: 2px solid black; /* Set border color to black */
+    border-radius: 6px;
+    background: #f8f8f8; 
+    color: black; /* Set text color to black */
+    resize: none; /* Prevents resizing */
+}
+
+/* Custom dropdown arrow */
+.form-container select {
+    -webkit-appearance: none; /* Removes default dropdown arrow in Safari/Chrome */
+    -moz-appearance: none;    /* Removes default dropdown arrow in Firefox */
+    appearance: none;         /* Removes default dropdown arrow */
+    background-image: url('data:image/svg+xml;charset=US-ASCII,<svg xmlns="http://www.w3.org/2000/svg" width="10" height="6" viewBox="0 0 10 6"><path fill="black" d="M0 0l5 5 5-5z"/></svg>'); /* Custom arrow icon */
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 10px;
+    padding-right: 40px; /* Ensures space for the arrow */
+}
+
+.form-container button {
+    padding: 12px 20px;
+    background-color: #7b4e83;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.form-container button:hover {
+    background-color: #37063c;
+}
