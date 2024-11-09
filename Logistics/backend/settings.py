@@ -134,10 +134,7 @@ USE_TZ = True
 
 # The directories where Django will search for static files
 STATIC_URL = '/static/'
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'api', 'static'),  # Assuming your static files are in the 'static' directory
-    ]
-STATIC_ROOT = BASE_DIR / 'staticfiles'
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 
 # Default primary key field type
