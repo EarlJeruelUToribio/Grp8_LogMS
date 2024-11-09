@@ -29,7 +29,7 @@ SECRET_KEY = 'django-insecure-ss7f)bgp8f=91nqt6b2m&z*3tx*kq%p4$b+w1%t6kbu0w38hl!
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ["*"]
+ALLOWED_HOSTS = ["*","grp8-logms.onrender.com"]
 
 
 # Application definition
@@ -131,8 +131,6 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 # URL to use when referring to static files (CSS, JavaScript, Images)
-STATIC_URL = '/static/'
-
 
 # The directories where Django will search for static files
 STATIC_URL = '/static/'
