@@ -20,8 +20,6 @@ function toggleVisibility(field_id) {
     }
 }
 
-
-
 function showPasswordSection() {
     var securityQuestions = document.getElementById('security-questions');
     var passwordSection = document.getElementById('password-section');
@@ -34,11 +32,33 @@ function showPasswordSection() {
 }
 
 function togglePassword() {
-    var passwordField = document.getElementById("password");
+    var passwordField = document.getElementById("form2Example22");
     if (passwordField) {
         var type = passwordField.getAttribute("type") === "password" ? "text" : "password";
         passwordField.setAttribute("type", type);
     } else {
         console.error('Password field not found');
     }
+}
+
+function validateForm() {
+    const emailField = document.getElementById('form2Example11');
+    const passwordField = document.getElementById('form2Example22');
+
+    // Check if email is valid
+    if (!emailField.value) {
+        alert('Please enter your email.');
+        emailField.focus();
+        return false;
+    }
+
+    // Check if password is provided
+    if (!passwordField.value) {
+        alert('Please enter your password.');
+        passwordField.focus();
+        return false;
+    }
+
+    // If both fields are filled, return true to submit the form
+    return true;
 }
