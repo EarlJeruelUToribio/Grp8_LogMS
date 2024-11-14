@@ -30,9 +30,12 @@ def PlaceOrder_view(request):
         supplier_name = request.POST.get('supplier-name')
         status = request.POST.get('status')
 
+        # Retrieve the Inventory instance using the material_id
+        material_instance = get_object_or_404(Inventory, Inventory_ID=material_id)
+
         # Process the order (e.g., save it to the database)
         Order.objects.create(
-            Items=material_id,  # Adjust how you save the item if necessary
+            Items=material_instance,  # Use the actual Inventory instance
             Quantity=quantity,
             OrderStatus=status,
             Supplier_id=supplier_name  # Save the supplier ID
