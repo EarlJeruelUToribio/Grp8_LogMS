@@ -3,9 +3,10 @@ from . import views
 
 urlpatterns = [
     # Base Route
+    path('', views.login_view, name='login-view'),
     path('home', views.home_view, name='home-view'),
 
-    path('', views.Sidebar_view, name='home'),
+    path('dashboard', views.Sidebar_view, name='home'),
     path('AddProduct/', views.AddProduct_view, name='AddProduct'),
 
     path('ManageOrder/', views.ManageOrder_view, name='ManageOrder'),

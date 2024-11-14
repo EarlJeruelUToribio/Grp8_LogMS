@@ -13,6 +13,9 @@ from .serializers import (
     IngredientSerializer
 )
 
+def login_view(request):
+    return render(request, 'Login.html')
+
 def home_view(request):
     return render(request, 'index.html'),
 
