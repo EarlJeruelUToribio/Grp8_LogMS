@@ -1,5 +1,3 @@
-// static/js/AddMaterial.js
-
 document.addEventListener('DOMContentLoaded', function() {
     console.log('AddMaterial.js loaded');
 
@@ -11,10 +9,18 @@ document.addEventListener('DOMContentLoaded', function() {
         const unitOfMeasure = document.getElementById('unit-of-measure').value;
         const purchasePrice = document.getElementById('purchase-price').value;
         const reorderLevel = document.getElementById('reorder-level').value;
+        const perishable = document.querySelector('input[name="perishable"]:checked');
+        const daysBeforeExpiry = document.getElementById('days-before-expiry').value;
 
-        if (!itemName || !itemCategory || !unitOfMeasure || !purchasePrice || !reorderLevel) {
+        if (!itemName || !itemCategory || !unitOfMeasure || !purchasePrice || !reorderLevel || !perishable) {
             event.preventDefault();
             alert('Please fill in all required fields.');
+            return;
+        }
+
+        if (perishable.value === 'true' && (!daysBeforeExpiry || daysBeforeExpiry < 0)) {
+            event.preventDefault();
+            alert('Please enter a valid number of days before expiry for perishable items.');
         }
     });
 

@@ -79,6 +79,23 @@
             <input type="number" id="reorder-level" name="reorder-level" class="form-control" required>
         </div>
 
+        <!-- Perishable Option -->
+        <div class="col-md-6">
+            <label class="form-label">Type:</label>
+            <div>
+                <input type="radio" id="perishable" name="perishable" value="true" onclick="toggleDaysInput()" required>
+                <label for="perishable">Perishable</label>
+                <input type="radio" id="non-perishable" name="perishable" value="false" onclick="toggleDaysInput()" required>
+                <label for="non-perishable">Non-Perishable</label>
+            </div>
+        </div>
+
+        <!-- Days Before Expiry -->
+        <div class="col-md-6" id="days-before-expiry-container" style="display: none;">
+            <label for="days-before-expiry" class="form-label">Days Before Expiry:</label>
+            <input type="number" id="days-before-expiry" name="days-before-expiry" class="form-control" min="0">
+        </div>
+
         <!-- Submit Button -->
         <div class="col-12">
             <button type="submit" class="btn btn-primary w-100">Add Material</button>
@@ -90,4 +107,11 @@
 
 {% block extra_js %}
 <script src="{% static 'js/AddMaterial.js' %}"></script>
+<script>
+    function toggleDaysInput() {
+        const perishable = document.getElementById('perishable').checked;
+        const daysContainer = document.getElementById('days-before-expiry-container');
+        daysContainer.style.display = perishable ? 'block' : 'none';
+    }
+</script>
 {% endblock %}

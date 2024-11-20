@@ -2,6 +2,8 @@ from django.shortcuts import render, redirect
 from django.shortcuts import render, redirect, get_object_or_404  # Add get_object_or_404 here
 from django.views.decorators.http import require_http_methods
 from django.contrib import messages
+from django.utils import timezone
+from datetime import timedelta
 from rest_framework import generics
 from .models import Inventory, Supplier, Order, ProductOrders, Product, Ingredient
 from .serializers import (
@@ -48,7 +50,18 @@ def PlaceOrder_view(request):
         # Retrieve materials and suppliers from the database
         materials = Inventory.objects.all()
         suppliers = Supplier.objects.all()  # Fetch all suppliers
-        return render(request, 'PlacedOrder.html', {'materials': materials, 'suppliers': suppliers})
+
+        # Create a dictionary to map materials to their suppliers
+        material_suppliers = {}
+        for material in materials:
+            # Get suppliers associated with the current material
+            material_suppliers[material.Inventory_ID] = list(material.supplier_set.values('Supplier_ID', 'SupplierName'))
+
+        return render(request, 'PlacedOrder.html', {
+            'materials': materials,
+            'suppliers': suppliers,
+            'material_suppliers': material_suppliers,
+        })
     
 def ManageOrder_view(request):
     orders = Order.objects.select_related('Items', 'Supplier').all()  # Ensure related data is fetched
@@ -78,7 +91,10 @@ def AddMaterial_view(request):
                 ItemCategory=request.POST.get('item-category'),
                 UnitOfMeasure=request.POST.get('unit-of-measure'),
                 PurchasePrice=request.POST.get('purchase-price'),
-                ReorderLevel=request.POST.get('reorder-level')
+                ReorderLevel=request.POST.get('reorder-level'),
+                Perishable=request.POST.get('perishable') == 'true',
+                DaysBeforeExpiry=request.POST.get('days-before-expiry') if request.POST.get('perishable') == 'true' else None,
+                Current_Stock=0 
             )
             inventory.save()
             messages.success(request, 'Material added successfully!')
@@ -88,11 +104,31 @@ def AddMaterial_view(request):
     
     return render(request, 'AddMaterial.html')
 
+def increase_stock(material_id, amount):
+    material = get_object_or_404(Inventory, pk=material_id)
+    material.Current_Stock += amount
+    material.save()
+
+def decrease_stock(material_id, amount):
+    material = get_object_or_404(Inventory, pk=material_id)
+    if material.Current_Stock - amount >= 0:
+        material.Current_Stock -= amount
+        material.save()
+    else:
+        raise ValueError("Stock cannot go below zero")
+
 def ManageMaterial_view(request):
     materials = Inventory.objects.all()
-    print(f"Number of materials: {materials.count()}")  # Debug print
+    
+    # Calculate expiration date for each material
     for material in materials:
-        print(f"Material: {material.ItemName}")  # Debug print
+        if material.Perishable and material.DaysBeforeExpiry is not None:
+            # Calculate expiration date
+            expiration_date = material.Created_At + timedelta(days=material.DaysBeforeExpiry)
+            material.expiration_date = expiration_date
+        else:
+            material.expiration_date = None
+    
     return render(request, 'ManageMaterial.html', {'materials': materials})
 
 def edit_material(request, pk):
@@ -104,9 +140,12 @@ def edit_material(request, pk):
         material.UnitOfMeasure = request.POST.get('unit-of-measure')
         material.PurchasePrice = request.POST.get('purchase-price')
         material.ReorderLevel = request.POST.get('reorder-level')
+        material.Perishable = request.POST.get('perishable') == 'true'
+        material.DaysBeforeExpiry = request.POST.get('days-before-expiry') if request.POST.get('perishable') == 'true' else None
         material.save()
-        messages.success(request, 'Material updated successfully!')
-        return redirect('ManageMaterial')
+        messages.success(request, ' Material updated successfully!')
+        return redirect('ManageMaterials')
+    
     return render(request, 'EditMaterial.html', {'material': material})
 
 @require_http_methods(["POST"])

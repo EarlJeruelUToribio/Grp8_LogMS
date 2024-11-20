@@ -17,9 +17,11 @@
                     <th>Item Name</th>
                     <th>Description</th>
                     <th>Category</th>
-                    <th>Unit of Measure</th>
+                    <th>Unit of Measure</th> 
                     <th>Purchase Price</th>
+                    <th>Current Stock</th>
                     <th>Reorder Level</th>
+                    <th>Expiration Date</th> <!-- New column for Expiration Date -->
                     <th>Actions</th>
                 </tr>
             </thead>
@@ -31,16 +33,26 @@
                     <td>{{ material.ItemCategory }}</td>
                     <td>{{ material.UnitOfMeasure }}</td>
                     <td>{{ material.PurchasePrice }}</td>
+                    <td>{{ material.Current_Stock }}</td>
                     <td>{{ material.ReorderLevel }}</td>
-                    <td> <a href="{% url 'edit_material' material.Inventory_ID %}" class="btn btn-primary">Edit</a> </td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-        </section>
+                    <td>
+                        {% if material.expiration_date %}
+                            {{ material.expiration_date|date:"Y-m-d" }}
+                        {% else %}
+                            N/A
+                        {% endif %}
+                    </td>
+                    <td>
+                        <a href="{% url 'edit_material' material.Inventory_ID %}" class="btn btn-primary">Edit</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </section>
     
-    {% endblock %}
+{% endblock %}
     
-    {% block extra_js %}
-    <script src="{% static 'js/ManageMaterials.js' %}"></script>
-    {% endblock %}
+{% block extra_js %}
+<script src="{% static 'js/ManageMaterials.js' %}"></script>
+{% endblock %}
