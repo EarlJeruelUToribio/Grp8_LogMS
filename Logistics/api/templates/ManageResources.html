@@ -1,0 +1,61 @@
+{% extends 'Base.html' %}
+{% load static %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'css/ManageResources.css' %}">
+{% endblock %}
+
+{% block content %}
+<section class="resources-section">
+    <h2 class="text-center mb-4">RESOURCES MANAGEMENT</h2>
+    <div class="d-flex align-items-center justify-content-between mb-3">
+        <!-- Link to the Add Resources page -->
+        <a href="{% url 'AddResources' %}" id="add-resource-button" class="btn btn-primary">
+            Add New Resources
+        </a>
+        <input type="text" id="search-bar" placeholder="Search Resource" class="search-bar">
+    </div>
+
+    <table class="table table-striped resources-table">
+        <thead>
+            <tr>
+                <th>Item Name</th>
+                <th>Type</th>
+                <th>Quantity</th>
+                <th>Available</th>
+                <th>Quantity Use</th>
+                <th>Minimum Threshold</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Example rows (replace with backend data later) -->
+            <tr>
+                <td>Tables</td>
+                <td>Furniture</td>
+                <td>50</td>
+                <td>45</td>
+                <td>5</td>
+                <td>10</td>
+                <td>
+                </td>
+            </tr>
+            <tr>
+                <td>Spoons</td>
+                <td>Utensils</td>
+                <td>200</td>
+                <td>150</td>
+                <td>50</td>
+                <td>100</td>
+                <td>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'js/ManageResources.js' %}"></script>
+{% endblock %}

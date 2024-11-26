@@ -3,9 +3,10 @@ from . import views
 
 urlpatterns = [
     # Base Route
+    path('', views.login_view, name='login-view'),
     path('home', views.home_view, name='home-view'),
 
-    path('', views.Sidebar_view, name='home'),
+    path('dashboard', views.Sidebar_view, name='home'),
     path('AddProduct/', views.AddProduct_view, name='AddProduct'),
 
     path('ManageOrder/', views.ManageOrder_view, name='ManageOrder'),
@@ -20,6 +21,9 @@ urlpatterns = [
     path('manage-supplier/', views.ManageSupplier_view, name='ManageSupplier'),
     path('edit-supplier/<int:pk>/', views.edit_supplier, name='edit_supplier'),
     path('ExpiryDates/', views.ExpiryDates_view, name='ExpiryDates'),
+    path('ManageResources/', views.ManageResources_view, name='ManageResources'),
+    path('AddResources/', views.AddResources_view, name='AddResources'),
+
     
 
     path('add-material/', views.AddMaterial_view, name='AddMaterial'),
@@ -44,6 +48,4 @@ urlpatterns = [
 
     path('ingredients/', views.IngredientListCreateView.as_view(), name='ingredient-list'),
     path('ingredients/<int:pk>/', views.IngredientDetailView.as_view(), name='ingredient-detail'),
-    path('manage-waste/', views.ManageWaste_view, name='ManageWaste'),
-
 ]

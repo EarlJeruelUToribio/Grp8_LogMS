@@ -1,181 +1,110 @@
-/* Supplier Status Container */
-.supplier-status-container {
-    display: flex;
-    justify-content: space-between;
-    background-color: transparent;
-    padding: 8px;
-    border-radius: 4px;
-    margin-bottom: 10px;
-    width: 800px;
-    margin-left: 380px;
-}
-
-/* Supplier Status Boxes */
-.supplier-status-box {
-    background-color: #7b4e83;
-    color: #fff;
-    padding: 25px;
+/* Table Container */
+.table-container {
+    max-width: 950px;
+    margin: 20px auto;
+    padding: 20px;
+    background: #ffffff;
     border-radius: 8px;
-    flex: 1;
-    margin: 20px 10px;
-    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border: 1px solid #ffffff;
+    margin-left: 300px;
 }
 
-/* Suppliers Header */
-.suppliers-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+.table-container h2 {
     margin-bottom: 20px;
-}
-
-/* Sort Button */
-.sort-button {
-    background-color: #7b4e83;
-    color: #fff;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-}
-
-/* Search Bar */
-.search-bar {
-    padding: 10px;
-    border-radius: 4px;
-    border: 2px solid #000000;
-}
-
-/* Supplier Section Heading */
-.suppliers-section h2 {
     font-size: 28px;
-    color: #7b4e83;
+    color: #7b4e83; /* Purple heading */
     font-weight: 700;
 }
 
-/* Suppliers Table */
-.suppliers-table {
+/* Table Styles */
+table {
     width: 100%;
     border-collapse: collapse;
+    background-color: #7b4e83; /* Purple table background */
+    color: white; /* White text for contrast */
 }
 
-.suppliers-table th, .suppliers-table td {
+/* Targeting table headers specifically */
+table th {
+    background-color: #7b4e83 !important; /* Purple background */
+    color: white !important; /* White text */
     padding: 15px;
     text-align: center;
-    border-bottom: 1px solid #ddd;
+    font-weight: bold; /* Make it bold */
 }
 
-.suppliers-table th {
+/* Alternating Row Colors */
+table tr:nth-child(even) {
+    background-color: #9b72a1; /* Lighter purple for alternating rows */
+}
+
+#edit-button {
     background-color: #7b4e83;
-    color: #fff;
-}
-
-.suppliers-table tr:hover {
-    background-color: #f1f1f1;
-}
-
-/* Suppliers Section */
-.suppliers-section {
-    background-color: #fff;
-    padding: 30px;
-    border-radius: 8px;
-    max-width: 90%;
-    margin: 50px auto 20px;
-    display: flex;
-    flex-direction: column;
-    margin-left: 250px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-/* Supplier Container */
-.supplier-container {
-    position: relative;
-    width: 700px;
-    background-color: #61396f;
-    border-radius: 10px;
-    overflow: hidden;
-    margin: 20px auto;
-    padding: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-    cursor: pointer;
-    display: flex;
-    flex-direction: column;
-    margin-left: 410px;
-}
-
-/* Supplier Details Text */
-.supplier-details-title {
-    font-size: 24px; /* Larger font size for the title */
-    font-weight: bold; /* Bold text */
-    color: #f8f8ff; /* White text color */
-    margin-bottom: 10px; /* Space below the title */
-}
-
-/* Dropdown Button for Supplier Details */
-#supplier-details-dropdown {
-    cursor: pointer;
-    color: #f8f8ff; /* White color for text */
-    background-color: #61396f; /* Green background for the button */
-    border: none; /* Remove border */
-    border-radius: 4px; /* Rounded corners */
-    padding: 10px 15px; /* Padding for button */
-    font-size: 16px; /* Adjust font size */
-    margin-bottom: 10px; /* Space below the button */
-    transition: background-color 0.3s ease; /* Smooth transition for hover effect */
-}
-
-/* Expanded Supplier Details */
-.expanded-supplier-details {
-    display: none;
-    padding: 10px;
-    background-color: transparent;
-    border-radius: 8px;
-    margin-top: 10px;
-    color: #f8f8ff;
-}
-
-/* Status Styles (Active & Inactive) */
-.status {
-    display: inline-block;
-    width: 100px; /* Set a fixed width */
-    text-align: center;
-    padding: 10px 0; /* Set equal padding for height consistency */
-    font-weight: 600;
-    border-radius: 4px;
-    color: #fff;
-}
-
-.active-status {
-    background-color: #28a745; /* Green background for active */
-}
-
-.inactive-status {
-    background-color: #dc3545; /* Red background for unactive */
-}
-
-/* Edit Button */
-.edit-button {
-    display: inline-block;
-    width: 100px; /* Same width as status labels */
-    text-align: center;
-    background-color: #28a745; /* Green background */
-    color: #fff;
-    padding: 10px 0; /* Same padding as status labels */
     border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    font-weight: 600;
+    color: white;
+    border-radius: 6px;
+    width: 100px;
 }
 
-.edit-button:hover {
-    background-color: #218838; /* Darker green on hover */
+#edit-button:hover {
+    background-color: #5e3b62;
 }
 
-/* Other styles */
-.supplier-row {
-    transition: background-color 0.3s ease;
+/* Manual Adjust Form */
+.form-container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    background: #f8f8f8;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-left: 460px;
 }
 
-.supplier-row:hover {
-    background-color: #f1f1f1; /* Highlight row on hover */
+.form-container h2 {
+    margin-bottom: 20px;
+    font-size: 28px;
+    color: #7b4e83;
+    text-align: center;
+}
+
+#manual-adjust-form button {
+    background-color: #7b4e83;
+    border: none;
+    color: white;
+    border-radius: 6px;
+}
+
+#manual-adjust-form button:hover {
+    background-color: #5e3b62;
+}
+
+.hidden {
+    display: none;
+}
+
+#add-supplier-button {
+    background-color: #7b4e83; /* Purple background */
+    color: white; /* White text */
+    font-weight: bold;
+    border: none;
+    border-radius: 6px; /* Rounded edges */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    height: 50px;
+    width: 150px;
+}
+
+#add-supplier-button:hover {
+    background-color: #5e3b62; /* Darker purple on hover */
+    color: white; /* Keep text white */
+    cursor: pointer; /* Pointer cursor for better UX */
+}
+
+
+/* Adjust Heading and Button Layout */
+.table-container .d-flex {
+    align-items: center;
+    justify-content: space-between; /* Button on left, heading centered */
+    position: relative;
 }

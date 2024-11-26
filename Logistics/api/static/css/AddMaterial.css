@@ -58,66 +58,106 @@
     cursor: pointer;
 }
 
-/* Container for radio buttons */
-.form-container-radio {
+.form-container button:hover {
+    background-color: #37063c;
+}
+
+
+/* Styling for the Perishable Option */
+.perishable-option {
+    background-color: #f8f8f8; /* Light background for better contrast */
+    border: 2px solid black; /* Matches the form's border style */
+    padding: 10px 15px; /* Creates spacing inside */
+    border-radius: 6px; /* Rounded edges */
+    font-weight: 500; /* Bold text for better visibility */
+    color: black; /* Text color */
+}
+
+.perishable-option input[type="radio"] {
+    width: 16px; /* Sets width to make it a proper circle */
+    height: 16px; /* Sets height equal to width */
+    margin-left: 10px; /* Adds space between label and button */
+    cursor: pointer; /* Pointer on hover for interactivity */
+    appearance: none; /* Removes default styling */
+    border: 2px solid black; /* Custom border for the radio button */
+    border-radius: 50%; /* Ensures circular shape */
+    background-color: white; /* White background for contrast */
+}
+
+.perishable-option input[type="radio"]:checked {
+    background-color: #7b4e83; /* Fill color when selected */
+    border-color: #37063c; /* Darker border when checked */
+}
+
+.perishable-option input[type="radio"]:hover {
+    background-color: #ddd; /* Light hover feedback */
+}
+
+.perishable-option label {
+    margin: 0; /* Proper alignment of the label text */
+}
+
+/* Ensure proper scaling across devices */
+.perishable-option {
     display: flex;
-    justify-content: space-between; /* Pushes perishable to the left and non-perishable to the right */
-    align-items: center;
-    padding: 12px;
-    background-color: #f8f8f8;
-    border: 2px solid black;
-    border-radius: 6px;
-    margin-bottom: 16px;
-    width: 100%;
-}
-
-/* Ensure the radio buttons are aligned properly */
-.form-check {
-    display: flex;
+    justify-content: space-between;
     align-items: center;
 }
 
-/* Styling for radio input */
-.form-check-input {
-    width: 18px;
-    height: 18px;
-    margin-right: 10px;
-    border-radius: 50%;  /* Ensure circular shape */
-    border: 2px solid black; /* Ensure a clear border when not selected */
+/* Custom Success Alert Styles */
+.swal-success-popup {
+    background-color: #7b4e83 !important;
+    color: white !important;
+    border-radius: 10px !important;
 }
 
-/* When the radio button is checked, make it purple */
-.form-check-input:checked {
-    background-color: #7b4e83; /* Purple background color when checked */
-    border-color: #000000; /* Purple border when checked */
+.swal-success-title {
+    font-size: 24px !important;
+    font-weight: bold !important;
 }
 
-
-/* Styling for the radio label */
-.form-check-label {
-    font-weight: 500;
-    color: var(--dark, #333);
-    font-size: 16px;
+.swal-success-content {
+    font-size: 16px !important;
 }
 
-/* Remove hover effect */
-.form-check-input:hover {
-    background-color: transparent; /* No hover effect */
-    border-color: black; /* Keep original border color */
+.swal-success-button {
+    background-color: #218838 !important;
+    color: white !important;
+    border: none !important;
+    border-radius: 5px !important;
+    padding: 10px 20px !important;
+    font-size: 16px !important;
 }
 
-/* Styling for Days before Expiry input */
-#expiry-days {
-    padding: 12px;
-    background-color: #f8f8f8; 
-    border: 2px solid black;
-    border-radius: 6px;
-    color: black; /* Text color black */
-    width: 100%; 
+.swal-success-button:hover {
+    background-color: #1e7e34 !important;
 }
 
-/* Disabled input styling */
-#expiry-days:disabled {
-    background-color: #e9ecef; /* Lighter background when disabled */
-    cursor: not-allowed; /* Show 'not-allowed' cursor when disabled */
+/* Custom Error Alert Styles */
+.swal-error-popup {
+    background-color: #dc3545 !important;
+    color: white !important;
+    border-radius: 10px !important;
+}
+
+.swal-error-title {
+    font-size: 24px !important;
+    font-weight: bold !important;
+}
+
+.swal-error-content {
+    font-size: 16px !important;
+}
+
+.swal-error-button {
+    background-color: #c82333 !important;
+    color: white !important;
+    border: none !important;
+    border-radius: 5px !important;
+    padding: 10px 20px !important;
+    font-size: 16px !important;
+}
+
+.swal-error-button:hover {
+    background-color: #bd2130 !important;
 }

@@ -1,13 +1,13 @@
 /* Table Container */
 .table-container {
-    max-width: 950px;
+    max-width: 1200px;
     margin: 20px auto;
     padding: 20px;
     background: #ffffff;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     border: 1px solid #ffffff;
-    margin-left: 300px;
+    margin-left: 180px;
 }
 
 .table-container h2 {
@@ -23,13 +23,15 @@ table {
     border-collapse: collapse;
     background-color: #7b4e83; /* Purple table background */
     color: white; /* White text for contrast */
+    text-align: center; /* Center all text in the table */
+
 }
 
 /* Targeting table headers specifically */
 table th {
     background-color: #7b4e83 !important; /* Purple background */
     color: white !important; /* White text */
-    padding: 15px;
+    padding: 10px;
     text-align: center;
     font-weight: bold; /* Make it bold */
 }
@@ -82,4 +84,49 @@ table tr:nth-child(even) {
 
 .hidden {
     display: none;
+}
+
+/* Add Material Button */
+#add-material-button {
+    background-color: #7b4e83; /* Purple background */
+    color: white; /* White text */
+    font-weight: bold;
+    border: none;
+    border-radius: 6px; /* Rounded edges */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    height: 50px;
+    width: 150px;
+}
+
+#add-material-button:hover {
+    background-color: #5e3b62; /* Darker purple on hover */
+    color: white; /* Keep text white */
+    cursor: pointer; /* Pointer cursor for better UX */
+}
+
+
+/* Adjust Heading and Button Layout */
+.table-container .d-flex {
+    align-items: center;
+    justify-content: space-between; /* Button on left, heading centered */
+    position: relative;
+}
+
+/* Edit Button Styles */
+.btn-primary {
+    background-color: #7b4e83; /* Purple background */
+    border: none;
+    color: white;
+    font-weight: bold;
+    border-radius: 6px; /* Rounded edges */
+    padding: 10px 20px;
+    text-align: center;
+    display: inline-block;
+    cursor: pointer;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+}
+
+.btn-primary:hover {
+    background-color: #5e3b62; /* Darker purple on hover */
+    color: white;
 }

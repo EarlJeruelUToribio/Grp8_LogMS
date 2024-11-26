@@ -162,3 +162,57 @@
     text-align: left;
 	color: #f8f8ff;
 }
+
+/* Modal Header */
+.modal-header {
+    background-color: #7b4e83;
+    color: #fff;
+    border-bottom: 1px solid #f1f1f1;
+}
+
+/* Modal Content */
+.modal-content {
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+/* Modal Title */
+.modal-title {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+/* Modal Body */
+.modal-body {
+    padding: 20px;
+    background-color: #f9f9f9;
+    color: #000;
+}
+
+/* Modal Footer Buttons */
+.modal-footer .btn {
+    border-radius: 4px;
+    padding: 10px 20px;
+    font-size: 14px;
+}
+
+.modal-footer .btn-primary {
+    background-color: #7b4e83;
+    color: #fff;
+    border: none;
+    transition: background-color 0.3s ease;
+}
+
+.modal-footer .btn-primary:hover {
+    background-color: #5f3c66;
+}
+
+.modal-footer .btn-secondary {
+    background-color: #ddd;
+    color: #000;
+    border: none;
+}
+
+.modal-footer .btn-secondary:hover {
+    background-color: #bbb;
+}

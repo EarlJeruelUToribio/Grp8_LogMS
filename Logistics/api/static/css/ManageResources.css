@@ -1,0 +1,87 @@
+/* Apply full-page layout to center everything */
+.container {
+    width: 1200px;    margin: 0 auto; /* Center the container horizontally */
+    padding: 20px; /* Padding inside the container */
+    background-color: #fff; /* Background color */
+    border-radius: 8px; /* Rounded corners */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Shadow for some depth */
+    display: flex;
+    flex-direction: column; /* Stack content vertically */
+    align-items: center; /* Center content horizontally */
+    justify-content: flex-start; /* Align content to the top (you can adjust as needed) */
+    margin-left: 250px;
+    margin-bottom: 300px;
+}
+
+body, html {
+    height: 100%;
+    margin: 0;
+    display: flex;
+    justify-content: center;  /* Horizontally center the content */
+    align-items: center;  /* Vertically center the content */
+    background-color: #f9f9f9; /* Set a background color if needed */
+
+}
+
+
+/* Section Header */
+.resources-section h2 {
+    font-size: 28px;
+    color: #7b4e83; /* Purple heading */
+    font-weight: 700;
+    text-align: center;
+}
+
+/* Search Bar */
+#search-bar {
+    padding: 10px;
+    width: 250px;
+    border: 2px solid #000000;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+/* Add Resource Button */
+#add-resource-button {
+    background-color: #7b4e83; /* Purple background */
+    color: white;
+    font-weight: bold;
+    border: none;
+    border-radius: 6px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    height: 50px;
+    width: 180px;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none; /* Remove underline */
+}
+
+#add-resource-button:hover {
+    background-color: #5e3b62; /* Darker purple on hover */
+    cursor: pointer;
+}
+
+/* Resource Table */
+.resources-table {
+    width: 1150px;  
+    margin-top: 20px;
+    border-collapse: collapse;
+    margin: 0 auto;
+}
+
+.resources-table th, .resources-table td {
+    padding: 15px;
+    text-align: center;
+    border-bottom: 1px solid #ddd;
+}
+
+.resources-table th {
+    background-color: #7b4e83;
+    color: #fff;
+}
+
+.resources-table tr:hover {
+    background-color: #f1f1f1;
+}

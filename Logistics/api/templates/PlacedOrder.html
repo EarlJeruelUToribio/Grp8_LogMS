@@ -12,12 +12,21 @@
         <h2 class="text-center mb-4">PLACE ORDER</h2>
         <form method="POST" id="place-order-form" class="row g-3">
             {% csrf_token %}
+
+            <div class="col-12">
+                <label for="supplier-name" class="form-label">Supplier Name:</label>
+                <select id="supplier-name" name="supplier-name" class="form-select" required>
+                    <option value="" disabled selected>Select Supplier</option>
+                    <!-- Supplier options will be populated based on selected material -->
+                </select>
+            </div>
+            
             <div class="col-12">
                 <label for="material" class="form-label">Material:</label>
                 <select id="material" name="material" class="form-select" required>
                     <option value="" disabled selected>Select Material</option>
                     {% for material in materials %}
-                    <option value="{{ material.Inventory_ID }}" data-price="{{ material.PurchasePrice }}" data-uom="{{ material.UnitOfMeasure }}" data-min-qty="{{ material.ReorderLevel }}">{{ material.ItemName }}</option>
+                    <option value="{{ material.Inventory_ID }}" data-price="{{ material.PurchasePrice }}" data-uom="{{ material.UnitOfMeasure }}">{{ material.ItemName }}</option>
                     {% endfor %}
                 </select>
             </div>
@@ -26,16 +35,6 @@
                 <label for="quantity" class="form-label">Quantity:</label>
                 <input type="number" class="form-control" id="quantity" name="quantity" required>
                 <span id="unit-of-measure"></span>
-            </div>
-
-            <div class="col-12">
-                <label for="supplier-name" class="form-label">Supplier Name:</label>
-                <select id="supplier-name" name="supplier-name" class="form-select" required>
-                    <option value="" disabled selected>Select Supplier</option>
-                    {% for supplier in suppliers %}
-                    <option value="{{ supplier.Supplier_ID }}">{{ supplier.SupplierName }}</option>
-                    {% endfor %}
-                </select>
             </div>
 
             <input type="hidden" id="status" name="status" value="Placed">
@@ -51,37 +50,43 @@
     </div>
 </div>
 
+
 <script>
-    const materialSelect = document.getElementById('material');
-    const quantityInput = document.getElementById('quantity');
-    const basePriceSpan = document.getElementById('base-price');
-    const totalCostSpan = document.getElementById('total-cost');
-    const unitOfMeasureSpan = document.getElementById('unit-of-measure');
+    document.getElementById('material').addEventListener('change', function() {
+        const selectedMaterial = this.options[this.selectedIndex];
+        const basePrice = parseFloat(selectedMaterial.getAttribute('data-price'));
+        const selectedMaterialId = this.value;
+        const supplierSelect = document.getElementById('supplier-name');
 
-    materialSelect.addEventListener('change', () => {
-        const selectedMaterial = materialSelect.options[materialSelect.selectedIndex];
-        const basePrice = selectedMaterial.getAttribute('data-price');
-        const uom = selectedMaterial.getAttribute('data-uom');
-        unitOfMeasureSpan.textContent = uom;
+        // Update base price display
+        document.getElementById('base-price').textContent = basePrice.toFixed(2);
+        
+        // Clear previous supplier options
+        supplierSelect.innerHTML = '<option value="" disabled selected>Select Supplier</option>';
+        
+        // Populate suppliers based on selected material
+        const suppliers = {{ material_suppliers|safe }};
+        if (suppliers[selectedMaterialId]) {
+            suppliers[selectedMaterialId].forEach(supplier => {
+                const option = document.createElement('option');
+                option.value = supplier.Supplier_ID;
+                option.textContent = supplier.SupplierName;
+                supplierSelect.appendChild(option);
+            });
+        }
 
-        basePriceSpan.textContent = basePrice;
-        calculateTotalCost();
+        // Reset quantity and total cost
+        document.getElementById('quantity').value = '';
+        document.getElementById('total-cost').textContent = '0.00';
     });
 
-    quantityInput.addEventListener('input ', () => {
-        calculateTotalCost();
-    });
+    document.getElementById('quantity').addEventListener('input', function() {
+        const quantity = parseInt(this.value) || 0; // Default to 0 if not a number
+        const selectedMaterial = document.getElementById('material').options[document.getElementById('material').selectedIndex];
+        const basePrice = parseFloat(selectedMaterial.getAttribute('data-price'));
+        const totalCost = basePrice * quantity;
 
-    function calculateTotalCost() {
-        const quantity = parseInt(quantityInput.value) || 0;  // Default to 0 if NaN
-        const basePrice = parseFloat(basePriceSpan.textContent) || 0;  // Default to 0 if NaN
-        const totalCost = quantity * basePrice;
-        totalCostSpan.textContent = totalCost.toFixed(2);
-    }
+        document.getElementById('total-cost').textContent = totalCost.toFixed(2);
+    });
 </script>
-
-{% endblock %}
-
-{% block extra_js %}
-<script src="{% static 'js/PlacedOrder.js' %}"></script>
 {% endblock %}

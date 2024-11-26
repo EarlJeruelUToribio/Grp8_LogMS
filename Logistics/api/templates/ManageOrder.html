@@ -2,9 +2,8 @@
 {% load static %}
 
 {% block extra_css %}
-<link rel="stylesheet" href="{% static 'css/ManageOrder.css' %}">
+<link rel="stylesheet" href="{% static 'css/ManageOrders.css' %}">
 {% endblock %}
-
 {% block content %}
 <section id="manage-order-section">
     <div class="container mt-5">
@@ -53,17 +52,20 @@
                     {% for order in orders %}
                     <tr>
                         <td>{{ order.Order_ID }}</td>
-                        <td>{{ order.Items.ItemName }}</td>  <!-- Display item name -->
+                        <td>{{ order.Items.ItemName }}</td>
                         <td>{{ order.Quantity }}</td>
-                        <td>{{ order.Supplier.SupplierName }}</td>  <!-- Display supplier name -->
-                        <td>{{ order.OrderStatus }}</td>  <!-- Display status -->
+                        <td>{{ order.Supplier.SupplierName }}</td>
+                        <td>{{ order.OrderStatus }}</td>
                         <td>
-                            <form method="POST" action="{% url 'ManageOrder' %}">
-                                {% csrf_token %}
-                                <input type="hidden" name="order_id" value="{{ order.Order_ID }}">
-                                <input type="hidden" name="new_status" value="{% if order.OrderStatus == 'Placed' %}Shipped{% elif order.OrderStatus == 'Shipped' %}Completed{% else %}Placed{% endif %}">
-                                <button type="submit" class="btn btn-primary">Change Status</button>
-                            </form>
+                            <button 
+                                type="button" 
+                                class="btn btn-primary change-status-btn" 
+                                data-bs-toggle="modal" 
+                                data-bs-target="#changeStatusModal" 
+                                data-order-id="{{ order.Order_ID }}" 
+                                data-current-status="{{ order.OrderStatus }}">
+                                Change Status
+                            </button>
                         </td>
                     </tr>
                     {% endfor %}
@@ -73,9 +75,38 @@
     </div>
 </section>
 
-<div id="success-popup" class="popup" style="display:none;">
-    <p>Order submitted successfully!</p>
-    <button onclick="document.getElementById('success-popup').style.display='none'">Close</button>
+<!-- Modal for Changing Status -->
+<div class="modal fade" id="changeStatusModal" tabindex="-1" aria-labelledby="changeStatusModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form method="POST" action="{% url 'ManageOrder' %}">
+                {% csrf_token %}
+                <div class="modal-header">
+                    <h5 class="modal-title" id="changeStatusModalLabel">Change Order Status</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" name="order_id" id="modal-order-id">
+                    <p>Current Status: <strong id="modal-current-status"></strong></p>
+                    <label for="new-status">Select New Status:</label>
+                    <select name="new_status" id="new-status" class="form-select">
+                        <option value="Placed">Placed</option>
+                        <option value="Shipped">Shipped</option>
+                        <option value="Completed">Completed</option>
+                        <option value="Cancelled">Cancelled</option>
+                    </select>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Save Changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
 </div>
 
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'js/ManageOrders.js' %}"></script>
 {% endblock %}

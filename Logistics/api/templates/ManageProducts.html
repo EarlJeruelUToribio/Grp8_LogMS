@@ -8,9 +8,14 @@
 {% block content %}
 <section class="products-section">
     <h2 class="text-center mb-4">PRODUCTS MANAGEMENT</h2>
-    <div class="product-header">
+    <div class="d-flex align-items-center justify-content-between mb-3">
+        <!-- Link to the Add Product page -->
+        <a href="{% url 'AddProduct' %}" id="add-product-button" class="btn btn-primary">
+            Add Product
+        </a>
         <input type="text" id="search-bar" placeholder="Search Product" class="search-bar">
     </div>
+
     <table class="table table-striped product-table">
         <thead>
             <tr>

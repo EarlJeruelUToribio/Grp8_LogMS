@@ -11,8 +11,7 @@
     align-items: center; /* Center content horizontally */
     justify-content: flex-start; /* Align content to the top (you can adjust as needed) */
     margin-left: 250px;
-    margin-top: 100px;
-    
+    margin-bottom: 300px;
 }
 
 body, html {
@@ -74,3 +73,26 @@ body, html {
 .product-table tr:hover {
     background-color: #f1f1f1;
 }
+
+#add-product-button {
+    background-color: #7b4e83; /* Purple background */
+    color: white; /* White text */
+    font-weight: bold;
+    border: none;
+    border-radius: 6px; /* Rounded edges */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    height: 50px;
+    width: 150px;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none; /* Remove underline */
+}
+
+#add-product-button:hover {
+    background-color: #5e3b62; /* Darker purple on hover */
+    color: white; /* Keep text white */
+    cursor: pointer; /* Pointer cursor for better UX */
+}
+

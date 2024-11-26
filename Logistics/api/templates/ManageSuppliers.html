@@ -2,12 +2,18 @@
 {% load static %}
 
 {% block extra_css %}
-<link rel="stylesheet" href="{% static 'css/ManageMaterials.css' %}">
+<link rel="stylesheet" href="{% static 'css/ManageSupplier.css' %}">
 {% endblock %}
 
 {% block content %}
 <section id="supplier-table" class="container table-container mt-5">
     <h2 class="text-center">SUPPLIER MANAGEMENT</h2>
+    <div class="d-flex align-items-center justify-content-between mb-3">
+        <!-- Link to another HTML file -->
+        <a href="{% url 'AddSupplier' %}" id="add-supplier-button" class="btn btn-primary">
+            Add Supplier
+        </a>
+    </div>
     
     <table class="table table-striped supplier-table">
         <thead>

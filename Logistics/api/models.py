@@ -10,6 +10,9 @@ class Inventory(models.Model):
     PurchasePrice = models.DecimalField(max_digits=10, decimal_places=2)
     ReorderLevel = models.IntegerField()
     Created_At = models.DateTimeField(auto_now_add=True)
+    Perishable = models.BooleanField(default=False)
+    DaysBeforeExpiry = models.IntegerField(null=True, blank=True)
+    Current_Stock = models.IntegerField(default=0)
 
     class Meta:
         db_table = 'api_inventory'
