@@ -7,7 +7,7 @@
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     border: 1px solid var(--dark-grey, #d3d3d3);
     background-image: linear-gradient(to bottom right, #fff, #f8f8f8);
-    margin-left: 280px; /* Adjust the left margin as needed */
+    margin-left: 280px;
 }
 
 .form-container h2 {

@@ -27,7 +27,6 @@
                     <i class="fa fa-caret-down"></i> 
                 </button>
                 <div class="dropdown-container">
-                    <a href="{% url 'PlacedOrder' %}"><span>Place Order</span></a>
                     <a href="{% url 'ManageOrder' %}"><span>Manage Order</span></a>
                 </div>
 
@@ -36,11 +35,10 @@
                     <i class="fa fa-caret-down"></i> 
                 </button>
                 <div class="dropdown-container">
-                    <a href="{% url 'AddMaterial' %}"><span>Add Material</span></a>
                     <a href="{% url 'ManageMaterial' %}"><span>Manage Material</span></a>
                     <a href="{#}"><span>Inventory Reports</span></a>
                     <a href="{% url 'ExpiryDates' %}"><span>Expiry Dates</span></a>
-                    <a href="{% url 'ManageWaste' %}"><span>Loss and Waste Tracking</span></a>
+                    <a href="{#}"><span>Loss and Waste Tracking</span></a>
                 </div>
 
                 <button class="dropdown-btn">
@@ -48,7 +46,6 @@
                     <i class="fa fa-caret-down"></i> 
                 </button>
                 <div class="dropdown-container">
-                    <a href="{% url 'AddProduct' %}"><span>Add Product</span></a>
                     <a href="{% url 'ManageProducts' %}"><span>Manage Products</span></a>
                     <a href="{#}"><span>Menu</span></a>
                     <a href="{% url 'KitchenDisplay' %}"><span>Kitchen Display</span></a>
@@ -59,8 +56,15 @@
                     <i class="fa fa-caret-down"></i>              
                 </button>
                 <div class="dropdown-container">
-                    <a href="{% url 'AddSupplier' %}"><span>Add Supplier</span></a>
                     <a href="{% url 'ManageSupplier' %}"><span>Manage Supplier</span></a>
+                </div>
+
+                <button class="dropdown-btn">
+                    <i class="fa fa-concierge-bell"></i> <span>Resources Management</span>
+                    <i class="fa fa-caret-down"></i>                          
+                </button>
+                <div class="dropdown-container">
+                    <a href="{% url 'ManageResources' %}"><span>Manage Resources</span></a>
                 </div>
 
                 <button class="dropdown-btn">
@@ -72,7 +76,7 @@
                 </div>
 
                 <div class="sidebar-footer">
-                    <img src="{% static 'images/tikme.png' %}" alt="Logo">
+                    <img src="{% static 'images/kup.png' %}" alt="Logo">
                     <p>v1.0.0</p>
                 </div>
             </div>

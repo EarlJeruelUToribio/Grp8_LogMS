@@ -2,12 +2,18 @@
 {% load static %}
 
 {% block extra_css %}
-<link rel="stylesheet" href="{% static 'css/ManageMaterials.css' %}">
+<link rel="stylesheet" href="{% static 'css/ManageSuppliers.css' %}">
 {% endblock %}
 
 {% block content %}
 <section id="supplier-table" class="container table-container mt-5">
     <h2 class="text-center">SUPPLIER MANAGEMENT</h2>
+    <div class="d-flex align-items-center justify-content-between mb-3">
+        <!-- Link to another HTML file -->
+        <a href="#" id="add-supplier-button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addSupplierModal">
+            Add Supplier
+        </a>        
+    </div>
     
     <table class="table table-striped supplier-table">
         <thead>
@@ -36,6 +42,75 @@
         </tbody>
     </table>
 </section>
+
+<!-- Modal for Add Supplier -->
+<div class="modal fade" id="addSupplierModal" tabindex="-1" aria-labelledby="addSupplierModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h5 class="modal-title" id="addSupplierModalLabel">ADD SUPPLIER</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+
+            <!-- Modal Body -->
+            <div class="modal-body">
+                <form method="POST" class="row g-3"> <!-- Added method POST and CSRF token -->
+                    {% csrf_token %}
+                    
+                    <!-- Supplier Name -->
+                    <div class="col-md-6">
+                        <label for="supplier-name" class="form-label">Supplier Name:</label>
+                        <input type="text" id="supplier-name" name="supplier-name" class="form-control" required>
+                    </div>
+
+                    <!-- Supplier Address -->
+                    <div class="col-md-6">
+                        <label for="supplier-address" class="form-label">Supplier Address:</label>
+                        <input type="text" id="supplier-address" name="supplier-address" class="form-control" required>
+                    </div>
+
+                    <!-- Supplier Email -->
+                    <div class="col-md-6">
+                        <label for="supplier-email" class="form-label">Supplier Email:</label>
+                        <input type="email" id="supplier-email" name="supplier-email" class="form-control" required>
+                    </div>
+
+                    <!-- Payment Terms -->
+                    <div class="col-md-6">
+                        <label for="payment-terms" class="form-label">Payment Terms:</label>
+                        <select id="payment-terms" name="payment-terms" class="form-select" required>
+                            <option value="cash-on-delivery">Cash on Delivery</option>
+                            <option value="gcash">Gcash</option>
+                            <option value="paymaya">Paymaya</option>
+                            <option value="bank-transfer">Bank Transfer</option>
+                        </select>
+                    </div>
+
+                    <!-- Add Material Button -->
+                    <div class="col-12">
+                        <button type="button" id="add-material-button" class="btn btn-secondary w-100">➕ Add Material</button>
+                    </div>
+
+                    <!-- Materials Section -->
+                    <div id="materials-section" class="col-12 mt-4">
+                        <h3 id="materials-heading" class="text-center" style="display: none;">MATERIALS</h3> <!-- Hide initially -->
+                        <div id="material-fields-container"></div> <!-- Container for dynamic material fields -->
+                    </div>
+                </form>
+            </div>
+            <!-- Modal Footer -->
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-primary w-100">Add Supplier</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Hidden Materials Data -->
+<div id="materials-data" style="display: none;">{{ materials|json_script:"materials-data" }}</div>
+
+
 {% endblock %}
 
 {% block extra_js %}

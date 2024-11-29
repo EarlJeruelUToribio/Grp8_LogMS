@@ -1,4 +1,26 @@
 document.addEventListener('DOMContentLoaded', function () {
+    const changeStatusButtons = document.querySelectorAll('.change-status-btn');
+    const modalOrderIdInput = document.getElementById('modal-order-id');
+    const modalCurrentStatus = document.getElementById('modal-current-status');
+    const modalNewStatus = document.getElementById('new-status');
+
+    changeStatusButtons.forEach(button => {
+        button.addEventListener('click', function () {
+            const orderId = button.getAttribute('data-order-id');
+            const currentStatus = button.getAttribute('data-current-status');
+
+            // Populate modal fields
+            modalOrderIdInput.value = orderId;
+            modalCurrentStatus.textContent = currentStatus;
+
+            // Set default selection to current status
+            [...modalNewStatus.options].forEach(option => {
+                option.selected = option.value === currentStatus;
+            });
+        });
+    });
+});
+
     const expandedDetails = document.querySelector('.expanded-order-details');
     const orderDetailsDropdown = document.getElementById('order-details-dropdown'); // Use the ID for the specific dropdown
     const orderTable = document.querySelector('.orders-table tbody'); // Select the table body
@@ -79,7 +101,6 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 
-});
 
 // Search functionality
 const searchBar = document.getElementById('search-bar');

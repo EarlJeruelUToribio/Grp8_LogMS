@@ -2,15 +2,20 @@
 {% load static %}
 
 {% block extra_css %}
-    <link rel="stylesheet" href="{% static 'css/ManageProduct.css' %}">
+    <link rel="stylesheet" href="{% static 'css/ManageProducts.css' %}">
 {% endblock %}
 
 {% block content %}
 <section class="products-section">
     <h2 class="text-center mb-4">PRODUCTS MANAGEMENT</h2>
-    <div class="product-header">
+    <div class="d-flex align-items-center justify-content-between mb-3">
+        <!-- Link to the Add Product page -->
+        <button type="button" class="add-product-button mt-5" data-bs-toggle="modal" data-bs-target="#addProductModal">
+            Add Product
+        </button>
         <input type="text" id="search-bar" placeholder="Search Product" class="search-bar">
     </div>
+
     <table class="table table-striped product-table">
         <thead>
             <tr>
@@ -52,6 +57,79 @@
         </tbody>
     </table>
 </section>
+
+<!-- Modal -->
+<div class="modal fade" id="addProductModal" tabindex="-1" aria-labelledby="addProductModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h5 class="modal-title" id="addProductModalLabel">ADD PRODUCT</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+
+            <!-- Modal Body -->
+            <div class="modal-body">
+                <form method="POST" class="row g-3" enctype="multipart/form-data"> <!-- Added enctype for file uploads -->
+                    {% csrf_token %}
+
+                    <!-- Product Name -->
+                    <div class="col-md-6">
+                        <label for="product-name" class="form-label">Product Name:</label>
+                        <input type="text" id="product-name" name="product-name" class="form-control" required>
+                    </div>
+
+                    <!-- Product Description -->
+                    <div class="col-md-6">
+                        <label for="product-description" class="form-label">Product Description:</label>
+                        <input type="text" id="product-description" name="product-description" class="form-control" required>
+                    </div>
+
+                    <!-- Product Category -->
+                    <div class="col-md-6">
+                        <label for="product-category" class="form-label">Product Category:</label>
+                        <input type="text" id="product-category" name="product-category" class="form-control" required>
+                    </div>
+
+                    <!-- Product Image -->
+                    <div class="col-md-6">
+                        <label for="product-image" class="form-label">Product Image:</label>
+                        <input type="file" id="product-image" name="product-image" class="form-control" accept="image/*" required>
+                    </div>
+
+                    <!-- Product Price -->
+                    <div class="col-md-6">
+                        <label for="product-price" class="form-label">Product Price:</label>
+                        <input type="number" id="product-price" name="product-price" class="form-control" required step="0.01">
+                    </div>
+
+                    <!-- Add Material Button -->
+                    <div class="col-12">
+                        <button type="button" id="add-material-button" class="btn btn-secondary w-100">➕ Add Ingredients</button>
+                    </div>
+
+                    <!-- Ingredients Section -->
+                    <div id="materials-section" class="col-12 mt-4">
+                        <h3 id="materials-heading" class="text-center" style="display: none;">INGREDIENTS</h3>
+                        <div id="material-fields-container"></div>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Modal Footer -->
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-primary">Add Product</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Hidden Materials Data -->
+<div id="materials-data" style="display: none;">{{ materials|json_script:"materials-data" }}</div>
+
+
+
+
 {% endblock %}
 
 {% block extra_js %}

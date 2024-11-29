@@ -1,0 +1,327 @@
+/* Table Container */
+.table-container {
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 20px;
+    background: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border: 1px solid #ffffff;
+    margin-left: 180px;
+}
+
+.table-container h2 {
+    margin-bottom: 20px;
+    font-size: 28px;
+    color: #7b4e83; /* Purple heading */
+    font-weight: 700;
+}
+
+/* Table Styles */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #7b4e83; /* Purple table background */
+    color: white; /* White text for contrast */
+    text-align: center; /* Center all text in the table */
+
+}
+
+/* Targeting table headers specifically */
+table th {
+    background-color: #7b4e83 !important; /* Purple background */
+    color: white !important; /* White text */
+    padding: 10px;
+    text-align: center;
+    font-weight: bold; /* Make it bold */
+}
+
+/* Alternating Row Colors */
+table tr:nth-child(even) {
+    background-color: #9b72a1; /* Lighter purple for alternating rows */
+}
+
+#edit-button {
+    background-color: #7b4e83;
+    border: none;
+    color: white;
+    border-radius: 6px;
+    width: 100px;
+}
+
+#edit-button:hover {
+    background-color: #5e3b62;
+}
+
+/* Manual Adjust Form */
+.form-container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    background: #f8f8f8;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-left: 460px;
+}
+
+.form-container h2 {
+    margin-bottom: 20px;
+    font-size: 28px;
+    color: #7b4e83;
+    text-align: center;
+}
+
+#manual-adjust-form button {
+    background-color: #7b4e83;
+    border: none;
+    color: white;
+    border-radius: 6px;
+}
+
+#manual-adjust-form button:hover {
+    background-color: #5e3b62;
+}
+
+.hidden {
+    display: none;
+}
+
+/* Add Material Button */
+#add-material-button {
+    background-color: #7b4e83; /* Purple background */
+    color: white; /* White text */
+    font-weight: bold;
+    border: none;
+    border-radius: 6px; /* Rounded edges */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    height: 50px;
+    width: 150px;
+}
+
+#add-material-button:hover {
+    background-color: #5e3b62; /* Darker purple on hover */
+    color: white; /* Keep text white */
+    cursor: pointer; /* Pointer cursor for better UX */
+}
+
+
+/* Adjust Heading and Button Layout */
+.table-container .d-flex {
+    align-items: center;
+    justify-content: space-between; /* Button on left, heading centered */
+    position: relative;
+}
+
+/* Edit Button Styles */
+.btn-primary {
+    background-color: #7b4e83; /* Purple background */
+    border: none;
+    color: white;
+    font-weight: bold;
+    border-radius: 6px; /* Rounded edges */
+    padding: 10px 20px;
+    text-align: center;
+    display: inline-block;
+    cursor: pointer;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+}
+
+.btn-primary:hover {
+    background-color: #5e3b62; /* Darker purple on hover */
+    color: white;
+}
+
+/* Modal Design */
+.modal-content {
+    width: 750px;  /* Ensure it takes 90% of the available width */
+    padding: 40px;  /* Increase padding for more space inside */
+    margin: 0 auto;
+    background: white;
+    border-radius: 8px;  /* Rounded corners */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);  /* Subtle shadow for depth */
+    border: 1px solid var(--dark-grey, #d3d3d3);  /* Border to match design */
+    background-image: linear-gradient(to bottom right, #fff, #f8f8f8); /* Background gradient */
+    box-sizing: border-box; /* Include padding and borders in width and height */
+}
+
+/* Modal Header */
+.modal-header {
+    background-color: #7b4e83; /* Purple header */
+    color: white;  /* White text */
+    border-radius: 8px 8px 0 0;  /* Rounded top corners */
+    padding: 15px;
+    display: flex;  /* Flexbox for alignment */
+    justify-content: center;  /* Center the content horizontally */
+    align-items: center;  /* Center the content vertically */
+}
+
+.modal-title {
+    font-size: 32px;  /* Increase font size for better readability */
+    font-weight: 900;  /* Bold font for the title */
+    margin: 0;
+}
+
+/* Close Button */
+.btn-close {
+    border: none;
+    font-size: 1.5rem;
+    color: white;
+    cursor: pointer;
+    margin-right: 50px;
+}
+
+/* Modal Body */
+.modal-body {
+    display: grid;
+    grid-template-columns: 1fr 1fr;  /* 2 columns */
+    gap: 20px;  /* Space between columns */
+    padding: 0;
+}
+
+/* Form Controls in Modal */
+.modal-body .form-control,
+.modal-body .form-select {
+    width: 330px;
+    padding: 16px;
+    margin-bottom: 20px;
+    border: 2px solid black;  /* Set border color to black */
+    border-radius: 6px;
+    background: #f8f8f8;
+    color: black;
+}
+
+/* Focus States for Inputs */
+.modal-body .form-select:focus,
+.modal-body .form-control:focus {
+    border-color: #7b4e83;  /* Purple border when focused */
+    box-shadow: 0 0 5px rgba(123, 78, 131, 0.5);  /* Subtle purple glow */
+}
+
+/* Perishable Option */
+.perishable-option {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #f8f8f8;  /* Light background for better contrast */
+    border: 2px solid black;  /* Matches the form's border style */
+    padding: 16px 24px;  /* Increased padding for better size */
+    border-radius: 6px;  /* Rounded edges */
+    color: black;  /* Text color */
+    width: 330px;  /* Ensure it takes up the full width */
+    margin-bottom: 20px;  /* Add space below it */
+}
+
+/* Perishable Option Input (Radio Button) */
+.perishable-option input[type="radio"] {
+    width: 24px;  /* Increase size of radio button */
+    height: 24px;  /* Increase size of radio button */
+    margin-left: 15px;  /* Adjust space between label and button */
+    cursor: pointer;  /* Pointer on hover for interactivity */
+    appearance: none;  /* Removes default styling */
+    border: 2px solid black;  /* Custom border for the radio button */
+    border-radius: 50%;  /* Ensures circular shape */
+    background-color: white;  /* White background for contrast */
+}
+
+/* Checked State of the Radio Button */
+.perishable-option input[type="radio"]:checked {
+    background-color: #7b4e83;  /* Fill color when selected */
+    border-color: #37063c;  /* Darker border when checked */
+}
+
+/* Hover State for the Radio Button */
+.perishable-option input[type="radio"]:hover {
+    background-color: #ddd;  /* Light hover feedback */
+}
+
+/* Perishable Option Label */
+.perishable-option label {
+    font-size: 18px;  /* Increase label font size */
+    margin: 0;  /* Proper alignment of the label text */
+    color: black;  /* Ensure label color is black for visibility */
+}
+
+/* Modal Footer */
+.modal-footer {
+    background-color: #f8f9fa;  /* Light background for footer */
+    border-radius: 0 0 8px 8px;  /* Rounded bottom corners */
+    padding: 10px 15px;
+    border-top: 1px solid #e0e0e0;  /* Subtle border to separate footer from body */
+    box-sizing: border-box; /* Include padding in total width/height calculation */
+}
+
+/* Button Styling in Footer */
+.modal-footer .btn {
+    padding: 16px 24px;  /* Increase button padding */
+    background-color: #7b4e83;  /* Purple background */
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 18px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    width: 20000px;
+}
+
+/* Button Hover State */
+.modal-footer .btn:hover {
+    background-color: #37063c;  /* Darker purple on hover */
+}
+
+/* Success and Error Alerts */
+.swal-success-popup {
+    background-color: #7b4e83 !important;
+    color: white !important;
+    border-radius: 10px !important;
+}
+
+.swal-success-title {
+    font-size: 24px !important;
+    font-weight: bold !important;
+}
+
+.swal-success-content {
+    font-size: 16px !important;
+}
+
+.swal-success-button {
+    background-color: #218838 !important;
+    color: white !important;
+    border: none !important;
+    border-radius: 5px !important;
+    padding: 10px 20px !important;
+    font-size: 16px !important;
+}
+
+.swal-success-button:hover {
+    background-color: #1e7e34 !important;
+}
+
+/* Error Styles */
+.swal-error-popup {
+    background-color: #dc3545 !important;
+    color: white !important;
+    border-radius: 10px !important;
+}
+
+.swal-error-title {
+    font-size: 24px !important;
+    font-weight: bold !important;
+}
+
+.swal-error-content {
+    font-size: 16px !important;
+}
+
+.swal-error-button {
+    background-color: #c82333 !important;
+    color: white !important;
+    border: none !important;
+    border-radius: 5px !important;
+    padding: 10px 20px !important;
+    font-size: 16px !important;
+}
+
+.swal-error-button:hover {
+    background-color: #bd2130 !important;
+}

@@ -1,0 +1,357 @@
+
+/* Order Status Boxes */
+.order-status-container {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;    
+
+}
+
+.order-status-box {
+    flex: 1;
+    padding: 15px;
+    margin: 0 10px;
+    background-color: #e1c18b;
+    color: #000;
+    text-align: center;
+    border-radius: 5px;
+    font-weight: bold;
+
+}
+
+/* Orders Section */
+.orders-section {
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 8px;
+    max-width: 90%; /* Reduce the width of the container */
+    margin: 0 auto; /* Center the section horizontally */
+}
+
+.order-status-container {
+    display: flex;
+    justify-content: space-between;
+    background-color: transparent;
+    padding: 8px; /* Reduced padding */
+    border-radius: 4px; /* Reduced border radius */
+    width: 1000px; /* Set a specific width */
+    margin-left: 260px;
+
+}
+
+/* Order Status Boxes */
+.order-status-box {
+    background-color: #7b4e83;
+    color: #fff;
+    padding: 25px;
+    border-radius: 8px;
+    flex: 1;
+    margin: 20px 10px; /* Add some space between boxes */
+    text-align: center;
+	
+}
+
+/* Orders Header */
+.orders-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+/* Sort Button */
+.sort-button {
+    background-color: #7b4e83;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+/* Search Bar */
+.search-bar {
+    padding: 10px;
+    border-radius: 4px;
+    border: 2px solid #000000; /* Black border */
+
+}
+
+.orders-section h2 {
+    font-size: 28px;
+    color: #7b4e83; /* Purple heading */
+    font-weight: 700;
+}
+
+/* Orders Table */
+.orders-table {
+    width: 100%; 
+    border-collapse: collapse;
+}
+
+.orders-table th, .orders-table td {
+    padding: 15px;
+    text-align: center;
+    border-bottom: 1px solid #ddd;
+
+}
+
+.orders-table th {
+    background-color: #7b4e83;
+    color: #fff;
+}
+
+.orders-table tr:hover {
+    background-color: #f1f1f1;
+}
+
+
+.orders-section {
+    background-color: #fff; /* Background color */
+    padding: 30px;
+    border-radius: 8px;
+    max-width: 90%; /* Reduce the width of the container */
+    margin: 50px auto 20px; /* Center the section horizontally and add top margin */
+    display: flex;
+    flex-direction: column;
+    margin-left: 250px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Shadow for some depth */
+
+}
+
+
+.order-container {
+    position: relative;
+    width: 700px;
+    background-color: #61396f;
+    color: #f8f8ff;
+    border-radius: 10px;
+    overflow: hidden;
+    margin: 20px auto;
+    padding: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    cursor: pointer; /* Pointer cursor on hover */
+    display: flex; /* Add flex to control layout */
+    flex-direction: column; /* Align items in a column */
+    margin-left: 410px;
+    
+}
+
+
+/* Dropdown Button for Supplier Details */
+#order-details-dropdown {
+    cursor: pointer;
+    color: #f8f8ff; /* White color for text */
+    background-color: #61396f; /* Green background for the button */
+    border: none; /* Remove border */
+    border-radius: 4px; /* Rounded corners */
+    padding: 10px 15px; /* Padding for button */
+    font-size: 16px; /* Adjust font size */
+    margin-bottom: 10px; /* Space below the button */
+    transition: background-color 0.3s ease; /* Smooth transition for hover effect */
+}
+
+.expanded-order-details {
+    display: none;
+    padding: 10px;
+    background-color: transparent;
+    border-radius: 8px;
+    margin-top: 10px;
+    color: #000;
+    text-align: left;
+	color: #f8f8ff;
+}
+
+/* Modal Header */
+.modal-header {
+    background-color: #7b4e83;
+    color: #fff;
+    border-bottom: 1px solid #f1f1f1;
+}
+
+/* Modal Content */
+.modal-content {
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+/* Modal Title */
+.modal-title {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+/* Modal Body */
+.modal-body {
+    padding: 20px;
+    background-color: #f9f9f9;
+    color: #000;
+}
+
+/* Modal Footer Buttons */
+.modal-footer .btn {
+    border-radius: 4px;
+    padding: 10px 20px;
+    font-size: 14px;
+}
+
+.modal-footer .btn-primary {
+    background-color: #7b4e83;
+    color: #fff;
+    border: none;
+    transition: background-color 0.3s ease;
+}
+
+.modal-footer .btn-primary:hover {
+    background-color: #5f3c66;
+}
+
+.modal-footer .btn-secondary {
+    background-color: #ddd;
+    color: #000;
+    border: none;
+}
+
+.modal-footer .btn-secondary:hover {
+    background-color: #bbb;
+}
+
+/* Style for the Place Order button */
+.btn-success {
+    background-color: #7b4e83; /* Purple background */
+    color: #fff; /* White text */
+    border: none; /* No border */
+    padding: 10px 20px; /* Adequate padding */
+    font-size: 16px; /* Larger text */
+    border-radius: 4px; /* Rounded corners */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+
+}
+
+.btn-success:hover {
+    background-color: #5f3c66; /* Darker purple on hover */
+}
+
+/* Style for the Change Status button */
+.change-status-btn {
+    background-color: #4c8fbd; /* Light blue background */
+    color: #fff; /* White text */
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 4px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.change-status-btn:hover {
+    background-color: #3d72a4; /* Darker blue on hover */
+    transform: scale(1.05);
+}
+
+/* General Button Styles */
+button {
+    cursor: pointer; /* Pointer cursor on hover */
+    outline: none; /* Remove outline on focus */
+}
+
+/* Modal Design */
+.modal-content {
+    border-radius: 8px; /* Rounded corners */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+    overflow: hidden; /* Prevent overflow */
+    box-sizing: border-box; /* Include padding and borders in width and height */
+    width: 530px;
+}
+
+/* Modal Header */
+.modal-header {
+    background-color: #7b4e83; /* Purple header */
+    color: white;  /* White text */
+    border-radius: 8px 8px 0 0;  /* Rounded top corners */
+    padding: px;
+    display: flex;  /* Flexbox for alignment */
+    justify-content: center;  /* Center the content horizontally */
+    align-items: center;  /* Center the content vertically */
+}
+
+.modal-title {
+    font-size: 32px;  /* Increase font size for better readability */
+    font-weight: 900;  /* Bold font for the title */
+    margin: 0;
+}
+
+
+.btn-close {
+    border: none;
+    font-size: 1.5rem;
+    color: white;
+    cursor: pointer;
+    margin-right: 50px;
+}
+
+.modal-body {
+    padding: 20px;
+}
+
+.form-label {
+    font-weight: bold;
+    margin-bottom: 8px;
+}
+
+.form-select,
+.form-control {
+    border-radius: 4px; /* Rounded corners */
+    border: 1px solid #ccc; /* Light border */
+    padding: 10px; /* Padding for inputs */
+    width: 500px; /* Full width */
+    margin-bottom: 15px; /* Space between form fields */
+}
+
+.form-select:focus,
+.form-control:focus {
+    border-color: #7b4e83; /* Purple border when focused */
+    box-shadow: 0 0 5px rgba(123, 78, 131, 0.5); /* Subtle purple glow */
+}
+
+.col-12 {
+    margin-bottom: 20px; /* Space between input fields */
+}
+
+#unit-of-measure {
+    font-weight: bold;
+    color: #7b4e83;
+}
+
+.modal-footer {
+    border-radius: 0 0 8px 8px; /* Rounded bottom corners */
+    padding: 10px 15px; /* Adjusted padding to align with modal body */
+    border-top: 1px solid #e0e0e0; /* Subtle border to separate footer from body */
+}
+
+.modal-footer button {
+    padding: 10px 20px;
+}
+
+.btn-secondary {
+    background-color: #d3d3d3; /* Light gray background */
+    border-radius: 4px;
+    font-weight: bold;
+    border: none;
+}
+
+.btn-secondary:hover {
+    background-color: #bbb; /* Darker gray on hover */
+}
+
+.btn-primary {
+    background-color: #7b4e83; /* Purple background */
+    color: #fff; /* White text */
+    border: none;
+    border-radius: 4px;
+    font-weight: bold;
+}
+
+.btn-primary:hover {
+    background-color: #5f3c66; /* Darker purple on hover */
+}

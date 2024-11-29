@@ -8,6 +8,7 @@
     
     <!-- Custom CSS -->
     <link rel="stylesheet" href="{% static 'css/static.css' %}">
+
     
     <!-- Additional CSS for specific pages -->
     {% block extra_css %}{% endblock %}
@@ -24,8 +25,11 @@
     
     <!-- Bootstrap JS Bundle -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Bootstrap JS (bundle includes both Bootstrap's JS and Popper.js) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+
     
-    <!-- <script src="{% static 'js/sidebar.js' %}"></script> -->
 
 
     {% block extra_js %}{% endblock %}

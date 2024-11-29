@@ -1,0 +1,235 @@
+/* Table Container */
+.table-container {
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 20px;
+    background: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border: 1px solid #ffffff;
+    margin-left: 180px;
+}
+
+.table-container h2 {
+    margin-bottom: 20px;
+    font-size: 28px;
+    color: #7b4e83; /* Purple heading */
+    font-weight: 700;
+}
+
+/* Table Styles */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #7b4e83; /* Purple table background */
+    color: white; /* White text for contrast */
+    text-align: center; /* Center content in the table */
+
+}
+
+/* Targeting table headers specifically */
+table th {
+    background-color: #7b4e83 !important; /* Purple background */
+    color: white !important; /* White text */
+    padding: 15px;
+    text-align: center;
+    font-weight: bold; /* Make it bold */
+}
+
+/* Alternating Row Colors */
+table tr:nth-child(even) {
+    background-color: #9b72a1; /* Lighter purple for alternating rows */
+}
+
+#edit-button {
+    background-color: #7b4e83;
+    border: none;
+    color: white;
+    border-radius: 6px;
+    width: 100px;
+}
+
+#edit-button:hover {
+    background-color: #5e3b62;
+}
+
+/* Manual Adjust Form */
+.form-container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    background: #f8f8f8;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-left: 460px;
+}
+
+.form-container h2 {
+    margin-bottom: 20px;
+    font-size: 28px;
+    color: #7b4e83;
+    text-align: center;
+}
+
+#manual-adjust-form button {
+    background-color: #7b4e83;
+    border: none;
+    color: white;
+    border-radius: 6px;
+}
+
+#manual-adjust-form button:hover {
+    background-color: #5e3b62;
+}
+
+.hidden {
+    display: none;
+}
+
+#add-supplier-button {
+    background-color: #7b4e83; /* Purple background */
+    color: white; /* White text */
+    font-weight: bold;
+    border: none;
+    border-radius: 6px; /* Rounded edges */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    height: 50px;
+    width: 150px;
+}
+
+#add-supplier-button:hover {
+    background-color: #5e3b62; /* Darker purple on hover */
+    color: white; /* Keep text white */
+    cursor: pointer; /* Pointer cursor for better UX */
+}
+
+
+/* Adjust Heading and Button Layout */
+.table-container .d-flex {
+    align-items: center;
+    justify-content: space-between; /* Button on left, heading centered */
+    position: relative;
+}
+
+/* MODAL DESIGN */
+.modal-content {
+    width: 100%;
+    max-width: 1000px; /* Ensures modal has a larger width */
+    margin: 0 auto;
+    background: white; /* White background */
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    border: 1px solid var(--dark-grey, #d3d3d3);
+    background-image: linear-gradient(to bottom right, #fff, #f8f8f8); /* Gradient background */
+    padding: 20px;
+}
+
+/* Modal Header */
+.modal-header {
+    background-color: #7b4e83; /* Purple background */
+    color: white;
+    padding: 20px;
+    text-align: center;
+    border-radius: 8px 8px 0 0; /* Rounded top corners */
+    font-size: 24px;
+    font-weight: bold;
+}
+
+/* Modal Body */
+.modal-body {
+    display: flex;
+    flex-wrap: wrap; /* Allow items to wrap into the next line if needed */
+    gap: 20px; /* Consistent gap between all form controls */
+    padding: 20px;
+    justify-content: center; /* Center-align form controls */
+}
+
+/* FORM CONTAINER */
+.form-container {
+    width: 100%;
+    padding: 0; /* Removed default padding */
+    margin: 0;
+}
+
+/* FORM HEADER */
+.form-container h2 {
+    margin-bottom: 20px;
+    font-size: 28px;
+    color: #7b4e83; /* Purple heading */
+    text-align: center;
+    font-weight: 900; /* Bold font weight */
+}
+
+/* FORM ELEMENTS */
+.form-container input,
+.form-container textarea,
+.form-container select {
+    width: calc(100% - 24px); /* Full width minus padding */
+    padding: 12px;
+    margin-bottom: 16px;
+    border: 2px solid black; /* Black border for consistency */
+    border-radius: 6px;
+    background: #f8f8f8; /* Light grey background */
+    color: black;
+    resize: none; /* Prevent resizing for textareas */
+}
+
+/* Custom dropdown arrow */
+.form-container select {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background-image: url('data:image/svg+xml;charset=US-ASCII,<svg xmlns="http://www.w3.org/2000/svg" width="10" height="6" viewBox="0 0 10 6"><path fill="black" d="M0 0l5 5 5-5z"/></svg>'); /* Custom arrow */
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 10px;
+    padding-right: 40px; /* Space for arrow */
+}
+
+/* BUTTON STYLES */
+.form-container button {
+    padding: 12px 20px;
+    background-color: #7b4e83; /* Purple button */
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 16px;
+    cursor: pointer;
+    width: 100%; /* Full-width button */
+    transition: background-color 0.3s ease;
+}
+
+/* BUTTON HOVER EFFECT */
+.form-container button:hover {
+    background-color: #37063c; /* Darker purple on hover */
+}
+
+/* MODAL FOOTER */
+.modal-footer {
+    text-align: center;
+    padding: 15px;
+    background-color: #f8f9fa; /* Light background */
+    border-radius: 0 0 8px 8px; /* Rounded bottom corners */
+}
+
+/* FOOTER BUTTON */
+.modal-footer .btn {
+    padding: 16px 24px;
+    background-color: #7b4e83;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+/* FOOTER BUTTON HOVER */
+.modal-footer .btn:hover {
+    background-color: #37063c; /* Darker purple on hover */
+}
+
+/* Optional: Add spacing between individual columns explicitly if needed */
+.modal-body > div {
+    margin-right: 40px; /* Adjust the gap between columns manually */
+}
