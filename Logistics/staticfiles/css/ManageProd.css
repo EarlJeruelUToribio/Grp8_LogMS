@@ -1,19 +1,20 @@
-/* Apply full-page layout to center everything */
 .container {
-    max-width: 1200px; /* Maximum width of the container */
-    margin: 0 auto; /* Center the container horizontally */
-    padding: 20px; /* Padding inside the container */
-    background-color: #fff; /* Background color */
-    border-radius: 8px; /* Rounded corners */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Shadow for some depth */
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     display: flex;
-    flex-direction: column; /* Stack content vertically */
-    align-items: center; /* Center content horizontally */
-    justify-content: flex-start; /* Align content to the top (you can adjust as needed) */
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
     margin-left: 250px;
     margin-top: 100px;
-    
+    padding-bottom: 30px;
+
 }
+
 
 body, html {
     height: 100%;
