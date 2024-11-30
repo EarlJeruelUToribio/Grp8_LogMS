@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.shortcuts import render, redirect, get_object_or_404  # Add get_object_or_404 here
 from django.views.decorators.http import require_http_methods
+from django.http import JsonResponse
 from django.contrib import messages
 from django.utils import timezone
 from datetime import timedelta
@@ -167,7 +168,6 @@ def update_material(request, pk):
 
 def AddProduct_view(request):
     if request.method == 'POST':
-        # Handle form submission
         product_name = request.POST.get('product-name')
         product_description = request.POST.get('product-description')
         product_category = request.POST.get('product-category')
@@ -178,7 +178,6 @@ def AddProduct_view(request):
         material_quantities = request.POST.getlist('material_quantity[]')
 
         try:
-            # Create and save the product
             product = Product(
                 ProductName=product_name,
                 ProductDescription=product_description,
@@ -188,36 +187,25 @@ def AddProduct_view(request):
             )
             product.save()
 
-            # Associate materials with the product
             for i in range(len(material_ids)):
                 material_id = material_ids[i]
                 material_unit_of_measure = material_units_of_measure[i]
                 material_quantity = material_quantities[i]
 
-                # Get the material instance
                 material = get_object_or_404(Inventory, pk=material_id)
                 
-                # Create Ingredient instance and save it
                 ingredient = Ingredient(
-                    IngredientName=material.ItemName,  # Assuming you want to store the name
+                    IngredientName=material.ItemName,
                     ItemUnitMeasure=material_unit_of_measure,
                     MeasureCount=material_quantity,
-                    Inventory_ID=material  # Set the foreign key
+                    Inventory_ID=material
                 )
                 ingredient.save()
+                product.Ingredients.add(ingredient)
 
-                # Add the ingredient to the product's ingredients
-                product.Ingredients.add(ingredient)  # Use the ManyToManyField relationship
-
-            messages.success(request, 'Product added successfully!')
-            return redirect('ManageProduct')  # Redirect to ManageProduct after submission
+            return JsonResponse({'success': True})
         except Exception as e:
-            messages.error(request, f'Error adding product: {str(e)}')
-
-    # Fetch all materials (Inventory items) for the dropdown
-    materials = Inventory.objects.all()
-    materials_list = list(materials.values('Inventory_ID', 'ItemName', 'UnitOfMeasure'))  # Convert QuerySet to list of dicts
-    return render(request, 'AddProduct.html', {'materials': materials_list})
+            return JsonResponse({'success': False, 'error': str(e)})
 
 def ManageProduct_view(request):
     products = Product.objects.all()  # Fetch all products
