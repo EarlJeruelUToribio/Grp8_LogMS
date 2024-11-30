@@ -85,24 +85,37 @@ def ManageOrder_view(request):
 def AddMaterial_view(request):
     if request.method == 'POST':
         try:
+            # Handle form submission
+            item_name = request.POST.get('item-name')
+            item_description = request.POST.get('item-description')
+            item_category = request.POST.get('item-category')
+            unit_of_measure = request.POST.get('unit-of-measure')
+            purchase_price = request.POST.get('purchase-price')
+            reorder_level = request.POST.get('reorder-level')
+            perishable = request.POST.get('perishable') == 'true'
+            days_before_expiry = request.POST.get('days-before-expiry') if perishable else None
+
+            # Create and save the Inventory instance
             inventory = Inventory(
-                ItemName=request.POST.get('item-name'),
-                ItemDescription=request.POST.get('item-description'),
-                ItemCategory=request.POST.get('item-category'),
-                UnitOfMeasure=request.POST.get('unit-of-measure'),
-                PurchasePrice=request.POST.get('purchase-price'),
-                ReorderLevel=request.POST.get('reorder-level'),
-                Perishable=request.POST.get('perishable') == 'true',
-                DaysBeforeExpiry=request.POST.get('days-before-expiry') if request.POST.get('perishable') == 'true' else None,
-                Current_Stock=0 
+                ItemName=item_name,
+                ItemDescription=item_description,
+                ItemCategory=item_category,
+                UnitOfMeasure=unit_of_measure,
+                PurchasePrice=purchase_price,
+                ReorderLevel=reorder_level,
+                Perishable=perishable,
+                DaysBeforeExpiry=days_before_expiry,
+                Current_Stock=0  # Default to 0 for new items
             )
             inventory.save()
+
             messages.success(request, 'Material added successfully!')
-            return redirect('AddMaterial')
+            return redirect('ManageMaterial')  # Redirect to ManageMaterial after submission
         except Exception as e:
             messages.error(request, f'Error adding material: {str(e)}')
-    
-    return render(request, 'AddMaterial.html')
+
+    # If the request method is GET, redirect to ManageMaterial instead of rendering a non-existing template
+    return redirect('ManageMaterial')
 
 def increase_stock(material_id, amount):
     material = get_object_or_404(Inventory, pk=material_id)

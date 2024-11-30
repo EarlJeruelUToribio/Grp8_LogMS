@@ -9,7 +9,6 @@
 <section id="supplier-table" class="container table-container mt-5">
     <h2 class="text-center">SUPPLIER MANAGEMENT</h2>
     <div class="d-flex align-items-center justify-content-between mb-3">
-        <!-- Link to another HTML file -->
         <a href="#" id="add-supplier-button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addSupplierModal">
             Add Supplier
         </a>        
@@ -21,6 +20,7 @@
                 <th>Supplier Name</th>
                 <th>Supplier Address</th>
                 <th>Supplier Email</th>
+                <th>Contact Number</th>
                 <th>Payment Terms</th>
                 <th>Status</th>
                 <th>Actions</th>
@@ -32,6 +32,7 @@
                 <td>{{ supplier.SupplierName }}</td>
                 <td>{{ supplier.SupplierDesc }}</td>
                 <td>{{ supplier.SupplierNumber }}</td>
+                <td>{{ supplier.ContactNumber }}</td>
                 <td>{{ supplier.PaymentTerms }}</td>
                 <td>{{ supplier.Status }}</td>
                 <td>
@@ -47,15 +48,13 @@
 <div class="modal fade" id="addSupplierModal" tabindex="-1" aria-labelledby="addSupplierModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
-            <!-- Modal Header -->
             <div class="modal-header">
                 <h5 class="modal-title" id="addSupplierModalLabel">ADD SUPPLIER</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
 
-            <!-- Modal Body -->
             <div class="modal-body">
-                <form method="POST" class="row g-3"> <!-- Added method POST and CSRF token -->
+                <form method="POST" class="row g-3" id="add-supplier-form">
                     {% csrf_token %}
                     
                     <!-- Supplier Name -->
@@ -76,6 +75,12 @@
                         <input type="email" id="supplier-email" name="supplier-email" class="form-control" required>
                     </div>
 
+                    <!-- Contact Number -->
+                    <div class="col-md-6">
+                        <label for="contact-number" class="form-label">Contact Number:</label>
+                        <input type="text" id="contact-number" name="contact-number" class="form-control" required>
+                    </div>
+
                     <!-- Payment Terms -->
                     <div class="col-md-6">
                         <label for="payment-terms" class="form-label">Payment Terms:</label>
@@ -83,8 +88,7 @@
                             <option value="cash-on-delivery">Cash on Delivery</option>
                             <option value="gcash">Gcash</option>
                             <option value="paymaya">Paymaya</option>
-                            <option value="bank-transfer">Bank Transfer</option>
-                        </select>
+                            <option value="bank-transfer">Bank Transfer</option> </select>
                     </div>
 
                     <!-- Add Material Button -->
@@ -94,14 +98,13 @@
 
                     <!-- Materials Section -->
                     <div id="materials-section" class="col-12 mt-4">
-                        <h3 id="materials-heading" class="text-center" style="display: none;">MATERIALS</h3> <!-- Hide initially -->
-                        <div id="material-fields-container"></div> <!-- Container for dynamic material fields -->
+                        <h3 id="materials-heading" class="text-center" style="display: none;">MATERIALS</h3>
+                        <div id="material-fields-container"></div>
                     </div>
                 </form>
             </div>
-            <!-- Modal Footer -->
             <div class="modal-footer">
-                <button type="submit" class="btn btn-primary w-100">Add Supplier</button>
+                <button type="submit" class="btn btn-primary w-100" form="add-supplier-form">Add Supplier</button>
             </div>
         </div>
     </div>
@@ -109,7 +112,6 @@
 
 <!-- Hidden Materials Data -->
 <div id="materials-data" style="display: none;">{{ materials|json_script:"materials-data" }}</div>
-
 
 {% endblock %}
 
