@@ -125,7 +125,9 @@
                         <label for="supplier-name" class="form-label">Supplier Name:</label>
                         <select id="supplier-name" name="supplier-name" class="form-select" required>
                             <option value="" disabled selected>Select Supplier</option>
-                            <!-- Supplier options will be populated based on selected material -->
+                            {% for supplier in suppliers %}
+                                <option value="{{ supplier.Supplier_ID }}">{{ supplier.SupplierName }}</option>
+                            {% endfor %}
                         </select>
                     </div>
                     
@@ -134,7 +136,6 @@
                         <label for="material" class="form-label">Material:</label>
                         <select id="material" name="material" class="form-select" required>
                             <option value="" disabled selected>Select Material</option>
-                            <!-- Material options will be populated here -->
                         </select>
                     </div>
 

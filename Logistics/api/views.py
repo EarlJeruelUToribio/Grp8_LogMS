@@ -25,45 +25,56 @@ def home_view(request):
 def Sidebar_view(request):
     return render(request, 'Sidebar.html')
 
+@require_http_methods(["GET"])
+def get_material_details(request, material_id):
+    material = get_object_or_404(Inventory, pk=material_id)
+    return JsonResponse({'PurchasePrice': material.PurchasePrice})
+
+@require_http_methods(["GET"])
+def get_materials_by_supplier(request):
+    supplier_id = request.GET.get('supplier_id')
+    materials = Inventory.objects.filter(Suppliers__Supplier_ID=supplier_id).values('Inventory_ID', 'ItemName')
+    return JsonResponse(list(materials), safe=False)
+
+@require_http_methods(["GET"])
+def get_suppliers_by_material(request):
+    material_id = request.GET.get('material_id')
+    suppliers = Supplier.objects.filter(Materials__Inventory_ID=material_id).values('Supplier_ID', 'SupplierName')
+    return JsonResponse(list(suppliers), safe=False)
+
 def PlaceOrder_view(request):
     if request.method == 'POST':
         # Handle form submission
         material_id = request.POST.get('material')
         quantity = request.POST.get('quantity')
-        supplier_name = request.POST.get('supplier-name')
+        supplier_id = request.POST.get('supplier-name')
         status = request.POST.get('status')
 
         # Retrieve the Inventory instance using the material_id
         material_instance = get_object_or_404(Inventory, Inventory_ID=material_id)
+        supplier_instance = get_object_or_404(Supplier, Supplier_ID=supplier_id)
 
         # Process the order (e.g., save it to the database)
         Order.objects.create(
-            Items=material_instance,  # Use the actual Inventory instance
+            Items=material_instance,
             Quantity=quantity,
             OrderStatus=status,
-            Supplier_id=supplier_name  # Save the supplier ID
+            Supplier=supplier_instance
         )
 
         messages.success(request, 'Order submitted successfully!')
         return redirect('ManageOrder')  # Redirect to ManageOrder after submission
 
     else:
-        # Retrieve materials and suppliers from the database
+        # Fetch materials and suppliers from the database
         materials = Inventory.objects.all()
-        suppliers = Supplier.objects.all()  # Fetch all suppliers
+        suppliers = Supplier.objects.all()
 
-        # Create a dictionary to map materials to their suppliers
-        material_suppliers = {}
-        for material in materials:
-            # Get suppliers associated with the current material
-            material_suppliers[material.Inventory_ID] = list(material.supplier_set.values('Supplier_ID', 'SupplierName'))
-
-        return render(request, 'PlacedOrder.html', {
+        return render(request, 'ManageOrder.html', {
             'materials': materials,
             'suppliers': suppliers,
-            'material_suppliers': material_suppliers,
         })
-    
+
 def ManageOrder_view(request):
     orders = Order.objects.select_related('Items', 'Supplier').all()  # Ensure related data is fetched
 
@@ -80,7 +91,18 @@ def ManageOrder_view(request):
         except Order.DoesNotExist:
             messages.error(request, 'Order not found.')
 
-    return render(request, 'ManageOrder.html', {'orders': orders})
+    return render(request, 'ManageOrder.html', {'orders': orders, 'suppliers': Supplier.objects.all()})
+
+@require_http_methods(["GET"])
+def get_min_order_qty(request):
+    supplier_id = request.GET.get('supplier_id')
+    material_id = request.GET.get('material_id')
+    
+    # Assuming you have a way to get the minimum order quantity for the supplier and material
+    # This is a placeholder; replace it with your actual logic
+    min_order_qty = 1  # Replace with actual logic to fetch minimum order quantity
+    return JsonResponse({'minOrderQty': min_order_qty})
+
 
 @require_http_methods(["GET", "POST"])
 def AddMaterial_view(request):
@@ -174,10 +196,10 @@ def AddProduct_view(request):
         product_image = request.FILES.get('product-image')
         product_price = request.POST.get('product-price')
         material_ids = request.POST.getlist('material_name[]')
-        material_units_of_measure = request.POST.getlist('material_unit_of_measure[]')
         material_quantities = request.POST.getlist('material_quantity[]')
 
         try:
+            # Create and save the Product instance
             product = Product(
                 ProductName=product_name,
                 ProductDescription=product_description,
@@ -187,29 +209,38 @@ def AddProduct_view(request):
             )
             product.save()
 
+            # Check that the length of material_ids and material_quantities match
             for i in range(len(material_ids)):
-                material_id = material_ids[i]
-                material_unit_of_measure = material_units_of_measure[i]
-                material_quantity = material_quantities[i]
+                if i < len(material_quantities):  # Prevent index out of range
+                    material_id = material_ids[i]
+                    material_quantity = material_quantities[i]
 
-                material = get_object_or_404(Inventory, pk=material_id)
-                
-                ingredient = Ingredient(
-                    IngredientName=material.ItemName,
-                    ItemUnitMeasure=material_unit_of_measure,
-                    MeasureCount=material_quantity,
-                    Inventory_ID=material
-                )
-                ingredient.save()
-                product.Ingredients.add(ingredient)
+                    # Get the material instance
+                    material = get_object_or_404(Inventory, pk=material_id)
+
+                    # Create and save the Ingredient instance
+                    ingredient = Ingredient(
+                        IngredientName=material.ItemName,  # Correctly set the name
+                        ItemUnitMeasure=material.UnitOfMeasure,  # Set the unit of measure
+                        MeasureCount=material_quantity,  # Set the quantity
+                        Inventory_ID=material  # Pass the actual Inventory instance
+                    )
+                    ingredient.save()
+                    product.Ingredients.add(ingredient)
 
             return JsonResponse({'success': True})
         except Exception as e:
             return JsonResponse({'success': False, 'error': str(e)})
 
+    return JsonResponse({'success': False, 'error': 'Invalid request method.'})
+
 def ManageProduct_view(request):
     products = Product.objects.all()  # Fetch all products
-    return render(request, 'ManageProducts.html', {'products': products})
+    materials = Inventory.objects.all()  # Fetch all materials
+    return render(request, 'ManageProducts.html', {
+        'products': products,
+        'materials': materials  # Pass materials to the template
+    })
 
 def EditProduct_view(request, pk):
     product = get_object_or_404(Product, pk=pk)

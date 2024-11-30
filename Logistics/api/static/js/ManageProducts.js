@@ -42,7 +42,7 @@ document.addEventListener("DOMContentLoaded", () => {
             <div class="row g-3 align-items-center">
                 <div class="col-md-4">
                     <label for="material-name-${materialCount}" class="form-label">Material Name:</label>
-                    <select id="material-name-${materialCount}" name="material_name[]" class="form-select" required onchange="updateUnitOfMeasure(${materialCount})">
+                    <select id="material-name-${materialCount}" name="material_name[]" class="form-select" required onchange="updateMaterialUnitOfMeasure(${materialCount})">
                         <option value="">Select Material</option>
                         ${materials.map(material => `
                             <option value="${material.Inventory_ID}" data-unit="${material.UnitOfMeasure}">
@@ -68,7 +68,7 @@ document.addEventListener("DOMContentLoaded", () => {
         materialCount++;
     };
 
-    window.updateUnitOfMeasure = (index) => {
+    window.updateMaterialUnitOfMeasure = (index) => {
         const materialSelect = document.getElementById(`material-name-${index}`);
         const selectedOption = materialSelect.options[materialSelect.selectedIndex];
         const unitOfMeasureInput = document.getElementById(`material-unit-of-measure-${index}`);
@@ -82,4 +82,59 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const addMaterialButton = document.getElementById('add-material-button');
     addMaterialButton.addEventListener('click', addMaterialField);
+
+    // INGREDIENT FIELDS DYNAMIC HANDLING
+    const ingredientsData = document.getElementById('ingredients-data').textContent;
+    const ingredients = JSON.parse(ingredientsData);
+    let ingredientCount = 0;
+    const ingredientFieldsContainer = document.getElementById('ingredient-fields-container');
+    const ingredientsHeading = document.getElementById('ingredients-heading');
+
+    const addIngredientField = () => {
+        const ingredientField = document.createElement('div');
+        ingredientField.classList.add('ingredient-field');
+        ingredientField.innerHTML = `
+            <div class="row g-3">
+                <div class="col-md-4">
+                    <label for="ingredient-name-${ingredientCount}" class="form-label">Ingredient Name:</label>
+                    <select id="ingredient-name-${ingredientCount}" name="ingredient_name[]" class="form-select" required onchange="updateIngredientUnitOfMeasure(${ingredientCount})">
+                        <option value="">Select Ingredient</option>
+                        ${ingredients.map(ingredient => `
+                            <option value="${ingredient.Inventory_ID}" data-unit="${ingredient.UnitOfMeasure}">
+                                ${ingredient.ItemName}
+                            </option>`).join('')}
+                    </select>
+                </div>
+                <div class="col-md-4">
+                    <label for="ingredient-unit-of-measure-${ingredientCount}" class="form-label">Unit of Measure:</label>
+                    <input type="text" id="ingredient-unit-of-measure-${ingredientCount}" name="ingredient_unit_of_measure[]" class="form-control" required readonly>
+                </div>
+                <div class="col-md-3">
+                    <label for="ingredient-quantity-${ingredientCount}" class="form-label">Ingredient Quantity:</label>
+                    <input type="number" id="ingredient-quantity-${ingredientCount}" name="ingredient_quantity[]" class="form-control" required>
+                </div>
+                <div class="col-md-1">
+                    <button type="button" class="btn btn-danger" onclick="deleteIngredientField(${ingredientCount})">Delete</button>
+                </div>
+            </div>
+        `;
+        ingredientFieldsContainer.appendChild(ingredientField);
+        if (ingredientsHeading.style.display === 'none') ingredientsHeading.style.display = 'block';
+        ingredientCount++;
+    };
+
+    window.updateIngredientUnitOfMeasure = (index) => {
+        const ingredientSelect = document.getElementById(`ingredient-name-${index}`);
+        const selectedOption = ingredientSelect.options[ingredientSelect.selectedIndex];
+        const unitOfMeasureInput = document.getElementById(`ingredient-unit-of-measure-${index}`);
+        unitOfMeasureInput.value = selectedOption.value ? selectedOption.getAttribute('data-unit') : '';
+    };
+
+    window.deleteIngredientField = (index) => {
+        const ingredientField = document.querySelectorAll('.ingredient-field')[index];
+        if (ingredientField) ingredientField.remove();
+    };
+
+    const addIngredientButton = document.getElementById('add-ingredient-button');
+    addIngredientButton.addEventListener('click', addIngredientField);
 });
