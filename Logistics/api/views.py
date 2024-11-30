@@ -48,25 +48,20 @@ def PlaceOrder_view(request):
         messages.success(request, 'Order submitted successfully!')
         return redirect('ManageOrder')  # Redirect to ManageOrder after submission
 
-    else:
-        # Retrieve materials and suppliers from the database
-        materials = Inventory.objects.all()
-        suppliers = Supplier.objects.all()  # Fetch all suppliers
+    # If not a POST request, return the modal with materials and suppliers
+    materials = Inventory.objects.all()
+    suppliers = Supplier.objects.all()  # Fetch all suppliers
 
-        # Create a dictionary to map materials to their suppliers
-        material_suppliers = {}
-        for material in materials:
-            # Get suppliers associated with the current material
-            material_suppliers[material.Inventory_ID] = list(material.supplier_set.values('Supplier_ID', 'SupplierName'))
-
-        return render(request, 'PlacedOrder.html', {
-            'materials': materials,
-            'suppliers': suppliers,
-            'material_suppliers': material_suppliers,
-        })
+    return render(request, 'ManageOrder.html', {
+        'materials': materials,
+        'suppliers': suppliers,
+        'orders': Order.objects.select_related('Items', 'Supplier').all()  # Fetch orders for the manage order view
+    })
     
 def ManageOrder_view(request):
     orders = Order.objects.select_related('Items', 'Supplier').all()  # Ensure related data is fetched
+    materials = Inventory.objects.all()  # Fetch all materials
+    suppliers = Supplier.objects.all()  # Fetch all suppliers
 
     if request.method == 'POST':
         # Handle status update
@@ -81,7 +76,11 @@ def ManageOrder_view(request):
         except Order.DoesNotExist:
             messages.error(request, 'Order not found.')
 
-    return render(request, 'ManageOrder.html', {'orders': orders})
+    return render(request, 'ManageOrder.html', {
+        'orders': orders,
+        'materials': materials,
+        'suppliers': suppliers,
+    })
 
 def get_materials_by_supplier(request):
     supplier_id = request.GET.get('supplier_id')

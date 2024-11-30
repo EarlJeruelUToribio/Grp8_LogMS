@@ -93,7 +93,7 @@
                     <label for="new-status">Select New Status:</label>
                     <select name="new_status" id="new-status" class="form-select">
                         <option value="Placed">Placed</option>
-                        <option value="Shipped">Shipped</option>
+                        <option value=" Shipped">Shipped</option>
                         <option value="Completed">Completed</option>
                         <option value="Cancelled">Cancelled</option>
                     </select>
@@ -111,29 +111,14 @@
 <div class="modal fade" id="placeOrderModal" tabindex="-1" aria-labelledby="placeOrderModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
-            <form method="POST" id="place-order-form" class="row g-3">
+            <form method="POST" id="place-order-form" class="row g-3" action="{% url 'PlaceOrder' %}">
                 {% csrf_token %}
                 <div class="modal-header">
                     <h5 class="modal-title" id="placeOrderModalLabel">Place Order</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <div class="col-12">
-                        <label for="material" class="form-label">Material:</label>
-                        <select id="material" name="material" class="form-select" required>
-                            <option value="" disabled selected>Select Material</option>
-                            {% for material in materials %}
-                            <option value="{{ material.Inventory_ID }}" data-price="{{ material.PurchasePrice }}" data-uom="{{ material.UnitOfMeasure }}">{{ material.ItemName }}</option>
-                            {% endfor %}
-                        </select>
-                    </div>
-
-                    <div class="col-12">
-                        <label for="quantity" class="form-label">Quantity:</label>
-                        <input type="number" class="form-control" id="quantity" name="quantity" required>
-                        <span id="unit-of-measure"></span>
-                    </div>
-
+                    <!-- Supplier Selection -->
                     <div class="col-12">
                         <label for="supplier-name" class="form-label">Supplier Name:</label>
                         <select id="supplier-name" name="supplier-name" class="form-select" required>
@@ -143,7 +128,26 @@
                             {% endfor %}
                         </select>
                     </div>
+                    
+                    <!-- Material Selection -->
+                    <div class="col-12">
+                        <label for="material" class="form-label">Material:</label>
+                        <select id="material" name="material" class="form-select" required>
+                            <option value="" disabled selected>Select Material</option>
+                            {% for material in materials %}
+                                <option value="{{ material.Inventory_ID }}" data-price="{{ material.PurchasePrice }}">{{ material.ItemName }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
 
+                    <!-- Quantity Input -->
+                    <div class="col-12">
+                        <label for="quantity" class="form-label">Quantity:</label>
+                        <input type="number" class="form-control" id="quantity" name="quantity" required>
+                        <span id="unit-of-measure"></span>
+                    </div>
+
+                    <!-- Status and Price Info -->
                     <input type="hidden" id="status" name="status" value="Placed">
                     <div class="col-12">
                         <p>Base Price: <span id="base-price">0.00</span></p>
@@ -162,42 +166,47 @@
 
 {% block extra_js %}
 <script>
-    document.getElementById('material').addEventListener('change', function() {
-        const selectedMaterial = this.options[this.selectedIndex];
-        const basePrice = parseFloat(selectedMaterial.getAttribute('data-price'));
-        const selectedMaterialId = this.value;
+    document.addEventListener('DOMContentLoaded', function() {
         const supplierSelect = document.getElementById('supplier-name');
+        const materialSelect = document.getElementById('material');
+        const basePriceElement = document.getElementById('base-price');
+        const totalCostElement = document.getElementById('total-cost');
+        const quantityInput = document.getElementById('quantity');
 
-        // Update base price display
-        document.getElementById('base-price').textContent = basePrice.toFixed(2);
-        
-        // Clear previous supplier options
-        supplierSelect.innerHTML = '<option value="" disabled selected>Select Supplier</option>';
-        
-        // Populate suppliers based on selected material
-        const suppliers = {{ material_suppliers|safe }};
-        if (suppliers[selectedMaterialId]) {
-            suppliers[selectedMaterialId].forEach(supplier => {
-                const option = document.createElement('option');
-                option.value = supplier.Supplier_ID;
-                option.textContent = supplier.SupplierName;
-                supplierSelect.appendChild(option);
-            });
+        supplierSelect.addEventListener('change', function() {
+            const supplierId = this.value;
+            fetch(`/get_materials_by_supplier?supplier_id=${supplierId}`)
+                .then(response => response.json())
+                .then(data => {
+                    materialSelect.innerHTML = '<option value="" disabled selected>Select Material</option>';
+                    data.forEach(material => {
+                        const option = document.createElement('option');
+                        option.value = material.Inventory_ID;
+                        option.textContent = material.ItemName;
+                        option.setAttribute('data-price', material.PurchasePrice); // Store price in data attribute
+                        materialSelect.appendChild(option);
+                    });
+                })
+                .catch(error => console.error('Error fetching materials:', error));
+        });
+
+        materialSelect.addEventListener('change', function() {
+            const selectedOption = this.options[this.selectedIndex];
+            const purchasePrice = parseFloat(selectedOption.getAttribute('data-price')) || 0;
+            basePriceElement.textContent = purchasePrice.toFixed(2); // Update base price display
+            calculateTotalCost(purchasePrice);
+        });
+
+        quantityInput.addEventListener('input', function() {
+            const purchasePrice = parseFloat(basePriceElement.textContent) || 0;
+            calculateTotalCost(purchasePrice);
+        });
+
+        function calculateTotalCost(basePrice) {
+            const quantity = parseInt(quantityInput.value) || 0;
+            const totalCost = (basePrice * quantity).toFixed(2);
+            totalCostElement.textContent = totalCost;
         }
-
-        // Reset quantity and total cost
-        document.getElementById('quantity').value = '';
-        document.getElementById('total-cost').textContent = '0.00';
-    });
-
-    document.getElementById('quantity').addEventListener('input', function() {
-        const quantity = parseInt(this.value) || 0; // Default to 0 if not a number
-        const selectedMaterial = document.getElementById('material').options[document.getElementById('material').selectedIndex];
-        const basePrice = parseFloat(selectedMaterial.getAttribute('data-price'));
-        const totalCost = basePrice * quantity;
-
-        document.getElementById('total-cost').textContent = totalCost.toFixed(2);
     });
 </script>
-<script src="{% static 'js/ManageOrders.js' %}"></script>
 {% endblock %}
