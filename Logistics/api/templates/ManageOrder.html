@@ -1,7 +1,6 @@
 {% extends 'Base.html' %}
 {% load static %}
 {% block extra_css %}
-
 <link rel="stylesheet" href="{% static 'css/ManageOrders.css' %}">
 {% endblock %}
 {% block content %}
@@ -39,7 +38,6 @@
                 </button>
                 <button class="sort-button">Sort by</button>
                 <input type="text" id="search-bar" placeholder="Search by Order ID" class="search-bar">
-                <!-- Place Order Button to trigger the modal -->
             </div>
             <table class="table table-striped orders-table">
                 <thead>
@@ -120,7 +118,22 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <!-- Supplier Selection -->
+                    <div class="col-12">
+                        <label for="material" class="form-label">Material:</label>
+                        <select id="material" name="material" class="form-select" required>
+                            <option value="" disabled selected>Select Material</option>
+                            {% for material in materials %}
+                            <option value="{{ material.Inventory_ID }}" data-price="{{ material.PurchasePrice }}" data-uom="{{ material.UnitOfMeasure }}">{{ material.ItemName }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <div class="col-12">
+                        <label for="quantity" class="form-label">Quantity:</label>
+                        <input type="number" class="form-control" id="quantity" name="quantity" required>
+                        <span id="unit-of-measure"></span>
+                    </div>
+
                     <div class="col-12">
                         <label for="supplier-name" class="form-label">Supplier Name:</label>
                         <select id="supplier-name" name="supplier-name" class="form-select" required>
@@ -130,23 +143,7 @@
                             {% endfor %}
                         </select>
                     </div>
-                    
-                    <!-- Material Selection -->
-                    <div class="col-12">
-                        <label for="material" class="form-label">Material:</label>
-                        <select id="material" name="material" class="form-select" required>
-                            <option value="" disabled selected>Select Material</option>
-                        </select>
-                    </div>
 
-                    <!-- Quantity Input -->
-                    <div class="col-12">
-                        <label for="quantity" class="form-label">Quantity:</label>
-                        <input type="number" class="form-control" id="quantity" name="quantity" required>
-                        <span id="unit-of-measure"></span>
-                    </div>
-
-                    <!-- Status and Price Info -->
                     <input type="hidden" id="status" name="status" value="Placed">
                     <div class="col-12">
                         <p>Base Price: <span id="base-price">0.00</span></p>
@@ -164,5 +161,43 @@
 {% endblock %}
 
 {% block extra_js %}
+<script>
+    document.getElementById('material').addEventListener('change', function() {
+        const selectedMaterial = this.options[this.selectedIndex];
+        const basePrice = parseFloat(selectedMaterial.getAttribute('data-price'));
+        const selectedMaterialId = this.value;
+        const supplierSelect = document.getElementById('supplier-name');
+
+        // Update base price display
+        document.getElementById('base-price').textContent = basePrice.toFixed(2);
+        
+        // Clear previous supplier options
+        supplierSelect.innerHTML = '<option value="" disabled selected>Select Supplier</option>';
+        
+        // Populate suppliers based on selected material
+        const suppliers = {{ material_suppliers|safe }};
+        if (suppliers[selectedMaterialId]) {
+            suppliers[selectedMaterialId].forEach(supplier => {
+                const option = document.createElement('option');
+                option.value = supplier.Supplier_ID;
+                option.textContent = supplier.SupplierName;
+                supplierSelect.appendChild(option);
+            });
+        }
+
+        // Reset quantity and total cost
+        document.getElementById('quantity').value = '';
+        document.getElementById('total-cost').textContent = '0.00';
+    });
+
+    document.getElementById('quantity').addEventListener('input', function() {
+        const quantity = parseInt(this.value) || 0; // Default to 0 if not a number
+        const selectedMaterial = document.getElementById('material').options[document.getElementById('material').selectedIndex];
+        const basePrice = parseFloat(selectedMaterial.getAttribute('data-price'));
+        const totalCost = basePrice * quantity;
+
+        document.getElementById('total-cost').textContent = totalCost.toFixed(2);
+    });
+</script>
 <script src="{% static 'js/ManageOrders.js' %}"></script>
 {% endblock %}

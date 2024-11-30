@@ -26,6 +26,7 @@ class Supplier(models.Model):
     SupplierName = models.CharField(max_length=255)
     SupplierDesc = models.TextField(blank=True, null=True)
     SupplierNumber = models.CharField(max_length=15, blank=True, null=True)
+    contact_number = models.CharField(max_length=15)
     Status = models.CharField(max_length=50, default='Active')
     MinOrderQty = models.IntegerField(default=0)
     PaymentTerms = models.CharField(max_length=100, blank=True, null=True)

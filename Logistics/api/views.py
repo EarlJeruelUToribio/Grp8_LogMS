@@ -1,3 +1,4 @@
+import json
 from django.shortcuts import render, redirect
 from django.shortcuts import render, redirect, get_object_or_404  # Add get_object_or_404 here
 from django.views.decorators.http import require_http_methods
@@ -25,56 +26,45 @@ def home_view(request):
 def Sidebar_view(request):
     return render(request, 'Sidebar.html')
 
-@require_http_methods(["GET"])
-def get_material_details(request, material_id):
-    material = get_object_or_404(Inventory, pk=material_id)
-    return JsonResponse({'PurchasePrice': material.PurchasePrice})
-
-@require_http_methods(["GET"])
-def get_materials_by_supplier(request):
-    supplier_id = request.GET.get('supplier_id')
-    materials = Inventory.objects.filter(Suppliers__Supplier_ID=supplier_id).values('Inventory_ID', 'ItemName')
-    return JsonResponse(list(materials), safe=False)
-
-@require_http_methods(["GET"])
-def get_suppliers_by_material(request):
-    material_id = request.GET.get('material_id')
-    suppliers = Supplier.objects.filter(Materials__Inventory_ID=material_id).values('Supplier_ID', 'SupplierName')
-    return JsonResponse(list(suppliers), safe=False)
-
 def PlaceOrder_view(request):
     if request.method == 'POST':
         # Handle form submission
         material_id = request.POST.get('material')
         quantity = request.POST.get('quantity')
-        supplier_id = request.POST.get('supplier-name')
+        supplier_name = request.POST.get('supplier-name')
         status = request.POST.get('status')
 
         # Retrieve the Inventory instance using the material_id
         material_instance = get_object_or_404(Inventory, Inventory_ID=material_id)
-        supplier_instance = get_object_or_404(Supplier, Supplier_ID=supplier_id)
 
         # Process the order (e.g., save it to the database)
         Order.objects.create(
-            Items=material_instance,
+            Items=material_instance,  # Use the actual Inventory instance
             Quantity=quantity,
             OrderStatus=status,
-            Supplier=supplier_instance
+            Supplier_id=supplier_name  # Save the supplier ID
         )
 
         messages.success(request, 'Order submitted successfully!')
         return redirect('ManageOrder')  # Redirect to ManageOrder after submission
 
     else:
-        # Fetch materials and suppliers from the database
+        # Retrieve materials and suppliers from the database
         materials = Inventory.objects.all()
-        suppliers = Supplier.objects.all()
+        suppliers = Supplier.objects.all()  # Fetch all suppliers
 
-        return render(request, 'ManageOrder.html', {
+        # Create a dictionary to map materials to their suppliers
+        material_suppliers = {}
+        for material in materials:
+            # Get suppliers associated with the current material
+            material_suppliers[material.Inventory_ID] = list(material.supplier_set.values('Supplier_ID', 'SupplierName'))
+
+        return render(request, 'PlacedOrder.html', {
             'materials': materials,
             'suppliers': suppliers,
+            'material_suppliers': material_suppliers,
         })
-
+    
 def ManageOrder_view(request):
     orders = Order.objects.select_related('Items', 'Supplier').all()  # Ensure related data is fetched
 
@@ -91,16 +81,22 @@ def ManageOrder_view(request):
         except Order.DoesNotExist:
             messages.error(request, 'Order not found.')
 
-    return render(request, 'ManageOrder.html', {'orders': orders, 'suppliers': Supplier.objects.all()})
+    return render(request, 'ManageOrder.html', {'orders': orders})
 
-@require_http_methods(["GET"])
+def get_materials_by_supplier(request):
+    supplier_id = request.GET.get('supplier_id')
+    materials = Inventory.objects.filter(Suppliers__Supplier_ID=supplier_id).values('Inventory_ID', 'ItemName', 'PurchasePrice')
+    return JsonResponse(list(materials), safe=False)
+
+def get_material_details(request, material_id):
+    material = get_object_or_404(Inventory, pk=material_id)
+    return JsonResponse({'PurchasePrice': material.PurchasePrice})
+
 def get_min_order_qty(request):
     supplier_id = request.GET.get('supplier_id')
     material_id = request.GET.get('material_id')
-    
     # Assuming you have a way to get the minimum order quantity for the supplier and material
-    # This is a placeholder; replace it with your actual logic
-    min_order_qty = 1  # Replace with actual logic to fetch minimum order quantity
+    min_order_qty = ...  # Logic to determine minimum order quantity
     return JsonResponse({'minOrderQty': min_order_qty})
 
 
@@ -260,49 +256,44 @@ def KitchenDisplay_view(request):
 
 def AddSupplier_view(request):
     if request.method == 'POST':
-        supplier_name = request.POST.get('supplier-name')
-        supplier_address = request.POST.get('supplier-address')
-        supplier_email = request.POST.get('supplier-email')
-        contact_number = request.POST.get('contact-number')
-        payment_terms = request.POST.get('payment-terms')
-        material_ids = request.POST.getlist('material_name[]')
-        material_min_order_qtys = request.POST.getlist('material_min_order_qty[]')
-
         try:
+            # Parse the JSON data from the request body
+            data = json.loads(request.body)
+
+            supplier_name = data.get('supplier-name')
+            supplier_address = data.get('supplier-address')
+            supplier_email = data.get('supplier-email')
+            contact_number = data.get('contact-number')  # Ensure this matches your model
+            payment_terms = data.get('payment-terms')
+            material_ids = data.get('material_name[]')
+            material_min_order_qtys = data.get('material_min_order_qty[]')
+
+            # Create and save the supplier instance
             supplier = Supplier(
                 SupplierName=supplier_name,
                 SupplierDesc=supplier_address,
                 SupplierNumber=supplier_email,
                 PaymentTerms=payment_terms,
-                ContactNumber=contact_number
+                contact_number=contact_number,  # Correct field name
             )
             supplier.save()
 
             # Associate materials with the supplier
             for i in range(len(material_ids)):
-                material_id = material_ids[i]
+                material_id = int(material_ids[i])  # Ensure this is an integer
                 material_min_order_qty = material_min_order_qtys[i]
 
                 material = get_object_or_404(Inventory, pk=material_id)
                 supplier.Materials.add(material)
 
-                # Save material details if necessary
-                # Assuming you have a MaterialDetail model to save additional details
-                material_detail = MaterialDetail(
-                    Material=material,
-                    MinOrderQty=material_min_order_qty
-                )
-                material_detail.save()
+            # Return a success response with the new supplier ID
+            return JsonResponse({'success': True, 'supplier_id': supplier.Supplier_ID})
 
-            messages.success(request, 'Supplier added successfully!')
-            return redirect('ManageSupplier')  # Redirect to ManageSupplier after submission
         except Exception as e:
-            messages.error(request, f'Error adding supplier: {str(e)}')
+            return JsonResponse({'success': False, 'error': str(e)})
 
-    # Fetch all materials (Inventory items) for the dropdown
-    materials = Inventory.objects.all()
-    materials_list = list(materials.values('Inventory_ID', 'ItemName', 'UnitOfMeasure'))  # Convert QuerySet to list of dicts
-    return render(request, 'ManageSuppliers.html', {'materials': materials_list})
+    # If the request method is not POST, redirect to ManageSupplier
+    return redirect('ManageSupplier')
 
 def ManageSupplier_view(request):
     suppliers = Supplier.objects.all()
