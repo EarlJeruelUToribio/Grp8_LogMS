@@ -26,7 +26,7 @@
                 <th>Actions</th>
             </tr>
         </thead>
-        <tbody>
+        <tbody id="supplier-table-body">
             {% for supplier in suppliers %}
             <tr>
                 <td>{{ supplier.SupplierName }}</td>
@@ -88,33 +88,116 @@
                             <option value="cash-on-delivery">Cash on Delivery</option>
                             <option value="gcash">Gcash</option>
                             <option value="paymaya">Paymaya</option>
-                            <option value="bank-transfer">Bank Transfer</option> </select>
-                    </div>
-
-                    <!-- Add Material Button -->
-                    <div class="col-12">
-                        <button type="button" id="add-material-button" class="btn btn-secondary w-100">➕ Add Material</button>
-                    </div>
+                            <option value="bank-transfer">Bank Transfer</option>
+                        </select>
+ </div>
 
                     <!-- Materials Section -->
-                    <div id="materials-section" class="col-12 mt-4">
-                        <h3 id="materials-heading" class="text-center" style="display: none;">MATERIALS</h3>
-                        <div id="material-fields-container"></div>
+                    <div class="col-md-12">
+                        <label for="materials" class="form-label">Add Materials:</label>
+                        <div id="materials-section">
+                            <div class="row mb-2 align-items-center">
+                                <div class="col-md-5">
+                                    <select class="form-select material-select" required>
+                                        <option value="">Select Material</option>
+                                        {% for material in materials %}
+                                            <option value="{{ material.Inventory_ID }}">{{ material.ItemName }} ({{ material.UnitOfMeasure }})</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                                <div class="col-md-5">
+                                    <input type="number" class="form-control material-quantity" placeholder="Min Order Qty" required>
+                                </div>
+                                <div class="col-md-2">
+                                    <button type="button" class="btn btn-secondary add-material-button">➕ Add Material</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="materials-list" class="list-group mt-3">
+                            <!-- Dynamically added materials will appear here -->
+                        </div>
+                    </div>
+
+                    <div class="col-12 mt-3">
+                        <button type="submit" class="btn btn-primary w-100">Save Supplier</button>
                     </div>
                 </form>
-            </div>
-            <div class="modal-footer">
-                <button type="submit" class="btn btn-primary w-100" form="add-supplier-form">Add Supplier</button>
             </div>
         </div>
     </div>
 </div>
 
-<!-- Hidden Materials Data -->
-<div id="materials-data" style="display: none;">{{ materials|json_script:"materials-data" }}</div>
-
-{% endblock %}
-
-{% block extra_js %}
 <script src="{% static 'js/ManageSupplier.js' %}"></script>
+<script>
+    document.querySelector('.add-material-button').addEventListener('click', function() {
+        const materialSelect = document.querySelector('.material-select');
+        const selectedMaterialId = materialSelect.value;
+        const selectedMaterialText = materialSelect.options[materialSelect.selectedIndex].text;
+        const quantityInput = document.querySelector('.material-quantity').value;
+
+        if (selectedMaterialId && quantityInput) {
+            const materialsList = document.getElementById('materials-list');
+            const newMaterialSection = document.createElement('div');
+            newMaterialSection.className = 'list-group-item d-flex justify-content-between align-items-center';
+            newMaterialSection.textContent = `${selectedMaterialText} - Qty: ${quantityInput}`;
+
+            const removeButton = document.createElement('button');
+            removeButton.className = 'btn btn-danger btn-sm remove-material';
+            removeButton.textContent = 'Remove';
+            newMaterialSection.appendChild(removeButton);
+            materialsList.appendChild(newMaterialSection);
+
+            // Add event listener to remove button
+            removeButton.addEventListener('click', function() {
+                materialsList.removeChild(newMaterialSection);
+            });
+
+            // Clear the selection and input
+            materialSelect.value = '';
+            document.querySelector('.material-quantity').value = '';
+        } else {
+            alert('Please select a material and enter a quantity.');
+        }
+    });
+
+    document.getElementById('add-supplier-form').addEventListener('submit', function(event) {
+        event.preventDefault();
+        // Gather supplier data
+        const supplierData = {
+            name: document.getElementById('supplier-name').value,
+            address: document.getElementById('supplier-address').value,
+            email: document.getElementById('supplier-email').value,
+            contact: document.getElementById('contact-number').value,
+            paymentTerms: document.getElementById('payment-terms').value,
+            materials: Array.from(document.querySelectorAll('#materials-list .list-group-item')).map(item => {
+                const materialText = item.textContent.split(' - Qty: ')[0];
+                const quantity = item.textContent.split(' - Qty: ')[1].replace('Qty: ', '');
+                return {
+                    materialId: materialText.split(' ')[0], // Assuming the ID is the first part
+                    quantity: quantity
+                };
+            })
+        };
+
+        // Send supplier data to the server (you can use fetch or axios here)
+        console.log(supplierData); // For demonstration, log the data
+        // Here you would typically send the data to your backend using AJAX or a form submission
+
+        // After successful submission, update the supplier table
+        const newRow = document.createElement('tr');
+        newRow.innerHTML = `
+            <td>${supplierData.name}</td>
+            <td>${supplierData.address}</td>
+            <td>${supplierData.email}</td>
+            <td>${supplierData.contact}</td>
+            <td>${supplierData.paymentTerms}</td>
+            <td>Active</td>
+            <td><button class="btn btn-primary">Edit</button></td>
+        `;
+        document.getElementById('supplier-table-body').appendChild(newRow);
+        // Close the modal
+        $('#addSupplierModal').modal('hide');
+    });
+</script ```html
+    </script>
 {% endblock %}

@@ -241,13 +241,12 @@ def KitchenDisplay_view(request):
 
 def AddSupplier_view(request):
     if request.method == 'POST':
-        # Handle form submission
         supplier_name = request.POST.get('supplier-name')
         supplier_address = request.POST.get('supplier-address')
         supplier_email = request.POST.get('supplier-email')
+        contact_number = request.POST.get('contact-number')
         payment_terms = request.POST.get('payment-terms')
         material_ids = request.POST.getlist('material_name[]')
-        material_units_of_measure = request.POST.getlist('material_unit_of_measure[]')
         material_min_order_qtys = request.POST.getlist('material_min_order_qty[]')
 
         try:
@@ -255,23 +254,23 @@ def AddSupplier_view(request):
                 SupplierName=supplier_name,
                 SupplierDesc=supplier_address,
                 SupplierNumber=supplier_email,
-                PaymentTerms=payment_terms
+                PaymentTerms=payment_terms,
+                ContactNumber=contact_number
             )
             supplier.save()
 
             # Associate materials with the supplier
             for i in range(len(material_ids)):
                 material_id = material_ids[i]
-                material_unit_of_measure = material_units_of_measure[i]
                 material_min_order_qty = material_min_order_qtys[i]
 
                 material = get_object_or_404(Inventory, pk=material_id)
                 supplier.Materials.add(material)
 
-                # Save material details
+                # Save material details if necessary
+                # Assuming you have a MaterialDetail model to save additional details
                 material_detail = MaterialDetail(
                     Material=material,
-                    UnitOfMeasure=material_unit_of_measure,
                     MinOrderQty=material_min_order_qty
                 )
                 material_detail.save()
@@ -284,11 +283,16 @@ def AddSupplier_view(request):
     # Fetch all materials (Inventory items) for the dropdown
     materials = Inventory.objects.all()
     materials_list = list(materials.values('Inventory_ID', 'ItemName', 'UnitOfMeasure'))  # Convert QuerySet to list of dicts
-    return render(request, 'AddSupplier.html', {'materials': materials_list})
+    return render(request, 'ManageSuppliers.html', {'materials': materials_list})
 
 def ManageSupplier_view(request):
     suppliers = Supplier.objects.all()
-    return render(request, 'ManageSuppliers.html', {'suppliers': suppliers})
+    materials = Inventory.objects.all().values('Inventory_ID', 'ItemName', 'UnitOfMeasure')  # Using values() to get a list of dicts
+
+    return render(request, 'ManageSuppliers.html', {
+        'suppliers': suppliers,
+        'materials': list(materials)  # Convert to list
+    })
 
 def edit_supplier(request, pk):
     supplier = get_object_or_404(Supplier, pk=pk)

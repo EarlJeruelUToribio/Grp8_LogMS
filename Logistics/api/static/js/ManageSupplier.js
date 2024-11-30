@@ -14,6 +14,9 @@ document.addEventListener('DOMContentLoaded', function () {
         return;
     }
 
+    // Initialize material count
+    let materialCount = 0;
+
     // Add Material functionality
     const addMaterialButton = document.getElementById('add-material-button');
     if (!addMaterialButton) {
@@ -29,7 +32,7 @@ document.addEventListener('DOMContentLoaded', function () {
             <div class="col-md-8">
                 <select name="material_name[]" class="form-select" required>
                     <option value="">Select Material</option>
-                    ${materialsData.map(material => `<option value="${material.Inventory_ID}">${material.ItemName}</option>`).join('')}
+                    ${materialsData.map(material => `<option value="${material.Inventory_ID}" data-unit="${material.UnitOfMeasure}">${material.ItemName}</option>`).join('')}
                 </select>
             </div>
             <div class="col-md-4">
