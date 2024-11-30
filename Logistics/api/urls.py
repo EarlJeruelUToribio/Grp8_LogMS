@@ -20,12 +20,14 @@ urlpatterns = [
     path('manage-supplier/', views.ManageSupplier_view, name='ManageSupplier'),
     path('edit-supplier/<int:pk>/', views.edit_supplier, name='edit_supplier'),
     path('ExpiryDates/', views.ExpiryDates_view, name='ExpiryDates'),
+
     path('ManageResources/', views.ManageResources_view, name='ManageResources'),
     path('AddResources/', views.AddResources_view, name='AddResources'),
 
     path('add-material/', views.AddMaterial_view, name='AddMaterial'),
     path('manage-material/', views.ManageMaterial_view, name='ManageMaterial'),
     path('edit-material/<int:pk>/', views.edit_material, name='edit_material'),
+
 
     # API Endpoints for AJAX Requests
     path('api/materials/', views.get_materials_by_supplier, name='get-materials-by-supplier'),

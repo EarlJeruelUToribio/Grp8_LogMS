@@ -7,7 +7,7 @@ from django.contrib import messages
 from django.utils import timezone
 from datetime import timedelta
 from rest_framework import generics
-from .models import Inventory, Supplier, Order, ProductOrders, Product, Ingredient
+from .models import Inventory, Supplier, Order, ProductOrders, Product, Ingredient, Resource
 from .serializers import (
     InventorySerializer, 
     SupplierSerializer, 
@@ -320,11 +320,38 @@ def edit_supplier(request, pk):
 def ExpiryDates_view(request):
     return render(request, 'ExpiryDates.html')
 
-def AddResources_view(request):
-    return render(request, 'AddResources.html')
-
 def ManageResources_view(request):
-    return render(request, 'ManageResources.html')
+    resources = Resource.objects.all()  # Fetch all resources
+    return render(request, 'ManageResources.html', {'resources': resources})
+
+@require_http_methods(["POST"])
+def AddResources_view(request):
+    if request.method == 'POST':
+        try:
+            # Get data from the request
+            resource_name = request.POST.get('resource-name')
+            resource_category = request.POST.get('resource-category')
+            quantity = request.POST.get('quantity')
+            specification = request.POST.get('specification')
+            reorder_level = request.POST.get('reorder-level')
+
+            # Create and save the Resource instance
+            resource = Resource(
+                ItemName=resource_name,
+                ItemCategory=resource_category,
+                Current_Stock=quantity,
+                ItemDescription=specification,
+                ReorderLevel=reorder_level,
+            )
+            resource.save()
+
+            return JsonResponse({'message': 'Resource added successfully!'}, status=200)
+
+        except Exception as e:
+            return JsonResponse({'error': str(e)}, status=400)
+
+    return JsonResponse({'error': 'Invalid request method.'}, status=405)
+
 #Inventory Views
 class InventoryListCreateView(generics.ListCreateAPIView):
     queryset = Inventory.objects.all()
