@@ -28,6 +28,8 @@ urlpatterns = [
     path('manage-material/', views.ManageMaterial_view, name='ManageMaterial'),
     path('edit-material/<int:pk>/', views.edit_material, name='edit_material'),
     path('ManageWaste/', views.ManageWaste_view, name='ManageWaste'),
+    path('KitchenResources/', views.KitchenResources_view, name='KitchenResources'),
+    path('Maintenance/', views.Maintenance_view, name='Maintenance'),
 
 
     # API Endpoints for AJAX Requests

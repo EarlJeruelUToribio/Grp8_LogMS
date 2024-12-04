@@ -323,6 +323,12 @@ def ExpiryDates_view(request):
 def ManageWaste_view(request):
     return render(request, 'ManageWaste.html')
 
+def KitchenResources_view(request):
+    return render(request, 'KitchenResources.html')
+
+def Maintenance_view(request):
+    return render(request, 'Maintenance.html')
+
 def ManageResources_view(request):
     resources = Resource.objects.all()  # Fetch all resources
     return render(request, 'ManageResources.html', {'resources': resources})

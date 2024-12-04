@@ -1,0 +1,55 @@
+{% extends 'Base.html' %}
+{% load static %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'css/Maintenance.css' %}">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+{% endblock %}
+
+{% block content %}
+<section class="resources-section">
+    <h2 class="text-center mb-4">RESOURCES MAINTENANCE TRACKING</h2>  
+    <div class="d-flex align-items-center justify-content-between mb-3">
+        <input type="text" id="kitchen-search-bar" placeholder="Search Kitchen Resource" class="search-bar">
+    </div>
+
+    <table class="table table-striped resources-table">
+        <thead>
+            <tr>
+                <th>Item Name</th>
+                <th>Category</th>
+                <th>Available</th>
+                <th>Quantity to Repair</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Example Item 1</td>
+                <td>Category A</td>
+                <td>15</td>
+                <td>3</td>
+                <td>In Use</td>
+            </tr>
+            <tr>
+                <td>Example Item 2</td>
+                <td>Category B</td>
+                <td>20</td>
+                <td>1</td>
+                <td>Under Maintenance</td>
+            </tr>
+            <tr>
+                <td>Example Item 3</td>
+                <td>Category C</td>
+                <td>5</td>
+                <td>2</td>
+                <td>Available</td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+{% endblock %}
+
+{% block extra_js %}
+    <script src="{% static 'js/Maintenance.js' %}"></script>
+{% endblock %}
