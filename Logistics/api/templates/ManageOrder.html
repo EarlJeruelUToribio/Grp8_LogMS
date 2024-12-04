@@ -1,8 +1,9 @@
 {% extends 'Base.html' %}
 {% load static %}
 {% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/ManageOrder.css' %}">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-<link rel="stylesheet" href="{% static 'css/ManageOrders.css' %}">
 {% endblock %}
 {% block content %}
 <section id="manage-order-section">
@@ -39,7 +40,6 @@
                 </button>
                 <button class="sort-button">Sort by</button>
                 <input type="text" id="search-bar" placeholder="Search by Order ID" class="search-bar">
-                <!-- Place Order Button to trigger the modal -->
             </div>
             <table class="table table-striped orders-table">
                 <thead>
@@ -95,7 +95,7 @@
                     <label for="new-status">Select New Status:</label>
                     <select name="new_status" id="new-status" class="form-select">
                         <option value="Placed">Placed</option>
-                        <option value="Shipped">Shipped</option>
+                        <option value=" Shipped">Shipped</option>
                         <option value="Completed">Completed</option>
                         <option value="Cancelled">Cancelled</option>
                     </select>
@@ -113,7 +113,7 @@
 <div class="modal fade" id="placeOrderModal" tabindex="-1" aria-labelledby="placeOrderModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
-            <form method="POST" id="place-order-form" class="row g-3">
+            <form method="POST" id="place-order-form" class="row g-3" action="{% url 'PlaceOrder' %}">
                 {% csrf_token %}
                 <div class="modal-header">
                     <h5 class="modal-title" id="placeOrderModalLabel">Place Order</h5>
@@ -125,7 +125,9 @@
                         <label for="supplier-name" class="form-label">Supplier Name:</label>
                         <select id="supplier-name" name="supplier-name" class="form-select" required>
                             <option value="" disabled selected>Select Supplier</option>
-                            <!-- Supplier options will be populated based on selected material -->
+                            {% for supplier in suppliers %}
+                                <option value="{{ supplier.Supplier_ID }}">{{ supplier.SupplierName }}</option>
+                            {% endfor %}
                         </select>
                     </div>
                     
@@ -134,7 +136,9 @@
                         <label for="material" class="form-label">Material:</label>
                         <select id="material" name="material" class="form-select" required>
                             <option value="" disabled selected>Select Material</option>
-                            <!-- Material options will be populated here -->
+                            {% for material in materials %}
+                                <option value="{{ material.Inventory_ID }}" data-price="{{ material.PurchasePrice }}">{{ material.ItemName }}</option>
+                            {% endfor %}
                         </select>
                     </div>
 
@@ -160,8 +164,8 @@
     </div>
 </div>
 
-{% endblock %}
 
 {% block extra_js %}
-<script src="{% static 'js/ManageOrders.js' %}"></script>
+{% endblock %}
+<script src="{% static 'js/ManageOrder.js' %}"></script>
 {% endblock %}

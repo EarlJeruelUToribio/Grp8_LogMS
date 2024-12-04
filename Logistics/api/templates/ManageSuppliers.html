@@ -2,14 +2,13 @@
 {% load static %}
 
 {% block extra_css %}
-<link rel="stylesheet" href="{% static 'css/ManageSuppliers.css' %}">
+<link rel="stylesheet" href="{% static 'css/ManageSupplier.css' %}">
 {% endblock %}
 
 {% block content %}
 <section id="supplier-table" class="container table-container mt-5">
     <h2 class="text-center">SUPPLIER MANAGEMENT</h2>
     <div class="d-flex align-items-center justify-content-between mb-3">
-        <!-- Link to another HTML file -->
         <a href="#" id="add-supplier-button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addSupplierModal">
             Add Supplier
         </a>        
@@ -21,17 +20,19 @@
                 <th>Supplier Name</th>
                 <th>Supplier Address</th>
                 <th>Supplier Email</th>
+                <th>Contact Number</th>
                 <th>Payment Terms</th>
                 <th>Status</th>
                 <th>Actions</th>
             </tr>
         </thead>
-        <tbody>
+        <tbody id="supplier-table-body">
             {% for supplier in suppliers %}
             <tr>
                 <td>{{ supplier.SupplierName }}</td>
                 <td>{{ supplier.SupplierDesc }}</td>
                 <td>{{ supplier.SupplierNumber }}</td>
+                <td>{{ supplier.contact_number }}</td>
                 <td>{{ supplier.PaymentTerms }}</td>
                 <td>{{ supplier.Status }}</td>
                 <td>
@@ -47,15 +48,13 @@
 <div class="modal fade" id="addSupplierModal" tabindex="-1" aria-labelledby="addSupplierModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
-            <!-- Modal Header -->
             <div class="modal-header">
                 <h5 class="modal-title" id="addSupplierModalLabel">ADD SUPPLIER</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
 
-            <!-- Modal Body -->
             <div class="modal-body">
-                <form method="POST" class="row g-3"> <!-- Added method POST and CSRF token -->
+                <form method="POST" class="row g-3" id="add-supplier-form">
                     {% csrf_token %}
                     
                     <!-- Supplier Name -->
@@ -76,6 +75,12 @@
                         <input type="email" id="supplier-email" name="supplier-email" class="form-control" required>
                     </div>
 
+                    <!-- Contact Number -->
+                    <div class="col-md-6">
+                        <label for="contact-number" class="form-label">Contact Number:</label>
+                        <input type="text" id="contact-number" name="contact-number" class="form-control" required>
+                    </div>
+
                     <!-- Payment Terms -->
                     <div class="col-md-6">
                         <label for="payment-terms" class="form-label">Payment Terms:</label>
@@ -85,34 +90,131 @@
                             <option value="paymaya">Paymaya</option>
                             <option value="bank-transfer">Bank Transfer</option>
                         </select>
-                    </div>
-
-                    <!-- Add Material Button -->
-                    <div class="col-12">
-                        <button type="button" id="add-material-button" class="btn btn-secondary w-100">➕ Add Material</button>
-                    </div>
+ </div>
 
                     <!-- Materials Section -->
-                    <div id="materials-section" class="col-12 mt-4">
-                        <h3 id="materials-heading" class="text-center" style="display: none;">MATERIALS</h3> <!-- Hide initially -->
-                        <div id="material-fields-container"></div> <!-- Container for dynamic material fields -->
+                    <div class="col-md-12">
+                        <label for="materials" class="form-label">Add Materials:</label>
+                        <div id="materials-section">
+                            <div class="row mb-2 align-items-center">
+                                <div class="col-md-5">
+                                    <select class="form-select material-select" required>
+                                        <option value="">Select Material</option>
+                                        {% for material in materials %}
+                                            <option value="{{ material.Inventory_ID }}">{{ material.ItemName }} ({{ material.UnitOfMeasure }})</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                                <div class="col-md-5">
+                                    <input type="number" class="form-control material-quantity" placeholder="Min Order Qty" required>
+                                </div>
+                                <div class="col-md-2">
+                                    <button type="button" class="btn btn-secondary add-material-button">➕ Add Material</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="materials-list" class="list-group mt-3">
+                            <!-- Dynamically added materials will appear here -->
+                        </div>
+                    </div>
+
+                    <div class="col-12 mt-3">
+                        <button type="submit" class="btn btn-primary w-100">Save Supplier</button>
                     </div>
                 </form>
-            </div>
-            <!-- Modal Footer -->
-            <div class="modal-footer">
-                <button type="submit" class="btn btn-primary w-100">Add Supplier</button>
             </div>
         </div>
     </div>
 </div>
 
-<!-- Hidden Materials Data -->
-<div id="materials-data" style="display: none;">{{ materials|json_script:"materials-data" }}</div>
-
-
-{% endblock %}
-
-{% block extra_js %}
 <script src="{% static 'js/ManageSupplier.js' %}"></script>
+<script>
+    document.querySelector('.add-material-button').addEventListener('click', function() {
+        const materialSelect = document.querySelector('.material-select');
+        const selectedMaterialId = materialSelect.value; // This should be the ID
+        const selectedMaterialText = materialSelect.options[materialSelect.selectedIndex].text;
+        const quantityInput = document.querySelector('.material-quantity').value;
+
+        if (selectedMaterialId && quantityInput) {
+            const materialsList = document.getElementById('materials-list');
+            const newMaterialSection = document.createElement('div');
+            newMaterialSection.className = 'list-group-item d-flex justify-content-between align-items-center';
+            newMaterialSection.dataset.materialId = selectedMaterialId; // Store the material ID in a data attribute
+            newMaterialSection.textContent = `${selectedMaterialText} - Qty: ${quantityInput}`;
+
+            const removeButton = document.createElement('button');
+            removeButton.className = 'btn btn-danger btn-sm remove-material';
+            removeButton.textContent = 'Remove';
+            newMaterialSection.appendChild(removeButton);
+            materialsList.appendChild(newMaterialSection);
+
+            // Add event listener to remove button
+            removeButton.addEventListener('click', function() {
+                materialsList.removeChild(newMaterialSection);
+            });
+
+            // Clear the selection and input
+            materialSelect.value = '';
+            document.querySelector('.material-quantity').value = '';
+        } else {
+            alert('Please select a material and enter a quantity.');
+        }
+    });
+
+    document.getElementById('add-supplier-form').addEventListener('submit', function(event) {
+        event.preventDefault(); // Prevent the default form submission
+
+        // Gather supplier data
+        const supplierData = {
+            'supplier-name': document.getElementById('supplier-name').value,
+            'supplier-address': document.getElementById('supplier-address').value,
+            'supplier-email': document.getElementById('supplier-email').value,
+            'contact-number': document.getElementById('contact-number').value,
+            'payment-terms': document.getElementById('payment-terms').value,
+            'material_name[]': Array.from(document.querySelectorAll('#materials-list .list-group-item')).map(item => {
+                return item.dataset.materialId; // Get the material ID from the data attribute
+            }),
+            'material_min_order_qty[]': Array.from(document.querySelectorAll('#materials-list .list-group-item')).map(item => {
+                const quantity = item.textContent.split(' - Qty: ')[1].replace('Qty: ', '');
+                return quantity;
+            })
+        };
+
+        // Send supplier data to the server using fetch
+        fetch('{% url "AddSupplier" %}', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': '{{ csrf_token }}' // Include CSRF token for security
+            },
+            body: JSON.stringify(supplierData)
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                // Add the new supplier to the table
+                const newRow = document.createElement('tr');
+                newRow.innerHTML = `
+                    <td>${supplierData['supplier-name']}</td>
+                    <td>${supplierData['supplier-address']}</td>
+                    <td>${supplierData['supplier-email']}</td>
+                    <td>${supplierData['contact-number']}</td>
+                    <td>${supplierData['payment-terms']}</td>
+                    <td>Active</td>
+                    <td><a href="/edit-supplier/${data.supplier_id}/" class="btn btn-primary">Edit</a></td>
+                `;
+                document.getElementById('supplier-table-body').appendChild(newRow);
+
+                // Close the modal
+                $('#addSupplierModal').modal('hide');
+                // Clear the form document.getElementById('add-supplier-form').reset();
+            } else {
+                alert('Error adding supplier: ' + data.error);
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+    });
+</script>
 {% endblock %}

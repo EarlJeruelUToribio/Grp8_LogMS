@@ -3,13 +3,14 @@
 
 {% block extra_css %}
     <link rel="stylesheet" href="{% static 'css/ManageProducts.css' %}">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 {% endblock %}
 
 {% block content %}
 <section class="products-section">
     <h2 class="text-center mb-4">PRODUCTS MANAGEMENT</h2>
     <div class="d-flex align-items-center justify-content-between mb-3">
-        <!-- Link to the Add Product page -->
         <button type="button" class="add-product-button mt-5" data-bs-toggle="modal" data-bs-target="#addProductModal">
             Add Product
         </button>
@@ -50,7 +51,9 @@
                     </button>
                 </td>
                 <td>
-                    <a href="{% url 'EditProduct' product.Product_ID %}" class="btn btn-primary">Edit</a>
+                    <button type="button" class="btn" id="edit-button" data-bs-toggle="modal" data-bs-target="#editProductModal">
+                        Edit
+                    </button>         
                 </td>
             </tr>
             {% endfor %}
@@ -58,80 +61,214 @@
     </table>
 </section>
 
-<!-- Modal -->
+<!-- Add Product Modal -->
 <div class="modal fade" id="addProductModal" tabindex="-1" aria-labelledby="addProductModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
-            <!-- Modal Header -->
             <div class="modal-header">
                 <h5 class="modal-title" id="addProductModalLabel">ADD PRODUCT</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-
-            <!-- Modal Body -->
             <div class="modal-body">
-                <form method="POST" class="row g-3" enctype="multipart/form-data"> <!-- Added enctype for file uploads -->
+                <form id="add-product-form" method="POST" enctype="multipart/form-data">
                     {% csrf_token %}
-
-                    <!-- Product Name -->
-                    <div class="col-md-6">
-                        <label for="product-name" class="form-label">Product Name:</label>
-                        <input type="text" id="product-name" name="product-name" class="form-control" required>
-                    </div>
-
-                    <!-- Product Description -->
-                    <div class="col-md-6">
-                        <label for="product-description" class="form-label">Product Description:</label>
-                        <input type="text" id="product-description" name="product-description" class="form-control" required>
-                    </div>
-
-                    <!-- Product Category -->
-                    <div class="col-md-6">
-                        <label for="product-category" class="form-label">Product Category:</label>
-                        <input type="text" id="product-category" name="product-category" class="form-control" required>
-                    </div>
-
-                    <!-- Product Image -->
-                    <div class="col-md-6">
-                        <label for="product-image" class="form-label">Product Image:</label>
-                        <input type="file" id="product-image" name="product-image" class="form-control" accept="image/*" required>
-                    </div>
-
-                    <!-- Product Price -->
-                    <div class="col-md-6">
-                        <label for="product-price" class="form-label">Product Price:</label>
-                        <input type="number" id="product-price" name="product-price" class="form-control" required step="0.01">
-                    </div>
-
-                    <!-- Add Material Button -->
-                    <div class="col-12">
-                        <button type="button" id="add-material-button" class="btn btn-secondary w-100">➕ Add Ingredients</button>
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <label for="product-name" class="form-label">Product Name:</label>
+                            <input type="text" id="product-name" name="product-name" class="form-control" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="product-description" class="form-label">Product Description:</label>
+                            <input type="text" id="product-description" name="product-description" class="form-control" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="product-category" class="form-label">Product Category:</label>
+                            <input type="text" id="product-category" name="product-category" class=" form-control" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="product-image" class="form-label">Product Image:</label>
+                            <input type="file" id="product-image" name="product-image" class="form-control">
+                        </div>
+                        <div class="col-md-6">
+                            <label for="product-price" class="form-label">Product Price:</label>
+                            <input type="number" id="product-price" name="product-price" class="form-control" required>
+                        </div>
                     </div>
 
                     <!-- Ingredients Section -->
-                    <div id="materials-section" class="col-12 mt-4">
-                        <h3 id="materials-heading" class="text-center" style="display: none;">INGREDIENTS</h3>
-                        <div id="material-fields-container"></div>
+                    <div class="col-md-12 mt-3">
+                        <label for="ingredients" class="form-label">Add Ingredients:</label>
+                        <div id="ingredients-section">
+                            <div class="row mb-2 align-items-center">
+                                <div class="col-md-5">
+                                    <select class="form-select ingredient-select" required>
+                                        <option value="" disabled selected>Select Ingredient</option>
+                                        {% for material in materials %}
+                                            <option value="{{ material.Inventory_ID }}">{{ material.ItemName }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                                <div class="col-md-5">
+                                    <input type="number" class="form-control" placeholder="Quantity" required>
+                                </div>
+                                <div class="col-md-2">
+                                    <button type="button" class="btn btn-danger remove-ingredient" onclick="removeIngredient(this)">Remove</button>
+                                </div>
+                            </div>
+                        </div>
+                        <button type="button" class="btn btn-primary" id="add-ingredient-button">Add Ingredient</button>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Add Product</button>
                     </div>
                 </form>
-            </div>
-
-            <!-- Modal Footer -->
-            <div class="modal-footer">
-                <button type="submit" class="btn btn-primary">Add Product</button>
             </div>
         </div>
     </div>
 </div>
 
-<!-- Hidden Materials Data -->
-<div id="materials-data" style="display: none;">{{ materials|json_script:"materials-data" }}</div>
+<!-- Edit Product Modal -->
+<div class="modal fade" id="editProductModal" tabindex="-1" aria-labelledby="editProductModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editProductModalLabel">EDIT PRODUCT</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="edit-product-form" method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <label for="edit-product-name" class="form-label">Product Name:</label>
+                            <input type="text" id="edit-product-name" name="product-name" class="form-control" value="{{ product.name }}" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="edit-product-description" class="form-label">Product Description:</label>
+                            <input type="text" id="edit-product-description" name="product-description" class="form-control" value="{{ product.description }}" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="edit-product-category" class="form-label">Product Category:</label>
+                            <input type="text" id="edit-product-category" name="product-category" class="form-control" value="{{ product.category }}" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="edit-product-image" class="form-label">Product Image:</label>
+                            <input type="file" id="edit-product-image" name="product-image" class="form-control">
+                        </div>
+                        <div class="col-md-6">
+                            <label for="edit-product-price" class="form-label">Product Price:</label>
+                            <input type="number" id="edit-product-price" name="product-price" class="form-control" value="{{ product.price }}" required>
+                        </div>
+                    </div>
+
+                    <!-- Ingredients Section -->
+                    <div class="col-md-12 mt-3">
+                        <label for="edit-ingredients" class="form-label">Edit Ingredients:</label>
+                        <div id="edit-ingredients-section">
+                            {% for ingredient in product.ingredients %}
+                                <div class="row mb-2 align-items-center">
+                                    <div class="col-md-5">
+                                        <select class="form-select ingredient-select" name="ingredient-{{ ingredient.id }}" required>
+                                            <option value="" disabled selected>Select Ingredient</option>
+                                            {% for material in materials %}
+                                                <option value="{{ material.Inventory_ID }}" {% if material.Inventory_ID == ingredient.material_id %} selected {% endif %}>{{ material.ItemName }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                    <div class="col-md-5">
+                                        <input type="number" class="form-control" name="quantity-{{ ingredient.id }}" placeholder="Quantity" value="{{ ingredient.quantity }}" required>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <button type="button" class="btn btn-danger remove-ingredient" onclick="removeIngredient(this)">Remove</button>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                        <button type="button" class="btn btn-primary" id="edit-add-ingredient-button">Add Ingredient</button>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Save Changes</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 
 
+<script>
+    document.getElementById('add-ingredient-button').addEventListener('click', function() {
+        const ingredientsSection = document.getElementById('ingredients-section');
+        const newIngredientRow = document.createElement('div');
+        newIngredientRow.classList.add('row', 'mb-2', 'align-items-center');
+        newIngredientRow.innerHTML = `
+            <div class="col-md-5">
+                <select class="form-select ingredient-select" required>
+                    <option value="" disabled selected>Select Ingredient</option>
+                    {% for material in materials %}
+                        <option value="{{ material.Inventory_ID }}">{{ material.ItemName }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="col-md-5">
+                <input type="number" class="form-control" placeholder="Quantity" required>
+            </div>
+            <div class="col-md-2">
+                <button type="button" class="btn btn-danger remove-ingredient" onclick="removeIngredient(this)">Remove</button>
+            </div>
+        `;
+        ingredientsSection.appendChild(newIngredientRow);
+    });
 
+    function removeIngredient(button) {
+        button.closest('.row').remove();
+    }
 
-{% endblock %}
+    document.getElementById('add-product-form').addEventListener('submit', function(event) {
+        event.preventDefault(); // Prevent default form submission
 
-{% block extra_js %}
-<script src="{% static 'js/ManageProducts.js' %}"></script>
+        const formData = new FormData(this); // Create FormData object
+
+        // Collect ingredients data
+        const ingredientSelects = document.querySelectorAll('.ingredient-select');
+        const ingredientQuantities = document.querySelectorAll('input[placeholder="Quantity"]');
+
+        const materials = [];
+        for (let i = 0; i < ingredientSelects.length; i++) {
+            const ingredientId = ingredientSelects[i].value;
+            const quantity = ingredientQuantities[i].value;
+            if (ingredientId && quantity) {
+                materials.push({ id: ingredientId, quantity: quantity });
+            }
+        }
+
+        // Append materials to FormData
+        materials.forEach((material, index) => {
+            formData.append(`material_name[]`, material.id);
+            formData.append(`material_quantity[]`, material.quantity);
+        });
+
+        // Send data to the server
+        fetch('{% url "AddProduct" %}', {
+            method: 'POST',
+            body: formData,
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                alert('Product added successfully!');
+                location.reload(); // Reload the page to see the new product
+            } else {
+                alert('Error adding product: ' + data.error);
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+    });
+</script>
 {% endblock %}

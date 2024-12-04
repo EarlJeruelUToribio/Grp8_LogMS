@@ -268,60 +268,29 @@ table tr:nth-child(even) {
     background-color: #37063c;  /* Darker purple on hover */
 }
 
-/* Success and Error Alerts */
-.swal-success-popup {
-    background-color: #7b4e83 !important;
-    color: white !important;
-    border-radius: 10px !important;
+/* Custom SweetAlert Styles */
+.custom-swal-popup {
+    background-color: white; /* Light purple background */
+    border-radius: 8px; /* Rounded corners */
+    border: 1px solid #7b4e83; /* Purple border */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
 }
 
-.swal-success-title {
-    font-size: 24px !important;
-    font-weight: bold !important;
+.custom-swal-title {
+    font-size: 24px; /* Adjust title font size */
+    font-weight: bold; /* Bold title */
+    color: #7b4e83; /* Purple text color */
 }
 
-.swal-success-content {
-    font-size: 16px !important;
+.custom-swal-confirm {
+    background-color: #7b4e83; /* Purple background */
+    color: white; /* White text */
+    border-radius: 6px; /* Rounded button */
+    font-size: 16px; /* Adjust font size */
+    padding: 10px 20px; /* Button padding */
 }
 
-.swal-success-button {
-    background-color: #218838 !important;
-    color: white !important;
-    border: none !important;
-    border-radius: 5px !important;
-    padding: 10px 20px !important;
-    font-size: 16px !important;
+.custom-swal-confirm:hover {
+    background-color: #5e3b62; /* Darker purple on hover */
 }
 
-.swal-success-button:hover {
-    background-color: #1e7e34 !important;
-}
-
-/* Error Styles */
-.swal-error-popup {
-    background-color: #dc3545 !important;
-    color: white !important;
-    border-radius: 10px !important;
-}
-
-.swal-error-title {
-    font-size: 24px !important;
-    font-weight: bold !important;
-}
-
-.swal-error-content {
-    font-size: 16px !important;
-}
-
-.swal-error-button {
-    background-color: #c82333 !important;
-    color: white !important;
-    border: none !important;
-    border-radius: 5px !important;
-    padding: 10px 20px !important;
-    font-size: 16px !important;
-}
-
-.swal-error-button:hover {
-    background-color: #bd2130 !important;
-}

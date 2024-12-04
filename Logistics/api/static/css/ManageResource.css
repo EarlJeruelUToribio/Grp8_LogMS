@@ -10,11 +10,10 @@
     align-items: center; /* Center content horizontally */
     justify-content: flex-start; /* Align content to the top (you can adjust as needed) */
     margin-left: 250px;
-    margin-bottom: 300px;
+    margin-top: 20px;
 }
 
 body, html {
-    height: 100%;
     margin: 0;
     display: flex;
     justify-content: center;  /* Horizontally center the content */
@@ -113,7 +112,7 @@ body, html {
 
 /* Modal Design */
 .modal-content {
-    width: 750px;  /* Ensure it takes 90% of the available width */
+    width: 500px;  /* Ensure it takes 90% of the available width */
     padding: 40px;  /* Increase padding for more space inside */
     margin: 0 auto;
     background: white;
@@ -150,26 +149,22 @@ body, html {
 
 /* Modal Body */
 .modal-body {
-    padding: 20px;
-    display: flex;
-    flex-wrap: wrap; /* Allow items to wrap into the next line */
-    gap: 20px; /* Space between the fields */
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);  /* Two equal-width columns */
+    gap: 20px;  /* Space between columns */
+    padding: 0;
 }
 
-/* Form Labels */
-.form-label {
-    font-weight: bold;
-    margin-bottom: 8px;
-}
 
 /* Form Controls (Input, Select, Textarea) */
 .form-select,
 .form-control {
-    border-radius: 4px; /* Rounded corners */
-    border: 1px solid #ccc; /* Light border */
-    padding: 10px; /* Padding for inputs */
-    width: calc(100% - 20px); /* Full width minus padding */
-    margin-bottom: 15px; /* Space between form fields */
+    border-radius: 6px; /* Rounded corners */
+    border: 2px solid black; /* Light border */
+    padding: 16px; /* Padding for inputs */
+    width: 400px;
+    margin-bottom: 20px; /* Space between form fields */
+    background: #f8f8f8;
 }
 
 /* Focus state for inputs */
@@ -177,12 +172,6 @@ body, html {
 .form-control:focus {
     border-color: #7b4e83; /* Purple border when focused */
     box-shadow: 0 0 5px rgba(123, 78, 131, 0.5); /* Subtle purple glow */
-}
-
-/* Columns (form groups) */
-.col-md-6 {
-    flex: 1 1 calc(50% - 20px); /* 2 columns layout with gap */
-    margin-bottom: 20px;
 }
 
 /* Modal Footer */
@@ -201,22 +190,14 @@ body, html {
     font-weight: bold;
 }
 
-.btn-secondary {
-    background-color: #d3d3d3; /* Light gray background */
-    border-radius: 4px;
-    border: none;
-}
-
-.btn-secondary:hover {
-    background-color: #bbb; /* Darker gray on hover */
-}
-
+/* Save Button */
 .btn-primary {
     background-color: #7b4e83; /* Purple background */
     color: white; /* White text */
     border: none;
     border-radius: 4px;
     font-weight: bold;
+    height: 50px;
 }
 
 .btn-primary:hover {
