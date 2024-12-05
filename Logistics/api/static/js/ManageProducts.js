@@ -1,140 +1,77 @@
-document.addEventListener("DOMContentLoaded", () => {
-    // SEARCH FUNCTIONALITY
-    const searchBar = document.getElementById("search-bar");
-    const productTable = document.querySelector(".product-table tbody");
-    const allRows = Array.from(productTable.rows);
+function removeIngredient(button) {
+    button.closest('.row').remove();
+}
 
-    const filterProducts = () => {
-        const searchTerm = searchBar.value.toLowerCase();
-        allRows.forEach(row => {
-            const productName = row.cells[1].textContent.toLowerCase();
-            const productCategory = row.cells[2].textContent.toLowerCase();
-            if (productName.includes(searchTerm) || productCategory.includes(searchTerm)) {
-                row.style.display = "";
-            } else {
-                row.style.display = "none";
-            }
-        });
-    };
+document.getElementById('add-ingredient-button').addEventListener('click', function() {
+    const ingredientsSection = document.getElementById('ingredients-section');
+    const newIngredientRow = document.createElement('div');
+    newIngredientRow.classList.add('row', 'mb-2', 'align-items-center');
+    
+    // Create the options for the select element using the materials array
+    let options = materials.map(material => `<option value="${material.id}">${material.name}</option>`).join('');
 
-    searchBar.addEventListener("input", filterProducts);
+    newIngredientRow.innerHTML = `
+        <div class="col-md-5">
+            <select class="form-select ingredient-select" required>
+                <option value="" disabled selected>Select Ingredient</option>
+                ${options}
+            </select>
+        </div>
+        <div class="col-md-5">
+            <input type="number" class="form-control" placeholder="Quantity" required>
+        </div>
+        <div class="col-md-2">
+            <button type="button" class="btn btn-danger remove-ingredient" onclick="removeIngredient(this)">Remove</button>
+        </div>
+    `;
+    ingredientsSection.appendChild(newIngredientRow);
+});
 
-    // TOGGLE AVAILABILITY FUNCTIONALITY
-    window.toggleAvailability = (button) => {
-        const currentStatus = button.getAttribute('data-available');
-        const newStatus = currentStatus === 'Active' ? 'Inactive' : 'Active';
-        button.textContent = newStatus;
-        button.setAttribute('data-available', newStatus);
-        // Add AJAX call if needed to update the backend
-    };
+document.getElementById('add-product-form').addEventListener('submit', function(event) {
+    event.preventDefault(); // Prevent default form submission
 
-    // MATERIAL FIELDS DYNAMIC HANDLING
-    const materialsData = document.getElementById('materials-data').textContent;
-    const materials = JSON.parse(materialsData);
-    let materialCount = 0;
-    const materialFieldsContainer = document.getElementById('material-fields-container');
-    const materialsHeading = document.getElementById('materials-heading');
+    const formData = new FormData(this); // Create FormData object
 
-    const addMaterialField = () => {
-        const materialField = document.createElement('div');
-        materialField.classList.add('material-field');
-        materialField.innerHTML = `
-            <div class="row g-3 align-items-center">
-                <div class="col-md-4">
-                    <label for="material-name-${materialCount}" class="form-label">Material Name:</label>
-                    <select id="material-name-${materialCount}" name="material_name[]" class="form-select" required onchange="updateMaterialUnitOfMeasure(${materialCount})">
-                        <option value="">Select Material</option>
-                        ${materials.map(material => `
-                            <option value="${material.Inventory_ID}" data-unit="${material.UnitOfMeasure}">
-                                ${material.ItemName}
-                            </option>`).join('')}
-                    </select>
-                </div>
-                <div class="col-md-4">
-                    <label for="material-unit-of-measure-${materialCount}" class="form-label">Unit of Measure:</label>
-                    <input type="text" id="material-unit-of-measure-${materialCount}" name="material_unit_of_measure[]" class="form-control" readonly>
-                </div>
-                <div class="col-md-3">
-                    <label for="material-quantity-${materialCount}" class="form-label">Quantity:</label>
-                    <input type="number" id="material-quantity-${materialCount}" name="material_quantity[]" class="form-control" required>
-                </div>
-                <div class="col-md-1">
-                    <button type="button" class="btn btn-danger" onclick="deleteMaterialField(${materialCount})">Delete</button>
-                </div>
-            </div>
-        `;
-        materialFieldsContainer.appendChild(materialField);
-        if (materialsHeading.style.display === 'none') materialsHeading.style.display = 'block';
-        materialCount++;
-    };
+    // Collect ingredients data
+    const ingredientSelects = document.querySelectorAll('.ingredient-select');
+    const ingredientQuantities = document.querySelectorAll('input[placeholder="Quantity"]');
 
-    window.updateMaterialUnitOfMeasure = (index) => {
-        const materialSelect = document.getElementById(`material-name-${index}`);
-        const selectedOption = materialSelect.options[materialSelect.selectedIndex];
-        const unitOfMeasureInput = document.getElementById(`material-unit-of-measure-${index}`);
-        unitOfMeasureInput.value = selectedOption.value ? selectedOption.getAttribute('data-unit') : '';
-    };
+    const materials = [];
+    for (let i = 0; i < ingredientSelects.length; i++) {
+        const ingredientId = ingredientSelects[i].value;
+        const quantity = ingredientQuantities[i].value;
+        if (ingredientId && quantity) {
+            materials.push({ id: ingredientId, quantity: quantity });
+        }
+    }
 
-    window.deleteMaterialField = (index) => {
-        const materialField = document.querySelectorAll('.material-field')[index];
-        if (materialField) materialField.remove();
-    };
+    // Append materials to FormData
+    materials.forEach((material) => {
+        formData.append(`material_name[]`, material.id);
+        formData.append(`material_quantity[]`, material.quantity);
+    });
 
-    const addMaterialButton = document.getElementById('add-material-button');
-    addMaterialButton.addEventListener('click', addMaterialField);
+    // Get CSRF token from the hidden input
+    const csrfToken = document.getElementById('csrf-token').value;
 
-    // INGREDIENT FIELDS DYNAMIC HANDLING
-    const ingredientsData = document.getElementById('ingredients-data').textContent;
-    const ingredients = JSON.parse(ingredientsData);
-    let ingredientCount = 0;
-    const ingredientFieldsContainer = document.getElementById('ingredient-fields-container');
-    const ingredientsHeading = document.getElementById('ingredients-heading');
-
-    const addIngredientField = () => {
-        const ingredientField = document.createElement('div');
-        ingredientField.classList.add('ingredient-field');
-        ingredientField.innerHTML = `
-            <div class="row g-3">
-                <div class="col-md-4">
-                    <label for="ingredient-name-${ingredientCount}" class="form-label">Ingredient Name:</label>
-                    <select id="ingredient-name-${ingredientCount}" name="ingredient_name[]" class="form-select" required onchange="updateIngredientUnitOfMeasure(${ingredientCount})">
-                        <option value="">Select Ingredient</option>
-                        ${ingredients.map(ingredient => `
-                            <option value="${ingredient.Inventory_ID}" data-unit="${ingredient.UnitOfMeasure}">
-                                ${ingredient.ItemName}
-                            </option>`).join('')}
-                    </select>
-                </div>
-                <div class="col-md-4">
-                    <label for="ingredient-unit-of-measure-${ingredientCount}" class="form-label">Unit of Measure:</label>
-                    <input type="text" id="ingredient-unit-of-measure-${ingredientCount}" name="ingredient_unit_of_measure[]" class="form-control" required readonly>
-                </div>
-                <div class="col-md-3">
-                    <label for="ingredient-quantity-${ingredientCount}" class="form-label">Ingredient Quantity:</label>
-                    <input type="number" id="ingredient-quantity-${ingredientCount}" name="ingredient_quantity[]" class="form-control" required>
-                </div>
-                <div class="col-md-1">
-                    <button type="button" class="btn btn-danger" onclick="deleteIngredientField(${ingredientCount})">Delete</button>
-                </div>
-            </div>
-        `;
-        ingredientFieldsContainer.appendChild(ingredientField);
-        if (ingredientsHeading.style.display === 'none') ingredientsHeading.style.display = 'block';
-        ingredientCount++;
-    };
-
-    window.updateIngredientUnitOfMeasure = (index) => {
-        const ingredientSelect = document.getElementById(`ingredient-name-${index}`);
-        const selectedOption = ingredientSelect.options[ingredientSelect.selectedIndex];
-        const unitOfMeasureInput = document.getElementById(`ingredient-unit-of-measure-${index}`);
-        unitOfMeasureInput.value = selectedOption.value ? selectedOption.getAttribute('data-unit') : '';
-    };
-
-    window.deleteIngredientField = (index) => {
-        const ingredientField = document.querySelectorAll('.ingredient-field')[index];
-        if (ingredientField) ingredientField.remove();
-    };
-
-    const addIngredientButton = document.getElementById('add-ingredient-button');
-    addIngredientButton.addEventListener('click', addIngredientField);
+    // Send data to the server
+    fetch('{% url "AddProduct" %}', {
+        method: 'POST',
+        body: formData,
+        headers: {
+            'X-CSRFToken': csrfToken // Include the CSRF token in the headers
+        }
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            alert('Product added successfully!');
+            location.reload(); // Reload the page to see the new product
+        } else {
+            alert('Error adding product: ' + data.error);
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });
 });
