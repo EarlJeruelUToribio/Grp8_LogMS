@@ -11,7 +11,7 @@
     align-items: center; /* Center content horizontally */
     justify-content: flex-start; /* Align content to the top (you can adjust as needed) */
     margin-left: 250px;
-    margin-bottom: 300px;
+    margin-bottom: 50px;
 }
 
 body, html {
@@ -73,3 +73,334 @@ body, html {
 .product-table tr:hover {
     background-color: #f1f1f1;
 }
+
+.add-product-button {
+    background-color: #7b4e83; /* Purple background */
+    color: white; /* White text */
+    font-weight: bold;
+    border: none;
+    border-radius: 6px; /* Rounded edges */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    height: 50px;
+    width: 150px;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none; /* Remove underline */
+}
+
+.add-product-button:hover {
+    background-color: #5e3b62; /* Darker purple on hover */
+    color: white; /* Keep text white */
+    cursor: pointer; /* Pointer cursor for better UX */
+}
+
+#edit-button {
+    background-color: #7b4e83;
+    border: none;
+    color: white;
+    border-radius: 6px;
+    width: 100px;
+    padding: 10px;
+    text-align: center;
+}
+
+#edit-button:hover {
+    background-color: #5e3b62;
+}
+
+
+
+
+
+/* CONTENT MAIN */
+#content main {
+    width: 100%;
+    padding: 36px 24px;
+    font-family: var(--poppins);
+    max-height: calc(100vh - 56px);
+    overflow-y: auto;
+}
+
+/* FORM CONTAINER */
+.form-container {
+    max-width: 750px; /* Reduced width for better modal styling */
+    margin: 0 auto; /* Centers the form */
+    padding: 40px;
+    background: #ffffff; /* White background */
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    border: 1px solid #ffffff;
+    background-image: linear-gradient(to bottom right, #fff, #f8f8f8); /* Gradient background */
+    box-sizing: border-box; /* Include padding and border in total width/height */
+}
+
+/* FORM HEADER */
+.form-container h2 {
+    margin-bottom: 20px;
+    font-size: 28px;
+    color: #7b4e83; /* Purple heading */
+    text-align: center;
+    font-weight: bold; /* Make it bold for emphasis */
+}
+
+/* LABEL STYLES */
+.form-container label {
+    display: block; /* Labels on their own line */
+    font-weight: 500;
+    color: #333; /* Dark text color */
+    margin-bottom: 5px; /* Space between label and input */
+}
+
+/* FORM ELEMENTS */
+.form-container input,
+.form-container textarea,
+.form-container select {
+    width: calc(100% - 16px); /* Full width minus padding */
+    padding: 16px;
+    margin-bottom: 20px;
+    border: 2px solid black; /* Black border for consistency */
+    border-radius: 6px;
+    background: #f8f8f8; /* Light grey background */
+    color: black; /* Text color */
+    resize: none; /* Prevents resizing for textareas */
+}
+
+/* Custom dropdown arrow for select */
+.form-container select {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background-image: url('data:image/svg+xml;charset=US-ASCII,<svg xmlns="http://www.w3.org/2000/svg" width="10" height="6" viewBox="0 0 10 6"><path fill="black" d="M0 0l5 5 5-5z"/></svg>');
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 10px;
+    padding-right: 40px; /* Space for arrow */
+}
+
+/* BUTTON STYLES */
+.form-container button {
+    padding: 16px 24px;
+    background-color: #7b4e83; /* Purple button */
+    color: white; /* White text */
+    border: none;
+    border-radius: 6px;
+    font-size: 16px;
+    cursor: pointer;
+    width: 100%; /* Full width button */
+    margin-top: 20px;
+    transition: background-color 0.3s ease; /* Smooth hover transition */
+}
+
+/* BUTTON HOVER EFFECT */
+.form-container button:hover {
+    background-color: #37063c; /* Darker purple on hover */
+}
+
+/* Modal Design */
+.modal-content {
+    width: 850px; /* Use wider width */
+    padding: 40px; /* Increased padding */
+    margin: 0 auto;
+    background: white;
+    border-radius: 8px; /* Rounded corners */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    border: 1px solid #d3d3d3; /* Border */
+    background-image: linear-gradient(to bottom right, #fff, #f8f8f8); /* Gradient */
+    box-sizing: border-box; /* Include padding/borders */
+    overflow: hidden; /* Prevent overflow */
+}
+
+/* Modal Header */
+.modal-header {
+    background-color: #7b4e83; /* Purple background */
+    color: white; /* White text */
+    border-radius: 8px 8px 0 0; /* Rounded top corners */
+    padding: 15px;
+    display: flex; /* Flexbox alignment */
+    justify-content: center; /* Centered horizontally */
+    align-items: center; /* Centered vertically */
+}
+
+/* Modal Title */
+.modal-title {
+    font-size: 32px; /* Larger font size */
+    font-weight: 900; /* Bold font */
+    margin: 0;
+}
+
+/* Close Button */
+.btn-close {
+    border: none;
+    font-size: 1.5rem;
+    color: white;
+    cursor: pointer;
+    margin-right: auto;
+}
+
+/* Modal Body */
+.modal-body {
+    display: grid;
+    gap: 20px; /* Space between columns */
+    padding: 20px;
+    background-color: #f9f9f9; /* Light background */
+}
+
+/* Form Controls */
+.modal-body .form-control,
+.modal-body .form-select {
+    width:350px;
+    padding: 16px;
+    margin-bottom: 20px;
+    border: 2px solid black; /* Black border */
+    border-radius: 6px; /* Rounded corners */
+    background: #f8f8f8; /* Light background */
+    color: black;
+}
+
+.modal-body .form-control:focus,
+.modal-body .form-select:focus {
+    border-color: #7b4e83; /* Purple border on focus */
+    box-shadow: 0 0 5px rgba(123, 78, 131, 0.5); /* Subtle glow */
+}
+
+/* Perishable Option */
+.perishable-option {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #f8f8f8; /* Light background */
+    border: 2px solid black; /* Black border */
+    padding: 16px 24px;
+    border-radius: 6px;
+    margin-bottom: 20px;
+}
+
+/* Radio Button Styling */
+.perishable-option input[type="radio"] {
+    width: 24px;
+    height: 24px;
+    margin-left: 15px;
+    cursor: pointer;
+    appearance: none;
+    border: 2px solid black;
+    border-radius: 50%;
+    background-color: white;
+}
+
+.perishable-option input[type="radio"]:checked {
+    background-color: #7b4e83; /* Purple on selection */
+    border-color: #37063c; /* Darker border */
+}
+
+.perishable-option label {
+    font-size: 18px; /* Larger font */
+    margin: 0;
+    color: black;
+}
+
+/* Modal Footer */
+.modal-footer {
+    background-color: #f8f9fa; /* Light background */
+    border-radius: 0 0 8px 8px; /* Rounded bottom corners */
+    padding: 10px 15px;
+    border-top: 1px solid #e0e0e0; /* Border separator */
+}
+
+/* Footer Buttons */
+.modal-footer .btn {
+    padding: 16px 24px; /* Larger padding */
+    font-size: 18px; /* Larger font size */
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.modal-footer .btn-primary {
+    background-color: #7b4e83; /* Purple background */
+    color: white;
+    border: none;
+}
+
+.modal-footer .btn-primary:hover {
+    background-color: #5f3c66; /* Darker purple */
+}
+
+.modal-footer .btn-secondary {
+    background-color: #d3d3d3; /* Light gray */
+    color: black;
+    border: none;
+}
+
+.modal-footer .btn-secondary:hover {
+    background-color: #bbb; /* Darker gray */
+}
+
+/* Ingredients Section */
+#ingredients-section {
+    margin-bottom: 20px;
+}
+
+.ingredient-select {
+    width: 100%;
+    padding: 10px;
+    border: 2px solid #7b4e83; /* Purple border */
+    border-radius: 5px;
+    background-color: #f8f8f8; /* Light background */
+    color: #333;
+}
+
+.ingredient-select:focus {
+    border-color: #37063c; /* Darker purple on focus */
+    box-shadow: 0 0 5px rgba(123, 78, 131, 0.5);
+}
+
+#ingredients-section .form-control {
+    width:250px;
+    padding: 16px;
+    margin-bottom: 20px;
+    border: 2px solid black; /* Black border */
+    border-radius: 6px; /* Rounded corners */
+    background: #f8f8f8; /* Light background */
+    color: black;
+margin-left: 60px;
+}
+
+#ingredients-section .form-control:focus {
+    border-color: #7b4e83; /* Purple border on focus */
+    box-shadow: 0 0 5px rgba(123, 78, 131, 0.5); /* Subtle glow */
+}
+
+
+
+#ingredients-section .btn-danger {
+    background-color: #dc3545; /* Danger red */
+    color: #fff;
+    border-radius: 5px;
+    font-weight: bold;
+    border: none;
+    margin-left: 10px;
+
+}
+
+#ingredients-section .btn-danger:hover {
+    background-color: #a71d2a; /* Darker red on hover */
+}
+
+
+#add-ingredient-button {
+    background-color: #7b4e83; /* Purple */
+    color: #fff;
+    font-weight: bold;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    margin-top: 10px;
+}
+
+#add-ingredient-button:hover {
+    background-color: #5f3c66; /* Darker purple */
+    cursor: pointer;
+}
+

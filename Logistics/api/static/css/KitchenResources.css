@@ -1,0 +1,185 @@
+.container {
+    width: 1200px;    margin: 0 auto; /* Center the container horizontally */
+    padding: 20px; /* Padding inside the container */
+    background-color: #fff; /* Background color */
+    border-radius: 8px; /* Rounded corners */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Shadow for some depth */
+    display: flex;
+    flex-direction: column; /* Stack content vertically */
+    align-items: center; /* Center content horizontally */
+    justify-content: flex-start; /* Align content to the top (you can adjust as needed) */
+    margin-left: 250px;
+    margin-top: 20px;
+    margin-bottom: 250px;
+}
+
+body, html {
+    margin: 0;
+    display: flex;
+    justify-content: center;  /* Horizontally center the content */
+    align-items: center;  /* Vertically center the content */
+    background-color: #f9f9f9; /* Set a background color if needed */
+
+}
+
+/* General Page Layout */
+.resources-section {
+    background-color: #fff; /* White background for the section */
+    padding: 20px;
+    border-radius: 8px; /* Rounded corners */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+    max-width: 1200px;
+    margin: 20px auto;
+}
+
+.resources-section h2 {
+    font-size: 28px;
+    color: #7b4e83; /* Purple text for the header */
+    font-weight: 700;
+    text-align: center;
+}
+
+/* Search Bar */
+.search-bar {
+    width: 250px;
+    padding: 10px;
+    border: 2px solid #000;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+/* Dropdown */
+.dropdown-menu {
+    border-radius: 8px; /* Rounded corners */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+}
+
+.dropdown-item {
+    padding: 10px 15px;
+    color: #333; /* Dark text */
+    transition: background-color 0.2s ease-in-out;
+}
+
+.dropdown-item:hover {
+    background-color: #7b4e83; /* Purple background */
+    color: #fff; /* White text on hover */
+}
+
+/* Add Resource Button */
+.btn-primary {
+    background-color: #7b4e83; /* Purple background */
+    color: #fff;
+    font-weight: bold;
+    border: none;
+    border-radius: 6px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Shadow */
+    text-align: center;
+    height: 50px;
+    width: 210;
+}
+
+.btn-primary:hover {
+    background-color: #5e3b62; /* Darker purple on hover */
+    cursor: pointer;
+}
+
+/* Table Styles */
+.resources-table {
+    width: 1100px;  
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.resources-table th, 
+.resources-table td {
+    padding: 15px;
+    text-align: center;
+    border-bottom: 1px solid #ddd;
+}
+
+.resources-table th {
+    background-color: #7b4e83; /* Purple header */
+    color: #fff; /* White text */
+}
+
+.resources-table tr:hover {
+    background-color: #f1f1f1; /* Light gray on hover */
+}
+
+/* Modal Styles */
+.modal-header {
+    background-color: #7b4e83; /* Purple header */
+    color: white;
+    border-radius: 8px 8px 0 0; /* Rounded top corners */
+    padding: 15px 20px;
+}
+
+.modal-title {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.btn-close {
+    color: white;
+    font-size: 1.5rem;
+    border: none;
+    cursor: pointer;
+}
+
+/* Modal Content */
+.modal-content {
+    padding: 20px;
+    background-color: #fff; /* White background */
+    border-radius: 8px; /* Rounded corners */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Shadow */
+    border: 1px solid #ddd; /* Light border */
+}
+
+.modal-body {
+    display: flex;
+    flex-direction: column;
+    gap: 15px; /* Space between form fields */
+}
+
+/* Form Inputs */
+.form-control {
+    border: 2px solid black;
+    border-radius: 6px;
+    padding: 10px;
+    font-size: 14px;
+}
+
+.form-control:focus {
+    border-color: #7b4e83; /* Purple border on focus */
+    box-shadow: 0 0 5px rgba(123, 78, 131, 0.5); /* Purple glow */
+    outline: none;
+}
+
+/* Save Button */
+.btn-primary {
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 6px;
+    background-color: #7b4e83; /* Purple */
+    border: none;
+}
+
+.btn-primary:hover {
+    background-color: #5e3b62; /* Darker purple */
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .resources-section {
+        padding: 10px;
+    }
+
+    .btn-primary {
+        width: 100%;
+    }
+
+    .resources-table {
+        font-size: 12px; /* Smaller font for smaller screens */
+    }
+}

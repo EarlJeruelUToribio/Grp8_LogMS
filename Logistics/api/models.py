@@ -10,9 +10,28 @@ class Inventory(models.Model):
     PurchasePrice = models.DecimalField(max_digits=10, decimal_places=2)
     ReorderLevel = models.IntegerField()
     Created_At = models.DateTimeField(auto_now_add=True)
+    Perishable = models.BooleanField(default=False)
+    DaysBeforeExpiry = models.IntegerField(null=True, blank=True)
+    Current_Stock = models.IntegerField(default=0)
 
     class Meta:
         db_table = 'api_inventory'
+
+    def __str__(self):
+        return self.ItemName
+
+
+class Resource(models.Model):
+    Resource_ID = models.AutoField(primary_key=True)
+    ItemName = models.CharField(max_length=255)
+    ItemDescription = models.TextField(blank=True, null=True)
+    ItemCategory = models.CharField(max_length=100)
+    Current_Stock = models.IntegerField(default=0)
+    ReorderLevel = models.IntegerField(default=0)
+    Created_At = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        db_table = 'resources'  # Name of the table in the database
 
     def __str__(self):
         return self.ItemName
@@ -23,6 +42,7 @@ class Supplier(models.Model):
     SupplierName = models.CharField(max_length=255)
     SupplierDesc = models.TextField(blank=True, null=True)
     SupplierNumber = models.CharField(max_length=15, blank=True, null=True)
+    contact_number = models.CharField(max_length=15)
     Status = models.CharField(max_length=50, default='Active')
     MinOrderQty = models.IntegerField(default=0)
     PaymentTerms = models.CharField(max_length=100, blank=True, null=True)

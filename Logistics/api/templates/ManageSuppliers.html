@@ -2,12 +2,17 @@
 {% load static %}
 
 {% block extra_css %}
-<link rel="stylesheet" href="{% static 'css/ManageMaterials.css' %}">
+<link rel="stylesheet" href="{% static 'css/ManageSupplier.css' %}">
 {% endblock %}
 
 {% block content %}
 <section id="supplier-table" class="container table-container mt-5">
     <h2 class="text-center">SUPPLIER MANAGEMENT</h2>
+    <div class="d-flex align-items-center justify-content-between mb-3">
+        <a href="#" id="add-supplier-button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addSupplierModal">
+            Add Supplier
+        </a>        
+    </div>
     
     <table class="table table-striped supplier-table">
         <thead>
@@ -15,17 +20,19 @@
                 <th>Supplier Name</th>
                 <th>Supplier Address</th>
                 <th>Supplier Email</th>
+                <th>Contact Number</th>
                 <th>Payment Terms</th>
                 <th>Status</th>
                 <th>Actions</th>
             </tr>
         </thead>
-        <tbody>
+        <tbody id="supplier-table-body">
             {% for supplier in suppliers %}
             <tr>
                 <td>{{ supplier.SupplierName }}</td>
                 <td>{{ supplier.SupplierDesc }}</td>
                 <td>{{ supplier.SupplierNumber }}</td>
+                <td>{{ supplier.contact_number }}</td>
                 <td>{{ supplier.PaymentTerms }}</td>
                 <td>{{ supplier.Status }}</td>
                 <td>
@@ -36,8 +43,94 @@
         </tbody>
     </table>
 </section>
-{% endblock %}
 
-{% block extra_js %}
-<script src="{% static 'js/ManageSupplier.js' %}"></script>
+<!-- Modal for Add Supplier -->
+<div class="modal fade" id="addSupplierModal" tabindex="-1" aria-labelledby="addSupplierModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addSupplierModalLabel">ADD SUPPLIER</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+
+            <div class="modal-body">
+                <form method="POST" class="row g-3" id="add-supplier-form">
+                    {% csrf_token %}
+                    <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
+                    
+                    <!-- Supplier Name -->
+                    <div class="col-md-6">
+                        <label for="supplier-name" class="form-label">Supplier Name:</label>
+                        <input type="text" id="supplier-name" name="supplier-name" class="form-control" required>
+                    </div>
+
+                    <!-- Supplier Address -->
+                    <div class="col-md-6">
+                        <label for="supplier-address" class="form-label">Supplier Address:</label>
+                        <input type="text" id="supplier-address" name="supplier-address" class="form-control" required>
+                    </div>
+
+                    <!-- Supplier Email -->
+                    <div class="col-md-6">
+                        <label for="supplier-email" class="form-label">Supplier Email:</label>
+                        <input type="email" id="supplier-email" name="supplier-email" class="form-control" required>
+                    </div>
+
+                    <!-- Contact Number -->
+                    <div class="col-md-6">
+                        <label for="contact-number" class="form-label">Contact Number:</label>
+                        <input type="text" id="contact-number" name="contact-number" class="form-control" required>
+                    </div>
+
+                    <!-- Payment Terms -->
+                    <div class="col-md-6">
+                        <label for="payment-terms" class="form-label">Payment Terms:</label>
+                        <select id="payment-terms" name="payment-terms" class="form-select" required>
+                            <option value="cash-on-delivery">Cash on Delivery</option>
+                            <option value="gcash">Gcash</option>
+                            <option value="paymaya">Paymaya</option>
+                            <option value="bank-transfer">Bank Transfer</option>
+                        </select>
+                    </div>
+
+                    <!-- Materials Section -->
+                    <div class="col-md-12">
+                        <label for="materials" class="form-label">Add Materials:</label>
+                        <div id="materials-section">
+                            <div class="row mb-2 align-items-center">
+                                <div class="col-md-5">
+                                    <select class="form-select material-select" required>
+                                        <option value="">Select Material</option>
+                                        {% for material in materials %}
+                                            <option value="{{ material.Inventory_ID }}">{{ material.ItemName }} ({{ material.UnitOfMeasure }})</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                                <div class="col-md-5">
+                                    <input type="number" class="form-control material-quantity" placeholder="Min Order Qty" required>
+                                </div>
+                                <div class="col-md-2">
+                                    <button type="button" class="btn btn-secondary add-material-button">➕ Add Material</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="materials-list" class="list-group mt-3">
+                            <!-- Dynamically added materials will appear here -->
+                        </div>
+                    </div>
+
+                    <div class="col-12 mt-3">
+                        <button type="submit" class="btn btn-primary w-100">Save Supplier</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    const csrfToken = '{{ csrf_token }}';  // Get CSRF token from Django
+    const addSupplierUrl = '{% url "AddSupplier" %}';  // Get the URL for adding a supplier
+</script>
+<script src="{% static 'js/Suppliers.js' %}"></script>  <!-- Updated file name -->
 {% endblock %}

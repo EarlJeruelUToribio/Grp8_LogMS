@@ -1,37 +1,77 @@
-document.addEventListener("DOMContentLoaded", () => {
-    const searchBar = document.getElementById("search-bar");
-    const productTable = document.querySelector(".product-table tbody");
-    const allRows = Array.from(productTable.rows);
+function removeIngredient(button) {
+    button.closest('.row').remove();
+}
 
-    // Function to filter products
-    const filterProducts = () => {
-        const searchTerm = searchBar.value.toLowerCase();
+document.getElementById('add-ingredient-button').addEventListener('click', function() {
+    const ingredientsSection = document.getElementById('ingredients-section');
+    const newIngredientRow = document.createElement('div');
+    newIngredientRow.classList.add('row', 'mb-2', 'align-items-center');
+    
+    // Create the options for the select element using the materials array
+    let options = materials.map(material => `<option value="${material.id}">${material.name}</option>`).join('');
 
-        allRows.forEach(row => {
-            const productName = row.cells[1].textContent.toLowerCase();
-            const productCategory = row.cells[2].textContent.toLowerCase();
-
-            // Show the row if the search term matches either the name or category
-            if (productName.includes(searchTerm) || productCategory.includes(searchTerm)) {
-                row.style.display = "";
-            } else {
-                row.style.display = "none";
-            }
-        });
-    };
-
-    // Add event listener to the search bar to filter as the user types
-    searchBar.addEventListener("input", filterProducts);
+    newIngredientRow.innerHTML = `
+        <div class="col-md-5">
+            <select class="form-select ingredient-select" required>
+                <option value="" disabled selected>Select Ingredient</option>
+                ${options}
+            </select>
+        </div>
+        <div class="col-md-5">
+            <input type="number" class="form-control" placeholder="Quantity" required>
+        </div>
+        <div class="col-md-2">
+            <button type="button" class="btn btn-danger remove-ingredient" onclick="removeIngredient(this)">Remove</button>
+        </div>
+    `;
+    ingredientsSection.appendChild(newIngredientRow);
 });
 
-// Function to toggle availability
-function toggleAvailability(button) {
-    const currentStatus = button.getAttribute('data-available');
-    const newStatus = currentStatus === 'Active' ? 'Inactive' : 'Active';
+document.getElementById('add-product-form').addEventListener('submit', function(event) {
+    event.preventDefault(); // Prevent default form submission
 
-    // Update the button text and data attribute
-    button.textContent = newStatus;
-    button.setAttribute('data-available', newStatus);
+    const formData = new FormData(this); // Create FormData object
 
-    // Here you can also add an AJAX call to update the product's status in the database if needed
-}
+    // Collect ingredients data
+    const ingredientSelects = document.querySelectorAll('.ingredient-select');
+    const ingredientQuantities = document.querySelectorAll('input[placeholder="Quantity"]');
+
+    const materials = [];
+    for (let i = 0; i < ingredientSelects.length; i++) {
+        const ingredientId = ingredientSelects[i].value;
+        const quantity = ingredientQuantities[i].value;
+        if (ingredientId && quantity) {
+            materials.push({ id: ingredientId, quantity: quantity });
+        }
+    }
+
+    // Append materials to FormData
+    materials.forEach((material) => {
+        formData.append(`material_name[]`, material.id);
+        formData.append(`material_quantity[]`, material.quantity);
+    });
+
+    // Get CSRF token from the hidden input
+    const csrfToken = document.getElementById('csrf-token').value;
+
+    // Send data to the server
+    fetch('{% url "AddProduct" %}', {
+        method: 'POST',
+        body: formData,
+        headers: {
+            'X-CSRFToken': csrfToken // Include the CSRF token in the headers
+        }
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            alert('Product added successfully!');
+            location.reload(); // Reload the page to see the new product
+        } else {
+            alert('Error adding product: ' + data.error);
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });
+});

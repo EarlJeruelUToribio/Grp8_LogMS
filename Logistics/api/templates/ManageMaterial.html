@@ -2,45 +2,264 @@
 {% load static %}
 
 {% block extra_css %}
-<link rel="stylesheet" href="{% static 'css/ManageMaterials.css' %}">
+<link rel="stylesheet" href="{% static 'css/Managematerial.css' %}">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 {% endblock %}
 
 {% block content %}
 
-    <!-- Material Table -->
-    <section id="material-table" class="container table-container mt-5">
-        <h2 class="text-center">MATERIAL INVENTORY</h2>
-        
-        <table class="table table-striped product-table">
-            <thead>
-                <tr>
-                    <th>Item Name</th>
-                    <th>Description</th>
-                    <th>Category</th>
-                    <th>Unit of Measure</th>
-                    <th>Purchase Price</th>
-                    <th>Reorder Level</th>
-                    <th>Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for material in materials %}
-                <tr>
-                    <td>{{ material.ItemName }}</td>
-                    <td>{{ material.ItemDescription }}</td>
-                    <td>{{ material.ItemCategory }}</td>
-                    <td>{{ material.UnitOfMeasure }}</td>
-                    <td>{{ material.PurchasePrice }}</td>
-                    <td>{{ material.ReorderLevel }}</td>
-                    <td> <a href="{% url 'edit_material' material.Inventory_ID %}" class="btn btn-primary">Edit</a> </td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-        </section>
-    
-    {% endblock %}
-    
-    {% block extra_js %}
-    <script src="{% static 'js/ManageMaterials.js' %}"></script>
-    {% endblock %}
+<!-- Material Table -->
+<section id="material-table" class="container table-container mt-5">
+    <!-- Add Material Button and Title -->
+    <h2 class="text-center w-100">MATERIAL INVENTORY</h2>
+    <div class="d-flex align-items-center justify-content-between mb-3">
+        <a href="#" id="add-material-button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addMaterialModal">
+            Add Material    
+        </a>
+    </div>
+
+    <table class="table table-striped product-table">
+        <thead>
+            <tr>
+                <th>Item Name</th>
+                <th>Description</th>
+                <th>Category</th>
+                <th>Unit of Measure</th> 
+                <th>Purchase Price</th>
+                <th>Current Stock</th>
+                <th>Reorder Level</th>
+                <th>Expiration Date</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for material in materials %}
+            <tr>
+                <td>{{ material.ItemName }}</td>
+                <td>{{ material.ItemDescription }}</td>
+                <td>{{ material.ItemCategory }}</td>
+                <td>{{ material.UnitOfMeasure }}</td>
+                <td>{{ material.PurchasePrice }}</td>
+                <td>{{ material.Current_Stock }}</td>
+                <td>{{ material.ReorderLevel }}</td>
+                <td>
+                    {% if material.expiration_date %}
+                        {{ material.expiration_date|date:"Y-m-d" }}
+                    {% else %}
+                        N/A
+                    {% endif %}
+                </td>
+                <td>
+<<<<<<< HEAD
+                    <a href="{% url 'edit_material' material.Inventory_ID %}" class="btn btn-primary">Edit</a>
+=======
+             <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editMaterialModal" data-material-id="EditMaterial">
+             Edit
+            </button>
+>>>>>>> e8d5a1bbffd43c6fa753d15d2429b913c3de717d
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</section>
+
+<!-- Add Material Modal -->
+<div class="modal fade" id="addMaterialModal" tabindex="-1" aria-labelledby="addMaterialModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form method="POST" action="{% url 'AddMaterial' %}" class="row g-3">
+                {% csrf_token %}
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addMaterialModalLabel">Add Material</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <!-- Item Name -->
+                    <div class="col-md-6">
+                        <label for="item-name" class="form-label">Item Name:</label>
+                        <input type="text" id="item-name" name="item-name" class="form-control" required>
+                    </div>
+
+                    <!-- Item Description -->
+                    <div class="col-md-6">
+                        <label for="item-description" class="form-label">Item Description:</label>
+                        <textarea id="item-description" name="item-description" rows="2" class="form-control"></textarea>
+                    </div>
+
+                    <!-- Item Category -->
+                    <div class="col-md-6">
+                        <label for="item-category" class="form-label">Item Category:</label>
+                        <select id="item-category" name="item-category" class="form-select" required>
+                            <option value="agahan">Agahan</option>
+                            <option value="noodles">Noodles</option>
+                            <option value="rice">Rice</option>
+                            <option value="sabaw">Sabaw</option>
+                            <option value="gulay">Gulay</option>
+                            <option value="sizzling">Sizzling</option>
+                            <option value="inihaw">Inihaw</option>
+                            <option value="pinirito">Pinirito</option>
+                            <option value="lutong-kakaiba">Lutong Kakaiba</option>
+                            <option value="steak">Steak</option>
+                            <option value="pampagana">Pampagana</option>
+                            <option value="pansit">Pansit</option>
+                        </select>
+                    </div>
+
+                    <!-- Unit of Measure -->
+                    <div class="col-md-6">
+                        <label for="unit-of-measure" class="form-label">Unit of Measure:</label>
+                        <select id="unit-of-measure" name="unit-of-measure" class="form-select" required>
+                            <option value="kg">Kilogram (kg)</option>
+                            <option value="g">Gram (g)</option>
+                            <option value="l">Liter (l)</option>
+                            <option value="ml">Milliliter (ml)</option>
+                            <option value="m">Meter (m)</option>
+                            <option value="cm">Centimeter (cm)</option>
+                            <option value="pcs">Pieces (pcs)</option>
+                            <option value="box">Box (box)</option>
+                        </select>
+                    </div>
+
+                    <!-- Purchase Price -->
+                    <div class="col-md-6">
+                        <label for="purchase-price" class="form-label">Purchase Price:</label>
+                        <input type="number" id="purchase-price" name="purchase-price" step="0.01" class="form-control" required>
+                    </div>
+
+                    <!-- Reorder Level -->
+                    <div class="col-md-6">
+                        <label for="reorder-level" class="form-label">Reorder Level:</label>
+                        <input type="number" id="reorder-level" name="reorder-level" class="form-control" required>
+                    </div>
+
+                    <!-- Perishable Option -->
+                    <div class="col-md-6">
+                        <label class="form-label">Type:</label>
+                        <div class="perishable-option d-flex align-items-center justify-content-between">
+                            <label for="perishable" class="form-check-label">Perishable</label>
+                            <input type="radio" id="perishable" name="perishable" value="true" class="form-check-input" onclick="toggleDaysInput()" required>
+                        </div>
+                        <div class="perishable-option d-flex align-items-center justify-content-between mt-2">
+                            <label for="non-perishable" class="form-check-label">Non-Perishable</label>
+                            <input type="radio" id="non-perishable" name="perishable" value="false" class="form-check-input" onclick="toggleDaysInput()" required>
+                        </div>
+                    </div>
+
+                    <!-- Days Before Expiry -->
+                    <div class="col-md-6" id="days-before-expiry-container" style="display: none;">
+                        <label for="days-before-expiry" class="form-label">Days Before Expiry:</label>
+                        <input type="number" id="days-before-expiry" name="days-before-expiry" class="form-control" min="0">
+                    </div>
+                </div>
+
+                <div class="col-12">
+                    <button type="submit" id="submit-material-button" class="btn btn-primary w-100">Add Material</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Edit Material Modal -->
+<div class="modal fade" id="editMaterialModal" tabindex="-1" aria-labelledby="editMaterialModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form method="POST" action="{#}" class="row g-3">
+                {% csrf_token %}
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editMaterialModalLabel">Edit Material</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <!-- Item Name -->
+                    <div class="col-md-6">
+                        <label for="item-name" class="form-label">Item Name:</label>
+                        <input type="text" id="item-name" name="item-name" class="form-control" required>
+                    </div>
+
+                    <!-- Item Description -->
+                    <div class="col-md-6">
+                        <label for="item-description" class="form-label">Item Description:</label>
+                        <textarea id="item-description" name="item-description" rows="2" class="form-control"></textarea>
+                    </div>
+
+                    <!-- Item Category -->
+                    <div class="col-md-6">
+                        <label for="item-category" class="form-label">Item Category:</label>
+                        <select id="item-category" name="item-category" class="form-select" required>
+                            <option value="agahan">Agahan</option>
+                            <option value="noodles">Noodles</option>
+                            <option value="rice">Rice</option>
+                            <option value="sabaw">Sabaw</option>
+                            <option value="gulay">Gulay</option>
+                            <option value="sizzling">Sizzling</option>
+                            <option value="inihaw">Inihaw</option>
+                            <option value="pinirito">Pinirito</option>
+                            <option value="lutong-kakaiba">Lutong Kakaiba</option>
+                            <option value="steak">Steak</option>
+                            <option value="pampagana">Pampagana</option>
+                            <option value="pansit">Pansit</option>
+                        </select>
+                    </div>
+
+                    <!-- Unit of Measure -->
+                    <div class="col-md-6">
+                        <label for="unit-of-measure" class="form-label">Unit of Measure:</label>
+                        <select id="unit-of-measure" name="unit-of-measure" class="form-select" required>
+                            <option value="kg">Kilogram (kg)</option>
+                            <option value="g">Gram (g)</option>
+                            <option value="l">Liter (l)</option>
+                            <option value="ml">Milliliter (ml)</option>
+                            <option value="m">Meter (m)</option>
+                            <option value="cm">Centimeter (cm)</option>
+                            <option value="pcs">Pieces (pcs)</option>
+                            <option value="box">Box (box)</option>
+                        </select>
+                    </div>
+
+                    <!-- Purchase Price -->
+                    <div class="col-md-6">
+                        <label for="purchase-price" class="form-label">Purchase Price:</label>
+                        <input type="number" id="purchase-price" name="purchase-price" step="0.01" class="form-control" required>
+                    </div>
+
+                    <!-- Reorder Level -->
+                    <div class="col-md-6">
+                        <label for="reorder-level" class="form-label">Reorder Level:</label>
+                        <input type="number" id="reorder-level" name="reorder-level" class="form-control" required>
+                    </div>
+
+                    <!-- Perishable Option -->
+                    <div class="col-md-6">
+                        <label class="form-label">Type:</label>
+                        <div class="perishable-option d-flex align-items-center justify-content-between">
+                            <label for="perishable" class="form-check-label">Perishable</label>
+                            <input type="radio" id="perishable" name="perishable" value="true" class="form-check-input" onclick="toggleDaysInput()" required>
+                        </div>
+                        <div class="perishable-option d-flex align-items-center justify-content-between mt-2">
+                            <label for="non-perishable" class="form-check-label">Non-Perishable</label>
+                            <input type="radio" id="non-perishable" name="perishable" value="false" class="form-check-input" onclick="toggleDaysInput()" required>
+                        </div>
+                    </div>
+
+                    <!-- Days Before Expiry -->
+                    <div class="col-md-6" id="days-before-expiry-container" style="display: none;">
+                        <label for="days-before-expiry" class="form-label">Days Before Expiry:</label>
+                        <input type="number" id="days-before-expiry" name="days-before-expiry" class="form-control" min="0">
+                    </div>
+                </div>
+
+                <div class="col-12">
+                    <button type="submit" id="submit-material-button" class="btn btn-primary w-100">Save Changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'js/ManageMaterial.js' %}"></script>
+{% endblock %}
