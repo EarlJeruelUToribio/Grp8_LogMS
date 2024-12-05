@@ -1,55 +1,87 @@
-document.addEventListener('DOMContentLoaded', function () {
-    const materialsDataElement = document.getElementById('materials-data');
-    if (!materialsDataElement) {
-        console.error('Materials data element not found.');
-        return;
-    }
+document.querySelector('.add-material-button').addEventListener('click', function() {
+    const materialSelect = document.querySelector('.material-select');
+    const selectedMaterialId = materialSelect.value; // This should be the ID
+    const selectedMaterialText = materialSelect.options[materialSelect.selectedIndex].text;
+    const quantityInput = document.querySelector('.material-quantity').value;
 
-    const materialsData = JSON.parse(materialsDataElement.textContent);
-    const materialsSection = document.getElementById('materials-section');
-    const materialFieldsContainer = document.getElementById('material-fields-container');
+    if (selectedMaterialId && quantityInput) {
+        const materialsList = document.getElementById('materials-list');
+        const newMaterialSection = document.createElement('div');
+        newMaterialSection.className = 'list-group-item d-flex justify-content-between align-items-center';
+        newMaterialSection.dataset.materialId = selectedMaterialId; // Store the material ID in a data attribute
+        newMaterialSection.textContent = `${selectedMaterialText} - Qty: ${quantityInput}`;
 
-    if (!materialsSection || !materialFieldsContainer) {
-        console.error('Materials section or fields container not found.');
-        return;
-    }
+        const removeButton = document.createElement('button');
+        removeButton.className = 'btn btn-danger btn-sm remove-material';
+        removeButton.textContent = 'Remove';
+        newMaterialSection.appendChild(removeButton);
+        materialsList.appendChild(newMaterialSection);
 
-    // Initialize material count
-    let materialCount = 0;
-
-    // Add Material functionality
-    const addMaterialButton = document.getElementById('add-material-button');
-    if (!addMaterialButton) {
-        console.error('Add material button not found.');
-        return;
-    }
-
-    addMaterialButton.addEventListener('click', function () {
-        const materialField = document.createElement('div');
-        materialField.classList.add('row', 'mb-3', 'material-field');
-
-        materialField.innerHTML = `
-            <div class="col-md-8">
-                <select name="material_name[]" class="form-select" required>
-                    <option value="">Select Material</option>
-                    ${materialsData.map(material => `<option value="${material.Inventory_ID}" data-unit="${material.UnitOfMeasure}">${material.ItemName}</option>`).join('')}
-                </select>
-            </div>
-            <div class="col-md-4">
-                <input type="number" name="material_min_order_qty[]" class="form-control" placeholder="Min Order Qty" required>
-                <button type="button" class="btn btn-danger remove-material-button">✖</button>
-            </div>
-        `;
-
-        materialFieldsContainer.appendChild(materialField);
-        materialsSection.querySelector('h3').style.display = 'block'; // Show materials heading
-
-        // Add event listener to remove material field
-        materialField.querySelector('.remove-material-button').addEventListener('click', function () {
-            materialFieldsContainer.removeChild(materialField);
-            if (materialFieldsContainer.children.length === 0) {
-                materialsSection.querySelector('h3').style.display = 'none'; // Hide heading if no materials
-            }
+        // Add event listener to remove button
+        removeButton.addEventListener('click', function() {
+            materialsList.removeChild(newMaterialSection);
         });
+
+        // Clear the selection and input
+        materialSelect.value = '';
+        document.querySelector('.material-quantity').value = '';
+    } else {
+        alert('Please select a material and enter a quantity.');
+    }
+});
+
+document.getElementById('add-supplier-form').addEventListener('submit', function(event) {
+    event.preventDefault(); // Prevent the default form submission
+
+    // Gather supplier data
+    const supplierData = {
+        'supplier-name': document.getElementById('supplier-name').value,
+        'supplier-address': document.getElementById('supplier-address').value,
+        'supplier-email': document.getElementById('supplier-email').value,
+        'contact-number': document.getElementById('contact-number').value,
+        'payment-terms': document.getElementById('payment-terms').value,
+        'material_name[]': Array.from(document.querySelectorAll('#materials-list .list-group-item')).map(item => {
+            return item.dataset.materialId; // Get the material ID from the data attribute
+        }),
+        'material_min_order_qty[]': Array.from(document.querySelectorAll('#materials-list .list-group-item')).map(item => {
+            const quantity = item.textContent.split(' - Qty: ')[1].replace('Qty: ', '');
+            return quantity;
+        })
+    };
+
+    // Send supplier data to the server using fetch
+    fetch('{% url "AddSupplier" %}', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRFToken': '{{ csrf_token }}' // Include CSRF token for security
+        },
+        body: JSON.stringify(supplierData)
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            // Add the new supplier to the table
+            const newRow = document.createElement('tr');
+            newRow.innerHTML = `
+                <td>${supplierData['supplier-name']}</td>
+                <td>${supplierData['supplier-address']}</td>
+                <td>${supplierData['supplier-email']}</td>
+                <td>${supplierData['contact-number']}</td>
+                <td>${supplierData['payment-terms']}</td>
+                <td>Active</td>
+                <td><a href="/edit-supplier/${data.supplier_id}/" class="btn btn-primary">Edit</a></td>
+            `;
+            document.getElementById('supplier-table-body').appendChild(newRow);
+
+            // Close the modal
+            $('#addSupplierModal').modal('hide');
+            // Clear the form document.getElementById('add-supplier-form').reset();
+        } else {
+            alert('Error adding supplier: ' + data.error);
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
     });
 });
