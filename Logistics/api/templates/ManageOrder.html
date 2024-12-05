@@ -1,7 +1,9 @@
 {% extends 'Base.html' %}
 {% load static %}
 {% block extra_css %}
-<link rel="stylesheet" href="{% static 'css/ManageOrders.css' %}">
+<link rel="stylesheet" href="{% static 'css/ManageOrder.css' %}">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 {% endblock %}
 {% block content %}
 <section id="manage-order-section">
@@ -162,51 +164,8 @@
     </div>
 </div>
 
-{% endblock %}
 
 {% block extra_js %}
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const supplierSelect = document.getElementById('supplier-name');
-        const materialSelect = document.getElementById('material');
-        const basePriceElement = document.getElementById('base-price');
-        const totalCostElement = document.getElementById('total-cost');
-        const quantityInput = document.getElementById('quantity');
-
-        supplierSelect.addEventListener('change', function() {
-            const supplierId = this.value;
-            fetch(`/get_materials_by_supplier?supplier_id=${supplierId}`)
-                .then(response => response.json())
-                .then(data => {
-                    materialSelect.innerHTML = '<option value="" disabled selected>Select Material</option>';
-                    data.forEach(material => {
-                        const option = document.createElement('option');
-                        option.value = material.Inventory_ID;
-                        option.textContent = material.ItemName;
-                        option.setAttribute('data-price', material.PurchasePrice); // Store price in data attribute
-                        materialSelect.appendChild(option);
-                    });
-                })
-                .catch(error => console.error('Error fetching materials:', error));
-        });
-
-        materialSelect.addEventListener('change', function() {
-            const selectedOption = this.options[this.selectedIndex];
-            const purchasePrice = parseFloat(selectedOption.getAttribute('data-price')) || 0;
-            basePriceElement.textContent = purchasePrice.toFixed(2); // Update base price display
-            calculateTotalCost(purchasePrice);
-        });
-
-        quantityInput.addEventListener('input', function() {
-            const purchasePrice = parseFloat(basePriceElement.textContent) || 0;
-            calculateTotalCost(purchasePrice);
-        });
-
-        function calculateTotalCost(basePrice) {
-            const quantity = parseInt(quantityInput.value) || 0;
-            const totalCost = (basePrice * quantity).toFixed(2);
-            totalCostElement.textContent = totalCost;
-        }
-    });
-</script>
+{% endblock %}
+<script src="{% static 'js/ManageOrder.js' %}"></script>
 {% endblock %}

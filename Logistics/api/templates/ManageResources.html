@@ -3,11 +3,13 @@
 
 {% block extra_css %}
     <link rel="stylesheet" href="{% static 'css/ManageResource.css' %}">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 {% endblock %}
 
 {% block content %}
 <section class="resources-section">
-    <h2 class="text-center mb-4">RESOURCES MANAGEMENT</h2>
+    <h2 class="text-center mb-4">CUSTOMER RESOURCES MANAGEMENT</h2>
     <div class="d-flex align-items-center justify-content-between mb-3">
         <!-- Trigger Button for Modal -->
         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addResourcesModal">

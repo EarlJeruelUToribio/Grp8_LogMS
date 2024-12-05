@@ -11,7 +11,7 @@
     align-items: center; /* Center content horizontally */
     justify-content: flex-start; /* Align content to the top (you can adjust as needed) */
     margin-left: 250px;
-    margin-bottom: 300px;
+    margin-bottom: 50px;
 }
 
 body, html {
@@ -95,6 +95,23 @@ body, html {
     color: white; /* Keep text white */
     cursor: pointer; /* Pointer cursor for better UX */
 }
+
+#edit-button {
+    background-color: #7b4e83;
+    border: none;
+    color: white;
+    border-radius: 6px;
+    width: 100px;
+    padding: 10px;
+    text-align: center;
+}
+
+#edit-button:hover {
+    background-color: #5e3b62;
+}
+
+
+
 
 
 /* CONTENT MAIN */
@@ -181,65 +198,209 @@ body, html {
     background-color: #37063c; /* Darker purple on hover */
 }
 
-/* MODAL HEADER */
+/* Modal Design */
+.modal-content {
+    width: 850px; /* Use wider width */
+    padding: 40px; /* Increased padding */
+    margin: 0 auto;
+    background: white;
+    border-radius: 8px; /* Rounded corners */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    border: 1px solid #d3d3d3; /* Border */
+    background-image: linear-gradient(to bottom right, #fff, #f8f8f8); /* Gradient */
+    box-sizing: border-box; /* Include padding/borders */
+    overflow: hidden; /* Prevent overflow */
+}
+
+/* Modal Header */
 .modal-header {
     background-color: #7b4e83; /* Purple background */
     color: white; /* White text */
-    padding: 20px;
-    text-align: center;
-    border-radius: 8px 8px 0 0; /* Rounded corners for header */
-    font-size: 24px;
-    font-weight: bold;
+    border-radius: 8px 8px 0 0; /* Rounded top corners */
+    padding: 15px;
+    display: flex; /* Flexbox alignment */
+    justify-content: center; /* Centered horizontally */
+    align-items: center; /* Centered vertically */
 }
 
-/* MODAL BODY */
+/* Modal Title */
+.modal-title {
+    font-size: 32px; /* Larger font size */
+    font-weight: 900; /* Bold font */
+    margin: 0;
+}
+
+/* Close Button */
+.btn-close {
+    border: none;
+    font-size: 1.5rem;
+    color: white;
+    cursor: pointer;
+    margin-right: auto;
+}
+
+/* Modal Body */
 .modal-body {
-    display: flex;
-    flex-wrap: wrap; /* Allow items to wrap into the next line if needed */
-    gap: 20px; /* Consistent gap between all form controls */
+    display: grid;
+    gap: 20px; /* Space between columns */
     padding: 20px;
-    justify-content: center; /* Center-align form controls */
+    background-color: #f9f9f9; /* Light background */
 }
 
-/* FORM CONTROLS IN MODAL */
+/* Form Controls */
 .modal-body .form-control,
 .modal-body .form-select {
-    flex: 1 1 100%; /* Make form controls take full width by default */
-    max-width: 600px; /* Restrict the maximum width */
+    width:350px;
     padding: 16px;
-    border: 2px solid black;
-    border-radius: 6px;
-    background: #f8f8f8;
+    margin-bottom: 20px;
+    border: 2px solid black; /* Black border */
+    border-radius: 6px; /* Rounded corners */
+    background: #f8f8f8; /* Light background */
     color: black;
 }
 
-/* MODAL FOOTER */
-.modal-footer {
-    text-align: center;
-    padding: 15px;
-    background-color: #f8f9fa; /* Light background */
-    border-radius: 0 0 8px 8px; /* Rounded bottom corners */
+.modal-body .form-control:focus,
+.modal-body .form-select:focus {
+    border-color: #7b4e83; /* Purple border on focus */
+    box-shadow: 0 0 5px rgba(123, 78, 131, 0.5); /* Subtle glow */
 }
 
-/* FOOTER BUTTON */
-.modal-footer .btn {
+/* Perishable Option */
+.perishable-option {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #f8f8f8; /* Light background */
+    border: 2px solid black; /* Black border */
     padding: 16px 24px;
-    background-color: #7b4e83;
-    color: white;
-    border: none;
     border-radius: 6px;
-    font-size: 16px;
+    margin-bottom: 20px;
+}
+
+/* Radio Button Styling */
+.perishable-option input[type="radio"] {
+    width: 24px;
+    height: 24px;
+    margin-left: 15px;
+    cursor: pointer;
+    appearance: none;
+    border: 2px solid black;
+    border-radius: 50%;
+    background-color: white;
+}
+
+.perishable-option input[type="radio"]:checked {
+    background-color: #7b4e83; /* Purple on selection */
+    border-color: #37063c; /* Darker border */
+}
+
+.perishable-option label {
+    font-size: 18px; /* Larger font */
+    margin: 0;
+    color: black;
+}
+
+/* Modal Footer */
+.modal-footer {
+    background-color: #f8f9fa; /* Light background */
+    border-radius: 0 0 8px 8px; /* Rounded bottom corners */
+    padding: 10px 15px;
+    border-top: 1px solid #e0e0e0; /* Border separator */
+}
+
+/* Footer Buttons */
+.modal-footer .btn {
+    padding: 16px 24px; /* Larger padding */
+    font-size: 18px; /* Larger font size */
+    border-radius: 6px;
     cursor: pointer;
     transition: background-color 0.3s ease;
 }
 
-/* Optional: Add spacing between individual columns explicitly if needed */
-.modal-body > div {
-    margin-right: 40px; /* Adjust the gap between columns manually */
+.modal-footer .btn-primary {
+    background-color: #7b4e83; /* Purple background */
+    color: white;
+    border: none;
 }
 
-/* FOOTER BUTTON HOVER */
-.modal-footer .btn:hover {
-    background-color: #37063c; /* Darker purple on hover */
+.modal-footer .btn-primary:hover {
+    background-color: #5f3c66; /* Darker purple */
+}
+
+.modal-footer .btn-secondary {
+    background-color: #d3d3d3; /* Light gray */
+    color: black;
+    border: none;
+}
+
+.modal-footer .btn-secondary:hover {
+    background-color: #bbb; /* Darker gray */
+}
+
+/* Ingredients Section */
+#ingredients-section {
+    margin-bottom: 20px;
+}
+
+.ingredient-select {
+    width: 100%;
+    padding: 10px;
+    border: 2px solid #7b4e83; /* Purple border */
+    border-radius: 5px;
+    background-color: #f8f8f8; /* Light background */
+    color: #333;
+}
+
+.ingredient-select:focus {
+    border-color: #37063c; /* Darker purple on focus */
+    box-shadow: 0 0 5px rgba(123, 78, 131, 0.5);
+}
+
+#ingredients-section .form-control {
+    width:250px;
+    padding: 16px;
+    margin-bottom: 20px;
+    border: 2px solid black; /* Black border */
+    border-radius: 6px; /* Rounded corners */
+    background: #f8f8f8; /* Light background */
+    color: black;
+margin-left: 60px;
+}
+
+#ingredients-section .form-control:focus {
+    border-color: #7b4e83; /* Purple border on focus */
+    box-shadow: 0 0 5px rgba(123, 78, 131, 0.5); /* Subtle glow */
+}
+
+
+
+#ingredients-section .btn-danger {
+    background-color: #dc3545; /* Danger red */
+    color: #fff;
+    border-radius: 5px;
+    font-weight: bold;
+    border: none;
+    margin-left: 10px;
+
+}
+
+#ingredients-section .btn-danger:hover {
+    background-color: #a71d2a; /* Darker red on hover */
+}
+
+
+#add-ingredient-button {
+    background-color: #7b4e83; /* Purple */
+    color: #fff;
+    font-weight: bold;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    margin-top: 10px;
+}
+
+#add-ingredient-button:hover {
+    background-color: #5f3c66; /* Darker purple */
+    cursor: pointer;
 }
 
