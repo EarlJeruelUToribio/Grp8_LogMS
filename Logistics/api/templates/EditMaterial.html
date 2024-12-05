@@ -11,16 +11,6 @@
 <section id="add-material-form" class="form-container container mt-5">
     <h2 class="text-center">EDIT MATERIAL</h2>
 
-<<<<<<<< HEAD:Logistics/api/templates/EditMaterial.html
-========
-    {% if messages %}
-    <div class="messages">
-        {% for message in messages %}
-        <div{% if message.tags %} class="alert alert-{{ message.tags }}"{% endif %}>{{ message }}</div>
-        {% endfor %}
-    </div>
-    {% endif %}
->>>>>>>> 904c74f26dd348a26d6fac443ee01ff481a1d0ae:Logistics/api/templates/AddMaterial.html
 
     <form method="POST" action="{% url 'AddMaterial' %}" class="row g-3">
         {% csrf_token %}
@@ -74,6 +64,16 @@
         <div class="col-md-6">
             <label for="purchase-price" class="form-label">Purchase Price:</label>
             <input type="number" id="purchase-price" name="purchase-price" step="0.01" class="form-control" required>
+        </div>
+
+        <!-- Supplier -->
+        <div class="col-md-6">
+            <label for="supplier" class="form-label">Supplier:</label>
+            <select id="supplier" name="supplier" class="form-select" required>
+                <option value="supplier1">Supplier 1</option>
+                <option value="supplier2">Supplier 2</option>
+                <option value="supplier3">Supplier 3</option>
+            </select>
         </div>
 
         <!-- Reorder Level -->
