@@ -19,13 +19,16 @@ function addIngredientRow() {
 
 // Function to generate HTML for a new ingredient row
 function getIngredientRowHTML() {
+    // Create the options for the select element
+    const options = materials.map(material => 
+        `<option value="${material.id}">${material.name}</option>`
+    ).join('');
+
     return `
         <div class="col-md-5">
             <select class="form-select ingredient-select" required>
                 <option value="" disabled selected>Select Ingredient</option>
-                {% for material in materials %}
-                    <option value="{{ material.Inventory_ID }}">{{ material.ItemName }}</option>
-                {% endfor %}
+                ${options} <!-- Insert the options here -->
             </select>
         </div>
         <div class="col-md-5">

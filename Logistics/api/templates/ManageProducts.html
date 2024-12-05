@@ -6,6 +6,11 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
         const addProductUrl = "{% url 'AddProduct' %}"; // Define the URL here
+        const materials = [
+        {% for material in materials %}
+            { id: "{{ material.Inventory_ID }}", name: "{{ material.ItemName }}" },
+        {% endfor %}
+    ]; // Pass materials to JavaScript
     </script>
     <script src="{% static 'js/Products.js' %}"></script> <!-- Include the new JS file -->
 {% endblock %}
