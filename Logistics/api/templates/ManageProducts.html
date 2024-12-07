@@ -10,6 +10,7 @@
         {% for material in materials %}
             { id: "{{ material.Inventory_ID }}", name: "{{ material.ItemName }}" },
         {% endfor %}
+        
     ]; // Pass materials to JavaScript
     </script>
     <script src="{% static 'js/Products.js' %}"></script> <!-- Include the new JS file -->

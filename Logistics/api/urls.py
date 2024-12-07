@@ -50,7 +50,9 @@ urlpatterns = [
     path('productorders/<int:pk>/', views.ProductOrdersDetailView.as_view(), name='productorders-detail'),
 
     path('products/', views.ProductListCreateView.as_view(), name='product-list'),
+    path('api/products/', views.ProductListCreateView.as_view(), name='product-list'),
     path('products/<int:pk>/', views.ProductDetailView.as_view(), name='product-detail'),
+    
 
     path('ingredients/', views.IngredientListCreateView.as_view(), name='ingredient-list'),
     path('ingredients/<int:pk>/', views.IngredientDetailView.as_view(), name='ingredient-detail'),
