@@ -13,6 +13,7 @@ class Inventory(models.Model):
     Perishable = models.BooleanField(default=False)
     DaysBeforeExpiry = models.IntegerField(null=True, blank=True)
     Current_Stock = models.IntegerField(default=0)
+    Expired = models.BooleanField(default=False)
 
     class Meta:
         db_table = 'api_inventory'
