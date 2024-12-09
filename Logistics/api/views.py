@@ -1,4 +1,5 @@
 import json
+import requests
 from django.shortcuts import render, redirect
 from django.shortcuts import render, redirect, get_object_or_404  # Add get_object_or_404 here
 from django.views.decorators.http import require_http_methods
@@ -6,6 +7,9 @@ from django.http import JsonResponse
 from django.contrib import messages
 from django.utils import timezone
 from datetime import timedelta
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework import status
 from rest_framework import generics
 from .models import Inventory, Supplier, Order, ProductOrders, Product, Ingredient, Resource
 from .serializers import (

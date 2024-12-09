@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block extra_css %}
-    <link rel="stylesheet" href="{% static 'css/ManageProducts.css' %}">
+    <link rel="stylesheet" href="{% static 'css/ManageProduct.css' %}">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
         const addProductUrl = "{% url 'AddProduct' %}"; // Define the URL here
@@ -10,6 +10,7 @@
         {% for material in materials %}
             { id: "{{ material.Inventory_ID }}", name: "{{ material.ItemName }}" },
         {% endfor %}
+        
     ]; // Pass materials to JavaScript
     </script>
     <script src="{% static 'js/Products.js' %}"></script> <!-- Include the new JS file -->
@@ -87,7 +88,7 @@
                         </div>
                         <div class="col-md-6">
                             <label for="product-description" class="form-label">Product Description:</label>
-                            <input type="text" id="product-description" name="product-description" class="form-control" required>
+                            <input type="text" id="product-description" name="product-description" class="form-control" >
                         </div>
                         <div class="col-md-6">
                             <label for="product-category" class="form-label">Product Category:</label>

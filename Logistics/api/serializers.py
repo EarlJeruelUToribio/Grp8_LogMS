@@ -1,4 +1,5 @@
 from rest_framework import serializers
+from rest_framework import generics
 from .models import Inventory, Supplier, Order, ProductOrders, Product, Ingredient
 
 class InventorySerializer(serializers.ModelSerializer):
@@ -32,3 +33,7 @@ class IngredientSerializer(serializers.ModelSerializer):
         model = Ingredient
         fields = '__all__'
 
+# API Serializers
+class ProductListCreateView(generics.ListCreateAPIView):
+    queryset = Product.objects.all()
+    serializer_class = ProductSerializer

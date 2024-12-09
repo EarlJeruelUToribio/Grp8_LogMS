@@ -1,4 +1,3 @@
-/* Apply full-page layout to center everything */
 .container {
     max-width: 1200px; /* Maximum width of the container */
     margin: 0 auto; /* Center the container horizontally */
@@ -9,10 +8,16 @@
     display: flex;
     flex-direction: column; /* Stack content vertically */
     align-items: center; /* Center content horizontally */
-    justify-content: flex-start; /* Align content to the top (you can adjust as needed) */
+    justify-content: flex-start; /* Align content to the top */
     margin-left: 250px;
-    margin-bottom: 50px;
+    margin-top: 50px;
+    margin-bottom: 100px; /* Adjusted top margin for proper spacing */
+    height: auto; /* Automatically adjust height based on content */
+    max-height: calc(100vh - 100px); /* Limits the height to fit within the viewport minus some space */
+    overflow-y: auto; /* Allows vertical scrolling if content exceeds max height */
+    box-sizing: border-box; /* Includes padding and border in width and height */
 }
+
 
 body, html {
     height: 100%;
@@ -68,6 +73,7 @@ body, html {
 .product-table th {
     background-color: #7b4e83;
     color: #fff;
+    font-size: 14px;
 }
 
 .product-table tr:hover {
