@@ -50,34 +50,32 @@
 <div class="modal fade" id="addKitchenResourcesModal" tabindex="-1" aria-labelledby="addKitchenResourcesModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
-            <!-- Modal Header -->
             <div class="modal-header" style="background-color: #7b4e83; color: white;">
                 <h5 class="modal-title" id="addKitchenResourcesModalLabel">Add Kitchen Resources</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            
-            <!-- Modal Body -->
             <div class="modal-body">
-                <form>
+                <form id="addKitchenResourceForm" method="POST" action="{% url 'AddKitchenResource' %}">
+                    {% csrf_token %}
                     <div class="mb-3">
                         <label for="kitchen-resource-name" class="form-label">Resource Name</label>
-                        <input type="text" class="form-control" id="kitchen-resource-name" name="kitchen-resource-name" required>
+                        <input type="text" class="form-control" id="kitchen-resource-name" name="resource-name" required>
                     </div>
                     <div class="mb-3">
                         <label for="kitchen-resource-category" class="form-label">Category</label>
-                        <input type="text" class="form-control" id="kitchen-resource-category" name="kitchen-resource-category" required>
+                        <input type="text" class="form-control" id="kitchen-resource-category" name="resource-category" required>
                     </div>
                     <div class="mb-3">
                         <label for="kitchen-quantity" class="form-label">Quantity</label>
-                        <input type="number" class="form-control" id="kitchen-quantity" name="kitchen-quantity" required>
+                        <input type="number" class="form-control" id="kitchen-quantity" name="quantity" required>
                     </div>
                     <div class="mb-3">
                         <label for="kitchen-specification" class="form-label">Specification</label>
-                        <textarea class="form-control" id="kitchen-specification" name="kitchen-specification"></textarea>
+                        <textarea class="form-control" id="kitchen-specification " name="specification"></textarea>
                     </div>
                     <div class="mb-3">
                         <label for="kitchen-reorder-level" class="form-label">Reorder Level</label>
-                        <input type="number" class="form-control" id="kitchen-reorder-level" name="kitchen-reorder-level" required>
+                        <input type="number" class="form-control" id="kitchen-reorder-level" name="reorder-level" required>
                     </div>
                     <button type="submit" class="btn btn-primary">Add Kitchen Resource</button>
                 </form>

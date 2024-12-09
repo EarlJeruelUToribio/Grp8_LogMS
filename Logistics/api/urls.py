@@ -24,6 +24,9 @@ urlpatterns = [
     path('ManageResources/', views.ManageResources_view, name='ManageResources'),
     path('AddResources/', views.AddResources_view, name='AddResources'),
 
+    path('kitchen-resources/', views.KitchenResources_view, name='KitchenResources'),
+    path('add-kitchen-resource/', views.AddKitchenResource_view, name='AddKitchenResource'),
+
     path('add-material/', views.AddMaterial_view, name='AddMaterial'),
     path('manage-material/', views.ManageMaterial_view, name='ManageMaterial'),
     path('edit-material/<int:pk>/', views.edit_material, name='edit_material'),

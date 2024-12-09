@@ -11,7 +11,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework import generics
-from .models import Inventory, Supplier, Order, ProductOrders, Product, Ingredient, Resource
+from .models import Inventory, Supplier, Order, ProductOrders, Product, Ingredient, Resource, KitchenResource
 from .serializers import (
     InventorySerializer, 
     SupplierSerializer, 
@@ -328,7 +328,37 @@ def ManageWaste_view(request):
     return render(request, 'ManageWaste.html')
 
 def KitchenResources_view(request):
-    return render(request, 'KitchenResources.html')
+    kitchen_resources = KitchenResource.objects.all()  # Fetch all kitchen resources
+    return render(request, 'KitchenResources.html', {'kitchen_resources': kitchen_resources})
+
+@require_http_methods(["POST"])
+def AddKitchenResource_view(request):
+    if request.method == 'POST':
+        try:
+            # Get data from the request
+            item_name = request.POST.get('resource-name')
+            item_category = request.POST.get('resource-category')
+            quantity = request.POST.get('quantity')
+            specification = request.POST.get('specification')
+            reorder_level = request.POST.get('reorder-level')
+
+            # Create and save the KitchenResource instance
+            kitchen_resource = KitchenResource(
+                ItemName=item_name,
+                ItemCategory=item_category,
+                Current_Stock=quantity,
+                ItemDescription=specification,
+                ReorderLevel=reorder_level,
+            )
+            kitchen_resource.save()
+
+            return JsonResponse({'message': 'Kitchen resource added successfully!'}, status=200)
+
+        except Exception as e:
+            return JsonResponse({'error': str(e)}, status=400)
+
+    return JsonResponse({'error': 'Invalid request method.'}, status=405)
+
 
 def Maintenance_view(request):
     return render(request, 'Maintenance.html')
