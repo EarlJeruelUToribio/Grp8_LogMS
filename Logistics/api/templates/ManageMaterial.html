@@ -10,7 +10,6 @@
 
 <!-- Material Table -->
 <section id="material-table" class="container table-container mt-5">
-    <!-- Add Material Button and Title -->
     <h2 class="text-center w-100">MATERIAL INVENTORY</h2>
     <div class="d-flex align-items-center justify-content-between mb-3">
         <a href="#" id="add-material-button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addMaterialModal">
@@ -58,9 +57,20 @@
                     {% endif %}
                 </td>
                 <td>
-             <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editMaterialModal" data-material-id="EditMaterial">
-             Edit
-            </button>
+                    <button type="button" class="btn btn-primary edit-material-button" 
+                            data-bs-toggle="modal" 
+                            data-bs-target="#editMaterialModal"
+                            data-item-id="{{ material.Inventory_ID }}"
+                            data-item-name="{{ material.ItemName }}" 
+                            data-item-description="{{ material.ItemDescription }}" 
+                            data-item-category="{{ material.ItemCategory }}" 
+                            data-unit-of-measure="{{ material.UnitOfMeasure }}" 
+                            data-purchase-price="{{ material.PurchasePrice }}" 
+                            data-reorder-level="{{ material.ReorderLevel }}" 
+                            data-perishable="{{ material.Perishable }}" 
+                            data-days-before-expiry="{{ material.DaysBeforeExpiry }}">
+                        Edit
+                    </button>
                 </td>
             </tr>
             {% endfor %}
@@ -96,7 +106,7 @@
                         <label for="item-category" class="form-label">Item Category:</label>
                         <select id="item-category" name="item-category" class="form-select" required>
                             <option value="agahan">Agahan</option>
-                            <option value="noodles">Noodles</option>
+ <option value="noodles">Noodles</option>
                             <option value="rice">Rice</option>
                             <option value="sabaw">Sabaw</option>
                             <option value="gulay">Gulay</option>
@@ -169,7 +179,7 @@
 <div class="modal fade" id="editMaterialModal" tabindex="-1" aria-labelledby="editMaterialModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
-            <form method="POST" action="{#}" class="row g-3">
+            <form method="POST" action="" class="row g-3" id="edit-material-form">
                 {% csrf_token %}
                 <div class="modal-header">
                     <h5 class="modal-title" id="editMaterialModalLabel">Edit Material</h5>
@@ -178,20 +188,20 @@
                 <div class="modal-body">
                     <!-- Item Name -->
                     <div class="col-md-6">
-                        <label for="item-name" class="form-label">Item Name:</label>
-                        <input type="text" id="item-name" name="item-name" class="form-control" required>
+                        <label for="edit-item-name" class="form-label">Item Name:</label>
+                        <input type="text" id="edit-item-name" name="item-name" class="form-control" required>
                     </div>
 
                     <!-- Item Description -->
                     <div class="col-md-6">
-                        <label for="item-description" class="form-label">Item Description:</label>
-                        <textarea id="item-description" name="item-description" rows="2" class="form-control"></textarea>
+                        <label for="edit-item-description" class="form-label">Item Description:</label>
+                        <textarea id="edit-item-description" name="item-description" rows="2" class="form-control"></textarea>
                     </div>
 
                     <!-- Item Category -->
                     <div class="col-md-6">
-                        <label for="item-category" class="form-label">Item Category:</label>
-                        <select id="item-category" name="item-category" class="form-select" required>
+                        <label for="edit-item-category" class="form-label">Item Category:</label>
+                        <select id="edit-item-category" name="item-category" class="form-select" required>
                             <option value="agahan">Agahan</option>
                             <option value="noodles">Noodles</option>
                             <option value="rice">Rice</option>
@@ -209,8 +219,8 @@
 
                     <!-- Unit of Measure -->
                     <div class="col-md-6">
-                        <label for="unit-of-measure" class="form-label">Unit of Measure:</label>
-                        <select id="unit-of-measure" name="unit-of-measure" class="form-select" required>
+                        <label for="edit-unit-of-measure" class="form-label">Unit of Measure:</label>
+                        <select id="edit-unit-of-measure" name="unit-of-measure" class="form-select" required>
                             <option value="kg">Kilogram (kg)</option>
                             <option value="g">Gram (g)</option>
                             <option value="l">Liter (l)</option>
@@ -224,38 +234,34 @@
 
                     <!-- Purchase Price -->
                     <div class="col-md-6">
-                        <label for="purchase-price" class="form-label">Purchase Price:</label>
-                        <input type="number" id="purchase-price" name="purchase-price" step="0.01" class="form-control" required>
+                        <label for="edit-purchase-price" class="form-label">Purchase Price:</label>
+                        <input type="number" id="edit-purchase-price" name="purchase-price" class="form-control" required>
                     </div>
 
                     <!-- Reorder Level -->
                     <div class="col-md-6">
-                        <label for="reorder-level" class="form-label">Reorder Level:</label>
-                        <input type="number" id="reorder-level" name="reorder-level" class="form-control" required>
+                        <label for="edit-reorder-level" class="form-label">Reorder Level:</label>
+                        <input type="number" id="edit-reorder-level" name="reorder-level" class="form-control" required>
                     </div>
 
                     <!-- Perishable Option -->
                     <div class="col-md-6">
                         <label class="form-label">Type:</label>
-                        <div class="perishable-option d-flex align-items-center justify-content-between">
-                            <label for="perishable" class="form-check-label">Perishable</label>
-                            <input type="radio" id="perishable" name="perishable" value="true" class="form-check-input" onclick="toggleDaysInput()" required>
-                        </div>
-                        <div class="perishable-option d-flex align-items-center justify-content-between mt-2">
-                            <label for="non-perishable" class="form-check-label">Non-Perishable</label>
-                            <input type="radio" id="non-perishable" name="perishable" value="false" class="form-check-input" onclick="toggleDaysInput()" required>
-                        </div>
+                        <select id="edit-perishable" name="perishable" class="form-select" required>
+                            <option value="true">Yes</option>
+                            <option value="false">No</option>
+                        </select>
                     </div>
 
                     <!-- Days Before Expiry -->
-                    <div class="col-md-6" id="days-before-expiry-container" style="display: none;">
-                        <label for="days-before-expiry" class="form-label">Days Before Expiry:</label>
-                        <input type="number" id="days-before-expiry" name="days-before-expiry" class="form-control" min="0">
+                    <div class="col-md-6">
+                        <label for="edit-days-before-expiry" class="form-label">Days Before Expiry:</label>
+                        <input type="number" id="edit-days-before-expiry" name="days-before-expiry" class="form-control">
                     </div>
                 </div>
-
-                <div class="col-12">
-                    <button type="submit" id="submit-material-button" class="btn btn-primary w-100">Save Changes</button>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Save changes</button>
                 </div>
             </form>
         </div>
@@ -266,4 +272,5 @@
 
 {% block extra_js %}
 <script src="{% static 'js/ManageMaterial.js' %}"></script>
+<script src="{% static 'js/EditMaterial.js' %}"></script>
 {% endblock %}
