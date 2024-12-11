@@ -24,13 +24,13 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-ss7f)bgp8f=91nqt6b2m&z*3tx*kq%p4$b+w1%t6kbu0w38hl!'
+SECRET_KEY = os.environ.get('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.environ.get('DEBUG')
 
-# ALLOWED_HOSTS = ["*"]
-ALLOWED_HOSTS = ['192.168.1.53', 'localhost', '127.0.0.1']
+# Allow local and specific IPs
+ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', '').split(',')
 
 # Application definition
 
@@ -87,15 +87,15 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 
 DATABASES = {
     'default': {
-        # 'ENGINE': 'django.db.backends.postgresql',
-        # 'NAME': 'logistic',
-        # 'USER':'postgres',
-        # 'PASSWORD': 'jeffskieS21',
-        # 'HOST': 'localhost',
-        # 'PORT': '5432'
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'logistic',
+        'USER':'postgres',
+        'PASSWORD': 'jeffskieS21',
+        'HOST': 'localhost',
+        'PORT': '5432'
 
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME':BASE_DIR / 'db.sqlite3',
+        # 'ENGINE': 'django.db.backends.sqlite3',
+        # 'NAME':BASE_DIR / 'db.sqlite3',
     }
 }
 
@@ -141,9 +141,11 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-# Set the STATIC_ROOT to a directory that exists
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')  # or any directory you prefer
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'api/static'),
+]
 
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
