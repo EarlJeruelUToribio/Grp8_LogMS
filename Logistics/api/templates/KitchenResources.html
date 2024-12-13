@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block extra_css %}
-    <link rel="stylesheet" href="{% static 'css/KitchenResources.css' %}">
+    <link rel="stylesheet" href="{% static 'css/KitchenResource.css' %}">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 {% endblock %}
@@ -13,7 +13,10 @@
     <h2 class="text-center mb-4">KITCHEN RESOURCES MANAGEMENT</h2>
     <div class="d-flex align-items-center justify-content-between mb-3">
         <!-- Trigger Button for Modal -->
-        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addKitchenResourcesModal">
+        <button type="button"         
+        id="add-kitchen-button" 
+        data-bs-toggle="modal" 
+        data-bs-target="#addKitchenResourcesModal">
             Add New Resources
         </button>
 

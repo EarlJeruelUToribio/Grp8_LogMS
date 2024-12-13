@@ -36,7 +36,7 @@ body, html {
 /* Title Styling */
 .resources-section h2 {
     font-size: 28px;
-    color: #7b4e83; /* Purple text for the header */
+    color: #743089; /* Purple text for the header */
     font-weight: 700;
     text-align: center;
 }
@@ -65,7 +65,7 @@ body, html {
 }
 
 .resources-table th {
-    background-color: #7b4e83; /* Purple header */
+    background-color: #743089; /* Purple header */
     color: #fff; /* White text */
 }
 

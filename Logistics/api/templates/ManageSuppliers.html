@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block extra_css %}
-<link rel="stylesheet" href="{% static 'css/ManageSupplier.css' %}">
+<link rel="stylesheet" href="{% static 'css/ManageSuppliers.css' %}">
 {% endblock %}
 
 {% block content %}
@@ -36,7 +36,7 @@
                 <td>{{ supplier.PaymentTerms }}</td>
                 <td>{{ supplier.Status }}</td>
                 <td>
-                    <a href="{% url 'edit_supplier' supplier.Supplier_ID %}" class="btn btn-primary">Edit</a>
+                    <a href="{% url 'edit_supplier' supplier.Supplier_ID %}" id="edit-button">Edit</a>
                 </td>
             </tr>
             {% endfor %}

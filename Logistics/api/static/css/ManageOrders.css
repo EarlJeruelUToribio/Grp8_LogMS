@@ -41,7 +41,7 @@
 
 /* Order Status Boxes */
 .order-status-box {
-    background-color: #7b4e83;
+    background-color: #743089;
     color: #fff;
     padding: 25px;
     border-radius: 8px;
@@ -61,7 +61,7 @@
 
 /* Sort Button */
 .sort-button {
-    background-color: #7b4e83;
+    background-color: #743089;
     color: #fff;
     padding: 10px 20px;
     border: none;
@@ -79,7 +79,7 @@
 
 .orders-section h2 {
     font-size: 28px;
-    color: #7b4e83; /* Purple heading */
+    color: #743089; /* Purple heading */
     font-weight: 700;
 }
 
@@ -97,7 +97,7 @@
 }
 
 .orders-table th {
-    background-color: #7b4e83;
+    background-color: #743089;
     color: #fff;
 }
 
@@ -123,7 +123,7 @@
 .order-container {
     position: relative;
     width: 700px;
-    background-color: #61396f;
+    background-color: #743089;
     color: #f8f8ff;
     border-radius: 10px;
     overflow: hidden;
@@ -142,7 +142,7 @@
 #order-details-dropdown {
     cursor: pointer;
     color: #f8f8ff; /* White color for text */
-    background-color: #61396f; /* Green background for the button */
+    background-color: #743089; /* Green background for the button */
     border: none; /* Remove border */
     border-radius: 4px; /* Rounded corners */
     padding: 10px 15px; /* Padding for button */
@@ -164,7 +164,7 @@
 
 /* Modal Header */
 .modal-header {
-    background-color: #7b4e83;
+    background-color: #743089;
     color: #fff;
     border-bottom: 1px solid #f1f1f1;
 }
@@ -196,7 +196,7 @@
 }
 
 .modal-footer .btn-primary {
-    background-color: #7b4e83;
+    background-color: #743089;
     color: #fff;
     border: none;
     transition: background-color 0.3s ease;
@@ -218,7 +218,7 @@
 
 /* Style for the Place Order button */
 .btn-success {
-    background-color: #7b4e83; /* Purple background */
+    background-color: #008425; /* Purple background */
     color: #fff; /* White text */
     border: none; /* No border */
     padding: 10px 20px; /* Adequate padding */
@@ -229,12 +229,12 @@
 }
 
 .btn-success:hover {
-    background-color: #5f3c66; /* Darker purple on hover */
+    background-color: #00691E; /* Darker purple on hover */
 }
 
 /* Style for the Change Status button */
 .change-status-btn {
-    background-color: #7b4e83; /* Light blue background */
+    background-color: #eeb32f; /* Light blue background */
     color: #fff; /* White text */
     border: none;
     padding: 10px 20px;
@@ -245,9 +245,10 @@
 }
 
 .change-status-btn:hover {
-    background-color: #5f3c66; /* Darker blue on hover */
+    background-color: #D1A35A; /* Darker blue on hover */
     transform: scale(1.05);
 }
+
 
 /* General Button Styles */
 button {
@@ -271,7 +272,7 @@ button {
 
 /* Modal Header */
 .modal-header {
-    background-color: #7b4e83; /* Purple background */
+    background-color: #743089; /* Purple background */
     color: white; /* White text */
     border-radius: 8px 8px 0 0; /* Rounded top corners */
     padding: 15px;
@@ -318,7 +319,7 @@ button {
 
 .modal-body .form-control:focus,
 .modal-body .form-select:focus {
-    border-color: #7b4e83; /* Purple border on focus */
+    border-color: #743089; /* Purple border on focus */
     box-shadow: 0 0 5px rgba(123, 78, 131, 0.5); /* Subtle glow */
 }
 
@@ -347,7 +348,7 @@ button {
 }
 
 .perishable-option input[type="radio"]:checked {
-    background-color: #7b4e83; /* Purple on selection */
+    background-color: #743089; /* Purple on selection */
     border-color: #37063c; /* Darker border */
 }
 
@@ -375,7 +376,7 @@ button {
 }
 
 .modal-footer .btn-primary {
-    background-color: #7b4e83; /* Purple background */
+    background-color: #743089; /* Purple background */
     color: white;
     border: none;
 }
@@ -392,4 +393,10 @@ button {
 
 .modal-footer .btn-secondary:hover {
     background-color: #bbb; /* Darker gray */
+}
+
+/* Hide the first column (Order ID) */
+.orders-table th:nth-child(1), 
+.orders-table td:nth-child(1) {
+  display: none;
 }

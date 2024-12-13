@@ -13,7 +13,7 @@
 .table-container h2 {
     margin-bottom: 20px;
     font-size: 28px;
-    color: #7b4e83; /* Purple heading */
+    color: #743089; /* Purple heading */
     font-weight: 700;
 }
 
@@ -21,7 +21,7 @@
 table {
     width: 100%;
     border-collapse: collapse;
-    background-color: #7b4e83; /* Purple table background */
+    background-color: #743089; /* Purple table background */
     color: white; /* White text for contrast */
     text-align: center; /* Center content in the table */
 
@@ -29,7 +29,7 @@ table {
 
 /* Targeting table headers specifically */
 table th {
-    background-color: #7b4e83 !important; /* Purple background */
+    background-color: #743089 !important; /* Purple background */
     color: white !important; /* White text */
     padding: 15px;
     text-align: center;
@@ -38,11 +38,11 @@ table th {
 
 /* Alternating Row Colors */
 table tr:nth-child(even) {
-    background-color: #9b72a1; /* Lighter purple for alternating rows */
+    background-color: #743089; /* Lighter purple for alternating rows */
 }
 
 #edit-button {
-    background-color: #7b4e83;
+    background-color: #743089;
     border: none;
     color: white;
     border-radius: 6px;
@@ -67,12 +67,12 @@ table tr:nth-child(even) {
 .form-container h2 {
     margin-bottom: 20px;
     font-size: 28px;
-    color: #7b4e83;
+    color: #743089;
     text-align: center;
 }
 
 #manual-adjust-form button {
-    background-color: #7b4e83;
+    background-color: #743089;
     border: none;
     color: white;
     border-radius: 6px;
@@ -87,7 +87,7 @@ table tr:nth-child(even) {
 }
 
 #add-supplier-button {
-    background-color: #7b4e83; /* Purple background */
+    background-color: #008425; /* Purple background */
     color: white; /* White text */
     font-weight: bold;
     border: none;
@@ -98,10 +98,28 @@ table tr:nth-child(even) {
 }
 
 #add-supplier-button:hover {
-    background-color: #5e3b62; /* Darker purple on hover */
+    background-color: #00691E; /* Darker purple on hover */
     color: white; /* Keep text white */
     cursor: pointer; /* Pointer cursor for better UX */
 }
+
+#edit-button {
+    background-color: #eeb32f; /* Gold base color */
+    border: none; /* No border */
+    color: white; /* White text */
+    border-radius: 6px; /* Rounded corners */
+    width: 100px; /* Fixed width */
+    padding: 10px; /* Padding inside the button */
+    text-align: center; /* Center text */
+    text-decoration: none; /* Remove underline */
+    display: inline-block; /* Ensure it looks like a button */
+}
+
+#edit-button:hover {
+    background-color: #D1A35A; /* Darker gold on hover */
+    color: white; /* Retain white text */
+}
+
 
 
 /* Adjust Heading and Button Layout */
@@ -126,7 +144,7 @@ table tr:nth-child(even) {
 
 /* Modal Header */
 .modal-header {
-    background-color: #7b4e83; /* Purple background */
+    background-color: #743089; /* Purple background */
     color: white;
     padding: 20px;
     text-align: center;
@@ -175,7 +193,7 @@ table tr:nth-child(even) {
 /* Focus States for Inputs */
 .modal-body .form-control:focus,
 .modal-body .form-select:focus {
-    border-color: #7b4e83; /* Purple border when focused */
+    border-color: #743089; /* Purple border when focused */
     box-shadow: 0 0 5px rgba(123, 78, 131, 0.5); /* Subtle purple glow */
 }
 
@@ -211,7 +229,7 @@ table tr:nth-child(even) {
 /* Add Material Button */
 .add-material-button {
     padding: 12px 20px;
-    background-color: #7b4e83; /* Purple button */
+    background-color: #743089; /* Purple button */
     color: white;
     border: none;
     border-radius: 6px;
@@ -236,7 +254,7 @@ table tr:nth-child(even) {
 /* Save Button */
 .modal-body .btn-primary {
     padding: 16px 24px;
-    background-color: #7b4e83;
+    background-color: #743089;
     color: white;
     border: none;
     border-radius: 6px;
