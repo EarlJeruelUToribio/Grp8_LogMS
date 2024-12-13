@@ -19,10 +19,16 @@ urlpatterns = [
     path('add-supplier/', views.AddSupplier_view, name='AddSupplier'),
     path('manage-supplier/', views.ManageSupplier_view, name='ManageSupplier'),
     path('edit-supplier/<int:pk>/', views.edit_supplier, name='edit_supplier'),
-    path('ExpiryDates/', views.ExpiryDates_view, name='ExpiryDates'),
+    
+    path('expiry-dates/', views.ExpiryDates_view, name='ExpiryDates'),
+    path('mark-as-expired/<int:item_id>/', views.mark_as_expired, name='mark_as_expired'),
+    path('extend-expiration/<int:item_id>/', views.extend_expiration, name='extend_expiration'),
 
     path('ManageResources/', views.ManageResources_view, name='ManageResources'),
     path('AddResources/', views.AddResources_view, name='AddResources'),
+
+    path('kitchen-resources/', views.KitchenResources_view, name='KitchenResources'),
+    path('add-kitchen-resource/', views.AddKitchenResource_view, name='AddKitchenResource'),
 
     path('add-material/', views.AddMaterial_view, name='AddMaterial'),
     path('manage-material/', views.ManageMaterial_view, name='ManageMaterial'),

@@ -6,9 +6,7 @@
 {% endblock %}
 
 {% block content %}
-
- <!-- Orders Section -->
- <div class="container">
+<div class="container">
     <section class="products-section">
         <h2 class="text-center mb-4">ITEM EXPIRATION MANAGEMENT</h2>
         <div class="product-header">
@@ -21,44 +19,55 @@
                     <th>Item ID</th>
                     <th>Item Name</th>
                     <th>Expiration Date</th>
+                    <th>Expiry</th>
                     <th>Manage Expiration</th>
                 </tr>
             </thead>
             <tbody>
-                    <td>00456</td>
-                    <td>Chicken</td>
-                    <td>2024-08-10</td>
+                {% for item in perishable_items %}
+                <tr data-item-id="{{ item.Inventory_ID }}">
+                    <td>{{ item.Inventory_ID }}</td>
+                    <td>{{ item.ItemName }}</td>
+                    <td>
+                        {% if item.expiration_date %}
+                            {{ item.expiration_date|date:"Y-m-d" }}  <!-- Display the actual expiration date -->
+                        {% else %}
+                            N/A
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if item.Expired %}
+                            <span class="text-danger">Expired</span>
+                        {% else %}
+                            <span class="text-success">Active</span>
+                        {% endif %}
+                    </td>
                     <td>
                         <button class="manage-btn" onclick="toggleManageOptions(this)">Manage</button>
                         <div class="manage-options" style="display:none;">
-                            <button class="extend-btn">Extend</button>
-                            <button class="expired-btn">Mark as Expired</button>
+                            <button class="extend-btn" onclick="extendExpiration({{ item.Inventory_ID }})">Extend</button>
+                            <button class="expired-btn" onclick="markAsExpired({{ item.Inventory_ID }})">Mark as Expired</button>
                         </div>
                     </td>
                 </tr>
-                <tr>
-                    <td>00456</td>
-                    <td>Fish</td>
-                    <td>2024-11-10</td>
-                    <td>
-                        <button class="manage-btn" onclick="toggleManageOptions(this)">Manage</button>
-                        <div class="manage-options" style="display:none;">
-                            <button class="extend-btn">Extend</button>
-                            <button class="expired-btn">Mark as Expired</button>
-                        </div>
-                    </td>
-                </tr>
-                <!-- Additional items can be added here -->
-                <!-- No items found example -->
+                {% endfor %}
             </tbody>
         </table>
     </section>
 </div>
+{% endblock %}
 
+{% block extra_js %}
+ <script src="{% static 'js/ExpiryDate.js' %}"></script>
+<script>
+    // Initialize the script with the CSRF token and URLs
+    document.addEventListener("DOMContentLoaded", function() {
+        const csrfToken = '{{ csrf_token }}';  // Get CSRF token from Django
+        const markAsExpiredUrl = '{% url "mark_as_expired" 0 %}';  // Placeholder for the URL
+        const extendExpirationUrl = '{% url "extend_expiration" 0 %}';  // Placeholder for the URL
 
-    {% endblock %}
-
-
-    {% block extra_js %}
-    <script src="{% static 'js/ExpiryDates.js' %}"></script>
-    {% endblock %}
+        // Call the initialize function to set the global variables
+        initializeScript(csrfToken, markAsExpiredUrl, extendExpirationUrl);
+    });
+</script>
+{% endblock %}

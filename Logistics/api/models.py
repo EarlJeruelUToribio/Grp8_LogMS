@@ -13,6 +13,7 @@ class Inventory(models.Model):
     Perishable = models.BooleanField(default=False)
     DaysBeforeExpiry = models.IntegerField(null=True, blank=True)
     Current_Stock = models.IntegerField(default=0)
+    Expired = models.BooleanField(default=False)
 
     class Meta:
         db_table = 'api_inventory'
@@ -20,7 +21,7 @@ class Inventory(models.Model):
     def __str__(self):
         return self.ItemName
 
-
+#for Customer Resources
 class Resource(models.Model):
     Resource_ID = models.AutoField(primary_key=True)
     ItemName = models.CharField(max_length=255)
@@ -32,6 +33,22 @@ class Resource(models.Model):
 
     class Meta:
         db_table = 'resources'  # Name of the table in the database
+
+    def __str__(self):
+        return self.ItemName
+
+# Kitchen Resources
+class KitchenResource(models.Model):
+    KitchenResource_ID = models.AutoField(primary_key=True)
+    ItemName = models.CharField(max_length=255)
+    ItemDescription = models.TextField(blank=True, null=True)
+    ItemCategory = models.CharField(max_length=100)
+    Current_Stock = models.IntegerField(default=0)
+    ReorderLevel = models.IntegerField(default=0)
+    Created_At = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        db_table = 'kitchen_resources'  # Name of the table in the database
 
     def __str__(self):
         return self.ItemName

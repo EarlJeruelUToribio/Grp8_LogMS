@@ -11,7 +11,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework import generics
-from .models import Inventory, Supplier, Order, ProductOrders, Product, Ingredient, Resource
+from .models import Inventory, Supplier, Order, ProductOrders, Product, Ingredient, Resource, KitchenResource
 from .serializers import (
     InventorySerializer, 
     SupplierSerializer, 
@@ -321,14 +321,73 @@ def edit_supplier(request, pk):
         return redirect('ManageSupplier')
     return render(request, 'EditSupplier.html', {'supplier': supplier})
 
+@require_http_methods(["POST"])
+def mark_as_expired(request, item_id):
+    inventory_item = get_object_or_404(Inventory, Inventory_ID=item_id)
+    inventory_item.Expired = True  # Mark the item as expired
+    inventory_item.save()
+    return JsonResponse({'message': 'Item marked as expired.'}, status=200)
+
+@require_http_methods(["POST"])
+def extend_expiration(request, item_id):
+    inventory_item = get_object_or_404(Inventory, Inventory_ID=item_id)
+    
+    if inventory_item.Perishable and inventory_item.DaysBeforeExpiry is not None:
+        # Calculate the new expiration date
+        new_expiration_date = inventory_item.Created_At + timedelta(days=inventory_item.DaysBeforeExpiry)
+        inventory_item.Created_At = new_expiration_date  # Update the Created_At to the new expiration date
+        inventory_item.Expired = False  # Mark as not expired
+        inventory_item.save()
+        
+        return JsonResponse({'message': 'Expiration date extended.', 'new_expiration_date': new_expiration_date.strftime('%Y-%m-%d')}, status=200)
+    
+    return JsonResponse({'error': 'Item is not perishable or does not have a valid expiration.'}, status=400)
+
 def ExpiryDates_view(request):
-    return render(request, 'ExpiryDates.html')
+    perishable_items = Inventory.objects.filter(Perishable=True)  # Get all perishable items
+    for item in perishable_items:
+        if item.DaysBeforeExpiry and item.Created_At:
+            # Calculate the actual expiration date
+            item.expiration_date = item.Created_At + timedelta(days=item.DaysBeforeExpiry)
+        else:
+            item.expiration_date = None  # Set to None if not applicable
+    return render(request, 'ExpiryDates.html', {'perishable_items': perishable_items})
 
 def ManageWaste_view(request):
     return render(request, 'ManageWaste.html')
 
 def KitchenResources_view(request):
-    return render(request, 'KitchenResources.html')
+    kitchen_resources = KitchenResource.objects.all()  # Fetch all kitchen resources
+    return render(request, 'KitchenResources.html', {'kitchen_resources': kitchen_resources})
+
+@require_http_methods(["POST"])
+def AddKitchenResource_view(request):
+    if request.method == 'POST':
+        try:
+            # Get data from the request
+            item_name = request.POST.get('resource-name')
+            item_category = request.POST.get('resource-category')
+            quantity = request.POST.get('quantity')
+            specification = request.POST.get('specification')
+            reorder_level = request.POST.get('reorder-level')
+
+            # Create and save the KitchenResource instance
+            kitchen_resource = KitchenResource(
+                ItemName=item_name,
+                ItemCategory=item_category,
+                Current_Stock=quantity,
+                ItemDescription=specification,
+                ReorderLevel=reorder_level,
+            )
+            kitchen_resource.save()
+
+            return JsonResponse({'message': 'Kitchen resource added successfully!'}, status=200)
+
+        except Exception as e:
+            return JsonResponse({'error': str(e)}, status=400)
+
+    return JsonResponse({'error': 'Invalid request method.'}, status=405)
+
 
 def Maintenance_view(request):
     return render(request, 'Maintenance.html')
