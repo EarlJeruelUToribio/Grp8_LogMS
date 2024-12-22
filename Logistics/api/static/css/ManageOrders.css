@@ -237,7 +237,7 @@
     background-color: #eeb32f; /* Light blue background */
     color: #fff; /* White text */
     border: none;
-    padding: 10px 20px;
+    padding: 8px 16px;
     font-size: 16px;
     border-radius: 4px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -246,7 +246,22 @@
 
 .change-status-btn:hover {
     background-color: #D1A35A; /* Darker blue on hover */
-    transform: scale(1.05);
+}
+
+/* Style for the Change Status button */
+.view-order-btn {
+    background-color: #eeb32f; /* Light blue background */
+    color: #fff; /* White text */
+    border: none;
+    padding: 8px 16px;
+    font-size: 16px;
+    border-radius: 4px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.view-order-btn:hover {
+    background-color: #D1A35A; /* Darker blue on hover */
 }
 
 
@@ -393,10 +408,4 @@ button {
 
 .modal-footer .btn-secondary:hover {
     background-color: #bbb; /* Darker gray */
-}
-
-/* Hide the first column (Order ID) */
-.orders-table th:nth-child(1), 
-.orders-table td:nth-child(1) {
-  display: none;
 }

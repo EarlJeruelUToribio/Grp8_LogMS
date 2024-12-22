@@ -44,7 +44,7 @@
             <table class="table table-striped orders-table">
                 <thead>
                     <tr>
-                        <th>Order ID</th>
+                        <th>Transaction No.</th>
                         <th>Item</th>
                         <th>Quantity</th>
                         <th>Supplier Name</th>
@@ -61,6 +61,18 @@
                         <td>{{ order.Supplier.SupplierName }}</td>
                         <td>{{ order.OrderStatus }}</td>
                         <td>
+                            <button 
+                            type="button" 
+                            class="btn btn-secondary view-order-btn" 
+                            data-bs-toggle="modal" 
+                            data-bs-target="#viewOrderModal" 
+                            data-order-id="{{ order.Order_ID }}"
+                            data-items="{{ order.Items.ItemName }}"
+                            data-quantity="{{ order.Quantity }}"
+                            data-supplier="{{ order.Supplier.SupplierName }}"
+                            data-status="{{ order.OrderStatus }}">
+                            View Details
+                        </button>
                             <button 
                                 type="button" 
                                 class="btn btn-primary change-status-btn" 
@@ -108,6 +120,29 @@
         </div>
     </div>
 </div>
+
+<!-- View Order Modal -->
+<div class="modal fade" id="viewOrderModal" tabindex="-1" aria-labelledby="viewOrderModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="viewOrderModalLabel">Order Details</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p><strong>Order ID:</strong> <span id="view-order-id"></span></p>
+                <p><strong>Items:</strong> <span id="view-order-items"></span></p>
+                <p><strong>Quantity:</strong> <span id="view-order-quantity"></span></p>
+                <p><strong>Supplier:</strong> <span id="view-order-supplier"></span></p>
+                <p><strong>Status:</strong> <span id="view-order-status"></span></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 <!-- Modal for Place Order -->
 <div class="modal fade" id="placeOrderModal" tabindex="-1" aria-labelledby="placeOrderModalLabel" aria-hidden="true">

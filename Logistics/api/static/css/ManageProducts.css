@@ -410,3 +410,10 @@ margin-left: 60px;
     cursor: pointer;
 }
 
+.product-table td:first-child {
+    display: none;
+}
+
+.product-table th:first-child {
+    display: none;
+}
