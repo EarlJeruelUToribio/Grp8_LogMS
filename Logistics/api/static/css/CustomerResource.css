@@ -4,14 +4,15 @@
     padding: 20px; /* Padding inside the container */
     background-color: #fff; /* Background color */
     border-radius: 8px; /* Rounded corners */
+    border: 1px solid #ffffff;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Shadow for some depth */
     display: flex;
     flex-direction: column; /* Stack content vertically */
-    align-items: center; /* Center content horizontally */
     justify-content: flex-start; /* Align content to the top (you can adjust as needed) */
-    margin-left: 250px;
+    margin-left: 230px;
     margin-top: 20px;
-    margin-bottom: 350px;
+    margin-bottom: 250px;
+
 }
 
 body, html {
@@ -22,7 +23,6 @@ body, html {
     background-color: #f9f9f9; /* Set a background color if needed */
 
 }
-
 
 /* Section Header */
 .resources-section h2 {

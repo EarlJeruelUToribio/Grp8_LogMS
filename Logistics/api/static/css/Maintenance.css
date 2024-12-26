@@ -1,18 +1,4 @@
 /* General Page Layout */
-.container {
-    width: 1100px;    margin: 0 auto; /* Center the container horizontally */
-    padding: 20px; /* Padding inside the container */
-    background-color: #fff; /* Background color */
-    border-radius: 8px; /* Rounded corners */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Shadow for some depth */
-    display: flex;
-    flex-direction: column; /* Stack content vertically */
-    align-items: center; /* Center content horizontally */
-    justify-content: flex-start; /* Align content to the top (you can adjust as needed) */
-    margin-left: 250px;
-    margin-top: 20px;
-    margin-bottom: 250px;
-}
 
 body, html {
     margin: 0;
@@ -28,9 +14,11 @@ body, html {
     padding: 20px;
     border-radius: 8px; /* Rounded corners */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
-    max-width: 1200px;
+    max-width: 1100px;
     margin: 20px auto;
     width: 100%;
+    margin-bottom: 200px;
+    margin-left: 200px;
 }
 
 /* Title Styling */
@@ -52,7 +40,7 @@ body, html {
 
 /* Table Styles */
 .resources-table {
-    width: 1100px;  
+    width: 1050px; 
     border-collapse: collapse;
     margin-top: 20px;
 }

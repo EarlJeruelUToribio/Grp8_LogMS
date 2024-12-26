@@ -1,32 +1,33 @@
 .container {
-    max-width: 1200px; /* Maximum width of the container */
-    margin: 0 auto; /* Center the container horizontally */
-    padding: 20px; /* Padding inside the container */
-    background-color: #fff; /* Background color */
+    max-width: 1100px; 
+    margin: 20px auto;
+    padding: 20px; /* Inner padding */
+    background: #ffffff;
     border-radius: 8px; /* Rounded corners */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Shadow for some depth */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Box shadow */
+    border: 1px solid #ffffff;
     display: flex;
-    flex-direction: column; /* Stack content vertically */
-    align-items: center; /* Center content horizontally */
+    flex-direction: column; /* Stack items vertically */
+    align-items: stretch; /* Ensure content spans the full width */
     justify-content: flex-start; /* Align content to the top */
-    margin-left: 250px;
-    margin-top: 50px;
-    margin-bottom: 100px; /* Adjusted top margin for proper spacing */
-    height: auto; /* Automatically adjust height based on content */
-    max-height: calc(100vh - 100px); /* Limits the height to fit within the viewport minus some space */
-    overflow-y: auto; /* Allows vertical scrolling if content exceeds max height */
-    box-sizing: border-box; /* Includes padding and border in width and height */
+    margin-top: 80px;
+    margin-bottom: 50px; /* Bottom margin */
+    margin-left: 100px;
+    height: auto; /* Adjust height based on content */
+    overflow: visible; /* Allow content to overflow without scrolling */
+    box-sizing: border-box; /* Include padding and border in dimensions */
 }
+
 
 
 body, html {
     height: 100%;
     margin: 0;
+    background-color: #f9f9f9; /* Light background color */
     display: flex;
-    justify-content: center;  /* Horizontally center the content */
-    align-items: center;  /* Vertically center the content */
-    background-color: #f9f9f9; /* Set a background color if needed */
-
+    flex-direction: column; /* Stack content */
+    justify-content: flex-start; /* Align to the top */
+    align-items: center; /* Center horizontally */
 }
 
 /* Adjust header layout */
@@ -45,8 +46,9 @@ body, html {
     border: 2px solid #000000; /* Black border */
     border-radius: 5px;
     box-sizing: border-box;
-    margin-bottom: 10px;
+    margin-top: 50px;
     margin-left: auto;
+    margin-right:30px;
     display: block; /* Ensures it's treated as a block element for centering */
 }
 
@@ -58,7 +60,7 @@ body, html {
 
 /* Product Table */
 .product-table {
-    width: 1100px;
+    width: 1000px;
     border-collapse: collapse;
     margin: 0 auto; /* Center the table horizontally */
     padding-bottom: 50px; /* Manually adjust padding at the bottom of the table */
@@ -94,6 +96,7 @@ body, html {
     align-items: center;
     justify-content: center;
     text-decoration: none; /* Remove underline */
+    margin-left: 30px;
 }
 
 .add-product-button:hover {
