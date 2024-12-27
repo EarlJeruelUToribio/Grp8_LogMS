@@ -61,5 +61,6 @@ urlpatterns = [
     
 
     path('ingredients/', views.IngredientListCreateView.as_view(), name='ingredient-list'),
+    path('send-ingredients/', views.send_ingredients, name='send-ingredients'),
     path('ingredients/<int:pk>/', views.IngredientDetailView.as_view(), name='ingredient-detail'),
 ]

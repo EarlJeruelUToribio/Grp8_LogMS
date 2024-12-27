@@ -251,8 +251,9 @@ def EditProduct_view(request, pk):
         product.PurchasePrice = request.POST.get('product-price')
         product.save()
         messages.success(request, 'Product updated successfully!')
-        return redirect('ManageProduct')
-    return render(request, 'EditProduct.html', {'product': product})
+        return redirect('ManageProducts')
+    
+    return render(request, 'ManageProducts.html', {'product': product})
 
 def KitchenDisplay_view(request):
     return render(request, 'KitchenDisplay.html')
@@ -423,6 +424,37 @@ def AddResources_view(request):
             return JsonResponse({'error': str(e)}, status=400)
 
     return JsonResponse({'error': 'Invalid request method.'}, status=405)
+
+@require_http_methods(["POST"])
+def send_ingredients(request):
+    if request.method == 'POST':
+        try:
+            # Assuming you are sending all ingredients or a specific list
+            ingredients = Ingredient.objects.all()  # Fetch all ingredients or filter as needed
+            
+            # Prepare the data to send
+            data_to_send = []
+            for ingredient in ingredients:
+                data_to_send.append({
+                    'IngredientName': ingredient.IngredientName,
+                    'ItemUnitMeasure': ingredient.ItemUnitMeasure,
+                    'MeasureCount': ingredient.MeasureCount,
+                    'Inventory_ID': ingredient.Inventory_ID.Inventory_ID,  # Assuming you want to send the Inventory ID
+                })
+
+            # Send the POST request to the external API
+            response = requests.post('https://external-api-url.com/endpoint', json=data_to_send)
+
+            # Check the response status
+            if response.status_code == 200:
+                return JsonResponse({'success': True, 'message': 'Ingredients sent successfully!'}, status=200)
+            else:
+                return JsonResponse({'success': False, 'message': 'Failed to send ingredients.', 'error': response.text}, status=response.status_code)
+
+        except Exception as e:
+            return JsonResponse({'success': False, 'error': str(e)}, status=500)
+
+    return JsonResponse({'success': False, 'error': 'Invalid request method.'}, status=405)
 
 #Inventory Views
 class InventoryListCreateView(generics.ListCreateAPIView):
