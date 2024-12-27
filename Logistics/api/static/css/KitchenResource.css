@@ -34,7 +34,7 @@ body, html {
 
 .resources-section h2 {
     font-size: 28px;
-    color: #7b4e83; /* Purple text for the header */
+    color: #743089; /* Purple text for the header */
     font-weight: 700;
     text-align: center;
 }
@@ -61,25 +61,29 @@ body, html {
 }
 
 .dropdown-item:hover {
-    background-color: #7b4e83; /* Purple background */
+    background-color: #743089; /* Purple background */
     color: #fff; /* White text on hover */
 }
 
 /* Add Resource Button */
-.btn-primary {
-    background-color: #7b4e83; /* Purple background */
-    color: #fff;
+#add-kitchen-button {
+    background-color: #008425; /* Purple background */
+    color: white;
     font-weight: bold;
     border: none;
     border-radius: 6px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Shadow */
-    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     height: 50px;
-    width: 210;
+    width: 180px;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none; /* Remove underline */
 }
 
-.btn-primary:hover {
-    background-color: #5e3b62; /* Darker purple on hover */
+#add-kitchen-button:hover {
+    background-color: #00691E; /* Darker purple on hover */
     cursor: pointer;
 }
 
@@ -98,7 +102,7 @@ body, html {
 }
 
 .resources-table th {
-    background-color: #7b4e83; /* Purple header */
+    background-color: #743089; /* Purple header */
     color: #fff; /* White text */
 }
 
@@ -108,7 +112,7 @@ body, html {
 
 /* Modal Styles */
 .modal-header {
-    background-color: #7b4e83; /* Purple header */
+    background-color: #743089; /* Purple header */
     color: white;
     border-radius: 8px 8px 0 0; /* Rounded top corners */
     padding: 15px 20px;
@@ -150,7 +154,7 @@ body, html {
 }
 
 .form-control:focus {
-    border-color: #7b4e83; /* Purple border on focus */
+    border-color: #743089; /* Purple border on focus */
     box-shadow: 0 0 5px rgba(123, 78, 131, 0.5); /* Purple glow */
     outline: none;
 }
@@ -161,7 +165,7 @@ body, html {
     font-size: 16px;
     font-weight: bold;
     border-radius: 6px;
-    background-color: #7b4e83; /* Purple */
+    background-color: #743089; /* Purple */
     border: none;
 }
 

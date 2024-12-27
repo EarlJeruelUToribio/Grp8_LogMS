@@ -13,7 +13,7 @@
             modalOrderIdInput.value = orderId;
             modalCurrentStatus.textContent = currentStatus;
 
-            // Set default selection to current status
+            // Set defau    lt selection to current status
             [...modalNewStatus.options].forEach(option => {
                 option.selected = option.value === currentStatus;
             });
@@ -59,4 +59,23 @@
             const totalCost = (basePrice * quantity).toFixed(2);
             totalCostElement.textContent = totalCost;
         }
-    });
+   // View Order Modal Logic
+   const viewOrderButtons = document.querySelectorAll('.view-order-btn');
+
+   viewOrderButtons.forEach(button => {
+       button.addEventListener('click', function() {
+           const orderId = button.getAttribute('data-order-id');
+           const items = button.getAttribute('data-items');
+           const quantity = button.getAttribute('data-quantity');
+           const supplier = button.getAttribute('data-supplier');
+           const status = button.getAttribute('data-status');
+
+           // Populate the View Order Modal with order details
+           document.getElementById('view-order-id').textContent = orderId;
+           document.getElementById('view-order-items').textContent = items;
+           document.getElementById('view-order-quantity').textContent = quantity;
+           document.getElementById('view-order-supplier').textContent = supplier;
+           document.getElementById('view-order-status').textContent = status;
+       });
+   });
+});

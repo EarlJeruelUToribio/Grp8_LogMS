@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block extra_css %}
-    <link rel="stylesheet" href="{% static 'css/ManageProduct.css' %}">
+    <link rel="stylesheet" href="{% static 'css/ManageProducts.css' %}">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
         const addProductUrl = "{% url 'AddProduct' %}"; // Define the URL here
@@ -17,8 +17,9 @@
 {% endblock %}
 
 {% block content %}
+<div class="container">
 <section class="products-section">
-    <h2 class="text-center mb-4">PRODUCTS MANAGEMENT</h2>
+    <h2 class="text-center mb-4">PRODUCT MANAGEMENT</h2>
     <div class="d-flex align-items-center justify-content-between mb-3">
         <button type="button" class="add-product-button mt-5" data-bs-toggle="modal" data-bs-target="#addProductModal">
             Add Product
