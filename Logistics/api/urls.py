@@ -44,12 +44,14 @@ urlpatterns = [
     path('api/min-order-qty/', views.get_min_order_qty, name='get-min-order-qty'),
 
     path('inventory/', views.InventoryListCreateView.as_view(), name='inventory-list'),
+    path('send-inventory-data/', views.send_inventory_data, name='send-inventory-data'),
     path('inventory/<int:pk>/', views.InventoryDetailView.as_view(), name='inventory-detail'),
 
     path('suppliers/', views.SupplierListCreateView.as_view(), name='supplier-list'),
     path('suppliers/<int:pk>/', views.SupplierDetailView.as_view(), name='supplier-detail'),
 
     path('orders/', views.OrderListCreateView.as_view(), name='order-list'),
+    path('send-delivered-orders/', views.send_delivered_orders, name='send-delivered-orders'),
     path('orders/<int:pk>/', views.OrderDetailView.as_view(), name='order-detail'),
 
     path('productorders/', views.ProductOrdersListCreateView.as_view(), name='productorders-list'),

@@ -456,6 +456,60 @@ def send_ingredients(request):
 
     return JsonResponse({'success': False, 'error': 'Invalid request method.'}, status=405)
 
+@require_http_methods(["POST"])
+def send_delivered_orders(request):
+    if request.method == 'POST':
+        try:
+            # Fetch all delivered orders
+            delivered_orders = Order.objects.filter(OrderStatus='Delivered').select_related('Items', 'Supplier')
+
+            # Prepare the order data
+            order_data = []
+            for order in delivered_orders:
+                order_data.append({
+                    'Order_ID': order.Order_ID,
+                    'ItemName': order.Items.ItemName,
+                    'Quantity': order.Quantity,
+                    'OrderStatus': order.OrderStatus,
+                    'SupplierName': order.Supplier.SupplierName,
+                    'Created_At': order.Created_At.strftime('%Y-%m-%d %H:%M:%S'),
+                })
+
+            # Send the POST request to the external API
+            response = requests.post('https://external-api-url.com/orders', json=order_data)
+
+            # Check the response status
+            if response.status_code == 200:
+                return JsonResponse({'success': True, 'message': 'Order data sent successfully!'}, status=200)
+            else:
+                return JsonResponse({'success': False, 'message': 'Failed to send order data.', 'error': response.text}, status=response.status_code)
+
+        except Exception as e:
+            return JsonResponse({'success': False, 'error': str(e)}, status=500)
+
+    return JsonResponse({'success': False, 'error': 'Invalid request method.'}, status=405)
+
+@require_http_methods(["POST"])
+def send_inventory_data(request):
+    if request.method == 'POST':
+        try:
+            # Fetch all inventory data
+            inventory_data = Inventory.objects.all().values('Inventory_ID', 'ItemName', 'Current_Stock', 'PurchasePrice')
+
+            # Send the POST request to the external API
+            response = requests.post('https://external-api-url.com/inventory', json=list(inventory_data))
+
+            # Check the response status
+            if response.status_code == 200:
+                return JsonResponse({'success': True, 'message': 'Inventory data sent successfully!'}, status=200)
+            else:
+                return JsonResponse({'success': False, 'message': 'Failed to send inventory data.', 'error': response.text}, status=response.status_code)
+
+        except Exception as e:
+            return JsonResponse({'success': False, 'error': str(e)}, status=500)
+
+    return JsonResponse({'success': False, 'error': 'Invalid request method.'}, status=405)
+
 #Inventory Views
 class InventoryListCreateView(generics.ListCreateAPIView):
     queryset = Inventory.objects.all()
