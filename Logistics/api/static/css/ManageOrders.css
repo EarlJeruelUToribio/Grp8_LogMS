@@ -409,3 +409,44 @@ button {
 .modal-footer .btn-secondary:hover {
     background-color: #bbb; /* Darker gray */
 }
+
+/* Custom SweetAlert Styles */
+.custom-swal-popup {
+    background-color: white; /* Light purple background */
+    border-radius: 8px; /* Rounded corners */
+    border: 1px solid #743089; /* Purple border */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+}
+
+.custom-swal-title {
+    font-size: 24px; /* Adjust title font size */
+    font-weight: bold; /* Bold title */
+    color: #743089; /* Purple text color */
+}
+
+.custom-swal-confirm {
+    background-color: #743089; /* Purple background */
+    color: white; /* White text */
+    border-radius: 6px; /* Rounded button */
+    font-size: 16px; /* Adjust font size */
+    padding: 10px 20px; /* Button padding */
+}
+
+.custom-swal-confirm:hover {
+    background-color: #5e3b62; /* Darker purple on hover */
+}
+
+.btn-close {
+    background-color: white; /* Set background to white */
+    border: none; /* Remove border */
+    color: #000; /* Set the color of the cross to black */
+    font-size: 1.3rem; /* Adjust size if needed */
+    padding: 0.5rem; /* Adjust padding */
+    opacity: 1; /* Ensure it’s fully visible */
+  }
+  
+  .btn-close:hover {
+    background-color: #f0f0f0; /* Light grey background on hover */
+    color: #333; /* Darker color for the cross on hover */
+  }
+  

@@ -331,3 +331,18 @@ table tr:nth-child(even) {
 #saveAddCategory:focus {
     background-color: #5e3b62; /* Darker purple on hover/focus */
 }
+
+.btn-close {
+    background-color: white; /* Set background to white */
+    border: none; /* Remove border */
+    color: #000; /* Set the color of the cross to black */
+    font-size: 1.3rem; /* Adjust size if needed */
+    padding: 0.5rem; /* Adjust padding */
+    opacity: 1; /* Ensure it’s fully visible */
+  }
+  
+  .btn-close:hover {
+    background-color: #f0f0f0; /* Light grey background on hover */
+    color: #333; /* Darker color for the cross on hover */
+  }
+  

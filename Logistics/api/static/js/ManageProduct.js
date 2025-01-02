@@ -78,10 +78,14 @@ function handleAddProductSubmit(event) {
                     confirmButton: 'custom-swal-confirm'
                 }
             }).then(() => {
-                // Optionally, close the modal and reset the form
+                // Optionally, close the modal
                 $('#addProductModal').modal('hide');
+                
+                // Reset the form
                 document.getElementById('add-product-form').reset();
-                // You can also reload the product list or update the table dynamically if needed
+
+                // Optionally, redirect to the product table or reload the table dynamically
+                window.location.href = '#your-table-id'; // Replace with the correct ID or link to redirect to the table
             });
         }
     })
