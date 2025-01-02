@@ -104,6 +104,23 @@ table tr:nth-child(even) {
     cursor: pointer; /* Pointer cursor for better UX */
 }
 
+/* Add Category Button */
+#add-category-button {
+    background-color: #008425; /* Purple background */
+    color: white; /* White text */
+    font-weight: bold;
+    border: none;
+    border-radius: 6px; /* Rounded edges */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    height: 50px;
+    width: 150px;
+}
+
+#add-category-button:hover {
+    background-color: #00691E; /* Darker purple on hover */
+    color: white; /* Keep text white */
+    cursor: pointer; /* Pointer cursor for better UX */
+}
 
 /* Adjust Heading and Button Layout */
 .table-container .d-flex {
@@ -260,7 +277,6 @@ table tr:nth-child(even) {
     font-size: 18px;
     cursor: pointer;
     transition: background-color 0.3s ease;
-    width: 20000px;
 }
 
 /* Button Hover State */
@@ -294,3 +310,24 @@ table tr:nth-child(even) {
     background-color: #5e3b62; /* Darker purple on hover */
 }
 
+
+
+/* Styling for the Save Category button */
+#saveAddCategory {
+    background-color: #743089; /* Purple background */
+    color: #ffffff; /* White text */
+    border-radius: 6px; /* Rounded edges */
+    padding: 10px 20px; /* Padding for better spacing */
+    font-size: 16px; /* Font size */
+    cursor: pointer; /* Pointer cursor on hover */
+    transition: background-color 0.3s ease; /* Smooth transition on hover */
+    width: 200px;
+    margin-top: 30px;
+
+}
+
+
+#saveAddCategory:hover,
+#saveAddCategory:focus {
+    background-color: #5e3b62; /* Darker purple on hover/focus */
+}
