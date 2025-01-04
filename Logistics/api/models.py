@@ -21,6 +21,16 @@ class Inventory(models.Model):
     def __str__(self):
         return self.ItemName
 
+class MaterialCategory(models.Model):
+    Category_ID = models.AutoField(primary_key=True)
+    CategoryName = models.CharField(max_length=100)
+
+    class Meta:
+        db_table = 'material_categories'  # Updated table name
+
+    def __str__(self):
+        return self.CategoryName
+
 #for Customer Resources
 class Resource(models.Model):
     Resource_ID = models.AutoField(primary_key=True)
