@@ -420,3 +420,29 @@ margin-left: 60px;
 .product-table th:first-child {
     display: none;
 }
+
+/* Custom SweetAlert Styles */
+.custom-swal-popup {
+    background-color: white; /* Light purple background */
+    border-radius: 8px; /* Rounded corners */
+    border: 1px solid #743089; /* Purple border */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+}
+
+.custom-swal-title {
+    font-size: 24px; /* Adjust title font size */
+    font-weight: bold; /* Bold title */
+    color: #743089; /* Purple text color */
+}
+
+.custom-swal-confirm {
+    background-color: #743089; /* Purple background */
+    color: white; /* White text */
+    border-radius: 6px; /* Rounded button */
+    font-size: 16px; /* Adjust font size */
+    padding: 10px 20px; /* Button padding */
+}
+
+.custom-swal-confirm:hover {
+    background-color: #5e3b62; /* Darker purple on hover */
+}
