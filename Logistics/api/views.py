@@ -86,6 +86,19 @@ def ManageOrder_view(request):
         'suppliers': suppliers,
     })
 
+def order_counts_view(request):
+    placed_count = Order.objects.filter(OrderStatus='Placed').count()
+    shipped_count = Order.objects.filter(OrderStatus='Shipped').count()
+    completed_count = Order.objects.filter(OrderStatus='Completed').count()
+    cancelled_count = Order.objects.filter(OrderStatus='Cancelled').count()
+
+    return JsonResponse({
+        'placed': placed_count,
+        'shipped': shipped_count,
+        'completed': completed_count,
+        'cancelled': cancelled_count,
+    })
+
 def get_materials_by_supplier(request):
     supplier_id = request.GET.get('supplier_id')
     materials = Inventory.objects.filter(Suppliers__Supplier_ID=supplier_id).values('Inventory_ID', 'ItemName', 'PurchasePrice')

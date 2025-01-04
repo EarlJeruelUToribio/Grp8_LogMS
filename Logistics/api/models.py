@@ -109,5 +109,5 @@ class Ingredient(models.Model):
     IngredientName = models.CharField(max_length=255)
     ItemUnitMeasure = models.CharField(max_length=50)
     MeasureCount = models.IntegerField()
-    Inventory_ID = models.ForeignKey('Inventory', on_delete=models.CASCADE)
+    Inventory_ID = models.ForeignKey(Inventory, models.DO_NOTHING, db_column='Inventory_ID')
     Created_At = models.DateTimeField(auto_now_add=True)
