@@ -11,6 +11,7 @@ urlpatterns = [
 
     path('ManageOrder/', views.ManageOrder_view, name='ManageOrder'),
     path('PlaceOrder/', views.PlaceOrder_view, name='PlaceOrder'),
+    path('api/order-counts/', views.order_counts_view, name='order-counts'),
     
     path('ManageProduct/', views.ManageProduct_view, name='ManageProducts'),
     path('edit_product/<int:pk>/', views.EditProduct_view, name='EditProduct'),
@@ -37,6 +38,7 @@ urlpatterns = [
     path('KitchenResources/', views.KitchenResources_view, name='KitchenResources'),
     path('Maintenance/', views.Maintenance_view, name='Maintenance'),
 
+    path('add-category/', views.AddCategory_view, name='AddCategory'),
 
     # API Endpoints for AJAX Requests
     path('api/materials/', views.get_materials_by_supplier, name='get-materials-by-supplier'),

@@ -21,6 +21,16 @@ class Inventory(models.Model):
     def __str__(self):
         return self.ItemName
 
+class MaterialCategory(models.Model):
+    Category_ID = models.AutoField(primary_key=True)
+    CategoryName = models.CharField(max_length=100)
+
+    class Meta:
+        db_table = 'material_categories'  # Updated table name
+
+    def __str__(self):
+        return self.CategoryName
+
 #for Customer Resources
 class Resource(models.Model):
     Resource_ID = models.AutoField(primary_key=True)
@@ -109,5 +119,5 @@ class Ingredient(models.Model):
     IngredientName = models.CharField(max_length=255)
     ItemUnitMeasure = models.CharField(max_length=50)
     MeasureCount = models.IntegerField()
-    Inventory_ID = models.ForeignKey('Inventory', on_delete=models.CASCADE)
+    Inventory_ID = models.ForeignKey(Inventory, models.DO_NOTHING, db_column='Inventory_ID')
     Created_At = models.DateTimeField(auto_now_add=True)

@@ -11,7 +11,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework import generics
-from .models import Inventory, Supplier, Order, ProductOrders, Product, Ingredient, Resource, KitchenResource
+from .models import Inventory, MaterialCategory, Supplier, Order, ProductOrders, Product, Ingredient, Resource, KitchenResource
 from .serializers import (
     InventorySerializer, 
     SupplierSerializer, 
@@ -86,6 +86,19 @@ def ManageOrder_view(request):
         'suppliers': suppliers,
     })
 
+def order_counts_view(request):
+    placed_count = Order.objects.filter(OrderStatus='Placed').count()
+    shipped_count = Order.objects.filter(OrderStatus='Shipped').count()
+    completed_count = Order.objects.filter(OrderStatus='Completed').count()
+    cancelled_count = Order.objects.filter(OrderStatus='Cancelled').count()
+
+    return JsonResponse({
+        'placed': placed_count,
+        'shipped': shipped_count,
+        'completed': completed_count,
+        'cancelled': cancelled_count,
+    })
+
 def get_materials_by_supplier(request):
     supplier_id = request.GET.get('supplier_id')
     materials = Inventory.objects.filter(Suppliers__Supplier_ID=supplier_id).values('Inventory_ID', 'ItemName', 'PurchasePrice')
@@ -154,7 +167,8 @@ def decrease_stock(material_id, amount):
 
 def ManageMaterial_view(request):
     materials = Inventory.objects.all()
-    
+    categories = MaterialCategory.objects.all()  # Fetch all categories
+
     # Calculate expiration date for each material
     for material in materials:
         if material.Perishable and material.DaysBeforeExpiry is not None:
@@ -163,8 +177,8 @@ def ManageMaterial_view(request):
             material.expiration_date = expiration_date
         else:
             material.expiration_date = None
-    
-    return render(request, 'ManageMaterial.html', {'materials': materials})
+
+    return render(request, 'ManageMaterial.html', {'materials': materials, 'categories': categories})
 
 def edit_material(request, pk):
     material = get_object_or_404(Inventory, pk=pk)
@@ -186,6 +200,18 @@ def edit_material(request, pk):
 @require_http_methods(["POST"])
 def update_material(request, pk):
     return redirect('ManageMaterial')
+
+
+@require_http_methods(["POST"])
+def AddCategory_view(request):
+    if request.method == 'POST':
+        category_name = request.POST.get('categoryName')
+        if category_name:
+            category = MaterialCategory(CategoryName=category_name)
+            category.save()
+            return JsonResponse({'success': True, 'category_id': category.Category_ID, 'category_name': category.CategoryName})
+        return JsonResponse({'success': False, 'error': 'Category name is required.'})
+    return JsonResponse({'success': False, 'error': 'Invalid request method.'})
 
 def AddProduct_view(request):
     if request.method == 'POST':

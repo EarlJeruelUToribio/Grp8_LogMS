@@ -78,19 +78,24 @@ function handleAddProductSubmit(event) {
                     confirmButton: 'custom-swal-confirm'
                 }
             }).then(() => {
-                // Optionally, close the modal
+                // Close the modal
                 $('#addProductModal').modal('hide');
                 
                 // Reset the form
-                document.getElementById('add-product-form').reset();
+                addProductForm.reset();
 
-                // Optionally, redirect to the product table or reload the table dynamically
-                window.location.href = '#your-table-id'; // Replace with the correct ID or link to redirect to the table
+                // Clear the ingredients section
+                const ingredientsSection = document.getElementById('ingredients-section');
+                ingredientsSection.innerHTML = ''; // Clear all ingredient rows
+
+                // Optionally, reload the current page to see the new product
+                location.reload(); // Reload the page to reflect the new product
             });
         }
     })
     .catch(error => {
         // Handle the fetch error silently
+        console.error('Error adding product:', error);
     });
 }
 

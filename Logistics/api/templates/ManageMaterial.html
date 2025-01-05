@@ -110,18 +110,9 @@
                     <div class="col-md-6">
                         <label for="item-category" class="form-label">Item Category:</label>
                         <select id="item-category" name="item-category" class="form-select" required>
-                            <option value="agahan">Agahan</option>
- <option value="noodles">Noodles</option>
-                            <option value="rice">Rice</option>
-                            <option value="sabaw">Sabaw</option>
-                            <option value="gulay">Gulay</option>
-                            <option value="sizzling">Sizzling</option>
-                            <option value="inihaw">Inihaw</option>
-                            <option value="pinirito">Pinirito</option>
-                            <option value="lutong-kakaiba">Lutong Kakaiba</option>
-                            <option value="steak">Steak</option>
-                            <option value="pampagana">Pampagana</option>
-                            <option value="pansit">Pansit</option>
+                            {% for category in categories %}
+                                <option value="{{ category.Category_ID }}">{{ category.CategoryName }}</option>
+                            {% endfor %}
                         </select>
                     </div>
 
@@ -205,20 +196,11 @@
 
                     <!-- Item Category -->
                     <div class="col-md-6">
-                        <label for="edit-item-category" class="form-label">Item Category:</label>
-                        <select id="edit-item-category" name="item-category" class="form-select" required>
-                            <option value="agahan">Agahan</option>
-                            <option value="noodles">Noodles</option>
-                            <option value="rice">Rice</option>
-                            <option value="sabaw">Sabaw</option>
-                            <option value="gulay">Gulay</option>
-                            <option value="sizzling">Sizzling</option>
-                            <option value="inihaw">Inihaw</option>
-                            <option value="pinirito">Pinirito</option>
-                            <option value="lutong-kakaiba">Lutong Kakaiba</option>
-                            <option value="steak">Steak</option>
-                            <option value="pampagana">Pampagana</option>
-                            <option value="pansit">Pansit</option>
+                        <label for="item-category" class="form-label">Item Category:</label>
+                        <select id="item-category" name="item-category" class="form-select" required>
+                            {% for category in categories %}
+                                <option value="{{ category.Category_ID }}">{{ category.CategoryName }}</option>
+                            {% endfor %}
                         </select>
                     </div>
 
@@ -303,4 +285,5 @@
 {% block extra_js %}
 <script src="{% static 'js/ManageMaterial.js' %}"></script>
 <script src="{% static 'js/EditMaterial.js' %}"></script>
+<script src="{% static 'js/MaterialCategory.js' %}"></script>
 {% endblock %}
