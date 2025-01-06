@@ -454,6 +454,45 @@ def AddResources_view(request):
 
     return JsonResponse({'error': 'Invalid request method.'}, status=405)
 
+
+from django.shortcuts import get_object_or_404, redirect
+from django.contrib import messages
+from django.http import JsonResponse
+from django.views.decorators.http import require_http_methods
+from .models import Resource  # Ensure you import the Resource model
+
+@require_http_methods(["POST"])
+def edit_resource(request):
+    if request.method == 'POST':
+        # Get the resource ID and other fields from the POST request
+        resource_id = request.POST.get('resource-id')  # This should be the Resource_ID
+        resource_name = request.POST.get('resource-name')
+        resource_category = request.POST.get('resource-category')
+        quantity = request.POST.get('quantity')
+        reorder_level = request.POST.get('reorder-level')
+
+        # Use Resource_ID to fetch the resource
+        resource = get_object_or_404(Resource, Resource_ID=resource_id)
+        
+        # Update the resource fields
+        resource.ItemName = resource_name
+        resource.ItemCategory = resource_category
+        resource.Current_Stock = quantity
+        resource.ReorderLevel = reorder_level
+        
+        # Save the updated resource
+        resource.save()
+
+        # Add a success message
+        messages.success(request, 'Resource updated successfully!')
+        
+        # Redirect to the ManageResources page after updating
+        return redirect('ManageResources')  
+
+    # If the request method is not POST, return an error response
+    return JsonResponse({'error': 'Invalid request method.'}, status=400)
+
+
 @require_http_methods(["POST"])
 def send_ingredients(request):
     if request.method == 'POST':
