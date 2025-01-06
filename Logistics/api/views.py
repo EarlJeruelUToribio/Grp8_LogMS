@@ -335,18 +335,21 @@ def ManageSupplier_view(request):
     })
 
 def edit_supplier(request, pk):
-    supplier = get_object_or_404(Supplier, pk=pk)
     if request.method == 'POST':
-        supplier.SupplierName = request.POST.get('supplier-name')
-        supplier.SupplierDesc = request.POST .get('supplier-address')
-        supplier.SupplierNumber = request.POST.get('supplier-email')
-        supplier.PaymentTerms = request.POST.get('payment-terms')
-        supplier.MinOrderQty = request.POST.get('min-order-qty')
-        supplier.Status = request.POST.get('status')
-        supplier.save()
-        messages.success(request, 'Supplier updated successfully!')
-        return redirect('ManageSupplier')
-    return render(request, 'EditSupplier.html', {'supplier': supplier})
+        try:
+            supplier = get_object_or_404(Supplier, pk=pk)
+            supplier.SupplierName = request.POST.get('supplier-name')
+            supplier.SupplierDesc = request.POST.get('supplier-address')
+            supplier.SupplierNumber = request.POST.get('supplier-email')
+            supplier.contact_number = request.POST.get('contact-number')
+            supplier.PaymentTerms = request.POST.get('payment-terms')
+            supplier.save()
+
+            return JsonResponse({'success': True})
+        except Exception as e:
+            return JsonResponse({'success': False, 'error': str(e)}, status=500)
+
+    return JsonResponse({'success': False, 'error': 'Invalid request method.'}, status=400)
 
 @require_http_methods(["POST"])
 def mark_as_expired(request, item_id):
