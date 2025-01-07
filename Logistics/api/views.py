@@ -419,6 +419,28 @@ def AddKitchenResource_view(request):
     return JsonResponse({'error': 'Invalid request method.'}, status=405)
 
 
+@require_http_methods(["GET", "POST"])
+def edit_kitchen_resource(request, pk):
+    kitchen_resource = get_object_or_404(KitchenResource, KitchenResource_ID=pk)  # Use KitchenResource_ID here
+    
+    if request.method == 'POST':
+        kitchen_resource.ItemName = request.POST.get('resource-name')
+        kitchen_resource.ItemCategory = request.POST.get('resource-category')
+        kitchen_resource.Current_Stock = request.POST.get('quantity')
+        kitchen_resource.ReorderLevel = request.POST.get('reorder-level')
+        kitchen_resource.save()
+        
+        messages.success(request, 'Kitchen resource updated successfully!')
+        return redirect('KitchenResources')  # Redirect to the kitchen resources page
+
+    # If the request method is GET, return the existing resource data as JSON
+    return JsonResponse({
+        'ItemName': kitchen_resource.ItemName,
+        'ItemCategory': kitchen_resource.ItemCategory,
+        'Current_Stock': kitchen_resource.Current_Stock,
+        'ReorderLevel': kitchen_resource.ReorderLevel,
+    })
+
 def Maintenance_view(request):
     return render(request, 'Maintenance.html')
 
