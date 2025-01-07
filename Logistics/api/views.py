@@ -335,18 +335,21 @@ def ManageSupplier_view(request):
     })
 
 def edit_supplier(request, pk):
-    supplier = get_object_or_404(Supplier, pk=pk)
     if request.method == 'POST':
-        supplier.SupplierName = request.POST.get('supplier-name')
-        supplier.SupplierDesc = request.POST .get('supplier-address')
-        supplier.SupplierNumber = request.POST.get('supplier-email')
-        supplier.PaymentTerms = request.POST.get('payment-terms')
-        supplier.MinOrderQty = request.POST.get('min-order-qty')
-        supplier.Status = request.POST.get('status')
-        supplier.save()
-        messages.success(request, 'Supplier updated successfully!')
-        return redirect('ManageSupplier')
-    return render(request, 'EditSupplier.html', {'supplier': supplier})
+        try:
+            supplier = get_object_or_404(Supplier, pk=pk)
+            supplier.SupplierName = request.POST.get('supplier-name')
+            supplier.SupplierDesc = request.POST.get('supplier-address')
+            supplier.SupplierNumber = request.POST.get('supplier-email')
+            supplier.contact_number = request.POST.get('contact-number')
+            supplier.PaymentTerms = request.POST.get('payment-terms')
+            supplier.save()
+
+            return JsonResponse({'success': True})
+        except Exception as e:
+            return JsonResponse({'success': False, 'error': str(e)}, status=500)
+
+    return JsonResponse({'success': False, 'error': 'Invalid request method.'}, status=400)
 
 @require_http_methods(["POST"])
 def mark_as_expired(request, item_id):
@@ -450,6 +453,45 @@ def AddResources_view(request):
             return JsonResponse({'error': str(e)}, status=400)
 
     return JsonResponse({'error': 'Invalid request method.'}, status=405)
+
+
+from django.shortcuts import get_object_or_404, redirect
+from django.contrib import messages
+from django.http import JsonResponse
+from django.views.decorators.http import require_http_methods
+from .models import Resource  # Ensure you import the Resource model
+
+@require_http_methods(["POST"])
+def edit_resource(request):
+    if request.method == 'POST':
+        # Get the resource ID and other fields from the POST request
+        resource_id = request.POST.get('resource-id')  # This should be the Resource_ID
+        resource_name = request.POST.get('resource-name')
+        resource_category = request.POST.get('resource-category')
+        quantity = request.POST.get('quantity')
+        reorder_level = request.POST.get('reorder-level')
+
+        # Use Resource_ID to fetch the resource
+        resource = get_object_or_404(Resource, Resource_ID=resource_id)
+        
+        # Update the resource fields
+        resource.ItemName = resource_name
+        resource.ItemCategory = resource_category
+        resource.Current_Stock = quantity
+        resource.ReorderLevel = reorder_level
+        
+        # Save the updated resource
+        resource.save()
+
+        # Add a success message
+        messages.success(request, 'Resource updated successfully!')
+        
+        # Redirect to the ManageResources page after updating
+        return redirect('ManageResources')  
+
+    # If the request method is not POST, return an error response
+    return JsonResponse({'error': 'Invalid request method.'}, status=400)
+
 
 @require_http_methods(["POST"])
 def send_ingredients(request):

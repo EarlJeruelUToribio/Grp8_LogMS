@@ -42,7 +42,14 @@
                 <td>{{ resource.Current_Stock }}</td>
                 <td>{{ resource.ReorderLevel }}</td>
                 <td>
-                    <!-- Add action buttons for editing or deleting resources here -->
+                    <button class="btn btn-warning edit-resource" 
+                            data-id="{{ resource.Resource_ID }}" 
+                            data-name="{{ resource.ItemName }}" 
+                            data-category="{{ resource.ItemCategory }}" 
+                            data-quantity="{{ resource.Current_Stock }}" 
+                            data-reorder="{{ resource.ReorderLevel }}" 
+                            data-bs-toggle="modal" 
+                            data-bs-target="#editResourcesModal">Edit</button>
                 </td>
             </tr>
             {% endfor %}
@@ -91,8 +98,45 @@
     </div>
 </div>
 
+<!-- Edit Resources Modal -->
+<div class="modal fade" id="editResourcesModal" tabindex="-1" aria-labelledby="editResourcesModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header" style="background-color: #7b4e83; color: white;">
+                <h5 class="modal-title" id="editResourcesModalLabel">Edit Resource</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="edit-resource-form" method="POST" action="{% url 'edit_resource' %}">
+                    {% csrf_token %}
+                    <input type="hidden" id="edit-resource-id" name="resource-id">
+                    <div class="mb-3">
+                        <label for="edit-resource-name" class="form-label">Resource Name</label>
+                        <input type="text" class="form-control" id="edit-resource-name" name="resource-name" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="edit-resource-category" class="form-label">Category</label>
+                        <input type="text" class="form-control" id="edit-resource-category" name="resource-category" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="edit-quantity" class="form-label">Quantity</label>
+                        <input type="number" class="form-control" id="edit-quantity" name="quantity" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="edit-reorder-level" class="form-label">Reorder Level</label>
+                        <input type="number" class="form-control" id="edit-reorder-level" name="reorder-level" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Update Resource</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
 {% endblock %}
 
 {% block extra_js %}
     <script src="{% static 'js/ManageResources.js' %}"></script>
- {% endblock %}
+    <script src="{% static 'js/EditResources.js' %}"></script>
+    <script src="{% static 'js/SearchResources.js' %}"></script>
+{% endblock %}
