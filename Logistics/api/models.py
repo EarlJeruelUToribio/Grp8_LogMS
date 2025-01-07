@@ -40,13 +40,15 @@ class Resource(models.Model):
     Current_Stock = models.IntegerField(default=0)
     ReorderLevel = models.IntegerField(default=0)
     Created_At = models.DateTimeField(auto_now_add=True)
+    QuantityToRepair = models.IntegerField(default=0)  # New field for quantity to repair
+    Status = models.CharField(max_length=50, default='In Use')  # New field for status
 
     class Meta:
         db_table = 'resources'  # Name of the table in the database
 
     def __str__(self):
         return self.ItemName
-
+    
 # Kitchen Resources
 class KitchenResource(models.Model):
     KitchenResource_ID = models.AutoField(primary_key=True)
@@ -56,6 +58,8 @@ class KitchenResource(models.Model):
     Current_Stock = models.IntegerField(default=0)
     ReorderLevel = models.IntegerField(default=0)
     Created_At = models.DateTimeField(auto_now_add=True)
+    QuantityToRepair = models.IntegerField(default=0)  # New field for quantity to repair
+    Status = models.CharField(max_length=50, default='In Use')  # New field for status
 
     class Meta:
         db_table = 'kitchen_resources'  # Name of the table in the database

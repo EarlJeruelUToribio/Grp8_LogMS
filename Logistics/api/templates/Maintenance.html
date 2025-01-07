@@ -21,35 +21,72 @@
                 <th>Available</th>
                 <th>Quantity to Repair</th>
                 <th>Status</th>
+                <th>Action</th>
             </tr>
         </thead>
-        <tbody>
+        <tbody id="resources-table-body">
+            {% for resource in resources %}
             <tr>
-                <td>Example Item 1</td>
-                <td>Category A</td>
-                <td>15</td>
-                <td>3</td>
-                <td>In Use</td>
+                <td>{{ resource.ItemName }}</td>
+                <td>{{ resource.ItemCategory }}</td>
+                <td>{{ resource.Current_Stock }}</td>
+                <td id="quantity-to-repair-{{ resource.Resource_ID }}">{{ resource.QuantityToRepair }}</td>
+                <td id="status-{{ resource.Resource_ID }}">{{ resource.Status }}</td>
+                <td>
+                    <button class="btn btn-primary" onclick="openEditModal({{ resource.Resource_ID }})">Edit</button>
+                </td>
             </tr>
+            {% endfor %}
+            {% for kitchen_resource in kitchen_resources %}
             <tr>
-                <td>Example Item 2</td>
-                <td>Category B</td>
-                <td>20</td>
-                <td>1</td>
-                <td>Under Maintenance</td>
+                <td>{{ kitchen_resource.ItemName }}</td>
+                <td>{{ kitchen_resource.ItemCategory }}</td>
+                <td>{{ kitchen_resource.Current_Stock }}</td>
+                <td id="quantity-to-repair-{{ kitchen_resource.KitchenResource_ID }}">{{ kitchen_resource.QuantityToRepair }}</td>
+                <td id="status-{{ kitchen_resource.KitchenResource_ID }}">{{ kitchen_resource.Status }}</td>
+                <td>
+                    <button class="btn btn-primary" onclick="openEditModal({{ kitchen_resource.KitchenResource_ID }})">Edit</button>
+                </td>
             </tr>
-            <tr>
-                <td>Example Item 3</td>
-                <td>Category C</td>
-                <td>5</td>
-                <td>2</td>
-                <td>Available</td>
-            </tr>
+            {% endfor %}
         </tbody>
     </table>
 </section>
+
+<!-- Edit Resource Modal -->
+<div class="modal fade" id="editResourceModal" tabindex="-1" aria-labelledby="editResourceModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header" style="background-color: #7b4e83; color: white;">
+                <h5 class="modal-title" id="editResourceModalLabel">Edit Resource</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="editResourceForm">
+                    {% csrf_token %}
+                    <input type="hidden" id="resource-id" name="resource-id" />
+                    <div class="mb-3">
+                        <label for="edit-quantity" class="form-label">Quantity to Repair</label>
+                        <input type="number" class="form-control" id="edit-quantity" name="quantity" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="edit-status" class="form-label">Status</label>
+                        <select class="form-select" id="edit-status" name="status" required>
+                            <option value="In Use">In Use</option>
+                            <option value="Under Maintenance">Under Maintenance</option>
+                            <option value="Available">Available</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Update Resource</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
 {% endblock %}
 
 {% block extra_js %}
     <script src="{% static 'js/Maintenance.js' %}"></script>
+    <script src="{% static 'js/SearchMaintenance.js' %}"></script>
 {% endblock %}
