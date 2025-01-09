@@ -42,7 +42,7 @@
             <tr>
                 <td>{{ material.ItemName }}</td>
                 <td>{{ material.ItemDescription }}</td>
-                <td>{{ material.ItemCategory.CategoryName }}</td>  <!-- Change this line -->
+                <td>{{ material.ItemCategory }}</td>  <!-- Change this line -->
                 <td>{{ material.UnitOfMeasure }}</td>
                 <td>{{ material.PurchasePrice }}</td>
                 <td>{{ material.Current_Stock }}</td>
@@ -239,16 +239,20 @@
                     <!-- Perishable Option -->
                     <div class="col-md-6">
                         <label class="form-label">Type:</label>
-                        <select id="edit-perishable" name="perishable" class="form-select" required>
-                            <option value="true">Yes</option>
-                            <option value="false">No</option>
-                        </select>
+                        <div class="perishable-option d-flex align-items-center justify-content-between">
+                            <label for="edit-perishable" class="form-check-label">Perishable</label>
+                            <input type="radio" id="edit-perishable" name="perishable" value="true" class="form-check-input" onclick="document.getElementById('edit-days-before-expiry').disabled = false;" required>
+                        </div>
+                        <div class="perishable-option d-flex align-items-center justify-content-between mt-2">
+                            <label for="edit-non-perishable" class="form-check-label">Non-Perishable</label>
+                            <input type="radio" id="edit-non-perishable" name="perishable" value="false" class ="form-check-input" onclick="document.getElementById('edit-days-before-expiry').disabled = true; document.getElementById('edit-days-before-expiry').value = '';" required>
+                        </div>
                     </div>
 
                     <!-- Days Before Expiry -->
                     <div class="col-md-6">
                         <label for="edit-days-before-expiry" class="form-label">Days Before Expiry:</label>
-                        <input type="number" id="edit-days-before-expiry" name="days-before-expiry" class="form-control">
+                        <input type="number" id="edit-days-before-expiry" name="days-before-expiry" class="form-control" disabled>
                     </div>
                 </div>
                 <div class="modal-footer">
