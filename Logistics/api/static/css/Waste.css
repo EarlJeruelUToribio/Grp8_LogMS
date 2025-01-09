@@ -148,3 +148,166 @@
 .search-bar {
     margin-left: auto; /* Align search bar to the right */
 }
+
+/* Modal Design */
+.modal-content {
+    width: 750px;  /* Set width for the modal */
+    padding: 40px;  /* Padding inside the modal */
+    margin: 0 auto;
+    background: white;  /* Modal background color */
+    border-radius: 8px;  /* Rounded corners */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);  /* Subtle shadow */
+    border: 1px solid #d3d3d3;  /* Border color */
+    background-image: linear-gradient(to bottom right, #fff, #f8f8f8); /* Gradient background */
+    box-sizing: border-box; /* Include padding and borders in width/height */
+}
+
+
+
+/* Modal Header */
+.modal-header {
+    background-color: #743089; /* Purple background */
+    color: white;  /* White text */
+    border-radius: 8px 8px 0 0;  /* Rounded top corners */
+    padding: 15px;
+    display: flex;  /* Flexbox for alignment */
+    justify-content: center;  /* Center content horizontally */
+    align-items: center;  /* Center content vertically */
+}
+
+.modal-title {
+    font-size: 32px;  /* Font size for the modal title */
+    font-weight: 900;  /* Bold title */
+    margin: 0;
+}
+
+/* Close Button */
+.btn-close {
+    background-color: white; /* Set background to white */
+    border: none; /* Remove border */
+    color: #000; /* Black close icon */
+    font-size: 1.3rem;
+    padding: 0.5rem;
+    opacity: 1;
+}
+
+.btn-close:hover {
+    background-color: #f0f0f0; /* Light grey hover background */
+    color: #333; /* Darker close icon on hover */
+}
+
+/* Modal Design */
+.modal-content {
+    width: 750px;  /* Ensure it takes 90% of the available width */
+    padding: 40px;  /* Increase padding for more space inside */
+    margin: 0 auto;
+    background: white;
+    border-radius: 8px;  /* Rounded corners */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);  /* Subtle shadow for depth */
+    border: 1px solid var(--dark-grey, #d3d3d3);  /* Border to match design */
+    background-image: linear-gradient(to bottom right, #fff, #f8f8f8); /* Background gradient */
+    box-sizing: border-box; /* Include padding and borders in width and height */
+}
+
+/* Modal Header */
+.modal-header {
+    background-color: #743089; /* Purple header */
+    color: white;  /* White text */
+    border-radius: 8px 8px 0 0;  /* Rounded top corners */
+    padding: 15px;
+    display: flex;  /* Flexbox for alignment */
+    justify-content: center;  /* Center the content horizontally */
+    align-items: center;  /* Center the content vertically */
+}
+
+.modal-title {
+    font-size: 32px;  /* Increase font size for better readability */
+    font-weight: 900;  /* Bold font for the title */
+    margin: 0;
+}
+
+/* Close Button */
+.btn-close {
+    border: none;
+    font-size: 1.5rem;
+    color: white;
+    cursor: pointer;
+    margin-right: 50px;
+}
+
+/* Modal Body */
+.modal-body {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* Two equal-width columns */
+    gap: 20px; /* Space between columns and rows */
+    padding: 20px; /* Add padding for spacing inside the modal */
+    box-sizing: border-box; /* Include padding and borders in dimensions */
+}
+
+/* Form Controls in Modal */
+.modal-body .form-control,
+.modal-body .form-select {
+    width: 100%; /* Automatically adjust width to grid column */
+    padding: 16px; /* Field padding */
+    border: 2px solid black; /* Set border color */
+    border-radius: 6px; /* Rounded corners */
+    background: #f8f8f8; /* Light field background */
+    color: black; /* Text color */
+    box-sizing: border-box; /* Include padding in dimensions */
+}
+
+/* Full-Width Form Controls */
+.modal-body textarea,
+.modal-body input[type="date"],
+.modal-body #cause-of-loss {
+    grid-column: span 2; /* Span full width of the grid (2 columns) */
+}
+
+/* Focus States for Inputs */
+.modal-body .form-control:focus,
+.modal-body .form-select:focus {
+    border-color: #743089; /* Purple border on focus */
+    box-shadow: 0 0 5px rgba(123, 78, 131, 0.5); /* Subtle purple glow */
+}
+
+
+/* Modal Footer */
+.modal-footer {
+    background-color: #f8f9fa;  /* Light background for footer */
+    border-radius: 0 0 8px 8px;  /* Rounded bottom corners */
+    padding: 10px 15px;
+    border-top: 1px solid #e0e0e0;  /* Subtle border to separate footer from body */
+    box-sizing: border-box; /* Include padding in total width/height calculation */
+}
+
+/* Button Styling in Footer */
+.modal-footer .btn {
+    padding: 16px 24px;  /* Increase button padding */
+    background-color: #743089;  /* Purple background */
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 18px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+/* Button Hover State */
+.modal-footer .btn:hover {
+    background-color: #37063c;  /* Darker purple on hover */
+}
+
+.btn-close {
+    background-color: white; /* Set background to white */
+    border: none; /* Remove border */
+    color: #000; /* Set the color of the cross to black */
+    font-size: 1.3rem; /* Adjust size if needed */
+    padding: 0.5rem; /* Adjust padding */
+    opacity: 1; /* Ensure it’s fully visible */
+  }
+  
+  .btn-close:hover {
+    background-color: #f0f0f0; /* Light grey background on hover */
+    color: #333; /* Darker color for the cross on hover */
+  }
+  
