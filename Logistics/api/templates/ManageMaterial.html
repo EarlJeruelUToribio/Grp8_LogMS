@@ -42,7 +42,7 @@
             <tr>
                 <td>{{ material.ItemName }}</td>
                 <td>{{ material.ItemDescription }}</td>
-                <td>{{ material.ItemCategory }}</td>
+                <td>{{ material.ItemCategory.CategoryName }}</td>  <!-- Change this line -->
                 <td>{{ material.UnitOfMeasure }}</td>
                 <td>{{ material.PurchasePrice }}</td>
                 <td>{{ material.Current_Stock }}</td>
@@ -75,6 +75,11 @@
                             data-perishable="{{ material.Perishable }}" 
                             data-days-before-expiry="{{ material.DaysBeforeExpiry }}">
                         Edit
+                    </button>
+                    <button type="button" class="btn btn-danger delete-material-button" 
+                            data-item-id="{{ material.Inventory_ID }}" 
+                            data-item-name="{{ material.ItemName }}">
+                        Delete
                     </button>
                 </td>
             </tr>
@@ -286,4 +291,5 @@
 <script src="{% static 'js/ManageMaterial.js' %}"></script>
 <script src="{% static 'js/EditMaterial.js' %}"></script>
 <script src="{% static 'js/MaterialCategory.js' %}"></script>
+<script src="{% static 'js/DeleteMaterial.js' %}"></script>
 {% endblock %}

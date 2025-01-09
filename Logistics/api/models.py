@@ -1,11 +1,22 @@
 from django.db import models
 from django.utils import timezone
 
+
+class MaterialCategory(models.Model):
+    Category_ID = models.AutoField(primary_key=True)
+    CategoryName = models.CharField(max_length=100)
+
+    class Meta:
+        db_table = 'material_categories'  # Updated table name
+
+    def __str__(self):
+        return self.CategoryName
+
 class Inventory(models.Model):
     Inventory_ID = models.AutoField(primary_key=True)
     ItemName = models.CharField(max_length=255)
     ItemDescription = models.TextField()
-    ItemCategory = models.CharField(max_length=100)
+    ItemCategory = models.ForeignKey(MaterialCategory, on_delete=models.CASCADE)  # Change this line
     UnitOfMeasure = models.CharField(max_length=50)
     PurchasePrice = models.DecimalField(max_digits=10, decimal_places=2)
     ReorderLevel = models.IntegerField()
@@ -21,15 +32,11 @@ class Inventory(models.Model):
     def __str__(self):
         return self.ItemName
 
-class MaterialCategory(models.Model):
-    Category_ID = models.AutoField(primary_key=True)
-    CategoryName = models.CharField(max_length=100)
-
     class Meta:
-        db_table = 'material_categories'  # Updated table name
+        db_table = 'api_inventory'
 
     def __str__(self):
-        return self.CategoryName
+        return self.ItemName
 
 #for Customer Resources
 class Resource(models.Model):

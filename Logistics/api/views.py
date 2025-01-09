@@ -195,6 +195,12 @@ def edit_material(request, pk):
     
     return render(request, 'EditMaterial.html', {'material': material})
 
+@require_http_methods(["DELETE"])
+def delete_material(request, material_id):
+    material = get_object_or_404(Inventory, Inventory_ID=material_id)
+    material.delete()
+    return JsonResponse({'message': 'Material deleted successfully.'}, status=204)
+
 @require_http_methods(["POST"])
 def update_material(request, pk):
     return redirect('ManageMaterial')
