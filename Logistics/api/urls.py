@@ -31,13 +31,16 @@ urlpatterns = [
 
     path('kitchen-resources/', views.KitchenResources_view, name='KitchenResources'),
     path('add-kitchen-resource/', views.AddKitchenResource_view, name='AddKitchenResource'),
+    path('edit-kitchen-resource/<int:pk>/', views.edit_kitchen_resource, name='edit_kitchen_resource'),
 
     path('add-material/', views.AddMaterial_view, name='AddMaterial'),
     path('manage-material/', views.ManageMaterial_view, name='ManageMaterial'),
     path('edit-material/<int:pk>/', views.edit_material, name='edit_material'),
     path('ManageWaste/', views.ManageWaste_view, name='ManageWaste'),
     path('KitchenResources/', views.KitchenResources_view, name='KitchenResources'),
+
     path('Maintenance/', views.Maintenance_view, name='Maintenance'),
+    path('edit-maintenance-resource/', views.edit_maintenance_resource, name='edit_maintenance_resource'),
 
     path('add-category/', views.AddCategory_view, name='AddCategory'),
 

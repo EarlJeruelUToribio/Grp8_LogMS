@@ -419,8 +419,60 @@ def AddKitchenResource_view(request):
     return JsonResponse({'error': 'Invalid request method.'}, status=405)
 
 
+@require_http_methods(["GET", "POST"])
+def edit_kitchen_resource(request, pk):
+    kitchen_resource = get_object_or_404(KitchenResource, KitchenResource_ID=pk)  # Use KitchenResource_ID here
+    
+    if request.method == 'POST':
+        kitchen_resource.ItemName = request.POST.get('resource-name')
+        kitchen_resource.ItemCategory = request.POST.get('resource-category')
+        kitchen_resource.Current_Stock = request.POST.get('quantity')
+        kitchen_resource.ReorderLevel = request.POST.get('reorder-level')
+        kitchen_resource.save()
+        
+        messages.success(request, 'Kitchen resource updated successfully!')
+        return redirect('KitchenResources')  # Redirect to the kitchen resources page
+
+    # If the request method is GET, return the existing resource data as JSON
+    return JsonResponse({
+        'ItemName': kitchen_resource.ItemName,
+        'ItemCategory': kitchen_resource.ItemCategory,
+        'Current_Stock': kitchen_resource.Current_Stock,
+        'ReorderLevel': kitchen_resource.ReorderLevel,
+    })
+
 def Maintenance_view(request):
-    return render(request, 'Maintenance.html')
+    resources = Resource.objects.all()  # Fetch all resources
+    kitchen_resources = KitchenResource.objects.all()  # Fetch all kitchen resources
+    return render(request, 'Maintenance.html', {
+        'resources': resources,
+        'kitchen_resources': kitchen_resources,
+    })
+
+@require_http_methods(["POST"])
+def edit_maintenance_resource(request):
+    if request.method == 'POST':
+        data = json.loads(request.body)
+        resource_id = data.get('resource_id')
+        quantity = data.get('quantity')
+        status = data.get('status')
+
+        # Check if the resource is a KitchenResource or a Resource
+        try:
+            resource = Resource.objects.get(Resource_ID=resource_id)
+            resource.QuantityToRepair = int(quantity)  # Store the quantity to repair
+            resource.Status = status  # Store the status
+            resource.save()
+            return JsonResponse({'success': True})
+        except Resource.DoesNotExist:
+            # If not found in Resource, check in KitchenResource
+            kitchen_resource = get_object_or_404(KitchenResource, KitchenResource_ID=resource_id)
+            kitchen_resource.QuantityToRepair = int(quantity)  # Store the quantity to repair
+            kitchen_resource.Status = status  # Store the status
+            kitchen_resource.save()
+            return JsonResponse({'success': True})
+
+    return JsonResponse({'success': False, 'error': 'Invalid request method.'}, status=400)
 
 def ManageResources_view(request):
     resources = Resource.objects.all()  # Fetch all resources

@@ -4,22 +4,15 @@
 {% block extra_css %}
     <link rel="stylesheet" href="{% static 'css/KitchenResource.css' %}">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
 {% endblock %}
 
 {% block content %}
-
 <section class="resources-section">
     <h2 class="text-center mb-4">KITCHEN RESOURCES MANAGEMENT</h2>
     <div class="d-flex align-items-center justify-content-between mb-3">
-        <!-- Trigger Button for Modal -->
-        <button type="button"         
-        id="add-kitchen-button" 
-        data-bs-toggle="modal" 
-        data-bs-target="#addKitchenResourcesModal">
+        <button type="button" id="add-kitchen-button" data-bs-toggle="modal" data-bs-target="#addKitchenResourcesModal">
             Add New Resources
         </button>
-
         <input type="text" id="kitchen-search-bar" placeholder="Search Kitchen Resource" class="search-bar">
     </div>
 
@@ -33,7 +26,7 @@
                 <th>Actions</th>
             </tr>
         </thead>
-        <tbody>
+        <tbody id="kitchen-resources-body">
             {% for kitchen_resource in kitchen_resources %}
             <tr>
                 <td>{{ kitchen_resource.ItemName }}</td>
@@ -41,7 +34,16 @@
                 <td>{{ kitchen_resource.Current_Stock }}</td>
                 <td>{{ kitchen_resource.ReorderLevel }}</td>
                 <td>
-                    <!-- Add action buttons for editing or deleting kitchen resources over here -->
+                    <button class="btn btn-warning edit-kitchen-resource" 
+                            data-id="{{ kitchen_resource.KitchenResource_ID }}" 
+                            data-name="{{ kitchen_resource.ItemName }}" 
+                            data-category="{{ kitchen_resource.ItemCategory }}" 
+                            data-quantity="{{ kitchen_resource.Current_Stock }}" 
+                            data-reorder="{{ kitchen_resource.ReorderLevel }}" 
+                            data-bs-toggle="modal" 
+                            data-bs-target="#addKitchenResourcesModal">
+                        Edit
+                    </button>
                 </td>
             </tr>
             {% endfor %}
@@ -73,10 +75,6 @@
                         <input type="number" class="form-control" id="kitchen-quantity" name="quantity" required>
                     </div>
                     <div class="mb-3">
-                        <label for="kitchen-specification" class="form-label">Specification</label>
-                        <textarea class="form-control" id="kitchen-specification " name="specification"></textarea>
-                    </div>
-                    <div class="mb-3">
                         <label for="kitchen-reorder-level" class="form-label">Reorder Level</label>
                         <input type="number" class="form-control" id="kitchen-reorder-level" name="reorder-level" required>
                     </div>
@@ -90,5 +88,12 @@
 {% endblock %}
 
 {% block extra_js %}
+    <script>
+        const csrfToken = '{{ csrf_token }}'; // Get CSRF token from Django
+        const addKitchenResourceUrl = '{% url "AddKitchenResource" %}'; // Get the URL for adding a kitchen resource
+        const editKitchenResourceUrl = '{% url "edit_kitchen_resource"  0 %}'; // Placeholder for editing a kitchen resource
+    </script>
     <script src="{% static 'js/KitchenResources.js' %}"></script>
- {% endblock %}
+    <script src="{% static 'js/EditKitchenResources.js' %}"></script>
+    <script src="{% static 'js/SearchKitchenResources.js' %}"></script> <!-- Include the search script -->
+{% endblock %}
