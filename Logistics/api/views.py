@@ -11,6 +11,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework import generics
+from decimal import Decimal
 from .models import Inventory, MaterialCategory, Supplier, Order, ProductOrders, Product, Ingredient, Resource, KitchenResource
 from .serializers import (
     InventorySerializer, 
@@ -68,7 +69,7 @@ def ManageOrder_view(request):
     if request.method == 'POST':
         # Handle status update
         order_id = request.POST.get('order_id')
-        new_status = request.POST.get('new_status')
+        new_status = request.POST.get('new_status').strip()  # Strip any leading/trailing spaces
 
         try:
             order = Order.objects.get(Order_ID=order_id)
@@ -121,12 +122,15 @@ def AddMaterial_view(request):
             # Handle form submission
             item_name = request.POST.get('item-name')
             item_description = request.POST.get('item-description')
-            item_category = request.POST.get('item-category')
+            item_category_id = request.POST.get('item-category')
             unit_of_measure = request.POST.get('unit-of-measure')
-            purchase_price = request.POST.get('purchase-price')
-            reorder_level = request.POST.get('reorder-level')
+            purchase_price = Decimal(request.POST.get('purchase-price'))
+            reorder_level = int(request.POST.get('reorder-level'))
             perishable = request.POST.get('perishable') == 'true'
             days_before_expiry = request.POST.get('days-before-expiry') if perishable else None
+
+            # Get the MaterialCategory instance
+            item_category = get_object_or_404(MaterialCategory, Category_ID=item_category_id)
 
             # Create and save the Inventory instance
             inventory = Inventory(
@@ -146,6 +150,7 @@ def AddMaterial_view(request):
             return redirect('ManageMaterial')  # Redirect to ManageMaterial after submission
         except Exception as e:
             messages.error(request, f'Error adding material: {str(e)}')
+            print(f"Error: {str(e)}")  # Log the error to the console
 
     # If the request method is GET, redirect to ManageMaterial instead of rendering a non-existing template
     return redirect('ManageMaterial')
@@ -178,22 +183,39 @@ def ManageMaterial_view(request):
 
     return render(request, 'ManageMaterial.html', {'materials': materials, 'categories': categories})
 
+@require_http_methods(["GET", "POST"])
 def edit_material(request, pk):
     material = get_object_or_404(Inventory, pk=pk)
     if request.method == 'POST':
         material.ItemName = request.POST.get('item-name')
         material.ItemDescription = request.POST.get('item-description')
-        material.ItemCategory = request.POST.get('item-category')
+        
+        # Get the item category ID from the POST data
+        item_category_id = request.POST.get('item-category')
+        
+        # Retrieve the MaterialCategory instance
+        item_category = get_object_or_404(MaterialCategory, Category_ID=item_category_id)
+        
+        # Assign the MaterialCategory instance to the ItemCategory field
+        material.ItemCategory = item_category
+        
         material.UnitOfMeasure = request.POST.get('unit-of-measure')
-        material.PurchasePrice = request.POST.get('purchase-price')
-        material.ReorderLevel = request.POST.get('reorder-level')
+        material.PurchasePrice = Decimal(request.POST.get('purchase-price'))  # Ensure this is a Decimal
+        material.ReorderLevel = int(request.POST.get('reorder-level'))  # Ensure this is an int
         material.Perishable = request.POST.get('perishable') == 'true'
         material.DaysBeforeExpiry = request.POST.get('days-before-expiry') if request.POST.get('perishable') == 'true' else None
+        
         material.save()
-        messages.success(request, ' Material updated successfully!')
-        return redirect('ManageMaterials')
+        messages.success(request, 'Material updated successfully!')
+        return redirect('ManageMaterial')  # Updated redirect to ManageMaterial
     
     return render(request, 'EditMaterial.html', {'material': material})
+
+@require_http_methods(["DELETE"])
+def delete_material(request, material_id):
+    material = get_object_or_404(Inventory, Inventory_ID=material_id)
+    material.delete()
+    return JsonResponse({'message': 'Material deleted successfully.'}, status=204)
 
 @require_http_methods(["POST"])
 def update_material(request, pk):

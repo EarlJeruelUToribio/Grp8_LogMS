@@ -19,12 +19,22 @@ document.addEventListener('DOMContentLoaded', function () {
 
             document.getElementById('edit-item-name').value = itemName;
             document.getElementById('edit-item-description').value = itemDescription;
-            document.getElementById('edit-item-category').value = itemCategory;
+            document.getElementById('item-category').value = itemCategory;
             document.getElementById('edit-unit-of-measure').value = unitOfMeasure;
             document.getElementById('edit-purchase-price').value = purchasePrice;
             document.getElementById('edit-reorder-level').value = reorderLevel;
-            document.getElementById('edit-perishable').value = perishable;
+            document.getElementById('edit-perishable').checked = (perishable === 'true');
+            document.getElementById('edit-non-perishable').checked = (perishable === 'false');
             document.getElementById('edit-days-before-expiry').value = daysBeforeExpiry;
+
+            // Enable or disable the days input based on the selected radio button
+            const daysBeforeExpiryInput = document.getElementById('edit-days-before-expiry');
+            if (perishable === 'true') {
+                daysBeforeExpiryInput.disabled = false;  // Enable the input
+            } else {
+                daysBeforeExpiryInput.disabled = true;   // Disable the input
+                daysBeforeExpiryInput.value = '';        // Clear the input value
+            }
         });
     });
 });
