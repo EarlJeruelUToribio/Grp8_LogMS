@@ -5,7 +5,6 @@ urlpatterns = [
     # Base Route
     path('', views.Sidebar_view, name='home'),
     path('dashboard', views.Sidebar_view, name='home'),
-    path('ManageWaste/', views.ManageWaste_view, name='ManageWaste'),
     path('AddProduct/', views.AddProduct_view, name='AddProduct'),
 
     path('ManageOrder/', views.ManageOrder_view, name='ManageOrder'),
@@ -36,12 +35,12 @@ urlpatterns = [
     path('add-material/', views.AddMaterial_view, name='AddMaterial'),
     path('manage-material/', views.ManageMaterial_view, name='ManageMaterial'),
     path('edit-material/<int:pk>/', views.edit_material, name='edit_material'),
-    path('KitchenResources/', views.KitchenResources_view, name='KitchenResources'),
 
     path('Maintenance/', views.Maintenance_view, name='Maintenance'),
     path('edit-maintenance-resource/', views.edit_maintenance_resource, name='edit_maintenance_resource'),
 
     path('add-category/', views.AddCategory_view, name='AddCategory'),
+    path('ManageWasteRecords/', views.ManageWaste_view, name='ManageWaste'),  # Updated URL
 
     # API Endpoints for AJAX Requests
     path('api/materials/', views.get_materials_by_supplier, name='get-materials-by-supplier'),
@@ -66,7 +65,6 @@ urlpatterns = [
     path('api/products/', views.ProductListCreateView.as_view(), name='product-list'),
     path('products/<int:pk>/', views.ProductDetailView.as_view(), name='product-detail'),
     
-
     path('ingredients/', views.IngredientListCreateView.as_view(), name='ingredient-list'),
     path('send-ingredients/', views.send_ingredients, name='send-ingredients'),
     path('ingredients/<int:pk>/', views.IngredientDetailView.as_view(), name='ingredient-detail'),

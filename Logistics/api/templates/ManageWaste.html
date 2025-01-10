@@ -17,13 +17,13 @@
             <tr>
                 <th>Waste ID</th>
                 <th>Ingredient Name</th>
-                <th>Estimated Date & Time</th>
+                <th>Date & Time</th>
                 <th>Quantity Lost</th>
                 <th>Cause of Loss</th>
                 <th>Action Taken</th>
             </tr>
         </thead>
-        <tbody>
+        <tbody id="waste-table-body">
             {% for record in waste_records %}
             <tr class="waste-row">
                 <td>{{ record.Waste_ID }}</td>
@@ -42,21 +42,17 @@
 <div class="modal fade" id="recordWasteModal" tabindex="-1" aria-labelledby="recordWasteModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
-            <!-- Modal Header -->
             <div class="modal-header">
                 <h5 class="modal-title" id="recordWasteModalLabel">Record Waste</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <!-- Modal Body -->
             <div class="modal-body">
                 <form id="record-waste-form">
-                    {% csrf_token %} <!-- Include CSRF token -->
-                    <!-- Ingredient Name Input -->
+                    {% csrf_token %}
                     <div class="mb-3">
                         <label for="ingredient-name" class="form-label">Ingredient Name</label>
-                        <input type="text" class="form-control" id="ingredient-name" placeholder="Type ingredient name" required>
+                        <input type="text" class="form-control" id="ingredient-name" required>
                     </div>
-                    <!-- Type (Perishable/Non-Perishable) -->
                     <div class="mb-3">
                         <label for="type" class="form-label">Type</label>
                         <select class="form-select" id="type" required>
@@ -65,35 +61,29 @@
                             <option value="Non-Perishable">Non-Perishable</option>
                         </select>
                     </div>
-                    <!-- Quantity Lost/Wasted -->
                     <div class="mb-3">
                         <label for="quantity-lost" class="form-label">Quantity Lost/Wasted</label>
-                        <input type="number" class="form-control" id="quantity-lost" placeholder="Enter quantity" required>
+                        <input type="number" class="form-control" id="quantity-lost" required>
                     </div>
-                    <!-- Unit of Measurement -->
                     <div class="mb-3">
                         <label for="unit-of-measurement" class="form-label">Unit of Measurement</label>
-                        <input type="text" class="form-control" id="unit-of-measurement" placeholder="e.g., kilograms, liters, boxes" required>
+                        <input type="text" class="form-control" id="unit-of-measurement" required>
                     </div>
-                    <!-- Cause of Loss/Waste -->
                     <div class="mb-3">
                         <label for="cause-of-loss" class="form-label">Cause of Loss/Waste</label>
-                        <textarea class="form-control" id="cause-of-loss" rows="3" placeholder="Describe the cause" required></textarea>
+                        <textarea class="form-control" id="cause-of-loss" rows="3" required></textarea>
                     </div>
-                    <!-- Date of Incident -->
                     <div class="mb-3">
                         <label for="date-of-incident" class="form-label">Date of Incident</label>
                         <input type="date" class="form-control" id="date-of-incident" required>
                     </div>
-                    <!-- Associated Costs -->
                     <div class="mb-3">
                         <label for="associated-costs" class="form-label">Associated Costs</label>
-                        <input type="number" class="form-control" id="associated-costs" placeholder="Enter associated costs" required>
+                        <input type="number" class="form-control" id="associated-costs" required>
                     </div>
-                    <!-- Action Taken -->
                     <div class="mb-3">
                         <label for="action-taken" class="form-label">Action Taken</label>
-                        <textarea class="form-control" id="action-taken" rows="3" placeholder="Describe the action taken" required></textarea>
+                        <textarea class="form-control" id="action-taken" rows="3" required></textarea>
                     </div>
                     <button type="submit" class="btn btn-primary">Submit</button>
                 </form>
@@ -102,12 +92,13 @@
     </div>
 </div>
 
+<script>
+    const csrfToken = '{{ csrf_token }}';
+    const manageWasteUrl = '{% url "ManageWaste" %}';  // This will still work as it refers to the name
+</script>
+
 {% endblock %}
 
 {% block extra_js %}
-<script>
-    const csrfToken = '{{ csrf_token }}'; // Make sure this is set correctly
-    const manageWasteUrl = '{% url "ManageWaste" %}'; // Adjust the URL as necessary
-</script>
-<script src="{% static 'js/Waste.js' %}"></script>
+<script src="{% static 'js/ManageWaste.js' %}"></script>
 {% endblock %}
