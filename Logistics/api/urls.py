@@ -40,7 +40,8 @@ urlpatterns = [
     path('edit-maintenance-resource/', views.edit_maintenance_resource, name='edit_maintenance_resource'),
 
     path('add-category/', views.AddCategory_view, name='AddCategory'),
-    path('ManageWasteRecords/', views.ManageWaste_view, name='ManageWaste'),  # Updated URL
+    path('ManageWasteRecords/', views.ManageWaste_view, name='ManageWaste'),
+    path('AddWasteRecord/', views.AddWaste_view, name='AddWaste'),  # New URL for adding waste
 
     # API Endpoints for AJAX Requests
     path('api/materials/', views.get_materials_by_supplier, name='get-materials-by-supplier'),

@@ -51,39 +51,31 @@
                     {% csrf_token %}
                     <div class="mb-3">
                         <label for="ingredient-name" class="form-label">Ingredient Name</label>
-                        <input type="text" class="form-control" id="ingredient-name" required>
+                        <input type="text" class="form-control" id="ingredient-name" name="ingredient-name" required>
                     </div>
                     <div class="mb-3">
-                        <label for="type" class="form-label">Type</label>
-                        <select class="form-select" id="type" required>
-                            <option value="" disabled selected>Choose type</option>
-                            <option value="Perishable">Perishable</option>
-                            <option value="Non-Perishable">Non-Perishable</option>
-                        </select>
+                        <label for="quantity-lost" class="form-label">Quantity Lost</label>
+                        <input type="number" class="form-control" id="quantity-lost" name="quantity-lost" required>
                     </div>
                     <div class="mb-3">
-                        <label for="quantity-lost" class="form-label">Quantity Lost/Wasted</label>
-                        <input type="number" class="form-control" id="quantity-lost" required>
+                        <label for=" unit-of-measurement" class="form-label">Unit of Measurement</label>
+                        <input type="text" class="form-control" id="unit-of-measurement" name="unit-of-measurement" required>
                     </div>
                     <div class="mb-3">
-                        <label for="unit-of-measurement" class="form-label">Unit of Measurement</label>
-                        <input type="text" class="form-control" id="unit-of-measurement" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="cause-of-loss" class="form-label">Cause of Loss/Waste</label>
-                        <textarea class="form-control" id="cause-of-loss" rows="3" required></textarea>
+                        <label for="cause-of-loss" class="form-label">Cause of Loss</label>
+                        <input type="text" class="form-control" id="cause-of-loss" name="cause-of-loss" required>
                     </div>
                     <div class="mb-3">
                         <label for="date-of-incident" class="form-label">Date of Incident</label>
-                        <input type="date" class="form-control" id="date-of-incident" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="associated-costs" class="form-label">Associated Costs</label>
-                        <input type="number" class="form-control" id="associated-costs" required>
+                        <input type="date" class="form-control" id="date-of-incident" name="date-of-incident" required>
                     </div>
                     <div class="mb-3">
                         <label for="action-taken" class="form-label">Action Taken</label>
-                        <textarea class="form-control" id="action-taken" rows="3" required></textarea>
+                        <input type="text" class="form-control" id="action-taken" name="action-taken" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="associated-costs" class="form-label">Associated Costs</label>
+                        <input type="number" class="form-control" id="associated-costs" name="associated-costs" required>
                     </div>
                     <button type="submit" class="btn btn-primary">Submit</button>
                 </form>
@@ -93,12 +85,11 @@
 </div>
 
 <script>
-    const csrfToken = '{{ csrf_token }}';
-    const manageWasteUrl = '{% url "ManageWaste" %}';  // This will still work as it refers to the name
+    const csrfToken = '{{ csrf_token }}'; // Ensure this is set correctly
+    const manageWasteUrl = '/ManageWasteRecords/'; // Directly define the URL
+    console.log('Manage Waste URL:', manageWasteUrl); // Log the URL being used
 </script>
 
-{% endblock %}
-
-{% block extra_js %}
+<script src="{% static 'js/AddWaste.js' %}"></script>
 <script src="{% static 'js/ManageWaste.js' %}"></script>
 {% endblock %}

@@ -1,53 +1,7 @@
+// ManageWaste.js
 document.addEventListener('DOMContentLoaded', () => {
-    const form = document.getElementById('record-waste-form');
     const wasteTableBody = document.getElementById('waste-table-body');
-    const manageWasteUrl = window.manageWasteUrl;  // This will still point to the updated URL
-
-    // Function to fetch existing waste records
-    const fetchWasteRecords = async () => {
-        try {
-            const response = await fetch(manageWasteUrl);
-            const data = await response.json();
-            if (Array.isArray(data.waste_records)) {
-                data.waste_records.forEach(addWasteRow);
-            }
-        } catch (error) {
-            console.error('Error fetching waste records:', error);
-        }
-    };
-
-    // Function to handle form submission
-    const handleFormSubmit = async (event) => {
-        event.preventDefault();
-        const formData = new FormData(form);
-
-        try {
-            const response = await fetch(manageWasteUrl, {
-                method: 'POST',
-                body: formData,
-                headers: {
-                    'X-CSRFToken': csrfToken
-                }
-            });
-            const data = await response.json();
-            if (data.success) {
-                form.reset();
-                addWasteRow({
-                    Waste_ID: data.waste_id,
-                    IngredientName: formData.get('ingredient-name'),
-                    QuantityLost: formData.get('quantity-lost'),
-                    UnitOfMeasurement: formData.get('unit-of-measurement'),
-                    CauseOfLoss: formData.get('cause-of-loss'),
-                    DateOfIncident: formData.get('date-of-incident'),
-                    ActionTaken: formData.get('action-taken')
-                });
-            } else {
-                console.error('Error:', data.error);
-            }
-        } catch (error) {
-            console.error('Error submitting waste record:', error);
-        }
-    };
+    const manageWasteUrl = '/ManageWasteRecords/'; // URL for fetching waste records
 
     // Function to add a new row to the waste table
     const addWasteRow = (record) => {
@@ -60,10 +14,34 @@ document.addEventListener('DOMContentLoaded', () => {
             <td>${record.CauseOfLoss}</td>
             <td>${record.ActionTaken}</td>
         `;
-        wasteTableBody.appendChild(row);
+        wasteTableBody.appendChild(row); // Append the new row to the table
     };
 
-    // Event listeners
-    form.addEventListener('submit', handleFormSubmit);
-    fetchWasteRecords();
+    // Note: Without fetchWasteRecords, you won't be populating the table dynamically.
+    // You can still add rows manually if you have data available.
+
+    // If you want to add hardcoded data for testing, you can do it like this:
+    const sampleData = [
+        {
+            Waste_ID: 1,
+            IngredientName: "Ingredient A",
+            DateOfIncident: "2025-01-01",
+            QuantityLost: 10,
+            UnitOfMeasurement: "kg",
+            CauseOfLoss: "Spoilage",
+            ActionTaken: "Discarded"
+        },
+        {
+            Waste_ID: 2,
+            IngredientName: "Ingredient B",
+            DateOfIncident: "2025-01-02",
+            QuantityLost: 5,
+            UnitOfMeasurement: "kg",
+            CauseOfLoss: "Overproduction",
+            ActionTaken: "Composted"
+        }
+    ];
+
+    // Populate the table with sample data
+    sampleData.forEach(addWasteRow);
 });
