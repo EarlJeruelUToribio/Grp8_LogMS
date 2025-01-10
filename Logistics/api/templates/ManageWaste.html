@@ -16,35 +16,27 @@
         <thead>
             <tr>
                 <th>Waste ID</th>
-                <th>Item or Product</th>
+                <th>Ingredient Name</th>
                 <th>Estimated Date & Time</th>
-                <th>Quantity</th>
-                <th>Location</th>
-                <th>Action</th>
+                <th>Quantity Lost</th>
+                <th>Cause of Loss</th>
+                <th>Action Taken</th>
             </tr>
         </thead>
         <tbody>
-            <!-- Example waste items -->
+            {% for record in waste_records %}
             <tr class="waste-row">
-                <td>W1234</td>
-                <td>Spoiled Chicken</td>
-                <td>2024-10-20 10:00 AM</td>
-                <td>20 kg</td>
-                <td>Warehouse A</td>
-                <td><button class="edit-btn edit-button">Edit</button></td>
+                <td>{{ record.Waste_ID }}</td>
+                <td>{{ record.IngredientName }}</td>
+                <td>{{ record.DateOfIncident }}</td>
+                <td>{{ record.QuantityLost }} {{ record.UnitOfMeasurement }}</td>
+                <td>{{ record.CauseOfLoss }}</td>
+                <td>{{ record.ActionTaken }}</td>
             </tr>
-            <tr class="waste-row">
-                <td>W5678</td>
-                <td>Expired Pork</td>
-                <td>2024-10-19 11:00 AM</td>
-                <td>15 kg</td>
-                <td>Kitchen B</td>
-                <td><button class="edit-btn edit-button">Edit</button></td>
-            </tr>
+            {% endfor %}
         </tbody>
     </table>
 </section>
-
 
 <!-- Modal for Record Waste -->
 <div class="modal fade" id="recordWasteModal" tabindex="-1" aria-labelledby="recordWasteModalLabel" aria-hidden="true">
@@ -58,10 +50,11 @@
             <!-- Modal Body -->
             <div class="modal-body">
                 <form id="record-waste-form">
-                    <!-- Ingredient Name -->
+                    {% csrf_token %} <!-- Include CSRF token -->
+                    <!-- Ingredient Name Input -->
                     <div class="mb-3">
                         <label for="ingredient-name" class="form-label">Ingredient Name</label>
-                        <input type="text" class="form-control" id="ingredient-name" placeholder="Enter ingredient name" required>
+                        <input type="text" class="form-control" id="ingredient-name" placeholder="Type ingredient name" required>
                     </div>
                     <!-- Type (Perishable/Non-Perishable) -->
                     <div class="mb-3">
@@ -95,28 +88,26 @@
                     <!-- Associated Costs -->
                     <div class="mb-3">
                         <label for="associated-costs" class="form-label">Associated Costs</label>
-                        <input type="number" class="form-control" id="associated-costs" placeholder="Enter cost in your currency" required>
+                        <input type="number" class="form-control" id="associated-costs" placeholder="Enter associated costs" required>
                     </div>
                     <!-- Action Taken -->
                     <div class="mb-3">
                         <label for="action-taken" class="form-label">Action Taken</label>
                         <textarea class="form-control" id="action-taken" rows="3" placeholder="Describe the action taken" required></textarea>
                     </div>
+                    <button type="submit" class="btn btn-primary">Submit</button>
                 </form>
-            </div>
-            <!-- Modal Footer -->
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="submit" class="btn btn-primary" form="record-waste-form">Submit</button>
             </div>
         </div>
     </div>
 </div>
 
-
-
 {% endblock %}
 
 {% block extra_js %}
-<script src="{% static 'js/ManageWaste.js' %}"></script>
+<script>
+    const csrfToken = '{{ csrf_token }}'; // Make sure this is set correctly
+    const manageWasteUrl = '{% url "ManageWaste" %}'; // Adjust the URL as necessary
+</script>
+<script src="{% static 'js/Waste.js' %}"></script>
 {% endblock %}

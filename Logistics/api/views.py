@@ -12,7 +12,7 @@ from rest_framework.response import Response
 from rest_framework import status
 from rest_framework import generics
 from decimal import Decimal
-from .models import Inventory, MaterialCategory, Supplier, Order, ProductOrders, Product, Ingredient, Resource, KitchenResource
+from .models import Inventory, MaterialCategory, Waste, Supplier, Order, ProductOrders, Product, Ingredient, Resource, KitchenResource
 from .serializers import (
     InventorySerializer, 
     SupplierSerializer, 
@@ -303,6 +303,47 @@ def EditProduct_view(request, pk):
 
 def KitchenDisplay_view(request):
     return render(request, 'KitchenDisplay.html')
+
+
+@require_http_methods(["GET", "POST"])
+def ManageWaste_view(request):
+    if request.method == 'POST':
+        # Handle form submission
+        ingredient_name = request.POST.get('ingredient-name')
+        waste_type = request.POST.get('type')
+        quantity_lost = request.POST.get('quantity-lost')
+        unit_of_measurement = request.POST.get('unit-of-measurement')
+        cause_of_loss = request.POST.get('cause-of-loss')
+        date_of_incident = request.POST.get('date-of-incident')
+        associated_costs = request.POST.get('associated-costs')
+        action_taken = request.POST.get('action-taken')
+
+        # Create a new Waste record
+        try:
+            new_waste_record = Waste.objects.create(
+                IngredientName=ingredient_name,
+                Type=waste_type,
+                QuantityLost=quantity_lost,
+                UnitOfMeasurement=unit_of_measurement,
+                CauseOfLoss=cause_of_loss,
+                DateOfIncident=date_of_incident,
+                AssociatedCosts=associated_costs,
+                ActionTaken=action_taken
+            )
+
+            # Return success response with the new Waste ID
+            return JsonResponse({'success': True, 'waste_id': new_waste_record.Waste_ID})
+
+        except Exception as e:
+            return JsonResponse({'success': False, 'error': str(e)}, status=400)
+
+    # If GET request, fetch existing waste records
+    waste_records = Waste.objects.all().values()
+    
+    return render(request, 'ManageWaste.html', {
+        'waste_records': waste_records,
+    })
+
 
 def AddSupplier_view(request):
     if request.method == 'POST':
