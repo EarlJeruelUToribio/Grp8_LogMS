@@ -16,107 +16,80 @@
         <thead>
             <tr>
                 <th>Waste ID</th>
-                <th>Item or Product</th>
-                <th>Estimated Date & Time</th>
-                <th>Quantity</th>
-                <th>Location</th>
-                <th>Action</th>
+                <th>Ingredient Name</th>
+                <th>Date & Time</th>
+                <th>Quantity Lost</th>
+                <th>Cause of Loss</th>
+                <th>Action Taken</th>
             </tr>
         </thead>
-        <tbody>
-            <!-- Example waste items -->
+        <tbody id="waste-table-body">
+            {% for record in waste_records %}
             <tr class="waste-row">
-                <td>W1234</td>
-                <td>Spoiled Chicken</td>
-                <td>2024-10-20 10:00 AM</td>
-                <td>20 kg</td>
-                <td>Warehouse A</td>
-                <td><button class="edit-btn edit-button">Edit</button></td>
+                <td>{{ record.Waste_ID }}</td>
+                <td>{{ record.IngredientName }}</td>
+                <td>{{ record.DateOfIncident }}</td>
+                <td>{{ record.QuantityLost }} {{ record.UnitOfMeasurement }}</td>
+                <td>{{ record.CauseOfLoss }}</td>
+                <td>{{ record.ActionTaken }}</td>
             </tr>
-            <tr class="waste-row">
-                <td>W5678</td>
-                <td>Expired Pork</td>
-                <td>2024-10-19 11:00 AM</td>
-                <td>15 kg</td>
-                <td>Kitchen B</td>
-                <td><button class="edit-btn edit-button">Edit</button></td>
-            </tr>
+            {% endfor %}
         </tbody>
     </table>
 </section>
-
 
 <!-- Modal for Record Waste -->
 <div class="modal fade" id="recordWasteModal" tabindex="-1" aria-labelledby="recordWasteModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
-            <!-- Modal Header -->
             <div class="modal-header">
                 <h5 class="modal-title" id="recordWasteModalLabel">Record Waste</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <!-- Modal Body -->
             <div class="modal-body">
                 <form id="record-waste-form">
-                    <!-- Ingredient Name -->
+                    {% csrf_token %}
                     <div class="mb-3">
                         <label for="ingredient-name" class="form-label">Ingredient Name</label>
-                        <input type="text" class="form-control" id="ingredient-name" placeholder="Enter ingredient name" required>
+                        <input type="text" class="form-control" id="ingredient-name" name="ingredient-name" required>
                     </div>
-                    <!-- Type (Perishable/Non-Perishable) -->
                     <div class="mb-3">
-                        <label for="type" class="form-label">Type</label>
-                        <select class="form-select" id="type" required>
-                            <option value="" disabled selected>Choose type</option>
-                            <option value="Perishable">Perishable</option>
-                            <option value="Non-Perishable">Non-Perishable</option>
-                        </select>
+                        <label for="quantity-lost" class="form-label">Quantity Lost</label>
+                        <input type="number" class="form-control" id="quantity-lost" name="quantity-lost" required>
                     </div>
-                    <!-- Quantity Lost/Wasted -->
                     <div class="mb-3">
-                        <label for="quantity-lost" class="form-label">Quantity Lost/Wasted</label>
-                        <input type="number" class="form-control" id="quantity-lost" placeholder="Enter quantity" required>
+                        <label for=" unit-of-measurement" class="form-label">Unit of Measurement</label>
+                        <input type="text" class="form-control" id="unit-of-measurement" name="unit-of-measurement" required>
                     </div>
-                    <!-- Unit of Measurement -->
                     <div class="mb-3">
-                        <label for="unit-of-measurement" class="form-label">Unit of Measurement</label>
-                        <input type="text" class="form-control" id="unit-of-measurement" placeholder="e.g., kilograms, liters, boxes" required>
+                        <label for="cause-of-loss" class="form-label">Cause of Loss</label>
+                        <input type="text" class="form-control" id="cause-of-loss" name="cause-of-loss" required>
                     </div>
-                    <!-- Cause of Loss/Waste -->
-                    <div class="mb-3">
-                        <label for="cause-of-loss" class="form-label">Cause of Loss/Waste</label>
-                        <textarea class="form-control" id="cause-of-loss" rows="3" placeholder="Describe the cause" required></textarea>
-                    </div>
-                    <!-- Date of Incident -->
                     <div class="mb-3">
                         <label for="date-of-incident" class="form-label">Date of Incident</label>
-                        <input type="date" class="form-control" id="date-of-incident" required>
+                        <input type="date" class="form-control" id="date-of-incident" name="date-of-incident" required>
                     </div>
-                    <!-- Associated Costs -->
-                    <div class="mb-3">
-                        <label for="associated-costs" class="form-label">Associated Costs</label>
-                        <input type="number" class="form-control" id="associated-costs" placeholder="Enter cost in your currency" required>
-                    </div>
-                    <!-- Action Taken -->
                     <div class="mb-3">
                         <label for="action-taken" class="form-label">Action Taken</label>
-                        <textarea class="form-control" id="action-taken" rows="3" placeholder="Describe the action taken" required></textarea>
+                        <input type="text" class="form-control" id="action-taken" name="action-taken" required>
                     </div>
+                    <div class="mb-3">
+                        <label for="associated-costs" class="form-label">Associated Costs</label>
+                        <input type="number" class="form-control" id="associated-costs" name="associated-costs" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Submit</button>
                 </form>
-            </div>
-            <!-- Modal Footer -->
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="submit" class="btn btn-primary" form="record-waste-form">Submit</button>
             </div>
         </div>
     </div>
 </div>
 
+<script>
+    const csrfToken = '{{ csrf_token }}'; // Ensure this is set correctly
+    const manageWasteUrl = '/ManageWasteRecords/'; // Directly define the URL
+    console.log('Manage Waste URL:', manageWasteUrl); // Log the URL being used
+</script>
 
-
-{% endblock %}
-
-{% block extra_js %}
+<script src="{% static 'js/AddWaste.js' %}"></script>
 <script src="{% static 'js/ManageWaste.js' %}"></script>
 {% endblock %}

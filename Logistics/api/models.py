@@ -79,7 +79,7 @@ class Supplier(models.Model):
     Supplier_ID = models.AutoField(primary_key=True)
     SupplierName = models.CharField(max_length=255)
     SupplierDesc = models.TextField(blank=True, null=True)
-    SupplierNumber = models.CharField(max_length=15, blank=True, null=True)
+    SupplierNumber = models.CharField(max_length=255, blank=True, null=True)
     contact_number = models.CharField(max_length=15)
     Status = models.CharField(max_length=50, default='Active')
     MinOrderQty = models.IntegerField(default=0)
@@ -132,3 +132,21 @@ class Ingredient(models.Model):
     MeasureCount = models.IntegerField()
     Inventory_ID = models.ForeignKey(Inventory, models.DO_NOTHING, db_column='Inventory_ID')
     Created_At = models.DateTimeField(auto_now_add=True)
+
+# Waste Model
+class Waste(models.Model):
+    Waste_ID = models.AutoField(primary_key=True)
+    IngredientName = models.CharField(max_length=255)
+    Type = models.CharField(max_length=50)  # Perishable or Non-Perishable
+    QuantityLost = models.DecimalField(max_digits=10, decimal_places=2)
+    UnitOfMeasurement = models.CharField(max_length=50)
+    CauseOfLoss = models.TextField()
+    DateOfIncident = models.DateTimeField()
+    AssociatedCosts = models.DecimalField(max_digits=10, decimal_places=2)
+    ActionTaken = models.TextField()
+
+    class Meta:
+        db_table = 'waste_records'
+
+    def __str__(self):
+        return self.IngredientName
