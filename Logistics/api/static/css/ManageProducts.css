@@ -82,6 +82,31 @@ body, html {
     background-color: #f1f1f1;
 }
 
+.category-product-button {
+    background-color: #008425; /* Blue background */
+    color: white; /* White text */
+    font-weight: bold;
+    border: none;
+    border-radius: 6px; /* Rounded edges */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    height: 50px;
+    width: 150px;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none; /* Remove underline */
+    margin-left: 30px;
+}
+
+.category-product-button:hover {
+    background-color: #00691E; /* Darker blue on hover */
+    color: white; /* Keep text white */
+    cursor: pointer; /* Pointer cursor for better UX */
+}
+
+
+
 .add-product-button {
     background-color: #008425; /* Purple background */
     color: white; /* White text */
