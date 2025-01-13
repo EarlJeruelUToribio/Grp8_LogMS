@@ -99,17 +99,6 @@ class Order(models.Model):
     Supplier = models.ForeignKey(Supplier, on_delete=models.CASCADE)  # ForeignKey to Supplier
     Created_At = models.DateTimeField(auto_now_add=True)
 
-# ProductOrders Model
-class ProductOrders(models.Model):
-    ProductOrder_ID = models.AutoField(primary_key=True)
-    OrderStatus = models.CharField(max_length=50)
-    OrderNumber = models.CharField(max_length=50)
-    CustomerName = models.CharField(max_length=255)
-    TableNumber = models.CharField(max_length=10)
-    Products_ID = models.ForeignKey('Product', on_delete=models.CASCADE)
-    OrderPrice = models.DecimalField(max_digits=10, decimal_places=2)
-    EstimatedPrepTime = models.IntegerField()
-
 # Product Model
 class Product(models.Model):
     Product_ID = models.AutoField(primary_key=True)
@@ -123,6 +112,28 @@ class Product(models.Model):
 
     def __str__(self):
         return self.ProductName
+    
+# ProductOrders Model
+class ProductOrders(models.Model):
+    ProductOrder_ID = models.AutoField(primary_key=True)
+    OrderStatus = models.CharField(max_length=50)
+    OrderNumber = models.CharField(max_length=50)
+    CustomerName = models.CharField(max_length=255)
+    TableNumber = models.CharField(max_length=10)
+    Products_ID = models.ForeignKey('Product', on_delete=models.CASCADE)
+    OrderPrice = models.DecimalField(max_digits=10, decimal_places=2)
+    EstimatedPrepTime = models.IntegerField()
+
+# ProductCategory Model    
+class ProductCategory(models.Model):
+    Category_ID = models.AutoField(primary_key=True)
+    CategoryName = models.CharField(max_length=100)
+
+    class Meta:
+        db_table = 'product_categories'
+
+    def __str__(self):
+        return self.CategoryName
 
 # Ingredient Model
 class Ingredient(models.Model):

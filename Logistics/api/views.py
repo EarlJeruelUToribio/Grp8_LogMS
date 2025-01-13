@@ -12,7 +12,7 @@ from rest_framework.response import Response
 from rest_framework import status
 from rest_framework import generics
 from decimal import Decimal
-from .models import Inventory, MaterialCategory, Waste, Supplier, Order, ProductOrders, Product, Ingredient, Resource, KitchenResource
+from .models import Inventory, MaterialCategory, ProductCategory, Waste, Supplier, Order, ProductOrders, Product, Ingredient, Resource, KitchenResource
 from .serializers import (
     InventorySerializer, 
     SupplierSerializer, 
@@ -282,9 +282,11 @@ def AddProduct_view(request):
 def ManageProduct_view(request):
     products = Product.objects.all()  # Fetch all products
     materials = Inventory.objects.all()  # Fetch all materials
+    product_categories = ProductCategory.objects.all()  # Fetch all product categories
     return render(request, 'ManageProducts.html', {
         'products': products,
-        'materials': materials  # Pass materials to the template
+        'materials': materials,
+        'product_categories': product_categories  # Pass product categories to the template
     })
 
 def EditProduct_view(request, pk):
@@ -301,51 +303,26 @@ def EditProduct_view(request, pk):
     
     return render(request, 'ManageProducts.html', {'product': product})
 
-def KitchenDisplay_view(request):
-    return render(request, 'KitchenDisplay.html')
-
-
-@require_http_methods(["GET"])
-def ManageWaste_view(request):
-    # Fetch waste records from the database
-    waste_records = list(Waste.objects.all().values())
-    print("Fetched waste records:", waste_records)  # Log the fetched records
-    return JsonResponse({'waste_records': waste_records})
+@require_http_methods(["DELETE"])
+def delete_product(request, product_id):
+    product = get_object_or_404(Product, Product_ID=product_id)
+    product.delete()
+    return JsonResponse({'message': 'Product deleted successfully.'}, status=204)
 
 @require_http_methods(["POST"])
-def AddWaste_view(request):
-    try:
-        # Retrieve data from the POST request
-        ingredient_name = request.POST.get('ingredient-name')
-        quantity_lost = request.POST.get('quantity-lost')  # Corrected from 'quantity-lsost'
-        unit_of_measurement = request.POST.get('unit-of-measurement')
-        cause_of_loss = request.POST.get('cause-of-loss')
-        date_of_incident = request.POST.get('date-of-incident')
-        action_taken = request.POST.get('action-taken')
-        associated_costs = request.POST.get('associated-costs')  # New field
+def AddCategory_view(request):
+    if request.method == 'POST':
+        category_name = json.loads(request.body).get('categoryName')
+        if category_name:
+            category = ProductCategory(CategoryName=category_name)
+            category.save()
+            return JsonResponse({'success': True, 'category_id': category.Category_ID, 'category_name': category.CategoryName})
+        return JsonResponse({'success': False, 'error': 'Category name is required.'})
+    return JsonResponse({'success': False, 'error': 'Invalid request method.'})
 
-        # Log the received data for debugging
-        print(f"Received data: {ingredient_name}, {quantity_lost}, {unit_of_measurement}, {cause_of_loss}, {date_of_incident}, {action_taken}, {associated_costs}")
 
-        # Check if any required fields are missing
-        if not all([ingredient_name, quantity_lost, unit_of_measurement, cause_of_loss, date_of_incident, action_taken, associated_costs]):
-            return JsonResponse({'success': False, 'error': 'Missing required fields.'}, status=400)
-
-        # Create a new Waste record
-        new_waste_record = Waste.objects.create(
-            IngredientName=ingredient_name,
-            QuantityLost=quantity_lost,
-            UnitOfMeasurement=unit_of_measurement,
-            CauseOfLoss=cause_of_loss,
-            DateOfIncident=date_of_incident,
-            ActionTaken=action_taken,
-            AssociatedCosts=associated_costs  # Include the associated costs
-        )
-
-        return JsonResponse({'success': True, 'waste_id': new_waste_record.Waste_ID})
-
-    except Exception as e:
-        return JsonResponse({'success': False, 'error': str(e)}, status=400)
+def KitchenDisplay_view(request):
+    return render(request, 'KitchenDisplay.html')
     
 def AddSupplier_view(request):
     if request.method == 'POST':
@@ -446,8 +423,54 @@ def ExpiryDates_view(request):
             item.expiration_date = None  # Set to None if not applicable
     return render(request, 'ExpiryDates.html', {'perishable_items': perishable_items})
 
+
+@require_http_methods(["POST"])
+def AddWaste_view(request):
+    try:
+        # Retrieve data from the POST request
+        ingredient_name = request.POST.get('ingredient-name')
+        quantity_lost = request.POST.get('quantity-lost')  # Corrected from 'quantity-lsost'
+        unit_of_measurement = request.POST.get('unit-of-measurement')
+        cause_of_loss = request.POST.get('cause-of-loss')
+        date_of_incident = request.POST.get('date-of-incident')
+        action_taken = request.POST.get('action-taken')
+        associated_costs = request.POST.get('associated-costs')  # New field
+
+        # Log the received data for debugging
+        print(f"Received data: {ingredient_name}, {quantity_lost}, {unit_of_measurement}, {cause_of_loss}, {date_of_incident}, {action_taken}, {associated_costs}")
+
+        # Check if any required fields are missing
+        if not all([ingredient_name, quantity_lost, unit_of_measurement, cause_of_loss, date_of_incident, action_taken, associated_costs]):
+            return JsonResponse({'success': False, 'error': 'Missing required fields.'}, status=400)
+
+        # Create a new Waste record
+        new_waste_record = Waste.objects.create(
+            IngredientName=ingredient_name,
+            QuantityLost=quantity_lost,
+            UnitOfMeasurement=unit_of_measurement,
+            CauseOfLoss=cause_of_loss,
+            DateOfIncident=date_of_incident,
+            ActionTaken=action_taken,
+            AssociatedCosts=associated_costs  # Include the associated costs
+        )
+
+        return JsonResponse({'success': True, 'waste_id': new_waste_record.Waste_ID})
+
+    except Exception as e:
+        return JsonResponse({'success': False, 'error': str(e)}, status=400)
+
+@require_http_methods(["GET"])
 def ManageWaste_view(request):
-    return render(request, 'ManageWaste.html')
+    print("Request method:", request.method)  # Debugging line
+    # Check if the request is an AJAX request
+    if request.headers.get('x-requested-with') == 'XMLHttpRequest':
+        print("Fetching waste records for AJAX request")  # Debugging line
+        waste_records = list(Waste.objects.all().values())
+        print("Fetched waste records:", waste_records)  # Log the fetched records
+        return JsonResponse({'waste_records': waste_records})
+    else:
+        print("Rendering HTML template")  # Debugging line
+        return render(request, 'ManageWaste.html')  # Render the HTML template for non-AJAX requests
 
 def KitchenResources_view(request):
     kitchen_resources = KitchenResource.objects.all()  # Fetch all kitchen resources
@@ -568,13 +591,6 @@ def AddResources_view(request):
             return JsonResponse({'error': str(e)}, status=400)
 
     return JsonResponse({'error': 'Invalid request method.'}, status=405)
-
-
-from django.shortcuts import get_object_or_404, redirect
-from django.contrib import messages
-from django.http import JsonResponse
-from django.views.decorators.http import require_http_methods
-from .models import Resource  # Ensure you import the Resource model
 
 @require_http_methods(["POST"])
 def edit_resource(request):

@@ -4,6 +4,8 @@
 {% block extra_css %}
     <link rel="stylesheet" href="{% static 'css/ManageProducts.css' %}">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <!-- Include jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
         const addProductUrl = "{% url 'AddProduct' %}"; // Define the URL here
         const materials = [
@@ -16,6 +18,8 @@
     <script src="{% static 'js/ManageProduct.js' %}"></script> <!-- Include the new JS file -->
     <script src="{% static 'js/EditProducts.js' %}"></script> <!-- Include the EditProduct.js file -->
     <script src="{% static 'js/SearchProduct.js' %}"></script> <!-- Include the SearchProduct.js file -->
+    <script src="{% static 'js/DeleteProduct.js' %}"></script> <!-- Include the DeleteProduct.js file -->
+    <script src="{% static 'js/ProductCategory.js' %}"></script>
 {% endblock %}
 
 {% block content %}
@@ -68,7 +72,10 @@
                 <td>
                     <button type="button" class="btn" id="edit-button" data-bs-toggle="modal" data-bs-target="#editProductModal">
                         Edit
-                    </button>         
+                    </button>
+                    <button type="button" class="btn btn-danger delete-button" data-product-id="{{ product.Product_ID }}">
+                        Delete
+                    </button>
                 </td>
             </tr>
             {% endfor %}
@@ -98,7 +105,12 @@
                         </div>
                         <div class="col-md-6">
                             <label for="product-category" class="form-label">Product Category:</label>
-                            <input type="text" id="product-category" name="product-category" class=" form-control" required>
+                            <select id="product-category" name="product-category" class="form-select" required>
+                                <option value="" disabled selected>Select Category</option>
+                                {% for category in product_categories %}
+                                    <option value="{{ category.Category_ID }}">{{ category.CategoryName }}</option>
+                                {% endfor %}
+                            </select>
                         </div>
                         <div class="col-md-6">
                             <label for="product-image" class="form-label">Product Image:</label>
@@ -144,6 +156,29 @@
     </div>
 </div>
 
+<!-- Add Category Modal -->
+<div class="modal fade" id="ProductCategoryModal" tabindex="-1" aria-labelledby="ProductCategoryModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="ProductCategoryModalLabel">Add Category</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="add-category-form">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <label for="category-name" class="form-label">Category Name</label>
+                        <input type="text" class="form-control" id="category-name" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Add Category</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 <!-- Edit Product Modal -->
 <div class="modal fade" id="editProductModal" tabindex="-1" aria-labelledby="editProductModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
@@ -165,8 +200,13 @@
                             <input type="text" id="edit-product-description" name="product-description" class="form-control" value="{{ product.description }}" required>
                         </div>
                         <div class="col-md-6">
-                            <label for="edit-product-category" class="form-label">Product Category:</label>
-                            <input type="text" id="edit-product-category" name="product-category" class="form-control" value="{{ product.category }}" required>
+                            <label for="product-category" class="form-label">Product Category:</label>
+                            <select id="product-category" name="product-category" class="form-select" required>
+                                <option value="" disabled selected>Select Category</option>
+                                {% for category in product_categories %}
+                                    <option value="{{ category.Category_ID }}">{{ category.CategoryName }}</option>
+                                {% endfor %}
+                            </select>
                         </div>
                         <div class="col-md-6">
                             <label for="edit-product-image" class="form-label">Product Image:</label>

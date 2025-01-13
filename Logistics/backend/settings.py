@@ -82,15 +82,15 @@ CRISPY_TEMPLATE_PACK = 'bootstrap4'  # or 'bootstrap5' if you're using Bootstrap
 WSGI_APPLICATION = 'backend.wsgi.application'
 
 
-# Database
+# Databases
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'logistic',
+        'NAME': 'postgres',
         'USER':'postgres',
-        'PASSWORD': 'admin',
+        'PASSWORD': 'hayaanmuna01',
         'HOST': 'localhost',
         'PORT': '5432'
     }
