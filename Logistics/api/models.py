@@ -99,12 +99,23 @@ class Order(models.Model):
     Supplier = models.ForeignKey(Supplier, on_delete=models.CASCADE)  # ForeignKey to Supplier
     Created_At = models.DateTimeField(auto_now_add=True)
 
+# ProductCategory Model    
+class ProductCategory(models.Model):
+    Category_ID = models.AutoField(primary_key=True)
+    CategoryName = models.CharField(max_length=100)
+
+    class Meta:
+        db_table = 'product_categories'
+
+    def __str__(self):
+        return self.CategoryName
+
 # Product Model
 class Product(models.Model):
     Product_ID = models.AutoField(primary_key=True)
     ProductName = models.CharField(max_length=255)
     ProductDescription = models.TextField()
-    ProductCategory = models.CharField(max_length=100)
+    ProductCategory = models.ForeignKey(ProductCategory, on_delete=models.CASCADE)  # Change this line
     ProductImage = models.ImageField(upload_to='product_images/')
     PurchasePrice = models.DecimalField(max_digits=10, decimal_places=2)
     Ingredients = models.ManyToManyField('Ingredient', blank=True)  # Changed to ManyToManyField
@@ -124,23 +135,11 @@ class ProductOrders(models.Model):
     OrderPrice = models.DecimalField(max_digits=10, decimal_places=2)
     EstimatedPrepTime = models.IntegerField()
 
-# ProductCategory Model    
-class ProductCategory(models.Model):
-    Category_ID = models.AutoField(primary_key=True)
-    CategoryName = models.CharField(max_length=100)
-
-    class Meta:
-        db_table = 'product_categories'
-
-    def __str__(self):
-        return self.CategoryName
-
-# Ingredient Model
 class Ingredient(models.Model):
     Ingredient_ID = models.AutoField(primary_key=True)
     IngredientName = models.CharField(max_length=255)
     ItemUnitMeasure = models.CharField(max_length=50)
-    MeasureCount = models.IntegerField()
+    MeasureCount = models.DecimalField(max_digits=10, decimal_places=2)  # Ensure this is a DecimalField for precision
     Inventory_ID = models.ForeignKey(Inventory, models.DO_NOTHING, db_column='Inventory_ID')
     Created_At = models.DateTimeField(auto_now_add=True)
 

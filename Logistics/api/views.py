@@ -298,10 +298,12 @@ def EditProduct_view(request, pk):
         product.ProductImage = request.FILES.get('product-image') if request.FILES.get('product-image') else product.ProductImage
         product.PurchasePrice = request.POST.get('product-price')
         product.save()
-        messages.success(request, 'Product updated successfully!')
-        return redirect('ManageProducts')
+        
+        # Return a JSON response instead of redirecting
+        return JsonResponse({'success': True, 'message': 'Product updated successfully!'})
     
-    return render(request, 'ManageProducts.html', {'product': product})
+    # If the request method is not POST, return the product data for editing
+    return JsonResponse({'success': False, 'error': 'Invalid request method.'}, status=400)
 
 @require_http_methods(["DELETE"])
 def delete_product(request, product_id):
