@@ -29,6 +29,24 @@ def home_view(request):
 def Sidebar_view(request):
     return render(request, 'Sidebar.html')
 
+def ManageProduct_view(request):
+    """
+    API endpoint to return product data in JSON format.
+    """
+    products = Product.objects.all()
+    product_list = [
+        {
+            "id": product.id,
+            "ProductName": product.name,
+            "ProductDescription": product.description,
+            "ProductCategory": product.category.name,  # Replace with actual relation
+            "PurchasePrice": product.price,
+            "isAvailable": product.is_available,  # Adjust according to your model
+        }
+        for product in products
+    ]
+    return JsonResponse(product_list, safe=False)
+
 def PlaceOrder_view(request):
     if request.method == 'POST':
         # Handle form submission
