@@ -104,21 +104,20 @@ table tr:nth-child(even) {
     cursor: pointer; /* Pointer cursor for better UX */
 }
 
-#edit-button {
-    background-color: #eeb32f; /* Gold base color */
-    border: none; /* No border */
-    color: white; /* White text */
-    border-radius: 6px; /* Rounded corners */
-    width: 100px; /* Fixed width */
-    padding: 10px; /* Padding inside the button */
-    text-align: center; /* Center text */
-    text-decoration: none; /* Remove underline */
-    display: inline-block; /* Ensure it looks like a button */
+.edit-button {
+    background-color: #eeb32f; /* Light yellow background */
+    color: #fff; /* White text */
+    border: none;
+    padding: 8px 16px;
+    font-size: 16px;
+    border-radius: 4px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
-#edit-button:hover {
-    background-color: #D1A35A; /* Darker gold on hover */
-    color: white; /* Retain white text */
+.edit-button:hover {
+    background-color: #D1A35A; /* Darker yellow on hover */
+    transform: scale(1.05); /* Slightly enlarge button on hover */
 }
 
 
