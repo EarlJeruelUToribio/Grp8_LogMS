@@ -52,6 +52,7 @@ body, html {
     display: block; /* Ensures it's treated as a block element for centering */
 }
 
+
 .products-section h2 {
     font-size: 28px;
     color: #743089; /* Purple heading */

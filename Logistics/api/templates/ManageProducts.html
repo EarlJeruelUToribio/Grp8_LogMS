@@ -28,6 +28,9 @@
         <button type="button" class="add-product-button mt-5" data-bs-toggle="modal" data-bs-target="#addProductModal">
             Add Product
         </button>
+        <button type="button" class="add-product-button mt-5" data-bs-toggle="modal" data-bs-target="#ProductCategoryModal">
+            Add Category
+        </button>
         <input type="text" id="search-bar" placeholder="Search Product" class="search-bar">
     </div>
 
@@ -87,7 +90,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form id="add-product-form" method="POST" enctype="multipart/form-data">
+                <form id="add-product-form" method="POST" enctype="multipart /form-data">
                     {% csrf_token %}
                     <div class="row g-3">
                         <div class="col-md-6">
@@ -118,34 +121,34 @@
                     </div>
 
                     <!-- Ingredients Section -->
-<div class="col-md-12 mt-3">
-    <label for="ingredients" class="form-label">Add Ingredients:</label>
-    <div id="ingredients-section">
-        <div class="row mb-2 align-items-center">
-            <div class="col-md-5">
-                <select class="form-select ingredient-select" id="ingredient-select-1" required onchange="updateSmallerUnits(this)">
-                    <option value="" disabled selected>Select Ingredient</option>
-                    {% for material in materials %}
-                        <option value="{{ material.Inventory_ID }}" data-unit="{{ material.UnitOfMeasure }}">{{ material.ItemName }}</option>
-                    {% endfor %}
-                </select>
-            </div>
-            <div class="col-md-4">
-                <input type="number" class="form-control" placeholder="Quantity" required>
-            </div>
-            <div class="col-md-2">
-                <select class="form-select unit-select" required>
-                    <option value="" disabled selected>Select Unit</option>
-                    <!-- Smaller units will be populated here -->
-                </select>
-            </div>
-            <div class="col-md-1">
-                <button type="button" class="btn btn-danger remove-ingredient" onclick="removeIngredient(this)">Remove</button>
-            </div>
-        </div>
-    </div>
-    <button type="button" class="btn btn-primary" id="add-ingredient-button">Add Ingredient</button>
-</div>
+                    <div class="col-md-12 mt-3">
+                        <label for="ingredients" class="form-label">Add Ingredients:</label>
+                        <div id="ingredients-section">
+                            <div class="row mb-2 align-items-center">
+                                <div class="col-md-5">
+                                    <select class="form-select ingredient-select" id="ingredient-select-1" required onchange="updateSmallerUnits(this)">
+                                        <option value="" disabled selected>Select Ingredient</option>
+                                        {% for material in materials %}
+                                            <option value="{{ material.Inventory_ID }}" data-unit="{{ material.UnitOfMeasure }}">{{ material.ItemName }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                                <div class="col-md-4">
+                                    <input type="number" class="form-control" placeholder="Quantity" required>
+                                </div>
+                                <div class="col-md-2">
+                                    <select class="form-select unit-select" required>
+                                        <option value="" disabled selected>Select Unit</option>
+                                        <!-- Smaller units will be populated here -->
+                                    </select>
+                                </div>
+                                <div class="col-md-1">
+                                    <button type="button" class="btn btn-danger remove-ingredient" onclick="removeIngredient(this)">Remove</button>
+                                </div>
+                            </div>
+                        </div>
+                        <button type="button" class="btn btn-primary" id="add-ingredient-button">Add Ingredient</button>
+                    </div>
 
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -196,7 +199,7 @@
 
     // Function to remove an ingredient row
     function removeIngredient(button) {
-        button.closest('.row').remove();
+        button.closest('.row ').remove();
     }
 
     // Function to handle the form submission for adding a product
@@ -315,7 +318,6 @@
     </div>
 </div>
 
-
 <!-- Edit Product Modal -->
 <div class="modal fade" id="editProductModal" tabindex="-1" aria-labelledby="editProductModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
@@ -324,7 +326,7 @@
                 <h5 class="modal-title" id="editProductModalLabel">EDIT PRODUCT</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-body">
+            <div class="modal -body">
                 <form id="edit-product-form" method="POST" enctype="multipart/form-data">
                     {% csrf_token %}
                     <div class="row g-3">
@@ -414,7 +416,7 @@ function addEditIngredientRow() {
 function getIngredientRowHTML(selectedId = '', selectedQuantity = '') {
     // Create the options for the select element
     const options = materials.map(material => 
-        `<option value="${material.id}" ${material.id === selectedId ? 'selected' : ''} data-unit="${material.unit}">${material.name}</option>`
+        `<option value="${material.id}" ${material.id === selectedId ? 'selected' : '' } data-unit="${material.unit}">${material.name}</option>`
     ).join('');
 
     return `
