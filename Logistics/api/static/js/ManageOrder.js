@@ -31,8 +31,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
     supplierSelect.addEventListener('change', function() {
         const supplierId = this.value;
-        // Update the fetch URL to the correct endpoint
-        fetch(`/api/materials?supplier_id=${supplierId}`) // Ensure this matches your URL pattern
+        const fetchUrl = `/api/materials?supplier_id=${supplierId}`; // Construct the URL
+        console.log('Fetching materials from:', fetchUrl); // Log the URL
+        fetch(fetchUrl)
             .then(response => {
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
