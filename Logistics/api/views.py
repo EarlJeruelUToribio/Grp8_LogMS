@@ -233,26 +233,34 @@ def AddCategory_view(request):
         return JsonResponse({'success': False, 'error': 'Category name is required.'})
     return JsonResponse({'success': False, 'error': 'Invalid request method.'})
 
+from django.shortcuts import get_object_or_404
+
 def AddProduct_view(request):
     if request.method == 'POST':
         product_name = request.POST.get('product-name')
         product_description = request.POST.get('product-description')
-        product_category = request.POST.get('product-category')
+        product_category_id = request.POST.get('product-category')  # Get the category ID
         product_image = request.FILES.get('product-image')
         product_price = request.POST.get('product-price')
         material_ids = request.POST.getlist('material_name[]')
         material_quantities = request.POST.getlist('material_quantity[]')
 
+        print(f"Received data: {product_name}, {product_description}, {product_category_id}, {product_price}, {material_ids}, {material_quantities}")
+
         try:
+            # Retrieve the ProductCategory instance using the ID
+            product_category = get_object_or_404(ProductCategory, pk=product_category_id)
+
             # Create and save the Product instance
             product = Product(
                 ProductName=product_name,
                 ProductDescription=product_description,
-                ProductCategory=product_category,
+                ProductCategory=product_category,  # Assign the ProductCategory instance
                 ProductImage=product_image,
                 PurchasePrice=product_price
             )
             product.save()
+            print(f"Product saved: {product}")
 
             # Check that the length of material_ids and material_quantities match
             for i in range(len(material_ids)):
@@ -275,6 +283,7 @@ def AddProduct_view(request):
 
             return JsonResponse({'success': True})
         except Exception as e:
+            print(f"Error: {str(e)}")  # Log the error
             return JsonResponse({'success': False, 'error': str(e)})
 
     return JsonResponse({'success': False, 'error': 'Invalid request method.'})
