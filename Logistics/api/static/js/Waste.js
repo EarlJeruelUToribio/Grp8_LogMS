@@ -7,7 +7,13 @@ document.addEventListener('DOMContentLoaded', () => {
     const fetchWasteRecords = async () => {
         try {
             console.log('Fetching from URL:', manageWasteUrl); // Log the URL being fetched
-            const response = await fetch(manageWasteUrl);
+            const response = await fetch(manageWasteUrl, {
+                method: 'GET',
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest', // Indicate that the request is AJAX
+                    'Content-Type': 'application/json' // Optional, but can be included
+                }
+            });
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
             }

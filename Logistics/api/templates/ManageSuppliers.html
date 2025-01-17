@@ -88,7 +88,7 @@
                     </div>
 
                     <!-- Payment Terms -->
-                    <div class="col-md-6">
+                    <div class="col-md- 6">
                         <label for="payment-terms" class="form-label">Payment Terms:</label>
                         <select id="payment-terms" name="payment-terms" class="form-select" required>
                             <option value="cash-on-delivery">Cash on Delivery</option>
@@ -184,7 +184,7 @@
 
                     <!-- Materials Section -->
                     <div class="col-md-12">
-                        <label for="edit-materials" class="form-label">Add Materials:</label>
+                        <label for="edit-materials" class="form-label"> Add Materials:</label>
                         <div id="edit-materials-section">
                             <div class="row mb-2 align-items-center">
                                 <div class="col-md-5">
@@ -217,6 +217,8 @@
     </div>
 </div>
 
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> <!-- Include jQuery -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script> <!-- Include Bootstrap JS -->
 <script>
     const csrfToken = '{{ csrf_token }}'; // Get CSRF token from Django
     const addSupplierUrl = '{% url "AddSupplier" %}'; // Get the URL for adding a supplier
