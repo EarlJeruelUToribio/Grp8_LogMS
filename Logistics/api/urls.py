@@ -10,6 +10,7 @@ urlpatterns = [
     path('ManageOrder/', views.ManageOrder_view, name='ManageOrder'),
     path('PlaceOrder/', views.PlaceOrder_view, name='PlaceOrder'),
     path('api/order-counts/', views.order_counts_view, name='order-counts'),
+    path('update-stock/<int:item_id>/', views.update_stock, name='update_stock'),
     
     path('ManageProduct/', views.ManageProduct_view, name='ManageProducts'),
     path('edit_product/<int:pk>/', views.EditProduct_view, name='EditProduct'),

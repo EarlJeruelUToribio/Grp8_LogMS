@@ -98,6 +98,18 @@ def order_counts_view(request):
         'cancelled': cancelled_count,
     })
 
+@require_http_methods(["POST"])
+def update_stock(request, item_id):
+    if request.method == 'POST':
+        data = json.loads(request.body)
+        quantity = data.get('quantity')
+
+        try:
+            increase_stock(item_id, quantity)  # Call the function to increase stock
+            return JsonResponse({'success': True})
+        except Exception as e:
+            return JsonResponse({'success': False, 'error': str(e)}, status=400)
+
 def get_materials_by_supplier(request):
     supplier_id = request.GET.get('supplier_id')
     materials = Inventory.objects.filter(Suppliers__Supplier_ID=supplier_id).values('Inventory_ID', 'ItemName', 'PurchasePrice')
