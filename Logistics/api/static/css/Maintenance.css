@@ -80,3 +80,22 @@ body, html {
         padding: 10px;
     }
 }
+
+
+/* Edit Button Styles */
+.btn-primary {
+    background-color: #eeb32f; /* Light blue background */
+    color: #fff; /* White text */
+    border: none;
+    padding: 8px 16px;
+    font-size: 16px;
+    border-radius: 4px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    width: 100px;
+}
+
+.btn-primary:hover {
+    background-color: #D1A35A; /* Darker blue on hover */
+}
+

@@ -67,6 +67,7 @@ urlpatterns = [
     path('products/', views.ProductListCreateView.as_view(), name='product-list'),
     path('api/products/', views.ProductListCreateView.as_view(), name='product-list'),
     path('products/<int:pk>/', views.ProductDetailView.as_view(), name='product-detail'),
+    path('api/manage-product/', views.ManageProduct_view, name='manage_product'),
     
     path('ingredients/', views.IngredientListCreateView.as_view(), name='ingredient-list'),
     path('send-ingredients/', views.send_ingredients, name='send-ingredients'),

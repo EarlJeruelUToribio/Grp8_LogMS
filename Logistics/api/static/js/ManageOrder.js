@@ -74,8 +74,8 @@ document.addEventListener('DOMContentLoaded', function() {
         totalCostElement.textContent = totalCost;
     }
 
-    // View Order Modal Logic
-    const viewOrderButtons = document.querySelectorAll('.view-order-btn');
+// View Order Modal Logic
+const viewOrderButtons = document.querySelectorAll('.view-order-btn');
 
     viewOrderButtons.forEach(button => {
         button.addEventListener('click', function() {
