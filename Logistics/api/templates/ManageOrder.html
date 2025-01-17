@@ -78,7 +78,9 @@
                                 data-bs-toggle="modal" 
                                 data-bs-target="#changeStatusModal" 
                                 data-order-id="{{ order.Order_ID }}" 
-                                data-current-status="{{ order.OrderStatus }}">
+                                data-current-status="{{ order.OrderStatus }}"
+                                data-item-id="{{ order.Items.Inventory_ID }}"  
+                                data-quantity="{{ order.Quantity }}"> 
                                 Change Status
                             </button>
                         </td>
@@ -102,14 +104,16 @@
                 </div>
                 <div class="modal-body">
                     <input type="hidden" name="order_id" id="modal-order-id">
+                    <input type="hidden" name="item-id" id="item-id"> <!-- Ensure this is present -->
                     <p>Current Status: <strong id="modal-current-status"></strong></p>
                     <label for="new-status">Select New Status:</label>
                     <select name="new_status" id="new-status" class="form-select">
                         <option value="Placed">Placed</option>
-                        <option value=" Shipped">Shipped</option>
+                        <option value="Shipped">Shipped</option>
                         <option value="Completed">Completed</option>
                         <option value="Cancelled">Cancelled</option>
                     </select>
+                    <p>Order Quantity: <strong id="order-quantity"></strong></p> <!-- Display quantity here -->
                 </div>
                 <div class="modal-footer">
                     <button type="submit" class="btn btn-primary">Save Changes</button>
@@ -204,4 +208,5 @@
 <script src="{% static 'js/ManageOrder.js' %}"></script>
 <script src="{% static 'js/OrderCount.js' %}"></script>
 <script src="{% static 'js/SearchOrder.js' %}"></script>
+<script src="{% static 'js/ShipOrder.js' %}"></script>
 {% endblock %}
