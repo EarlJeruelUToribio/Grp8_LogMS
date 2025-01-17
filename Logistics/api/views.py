@@ -112,7 +112,7 @@ def update_stock(request, item_id):
 
 def get_materials_by_supplier(request):
     supplier_id = request.GET.get('supplier_id')
-    materials = Inventory.objects.filter(Suppliers__Supplier_ID=supplier_id).values('Inventory_ID', 'ItemName', 'PurchasePrice')
+    materials = Inventory.objects.filter(supplier__Supplier_ID=supplier_id).values('Inventory_ID', 'ItemName', 'PurchasePrice')
     return JsonResponse(list(materials), safe=False)
 
 def get_material_details(request, material_id):

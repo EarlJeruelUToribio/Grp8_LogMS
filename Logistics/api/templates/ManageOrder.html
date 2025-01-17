@@ -61,17 +61,18 @@
                         <td>{{ order.OrderStatus }}</td>
                         <td>
                             <button 
-                            type="button" 
-                            class="btn btn-secondary view-order-btn" 
-                            data-bs-toggle="modal" 
-                            data-bs-target="#viewOrderModal" 
-                            data-order-id="{{ order.Order_ID }}"
-                            data-items="{{ order.Items.ItemName }}"
-                            data-quantity="{{ order.Quantity }}"
-                            data-supplier="{{ order.Supplier.SupplierName }}"
-                            data-status="{{ order.OrderStatus }}">
-                            View Details
-                        </button>
+                                type="button" 
+                                class="btn btn-secondary view-order-btn" 
+                                data-bs-toggle="modal" 
+                                data-bs-target="#viewOrderModal" 
+                                data-order-id="{{ order.Order_ID }}"
+                                data-items="{{ order.Items.ItemName }}"
+                                data-quantity="{{ order.Quantity }}"
+                                data-supplier="{{ order.Supplier.SupplierName }}"
+                                data-status="{{ order.OrderStatus }}"
+                                data-base-price="{{ order.Items.PurchasePrice }}"> <!-- Add this line -->
+                                View Details
+                            </button>
                             <button 
                                 type="button" 
                                 class="btn btn-primary change-status-btn" 
@@ -79,7 +80,7 @@
                                 data-bs-target="#changeStatusModal" 
                                 data-order-id="{{ order.Order_ID }}" 
                                 data-current-status="{{ order.OrderStatus }}"
-                                data-item-id="{{ order.Items.Inventory_ID }}"  
+                                data-item-id="{{ order.Items.Inventory_ID }}"
                                 data-quantity="{{ order.Quantity }}"> 
                                 Change Status
                             </button>
@@ -137,7 +138,8 @@
                 <p><strong>Quantity:</strong> <span id="view-order-quantity"></span></p>
                 <p><strong>Supplier:</strong> <span id="view-order-supplier"></span></p>
                 <p><strong>Status:</strong> <span id="view-order-status"></span></p>
-            </div>
+                <p><strong>Base Price:</strong> <span id="view-base-price"></span></p>
+                <p><strong>Total Cost:</strong> <span id="view-total-cost"></span></p>
             </div>
         </div>
     </div>
@@ -171,9 +173,7 @@
                         <label for="material" class="form-label">Material:</label>
                         <select id="material" name="material" class="form-select" required>
                             <option value="" disabled selected>Select Material</option>
-                            {% for material in materials %}
-                                <option value="{{ material.Inventory_ID }}" data-price="{{ material.PurchasePrice }}">{{ material.ItemName }}</option>
-                            {% endfor %}
+                            <!-- Options will be populated based on the selected supplier -->
                         </select>
                     </div>
 
@@ -203,6 +203,7 @@
 {% block extra_js %}
 {% endblock %}
 <script src="{% static 'js/ManageOrder.js' %}"></script>
+<script src="{% static 'js/OrderPricing.js' %}"></script>
 <script src="{% static 'js/OrderCount.js' %}"></script>
 <script src="{% static 'js/SearchOrder.js' %}"></script>
 <script src="{% static 'js/ShipOrder.js' %}"></script>

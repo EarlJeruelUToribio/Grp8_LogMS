@@ -31,19 +31,28 @@ document.addEventListener('DOMContentLoaded', function() {
 
     supplierSelect.addEventListener('change', function() {
         const supplierId = this.value;
-        fetch(`/get_materials_by_supplier?supplier_id=${supplierId}`)
-            .then(response => response.json())
+        // Update the fetch URL to the correct endpoint
+        fetch(`/api/materials?supplier_id=${supplierId}`) // Ensure this matches your URL pattern
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
             .then(data => {
-                materialSelect.innerHTML = '<option value="" disabled selected>Select Material</option>';
+                materialSelect.innerHTML = '<option value="" disabled selected>Select Material</option>'; // Reset options
                 data.forEach(material => {
                     const option = document.createElement('option');
                     option.value = material.Inventory_ID;
-                    option.textContent = material.ItemName;
+                    option.textContent = `${material.ItemName} - Price: ${material.PurchasePrice}`;
                     option.setAttribute('data-price', material.PurchasePrice); // Store price in data attribute
                     materialSelect.appendChild(option);
                 });
             })
-            .catch(error => console.error('Error fetching materials:', error));
+            .catch(error => {
+                console.error('Error fetching materials:', error);
+                alert('Failed to fetch materials. Please try again later.');
+            });
     });
 
     materialSelect.addEventListener('change', function() {
@@ -81,31 +90,14 @@ document.addEventListener('DOMContentLoaded', function() {
             document.getElementById('view-order-quantity').textContent = quantity;
             document.getElementById('view-order-supplier').textContent = supplier;
             document.getElementById('view-order-status').textContent = status;
+
+            // Assuming base price is also passed as a data attribute
+            const basePrice = button.getAttribute('data-base-price');
+            document.getElementById('view-base-price').textContent = basePrice;
+
+            // Calculate total cost based on quantity and base price
+            const totalCost = (parseFloat(basePrice) * parseInt(quantity)).toFixed(2);
+            document.getElementById('view-total-cost').textContent = totalCost;
         });
     });
-
-    // SweetAlert for Submit Order
-    document.querySelector('#place-order-form').addEventListener('submit', function(event) {
-        event.preventDefault(); // Prevent the default form submission to show the alert first
-
-        // Show SweetAlert success message
-        Swal.fire({
-            icon: 'success',
-            title: 'Success',
-            text: 'Order has been successfully placed!',
-            confirmButtonText: 'OK',
-            customClass: {
-                popup: 'custom-swal-popup',
-                title: 'custom-swal-title',
-                confirmButton: 'custom-swal-confirm'
-            }
-            
-        }).then((result) => {
-            if (result.isConfirmed) {
-                // After the alert, submit the form manually
-                this.submit();
-            }
-        });
-    });
-
 });
