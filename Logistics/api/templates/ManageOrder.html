@@ -61,27 +61,24 @@
                         <td>{{ order.OrderStatus }}</td>
                         <td>
                             <button 
-                                type="button" 
-                                class="btn btn-secondary view-order-btn" 
-                                data-bs-toggle="modal" 
-                                data-bs-target="#viewOrderModal" 
-                                data-order-id="{{ order.Order_ID }}"
-                                data-items="{{ order.Items.ItemName }}"
-                                data-quantity="{{ order.Quantity }}"
-                                data-supplier="{{ order.Supplier.SupplierName }}"
-                                data-status="{{ order.OrderStatus }}"
-                                data-base-price="{{ order.Items.PurchasePrice }}"> <!-- Add this line -->
-                                View Details
-                            </button>
+                            type="button" 
+                            class="btn btn-secondary view-order-btn" 
+                            data-bs-toggle="modal" 
+                            data-bs-target="#viewOrderModal" 
+                            data-order-id="{{ order.Order_ID }}"
+                            data-items="{{ order.Items.ItemName }}"
+                            data-quantity="{{ order.Quantity }}"
+                            data-supplier="{{ order.Supplier.SupplierName }}"
+                            data-status="{{ order.OrderStatus }}">
+                            View Details
+                        </button>
                             <button 
                                 type="button" 
                                 class="btn btn-primary change-status-btn" 
                                 data-bs-toggle="modal" 
                                 data-bs-target="#changeStatusModal" 
                                 data-order-id="{{ order.Order_ID }}" 
-                                data-current-status="{{ order.OrderStatus }}"
-                                data-item-id="{{ order.Items.Inventory_ID }}"
-                                data-quantity="{{ order.Quantity }}"> 
+                                data-current-status="{{ order.OrderStatus }}">
                                 Change Status
                             </button>
                         </td>
@@ -105,16 +102,14 @@
                 </div>
                 <div class="modal-body">
                     <input type="hidden" name="order_id" id="modal-order-id">
-                    <input type="hidden" name="item-id" id="item-id"> <!-- Ensure this is present -->
                     <p>Current Status: <strong id="modal-current-status"></strong></p>
                     <label for="new-status">Select New Status:</label>
                     <select name="new_status" id="new-status" class="form-select">
                         <option value="Placed">Placed</option>
-                        <option value="Shipped">Shipped</option>
+                        <option value=" Shipped">Shipped</option>
                         <option value="Completed">Completed</option>
                         <option value="Cancelled">Cancelled</option>
                     </select>
-                    <p>Order Quantity: <strong id="order-quantity"></strong></p> <!-- Display quantity here -->
                 </div>
                 <div class="modal-footer">
                     <button type="submit" class="btn btn-primary">Save Changes</button>
@@ -138,8 +133,10 @@
                 <p><strong>Quantity:</strong> <span id="view-order-quantity"></span></p>
                 <p><strong>Supplier:</strong> <span id="view-order-supplier"></span></p>
                 <p><strong>Status:</strong> <span id="view-order-status"></span></p>
-                <p><strong>Base Price:</strong> <span id="view-base-price"></span></p>
-                <p><strong>Total Cost:</strong> <span id="view-total-cost"></span></p>
+                <!-- <p><strong>Base Price:</strong> <span id="view-order-base-price"></span></p>
+                <p><strong>Total Cost:</strong> <span id="view-order-total-cost"></span></p>                 -->
+
+            </div>
             </div>
         </div>
     </div>
@@ -173,7 +170,9 @@
                         <label for="material" class="form-label">Material:</label>
                         <select id="material" name="material" class="form-select" required>
                             <option value="" disabled selected>Select Material</option>
-                            <!-- Options will be populated based on the selected supplier -->
+                            {% for material in materials %}
+                                <option value="{{ material.Inventory_ID }}" data-price="{{ material.PurchasePrice }}">{{ material.ItemName }}</option>
+                            {% endfor %}
                         </select>
                     </div>
 
