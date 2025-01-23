@@ -41,7 +41,10 @@ urlpatterns = [
     path('Maintenance/', views.Maintenance_view, name='Maintenance'),
     path('edit-maintenance-resource/', views.edit_maintenance_resource, name='edit_maintenance_resource'),
 
-    path('add-category/', views.AddCategory_view, name='AddCategory'),
+    
+    path('add-material-category/', views.AddMaterialCategory_view, name='add-material-category'),
+    path('add-product-category/', views.AddProductCategory_view, name='add-product-category'),
+    
     path('ManageWasteRecords/', views.ManageWaste_view, name='ManageWaste'),
     path('AddWasteRecord/', views.AddWaste_view, name='AddWaste'),  # New URL for adding waste
 

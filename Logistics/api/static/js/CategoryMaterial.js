@@ -3,15 +3,13 @@ document.getElementById('addCategoryForm').addEventListener('submit', function(e
 
     const categoryName = document.getElementById('categoryName').value;
 
-    fetch('/add-category/', {
+    fetch('/add-material-category/', { // Updated URL
         method: 'POST',
         headers: {
-            'Content-Type': 'application/x-www-form-urlencoded',
+            'Content-Type': 'application/json',
             'X-CSRFToken': getCookie('csrftoken'), // Function to get CSRF token
         },
-        body: new URLSearchParams({
-            'categoryName': categoryName,
-        }),
+        body: JSON.stringify({ categoryName: categoryName }),
     })
     .then(response => response.json())
     .then(data => {

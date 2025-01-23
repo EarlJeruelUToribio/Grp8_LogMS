@@ -1,5 +1,6 @@
 import json
 import requests
+from django.shortcuts import get_object_or_404
 from django.shortcuts import render, redirect
 from django.shortcuts import render, redirect, get_object_or_404  # Add get_object_or_404 here
 from django.views.decorators.http import require_http_methods
@@ -116,17 +117,28 @@ def order_counts_view(request):
         'cancelled': cancelled_count,
     })
 
+def increase_stock(item_id, amount):
+    material = get_object_or_404(Inventory, pk=item_id)
+    material.Current_Stock += amount
+    material.save()
+
 @require_http_methods(["POST"])
 def update_stock(request, item_id):
-    if request.method == 'POST':
+    try:
         data = json.loads(request.body)
         quantity = data.get('quantity')
 
-        try:
-            increase_stock(item_id, quantity)  # Call the function to increase stock
-            return JsonResponse({'success': True})
-        except Exception as e:
-            return JsonResponse({'success': False, 'error': str(e)}, status=400)
+        if quantity is None:
+            return JsonResponse({'success': False, 'error': 'Quantity is required.'}, status=400)
+
+        # Call the function to increase stock
+        increase_stock(item_id, quantity)  # Ensure this function is defined to handle stock increase
+        return JsonResponse({'success': True})
+
+    except Exception as e:
+        return JsonResponse({'success': False, 'error': str(e)}, status=400)
+    
+
 
 def get_materials_by_supplier(request):
     supplier_id = request.GET.get('supplier_id')
@@ -185,10 +197,7 @@ def AddMaterial_view(request):
     # If the request method is GET, redirect to ManageMaterial instead of rendering a non-existing template
     return redirect('ManageMaterial')
 
-def increase_stock(material_id, amount):
-    material = get_object_or_404(Inventory, pk=material_id)
-    material.Current_Stock += amount
-    material.save()
+
 
 def decrease_stock(material_id, amount):
     material = get_object_or_404(Inventory, pk=material_id)
@@ -251,19 +260,58 @@ def delete_material(request, material_id):
 def update_material(request, pk):
     return redirect('ManageMaterial')
 
+@require_http_methods(["POST"])
+def AddMaterialCategory_view(request):
+    try:
+        # Parse the JSON data from the request body
+        data = json.loads(request.body)
+        category_name = data.get('categoryName')
+
+        if not category_name:
+            return JsonResponse({'success': False, 'error': 'Category name is required.'}, status=400)
+
+        # Create and save the new material category
+        category = MaterialCategory(CategoryName=category_name)
+        category.save()
+
+        return JsonResponse({
+            'success': True,
+            'category_id': category.Category_ID,
+            'category_name': category.CategoryName
+        })
+
+    except json.JSONDecodeError:
+        return JsonResponse({'success': False, 'error': 'Invalid JSON data.'}, status=400)
+    except Exception as e:
+        print(f"Error occurred: {str(e)}")  # Log the error for debugging
+        return JsonResponse({'success': False, 'error': 'An error occurred while adding the category.'}, status=500)
+
 
 @require_http_methods(["POST"])
-def AddCategory_view(request):
-    if request.method == 'POST':
-        category_name = request.POST.get('categoryName')
-        if category_name:
-            category = MaterialCategory(CategoryName=category_name)
-            category.save()
-            return JsonResponse({'success': True, 'category_id': category.Category_ID, 'category_name': category.CategoryName})
-        return JsonResponse({'success': False, 'error': 'Category name is required.'})
-    return JsonResponse({'success': False, 'error': 'Invalid request method.'})
+def AddProductCategory_view(request):
+    try:
+        # Parse the JSON data from the request body
+        data = json.loads(request.body)
+        category_name = data.get('categoryName')
 
-from django.shortcuts import get_object_or_404
+        if not category_name:
+            return JsonResponse({'success': False, 'error': 'Category name is required.'}, status=400)
+
+        # Create and save the new product category
+        category = ProductCategory(CategoryName=category_name)
+        category.save()
+
+        return JsonResponse({
+            'success': True,
+            'category_id': category.Category_ID,
+            'category_name': category.CategoryName
+        })
+
+    except json.JSONDecodeError:
+        return JsonResponse({'success': False, 'error': 'Invalid JSON data.'}, status=400)
+    except Exception as e:
+        print(f"Error occurred: {str(e)}")  # Log the error for debugging
+        return JsonResponse({'success': False, 'error': 'An error occurred while adding the category.'}, status=500)
 
 def AddProduct_view(request):
     if request.method == 'POST':
@@ -349,19 +397,8 @@ def delete_product(request, product_id):
     product = get_object_or_404(Product, Product_ID=product_id)
     product.delete()
     return JsonResponse({'message': 'Product deleted successfully.'}, status=204)
-
-@require_http_methods(["POST"])
-def AddCategory_view(request):
-    if request.method == 'POST':
-        category_name = json.loads(request.body).get('categoryName')
-        if category_name:
-            category = ProductCategory(CategoryName=category_name)
-            category.save()
-            return JsonResponse({'success': True, 'category_id': category.Category_ID, 'category_name': category.CategoryName})
-        return JsonResponse({'success': False, 'error': 'Category name is required.'})
-    return JsonResponse({'success': False, 'error': 'Invalid request method.'})
-
-
+        
+    
 def KitchenDisplay_view(request):
     return render(request, 'KitchenDisplay.html')
     
