@@ -21,23 +21,65 @@ function addIngredientRow() {
 function getIngredientRowHTML() {
     // Create the options for the select element
     const options = materials.map(material => 
-        `<option value="${material.id}">${material.name}</option>`
+        `<option value="${material.id}" data-unit="${material.UnitOfMeasure}">${material.name}</option>`
     ).join('');
 
     return `
         <div class="col-md-5">
-            <select class="form-select ingredient-select" required>
+            <select class="form-select ingredient-select" required onchange="updateSmallerUnits(this)">
                 <option value="" disabled selected>Select Ingredient</option>
                 ${options} <!-- Insert the options here -->
             </select>
         </div>
-        <div class="col-md-5">
+        <div class="col-md-4">
             <input type="number" class="form-control" placeholder="Quantity" required>
         </div>
         <div class="col-md-2">
+            <select class="form-select unit-select" required>
+                <option value="" disabled selected>Select Unit</option>
+                <!-- Smaller units will be populated here -->
+            </select>
+        </div>
+        <div class="col-md-1">
             <button type="button" class="btn btn-danger remove-ingredient" onclick="removeIngredient(this)">Remove</button>
         </div>
     `;
+}
+
+// Function to update smaller units based on the selected ingredient
+function updateSmallerUnits(selectElement) {
+    const selectedOption = selectElement.options[selectElement.selectedIndex];
+    const selectedUnit = selectedOption.getAttribute('data-unit');
+    const smallerUnitSelect = selectElement.closest('.row').querySelector('.unit-select');
+
+    // Clear existing options
+    smallerUnitSelect.innerHTML = '';
+
+    // Define smaller units based on the selected unit
+    let smallerUnits = [];
+    switch (selectedUnit) {
+        case 'kg':
+            smallerUnits = ['grams', 'milligrams'];
+            break;
+        case 'l':
+            smallerUnits = ['liters', 'milliliters'];
+            break;
+        case 'm':
+            smallerUnits = ['centimeters', 'millimeters'];
+            break;
+        case 'pcs':
+        case 'box':
+            smallerUnits = []; // No smaller units
+            break;
+    }
+
+    // Populate smaller units
+    smallerUnits.forEach(unit => {
+        const option = document.createElement('option');
+        option.value = unit;
+        option.textContent = unit.charAt(0).toUpperCase() + unit.slice(1); // Capitalize first letter
+        smallerUnitSelect.appendChild(option);
+    });
 }
 
 // Function to remove an ingredient row
@@ -54,8 +96,9 @@ function handleAddProductSubmit(event) {
 
     // Append materials to FormData
     materials.forEach(material => {
+        const convertedQuantity = convertToStandardUnit(material.quantity, material.unit);
         formData.append(`material_name[]`, material.id);
-        formData.append(`material_quantity[]`, material.quantity);
+        formData.append(`material_quantity[]`, convertedQuantity);
     });
 
     // Send data to the server
@@ -69,48 +112,71 @@ function handleAddProductSubmit(event) {
             // Show SweetAlert for successful product addition
             Swal.fire({
                 icon: 'success',
-                title: 'Product Added',
-                text: 'The product has been successfully added!',
-                confirmButtonText: 'OK',
-                customClass: {
-                    popup: 'custom-swal-popup',
-                    title: 'custom-swal-title',
-                    confirmButton: 'custom-swal-confirm'
-                }
+                title: 'Product Added!',
+                text: 'The product has been successfully added.',
             }).then(() => {
-                // Close the modal
-                $('#addProductModal').modal('hide');
-                
-                // Reset the form
-                addProductForm.reset();
-
-                // Clear the ingredients section
-                const ingredientsSection = document.getElementById('ingredients-section');
-                ingredientsSection.innerHTML = ''; // Clear all ingredient rows
-
-                // Optionally, reload the current page to see the new product
-                location.reload(); // Reload the page to reflect the new product
+                // Optionally, refresh the product list or close the modal
+                location.reload(); // Reload the page to see the new product
+            });
+        } else {
+            // Handle errors
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: data.message || 'Something went wrong!',
             });
         }
     })
     .catch(error => {
-        // Handle the fetch error silently
-        console.error('Error adding product:', error);
+        console.error('Error:', error);
+        Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'An error occurred while adding the product.',
+        });
     });
 }
 
-// Function to collect ingredient data from the form
+// Function to collect ingredients data from the form
 function collectIngredientsData() {
-    const ingredientSelects = document.querySelectorAll('.ingredient-select');
-    const ingredientQuantities = document.querySelectorAll('input[placeholder="Quantity"]');
-
+    const ingredientRows = document.querySelectorAll('#ingredients-section .row');
     const materials = [];
-    for (let i = 0; i < ingredientSelects.length; i++) {
-        const ingredientId = ingredientSelects[i].value;
-        const quantity = ingredientQuantities[i].value;
-        if (ingredientId && quantity) {
-            materials.push({ id: ingredientId, quantity: quantity });
+
+    ingredientRows.forEach(row => {
+        const ingredientSelect = row.querySelector('.ingredient-select');
+        const quantityInput = row.querySelector('input[type="number"]');
+        const unitSelect = row.querySelector('.unit-select');
+
+        if (ingredientSelect.value && quantityInput.value && unitSelect.value) {
+            materials.push({
+                id: ingredientSelect.value,
+                quantity: quantityInput.value,
+                unit: unitSelect.value,
+            });
         }
-    }
+    });
+
     return materials;
+}
+
+// Function to convert quantity to a standard unit (if needed)
+function convertToStandardUnit(quantity, unit) {
+    // Implement conversion logic based on your requirements
+    // For example, if the base unit is kilograms, convert grams to kilograms
+    switch (unit) {
+        case 'grams':
+            return quantity / 1000; // Convert grams to kilograms
+        case 'milligrams':
+            return quantity / 1000000; // Convert milligrams to kilograms
+        case 'liters':
+            return quantity; // Assume liters is the base unit
+        case 'milliliters':
+            return quantity / 1000; // Convert milliliters to liters
+        case 'centimeters':
+            return quantity / 100; // Convert centimeters to meters
+        case 'millimeters':
+            return quantity / 1000; // Convert millimeters to meters
+        default:
+            return quantity; // No conversion needed
+    }
 }
