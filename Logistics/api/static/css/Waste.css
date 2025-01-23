@@ -8,7 +8,7 @@
     display: flex;
     flex-direction: column;
     margin-left: 300px;
-    margin-top: 50px;
+    margin-top: 100px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
@@ -22,7 +22,7 @@
 
 /* Sort Button */
 .sort-button {
-    background-color: #7b4e83;
+    background-color: #6f42c1;
     color: #fff;
     padding: 10px 20px;
     border: none;
@@ -33,7 +33,7 @@
 /* Supplier Section Heading */
 .waste-section h2 {
     font-size: 28px;
-    color: #7b4e83;
+    color: #6f42c1;
     font-weight: 700;
 }
 /* Search Bar */
@@ -56,7 +56,7 @@
 }
 
 .waste-table th {
-    background-color: #7b4e83;
+    background-color: #6f42c1;
     color: #fff;
 }
 
@@ -121,20 +121,22 @@
 
 /* Record Waste Button */
 .record-waste-btn {
-    background-color: #7b4e83;
+    background-color: #6f42c1; /* Purple background */
     color: white;
-    padding: 8px 16px;
-    margin: 0 10px; /* Space between buttons */
     border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
+    border-radius: 8px;
+    font-weight: 500;
+    padding: 0.5rem 1rem 0.5rem 0.5rem;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    width: 140px;
     
 }
 
 /* Hover effect for Record Waste Button */
 .record-waste-btn:hover {
-    background-color: #61396f; 
+    background-color: #5a3795; /* Darker purple on hover */
+    color: white; /* Keep text white */
+    cursor: pointer; /* Pointer cursor for better UX */ 
 }
 
 /* Adjust header layout for better alignment */
@@ -166,7 +168,7 @@
 
 /* Modal Header */
 .modal-header {
-    background-color: #743089; /* Purple background */
+    background-color: #6f42c1; /* Purple background */
     color: white;  /* White text */
     border-radius: 8px 8px 0 0;  /* Rounded top corners */
     padding: 15px;
@@ -211,7 +213,7 @@
 
 /* Modal Header */
 .modal-header {
-    background-color: #743089; /* Purple header */
+    background-color: #6f42c1; /* Purple header */
     color: white;  /* White text */
     border-radius: 8px 8px 0 0;  /* Rounded top corners */
     padding: 15px;
@@ -266,7 +268,7 @@
 /* Focus States for Inputs */
 .modal-body .form-control:focus,
 .modal-body .form-select:focus {
-    border-color: #743089; /* Purple border on focus */
+    border-color: #6f42c1; /* Purple border on focus */
     box-shadow: 0 0 5px rgba(123, 78, 131, 0.5); /* Subtle purple glow */
 }
 
@@ -283,7 +285,7 @@
 /* Button Styling in Footer */
 .modal-footer .btn {
     padding: 16px 24px;  /* Increase button padding */
-    background-color: #743089;  /* Purple background */
+    background-color: #6f42c1;  /* Purple background */
     color: white;
     border: none;
     border-radius: 6px;

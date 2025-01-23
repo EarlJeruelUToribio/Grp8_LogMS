@@ -55,7 +55,7 @@ body, html {
 
 .products-section h2 {
     font-size: 28px;
-    color: #743089; /* Purple heading */
+    color: #6f42c1; /* Purple heading */
     font-weight: 700;
 }
 
@@ -74,7 +74,7 @@ body, html {
 }
 
 .product-table th {
-    background-color: #743089;
+    background-color: #6f42c1;
     color: #fff;
     font-size: 14px;
 }
@@ -177,7 +177,7 @@ body, html {
 .form-container h2 {
     margin-bottom: 20px;
     font-size: 28px;
-    color: #743089; /* Purple heading */
+    color: #6f42c1; /* Purple heading */
     text-align: center;
     font-weight: bold; /* Make it bold for emphasis */
 }
@@ -219,7 +219,7 @@ body, html {
 /* BUTTON STYLES */
 .form-container button {
     padding: 16px 24px;
-    background-color: #743089; /* Purple button */
+    background-color: #6f42c1; /* Purple button */
     color: white; /* White text */
     border: none;
     border-radius: 6px;
@@ -251,7 +251,7 @@ body, html {
 
 /* Modal Header */
 .modal-header {
-    background-color: #743089; /* Purple background */
+    background-color: #6f42c1; /* Purple background */
     color: white; /* White text */
     border-radius: 8px 8px 0 0; /* Rounded top corners */
     padding: 15px;
@@ -298,7 +298,7 @@ body, html {
 
 .modal-body .form-control:focus,
 .modal-body .form-select:focus {
-    border-color: #743089; /* Purple border on focus */
+    border-color: #6f42c1; /* Purple border on focus */
     box-shadow: 0 0 5px rgba(123, 78, 131, 0.5); /* Subtle glow */
 }
 
@@ -327,7 +327,7 @@ body, html {
 }
 
 .perishable-option input[type="radio"]:checked {
-    background-color: #743089; /* Purple on selection */
+    background-color: #6f42c1; /* Purple on selection */
     border-color: #37063c; /* Darker border */
 }
 
@@ -355,13 +355,13 @@ body, html {
 }
 
 .modal-footer .btn-primary {
-    background-color: #743089; /* Purple background */
+    background-color: #6f42c1; /* Purple background */
     color: white;
     border: none;
 }
 
 .modal-footer .btn-primary:hover {
-    background-color: #743089; /* Darker purple */
+    background-color: #5a3795; /* Darker purple */
 }
 
 .modal-footer .btn-secondary {
@@ -382,14 +382,14 @@ body, html {
 .ingredient-select {
     width: 100%;
     padding: 10px;
-    border: 2px solid #743089; /* Purple border */
+    border: 2px solid #6f42c1; /* Purple border */
     border-radius: 5px;
     background-color: #f8f8f8; /* Light background */
     color: #333;
 }
 
 .ingredient-select:focus {
-    border-color: #37063c; /* Darker purple on focus */
+    border-color: #5a3795; /* Darker purple on focus */
     box-shadow: 0 0 5px rgba(123, 78, 131, 0.5);
 }
 
@@ -405,7 +405,7 @@ margin-left: 60px;
 }
 
 #ingredients-section .form-control:focus {
-    border-color: #743089; /* Purple border on focus */
+    border-color: #5a3795; /* Purple border on focus */
     box-shadow: 0 0 5px rgba(123, 78, 131, 0.5); /* Subtle glow */
 }
 
@@ -453,18 +453,18 @@ margin-left: 60px;
 .custom-swal-popup {
     background-color: white; /* Light purple background */
     border-radius: 8px; /* Rounded corners */
-    border: 1px solid #743089; /* Purple border */
+    border: 1px solid #6f42c1; /* Purple border */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
 }
 
 .custom-swal-title {
     font-size: 24px; /* Adjust title font size */
     font-weight: bold; /* Bold title */
-    color: #743089; /* Purple text color */
+    color: #6f42c1; /* Purple text color */
 }
 
 .custom-swal-confirm {
-    background-color: #743089; /* Purple background */
+    background-color: #6f42c1; /* Purple background */
     color: white; /* White text */
     border-radius: 6px; /* Rounded button */
     font-size: 16px; /* Adjust font size */
@@ -472,5 +472,5 @@ margin-left: 60px;
 }
 
 .custom-swal-confirm:hover {
-    background-color: #5e3b62; /* Darker purple on hover */
+    background-color: #5a3795; /* Darker purple on hover */
 }

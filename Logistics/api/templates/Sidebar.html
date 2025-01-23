@@ -1,146 +1,150 @@
-
-{% load static %}
-
+{% load static %} 
 {% block extra_css %}
-<link rel="stylesheet" href="{% static 'css/Admin-Sidebar.css' %}">
+<link rel="stylesheet" href="{% static 'css/Admin-Sidebar.css' %}" />
 
 {% endblock %}
 
-<nav>
-    <!-- Logo -->
-    <div class="logo-name">
-        <span class="logo_name">Logistics</span>
-    </div>
+<nav class="bar" >
+	<!-- Logo -->
+	<div class="logo-name">
+		<span class="logo_name">Logistics</span>`
+	</div>
 
-    <!-- Sidebar Menu -->
-    <div class="menu-items">
-        <ul class="nav-links">
-            <!-- Dashboard -->
-            <li>
-                <a href="{% url 'home' %}">
-                    <i class="uil uil-estate"></i>
-                    <span class="link-name">Dashboard</span>
-                </a>
-            </li>
+	<!-- Sidebar Menu -->
+	<div class="menu-items">
+		<ul class="nav-links">
+			<!-- Dashboard -->
+			<li>
+				<a href="{% url 'home' %}" >
+					<i class="uil uil-estate"></i>
+					<span class="link-name">Dashboard</span>
+				</a>
+			</li>
 
-            <!-- Order Management -->
-            <li class="dropdown">
-                <a href="#" class="dropdown-toggle">
-                    <i class="uil uil-clipboard-alt"></i>
-                    <span class="link-name">Order</span>
-                    <i class="uil uil-angle-down dropdown-arrow"></i>
-                </a>
-                <ul class="submenu">
-                    <li><a href="{% url 'ManageOrder' %}">Manage Order</a></li>
-                </ul>
-            </li>
+			<!-- Order Management -->
+			<li class="dropdown">
+				<a href="#" class="dropdown-toggle">
+					<i class="uil uil-clipboard-alt"></i>
+					<span class="link-name">Order</span>
+					<i class="uil uil-angle-down dropdown-arrow"></i>
+				</a>
+				<ul class="submenu">
+					<li><a href="{% url 'ManageOrder' %}">Manage Order</a></li>
+				</ul>
+			</li>
 
-            <!-- Material Management -->
-            <li class="dropdown">
-                <a href="#" class="dropdown-toggle">
-                    <i class="uil uil-box"></i>
-                    <span class="link-name">Material</span>
-                    <i class="uil uil-angle-down dropdown-arrow"></i>
-                </a>
-                <ul class="submenu">
-                    <li><a href="{% url 'ManageMaterial' %}">Manage Material</a></li>
-                    <li><a href="{% url 'ExpiryDates' %}">Expiry Dates</a></li>
-                    <li><a href="{% url 'ManageWaste' %}">Loss and Waste Tracking</a></li>
-                </ul>
-            </li>
+			<!-- Material Management -->
+			<li class="dropdown">
+				<a href="#" class="dropdown-toggle">
+					<i class="uil uil-box"></i>
+					<span class="link-name">Material</span>
+					<i class="uil uil-angle-down dropdown-arrow"></i>
+				</a>
+				<ul class="submenu">
+					<li><a href="{% url 'ManageMaterial' %}">Manage Material</a></li>
+					<li><a href="{% url 'ExpiryDates' %}">Expiry Dates</a></li>
+					<li><a href="{% url 'ManageWaste' %}">Loss and Waste Tracking</a></li>
+				</ul>
+			</li>
 
-            <!-- Product Management -->
-            <li class="dropdown">
-                <a href="#" class="dropdown-toggle">
-                    <i class="uil uil-box"></i>
-                    <span class="link-name">Product</span>
-                    <i class="uil uil-angle-down dropdown-arrow"></i>
-                </a>
-                <ul class="submenu">
-                    <li><a href="{% url 'ManageProducts' %}">Manage Products</a></li>
-                </ul>
-            </li>
+			<!-- Product Management -->
+			<li class="dropdown">
+				<a href="#" class="dropdown-toggle">
+					<i class="uil uil-box"></i>
+					<span class="link-name">Product</span>
+					<i class="uil uil-angle-down dropdown-arrow"></i>
+				</a>
+				<ul class="submenu">
+					<li><a href="{% url 'ManageProducts' %}">Manage Products</a></li>
+				</ul>
+			</li>
 
-            <!-- Supplier Management -->
-            <li class="dropdown">
-                <a href="#" class="dropdown-toggle">
-                    <i class="uil uil-truck"></i>
-                    <span class="link-name">Supplier</span>
-                    <i class="uil uil-angle-down dropdown-arrow"></i>
-                </a>
-                <ul class="submenu">
-                    <li><a href="{% url 'ManageSupplier' %}">Manage Supplier</a></li>
-                </ul>
-            </li>
+			<!-- Supplier Management -->
+			<li class="dropdown">
+				<a href="#" class="dropdown-toggle">
+					<i class="uil uil-truck"></i>
+					<span class="link-name">Supplier</span>
+					<i class="uil uil-angle-down dropdown-arrow"></i>
+				</a>
+				<ul class="submenu">
+					<li><a href="{% url 'ManageSupplier' %}">Manage Supplier</a></li>
+				</ul>
+			</li>
 
-            <!-- Resources Management -->
-            <li class="dropdown">
-                <a href="#" class="dropdown-toggle">
-                    <i class="uil uil-box"></i>
-                    <span class="link-name">Resources</span>
-                    <i class="uil uil-angle-down dropdown-arrow"></i>
-                </a>
-                <ul class="submenu">
-                    <li><a href="{% url 'ManageResources' %}">Manage Resources</a></li>
+			<!-- Resources Management -->
+			<li class="dropdown">
+				<a href="#" class="dropdown-toggle">
+					<i class="uil uil-box"></i>
+					<span class="link-name">Resources</span>
+					<i class="uil uil-angle-down dropdown-arrow"></i>
+				</a>
+				<ul class="submenu">
+					<li><a href="{% url 'ManageResources' %}">Manage Resources</a></li>
 
-                    <!-- <li><a href="{% url 'KitchenResources' %}">Kitchen Resources</a></li> -->
+					<!-- <li><a href="{% url 'KitchenResources' %}">Kitchen Resources</a></li> -->
 
-                    <li><a href="{% url 'Maintenance' %}">Resources Maintenance</a></li>
-                </ul>
-            </li>
-        </ul>
+					<li><a href="{% url 'Maintenance' %}">Resources Maintenance</a></li>
+				</ul>
+			</li>
+		</ul>
 
-        <!-- Logout and Dark Mode -->
-        <ul class="logout-mode">
-            <!-- Logout -->
-            <li>
-                <a href="#">
-                    <i class="uil uil-signout"></i>
-                    <span class="link-name">Logout</span>
-                </a>
-            </li>
+		<!-- Logout and Dark Mode -->
+		<ul class="logout-mode">
+			<!-- Logout -->
+			<li>
+				<a href="#">
+					<i class="uil uil-signout"></i>
+					<span class="link-name">Logout</span>
+				</a>
+			</li>
 
-            <!-- Dark Mode -->
-            <li class="mode">
-                <a href="#">
-                    <i class="uil uil-moon"></i>
-                    <span class="link-name">Dark Mode</span>
-                </a>
-                <div class="mode-toggle">
-                    <span class="switch"></span>
-                </div>
-            </li>
-        </ul>
-    </div>
+			<!-- Dark Mode -->
+			<li class="mode">
+				<a href="#">
+					<i class="uil uil-moon"></i>
+					<span class="link-name">Dark Mode</span>
+				</a>
+				<div class="mode-toggle">
+					<span class="switch"></span>
+				</div>
+			</li>
+		</ul>
+	</div>
 </nav>
 
-
+<!--begin: Main Dashboard Section-->
 <section class="dashboard">
-    <!-- Top Section -->
-    <div class="top">
-        <i class="uil uil-bars sidebar-toggle"></i>
-        
-        <!-- Breadcrumbs -->
-        <div class="breadcrumbs">
-            <a href="#" class="breadcrumb-link">Dashboard</a>
-            <span class="breadcrumb-divider">/</span>
-            <a href="#" class="breadcrumb-link current">Current Page</a>
-        </div>
-        
-        <!-- Profile Section -->
-        <div class="profile-section">
-            <img src="{% static 'images/prof.png' %}" alt="Profile" class="profile-img">
-            <div class="profile-dropdown">
-                <span class="profile-name">John Doe</span>
-                <ul>
-                    <li><a href="#">View Profile</a></li>
-                    <li><a href="#">Account Settings</a></li>
-                    <li><a href="#">Activity Logs</a></li>
-                </ul>
-            </div>
-        </div>
-    </div>
+	<!--begin: Top Section-->
+	<div class="top"  >
+		<i class="uil uil-bars sidebar-toggle"></i>
+		<!--begin: Profile and Notification Section-->
+		<div class="top-right-section d-flex align-items-center" style="position: relative">
+			<!-- Notification Icon -->
+			<div class="notification-section me-3 position-relative">
+				<i class="uil uil-bell notification-icon" style="font-size: 1.5rem; cursor: pointer" data-bs-toggle="dropdown"></i>
+				<span class="notification-badge badge bg-danger" style="position: absolute; top: -5px; right: -10px; font-size: 0.75rem">5</span>
+			</div>
+
+			<!-- Profile Section -->
+			<div class="profile-section dropdown">
+				<img
+					src="{% static 'images/prof.png' %}"
+					alt="Profile"
+					class="profile-img rounded-circle"
+					style="width: 40px; height: 40px; cursor: pointer"
+					data-bs-toggle="dropdown" />
+    				<!-- <ul class="dropdown-menu dropdown-menu-end">
+    					<li><a href="#" class="dropdown-item">View Profile</a></li>
+    					<li><a href="#" class="dropdown-item">Account Settings</a></li>
+    					<li><a href="#" class="dropdown-item">Activity Logs</a></li> -->
+				</ul>
+			</div>
+		</div>
+		<!--end: Profile and Notification Section-->
+		<!--end: Main Dashboard Section-->
+	</div>
 </section>
+
 
 {% block extra_js %}
 <script src="{% static 'js/AdminSidebar.js' %}"></script>

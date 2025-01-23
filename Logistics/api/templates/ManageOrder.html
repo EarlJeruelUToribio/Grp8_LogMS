@@ -30,18 +30,36 @@
                 <div class="order-status-box">Order Completed: {{ completed }}</div>
                 <div class="order-status-box">Order Cancelled: {{ cancelled }}</div>
             {% endwith %}
+            
         </div>
-
+        
         <section class="orders-section">
             <h2 class="text-center mb-4">ORDERS MANAGEMENT</h2>
             <div class="orders-header">
-                <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#placeOrderModal">
-                    Place Order
-                </button>
+                <button
+                class="btn btn-primary"
+                style="
+                    background-color: #6f42c1;
+                    color: white;
+                    border: none;
+                    border-radius: 8px;
+                    font-weight: 500;
+                    padding: 0.5rem 1rem 0.5rem 0.5rem;
+                    transition: background-color 0.3s ease, color 0.3s ease;
+                "
+                onmouseover="this.style.backgroundColor='#5a3795';"
+                onmouseout="this.style.backgroundColor='#6f42c1';"
+                data-bs-toggle="modal"
+                data-bs-target="#placeOrderModal">
+                <!-- style="border-radius: 8px; font-weight: 600; font-size: 0.875rem; padding: 0.5rem 1rem; -->
+                <i class="bi bi-plus"></i>
+                Place Order
+            </button>
                 <input type="text" id="search-bar" placeholder="Search by Order ID" class="search-bar">
             </div>
-            <table class="table table-striped orders-table">
-                <thead>
+            <div class="table-responsive">
+            <table class="table table-bordered table-hover text-center">
+                <thead class="table-light">
                     <tr>
                         <th>Transaction No.</th>
                         <th>Item</th>
@@ -70,16 +88,18 @@
                             data-quantity="{{ order.Quantity }}"
                             data-supplier="{{ order.Supplier.SupplierName }}"
                             data-status="{{ order.OrderStatus }}">
-                            View Details
+                            <i class="fas fa-eye"></i> 
+                            
                         </button>
                             <button 
                                 type="button" 
-                                class="btn btn-primary change-status-btn" 
+                                class="btn btn-warning change-status-btn" 
                                 data-bs-toggle="modal" 
                                 data-bs-target="#changeStatusModal" 
                                 data-order-id="{{ order.Order_ID }}" 
                                 data-current-status="{{ order.OrderStatus }}">
-                                Change Status
+                                <i class="fas fa-edit"></i> 
+                                
                             </button>
                         </td>
                     </tr>

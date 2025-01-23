@@ -14,9 +14,8 @@ body, html {
     padding: 20px;
     border-radius: 8px; /* Rounded corners */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
-    max-width: 1100px;
+    width: 1100px;
     margin: 20px auto;
-    width: 100%;
     margin-bottom: 200px;
     margin-left: 200px;
 }
@@ -24,7 +23,7 @@ body, html {
 /* Title Styling */
 .resources-section h2 {
     font-size: 28px;
-    color: #743089; /* Purple text for the header */
+    color: #6f42c1; /* Purple text for the header */
     font-weight: 700;
     text-align: center;
 }
@@ -40,7 +39,7 @@ body, html {
 
 /* Table Styles */
 .resources-table {
-    width: 1050px; 
+    width: 1200px; 
     border-collapse: collapse;
     margin-top: 20px;
 }
@@ -53,7 +52,7 @@ body, html {
 }
 
 .resources-table th {
-    background-color: #743089; /* Purple header */
+    background-color: #6f42c1; /* Purple header */
     color: #fff; /* White text */
 }
 
@@ -82,9 +81,8 @@ body, html {
 }
 
 
-/* Edit Button Styles */
-.btn-primary {
-    background-color: #eeb32f; /* Light blue background */
+.edit-button {
+    background-color: #f0ad4e; /* Light blue background */
     color: #fff; /* White text */
     border: none;
     padding: 8px 16px;
@@ -92,10 +90,10 @@ body, html {
     border-radius: 4px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     transition: background-color 0.3s ease, transform 0.2s ease;
-    width: 100px;
+    
 }
 
-.btn-primary:hover {
-    background-color: #D1A35A; /* Darker blue on hover */
+.edit-button:hover {
+    background-color: #e09c40; 
 }
 

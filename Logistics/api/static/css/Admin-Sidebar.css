@@ -1,6 +1,7 @@
 /* ===== Google Font Import - Poppins ===== */
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600&display=swap');
-*{
+
+* {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -8,43 +9,62 @@
 }
 
 .bootstrap-container {
-    all: unset; /* Resets all inherited styles */
+    all: unset;
+    /* Resets all inherited styles */
 }
 
-:root{
+:root {
     /* ===== Colors ===== */
-    --primary-color: #8A2BE2;   
+    --primary-color: #6f42c1;
+    /* primary text color on component of dropdown when you hover*/
     --panel-color: #FFF;
-    --text-color: #8A2BE2;
-    --black-light-color: #707070;
+    /*overall body color of the sidebar*/
+    --text-color: #6f42c1;
+    /* finance text color*/
+    --black-light-color: #313131;
+    /* text Color components on sidebar*/
     --border-color: #e6e5e5;
+    /* border color of sidebar*/
     --toggle-color: #DDD;
+    /* dropdown text color */
     --box1-color: #4DA3FF;
     --box2-color: #FFE6AC;
     --box3-color: #E7D1FC;
     --title-icon-color: #fff;
-    
+
     /* ====== Transition ====== */
-    --tran-05: all 0.5s ease;
-    --tran-03: all 0.3s ease;
+    --tran-05: all 0.2s;
+    /*pag ni close yung humberger eto yung transition nya*/
     --tran-03: all 0.2s ease;
+    /**/
+    --tran-03: all 0.2s ease;
+    /**/
 }
 
-body{
+body {
     min-height: 100vh;
 }
-body.dark{
-    --primary-color: #3A3B3C;
+
+/* Dark Mode  */
+body.dark {
+    --primary-color: #6f42c1;
+    /* primary text color on component of dropdown when you hover*/
     --panel-color: #242526;
-    --text-color: #8A2BE2;
-    --black-light-color: #CCC;
+    /*overall color of darkmode*/
+    --text-color: #6f42c1;
+    /* dropdown text color */
+    --black-light-color: #f3f3f3;
+    /* dropdown  overall text color */
     --border-color: #4D4C4C;
+    /* border color*/
     --toggle-color: #FFF;
-    --box1-color: #3A3B3C;
+    /* toggle color */
+    --box1-color: #629dd8;
     --box2-color: #3A3B3C;
     --box3-color: #3A3B3C;
     --title-icon-color: #CCC;
 }
+
 /* === Custom Scroll Bar CSS === */
 ::-webkit-scrollbar {
     width: 8px;
@@ -64,7 +84,8 @@ body.dark .activity-data::-webkit-scrollbar-thumb:hover{
 }
 
 .dropdown .submenu {
-    display: none; /* Initially hidden */
+    display: none;
+    /* Initially hidden */
     list-style: none;
     margin: 0;
     justify-content: center;
@@ -87,22 +108,31 @@ body.dark .activity-data::-webkit-scrollbar-thumb:hover{
 .dropdown .dropdown-toggle {
     display: flex;
     align-items: center;
-   
+
 }
 
-.dropdown .dropdown-toggle i.dropdown-arrow {
-    font-size: 18px;
+
+/* Default state */
+.dropdown-arrow {
+    display: inline-block;
     transition: transform 0.3s ease;
+    transform: rotate(90deg);
+    /* Default rotation */
 }
 
+/* Rotated state when dropdown is active */
 .dropdown.active .dropdown-arrow {
-    transform: rotate(90deg); /* Rotate the arrow when active */
+    transform: rotate(0deg);
+    /* Rotate down when active */
 }
+
 
 .dropdown-toggle::after {
-    display: none; /* Hides the caret */
-    content: none; /* Ensures no additional content is rendered */
+    content: none !important;
+    display: none !important;
 }
+
+
 
 
 /* Existing Sidebar CSS */
@@ -117,12 +147,22 @@ nav {
     background-color: var(--panel-color);
     border-right: 1px solid var(--border-color);
     transition: var(--tran-05);
-    overflow-y: auto; /* Add scrollbar */
-    overflow-x: hidden; /* Hide horizontal overflow */
+    overflow-y: auto;
+    /* Add scrollbar */
+    overflow-x: hidden;
+    /* Hide horizontal overflow */
     scrollbar-width: thin;
+    z-index: 1050; /* Higher than other elements */
     scrollbar-color: var(--primary-color) var(--panel-color);
 }
-
+/* shadow of navigation bar */
+nav.bar{
+    box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.1);
+}
+/* shadow of top section navigation bar */
+div.top{
+    box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.1);
+}
 nav::-webkit-scrollbar {
     width: 8px;
 }
@@ -140,62 +180,69 @@ nav::-webkit-scrollbar-thumb:hover {
     background-color: #6a1ab9;
 }
 
-.menu-items {
-    padding-bottom: 20px; /* Adds space for scrollbar visibility */
-}
 
-nav.close{
+
+nav.close {
     width: 90px;
     display: none;
 }
-nav .logo-name{
+
+nav .logo-name {
     display: flex;
     align-items: center;
     justify-content: center;
 }
-nav .logo-image{
+
+nav .logo-image {
     display: flex;
     justify-content: center;
     min-width: 45px;
 }
-nav .logo-image img{
+
+nav .logo-image img {
     width: 40px;
     object-fit: cover;
     border-radius: 50%;
 }
 
-nav .logo-name .logo_name{
+nav .logo-name .logo_name {
     font-size: 22px;
     font-weight: 600;
     color: var(--text-color);
     margin-left: 14px;
     transition: var(--tran-05);
 }
-nav.close .logo_name{
+
+nav.close .logo_name {
     opacity: 0;
     pointer-events: none;
 }
-nav .menu-items{
-    
+
+nav .menu-items {
+
     margin-top: 10px;
     height: calc(100% - 90px);
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    
+
 }
-.menu-items li{
+
+.menu-items li {
     list-style: none;
-    
+
 }
-.menu-items li a{
+
+.menu-items li a {
     display: flex;
     align-items: center;
     height: 50px;
     text-decoration: none;
     position: relative;
 }
-.nav-links li a:hover:before{
+
+
+.nav-links li a:hover:before {
     content: "";
     position: absolute;
     left: -7px;
@@ -204,10 +251,12 @@ nav .menu-items{
     border-radius: 50%;
     background-color: var(--primary-color);
 }
-body.dark li a:hover:before{
+
+body.dark li a:hover:before {
     background-color: var(--text-color);
 }
-.menu-items li a i{
+
+.menu-items li a i {
     font-size: 24px;
     min-width: 45px;
     height: 100%;
@@ -216,33 +265,40 @@ body.dark li a:hover:before{
     justify-content: center;
     color: var(--black-light-color);
 }
-.menu-items li a .link-name{
+
+.menu-items li a .link-name {
     font-size: 16px;
     font-weight: 400;
-    color: var(--black-light-color);    
+    color: var(--black-light-color);
     transition: var(--tran-05);
 }
-nav.close li a .link-name{
+
+nav.close li a .link-name {
     opacity: 0;
     pointer-events: none;
 }
+
 .nav-links li a:hover i,
-.nav-links li a:hover .link-name{
+.nav-links li a:hover .link-name {
     color: var(--primary-color);
 }
+
 body.dark .nav-links li a:hover i,
-body.dark .nav-links li a:hover .link-name{
+body.dark .nav-links li a:hover .link-name {
     color: var(--text-color);
 }
-.menu-items .logout-mode{
+
+.menu-items .logout-mode {
     border-top: 1px solid var(--border-color);
 }
-.menu-items .mode{
+
+.menu-items .mode {
     display: flex;
     align-items: center;
     white-space: nowrap;
 }
-.menu-items .mode-toggle{
+
+.menu-items .mode-toggle {
     position: absolute;
     right: 14px;
     height: 50px;
@@ -252,7 +308,8 @@ body.dark .nav-links li a:hover .link-name{
     justify-content: center;
     cursor: pointer;
 }
-.mode-toggle .switch{
+
+.mode-toggle .switch {
     position: relative;
     display: inline-block;
     height: 22px;
@@ -260,7 +317,8 @@ body.dark .nav-links li a:hover .link-name{
     border-radius: 25px;
     background-color: var(--toggle-color);
 }
-.switch:before{
+
+.switch:before {
     content: "";
     position: absolute;
     left: 5px;
@@ -272,47 +330,53 @@ body.dark .nav-links li a:hover .link-name{
     border-radius: 50%;
     transition: var(--tran-03);
 }
-body.dark .switch:before{
+
+body.dark .switch:before {
     left: 20px;
 }
 
 
-.breadcrumbs {
+.top img {
+    margin-left: auto;
+    /* Push the profile image to the far right */
+    width: 40px;
+    border-radius: 50%;
+}
+
+/* Top Section Styling */
+.top-right-section {
     display: flex;
     align-items: center;
-    gap: 5px; /* Space between breadcrumb items */
-    margin-left: 0; /* Align breadcrumbs close to the toggle */
-    font-size: 14px;
-    color: var(--black-light-color);
-    white-space: nowrap; /* Prevent wrapping */
+    margin-left: auto; /* Push to the right */
+    gap: 20px; /* Adjust spacing between notification and profile */
 }
 
-.breadcrumb-link {
-    text-decoration: none;
-    color: var(--primary-color);
-    font-weight: 500;
-    transition: color var(--tran-03);
+/* Notification Section */
+.notification-section {
+    position: relative;
 }
 
-.breadcrumb-link:hover {
-    text-decoration: underline;
-    color: var(--text-color);
+.notification-icon {
+    font-size: 28px; /* Make it bigger */
+    color: var(--black-light-color); /* Default color */
+    cursor: pointer;
+    transition: color 0.3s ease;
 }
 
-.breadcrumb-divider {
-    color: var(--black-light-color);
-    font-size: 14px;
+.notification-icon:hover {
+    color: var(--primary-color); /* Highlight color */
 }
 
-.breadcrumb-link.current {
-    color: var(--black-light-color);
-    font-weight: 600; /* Emphasize current page visually */
-    cursor: default;
-}
-
-.top img {
-    margin-left: auto; /* Push the profile image to the far right */
-    width: 40px;
+/* Notification Badge */
+.notification-badge {
+    position: absolute;
+    top: -5px;
+    right: -10px;
+    background-color: var(--primary-color);
+    color: white;
+    font-size: 14px; /* Bigger badge */
+    font-weight: bold;
+    padding: 3px 7px;
     border-radius: 50%;
 }
 
@@ -339,9 +403,11 @@ body.dark .switch:before{
 
 /* Dropdown Menu */
 .profile-dropdown {
-    display: none; /* Initially hidden */
+    display: none;
+    /* Initially hidden */
     position: absolute;
-    top: calc(100% + 10px); /* Positioned below the profile image */
+    top: calc(100% + 10px);
+    /* Positioned below the profile image */
     right: 0;
     background-color: var(--panel-color);
     border: 1px solid var(--border-color);
@@ -384,9 +450,29 @@ body.dark .switch:before{
     color: var(--primary-color);
     border-radius: 4px;
 }
+/* Active dropdown styling */
+.dropdown.active > .dropdown-toggle {
+    color: var(--primary-color); /* Make the dropdown link purple */
+}
+
+/* Active submenu link styling */
+.submenu li a.active {
+    color: var(--primary-color); /* Make the active link purple */
+}
+.nav-links a.active {
+    color: #6f42c1;
+}
+
+/* Primary menu active link */
+.menu-items .nav-links .active {
+    color: var(--primary-color);
+
+}
 
 /* Main Content Sections */
-.view-profile, .account-settings, .logs {
+.view-profile,
+.account-settings,
+.logs {
     padding: 20px;
     background-color: var(--panel-color);
     border: 1px solid var(--border-color);
@@ -439,7 +525,8 @@ h2 {
     color: var(--text-color);
 }
 
-.account-settings input, .account-settings select {
+.account-settings input,
+.account-settings select {
     width: 100%;
     padding: 8px;
     font-size: 14px;
@@ -468,7 +555,8 @@ h2 {
     margin-top: 15px;
 }
 
-.logs th, .logs td {
+.logs th,
+.logs td {
     text-align: left;
     padding: 10px;
     border: 1px solid var(--border-color);
@@ -483,12 +571,12 @@ h2 {
     background-color: var(--box3-color);
 }
 
-nav.close ~ .dashboard{
+nav.close~.dashboard {
     left: 73px;
     width: calc(100% - 73px);
 }
 
-.dashboard .top{
+.dashboard .top {
     position: fixed;
     top: 0;
     left: 260px;
@@ -502,11 +590,12 @@ nav.close ~ .dashboard{
     z-index: 10;
 }
 
-nav.close ~ .dashboard .top{
+nav.close~.dashboard .top {
     left: 0px;
     width: calc(100% - 0px);
 }
-.dashboard .top .sidebar-toggle{
+
+.dashboard .top .sidebar-toggle {
     font-size: 26px;
     color: var(--text-color);
     cursor: pointer;
@@ -515,7 +604,7 @@ nav.close ~ .dashboard .top{
 
 
 
-@media (max-width: 1000px) {
+/* @media (max-width: 1000px) {
     nav{
         width: 73px;
     }
@@ -609,4 +698,15 @@ nav.close ~ .dashboard .top{
         left: 0;
         width: 100%;
     }
+} */
+
+/* Main content styles in sidebar always remember*/
+.main-content {
+    margin-left: 0;
+    /* Default margin to make space for the sidebar */
+    margin-top: 20px;
+    padding: 20px;
+    /* transition: margin-left 0.3s ease; salarin pag nagrerefresh nagsisimula sa left side */
+    position: relative;
+    /* Ensure main content appears correctly */
 }

@@ -1,6 +1,6 @@
 /* Manage Button */
 .manage-btn {
-    background-color: #28a745; /* Green background */
+    background-color: #e09c40; /* Green background */
     color: #fff; /* White text */
     padding: 10px 15px; /* Padding for the button */
     border: none; /* No border */
@@ -16,27 +16,18 @@
     margin-bottom: 20px; /* Space below the header */
 }
 
-/* Sort Button */
-.sort-button {
-    background-color: #7b4e83; /* Purple background */
-    color: #fff; /* White text */
-    padding: 10px 20px; /* Padding for the button */
-    border: none; /* No border */
-    border-radius: 4px; /* Rounded corners */
-    cursor: pointer; /* Pointer on hover */
-}
 
 /* Search Bar */
 .search-bar {
-    padding: 10px; /* Padding inside the search bar */
-    border-radius: 4px; /* Rounded corners */
-    border: 2px solid #000000; /* Black border */
+    padding: 10px;
+    border-radius: 4px;
+    border: 2px solid #000000;
 }
 
 /* Products Section Header */
 .products-section h2 {
     font-size: 28px; /* Font size for the heading */
-    color: #7b4e83; /* Purple heading */
+    color: #6f42c1; /* Purple heading */
     font-weight: 700; /* Bold font weight */
 }
 
@@ -53,7 +44,7 @@
 }
 
 .product-table th {
-    background-color: #7b4e83; /* Purple header background */
+    background-color: #6f42c1; /* Purple header background */
     color: #fff; /* White text for headers */
 }
 
@@ -72,11 +63,12 @@
     flex-direction: column; /* Stack items vertically */
     margin-left: 250px; /* Adjust left margin */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Shadow for depth */
+    margin-top: 80px;
 }
 
 /* Extend Button */
 .extend-btn { /* Changed to lowercase */
-    background-color: #28a745; /* Green background */
+    background-color: #5cb85c; /* Green background */
     color: #fff; /* White text */
     padding: 10px 15px; /* Padding for the button */
     border: none; /* No border */

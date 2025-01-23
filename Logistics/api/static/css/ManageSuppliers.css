@@ -7,14 +7,14 @@
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     border: 1px solid #ffffff;
-    margin-left: 350px;
-    margin-top: 50px;
+    margin-left: 370px;
+    margin-top: 100px;
 }
 
 .table-container h2 {
     margin-bottom: 20px;
     font-size: 28px;
-    color: #743089; /* Purple heading */
+    color: #6f42c1; /* Purple heading */
     font-weight: 700;
 }
 
@@ -22,28 +22,21 @@
 table {
     width: 100%;
     border-collapse: collapse;
-    background-color: #743089; /* Purple table background */
+    background-color: #6f42c1; /* Purple table background */
     color: white; /* White text for contrast */
     text-align: center; /* Center content in the table */
 
 }
 
 /* Targeting table headers specifically */
-table th {
-    background-color: #743089 !important; /* Purple background */
-    color: white !important; /* White text */
-    padding: 15px;
-    text-align: center;
-    font-weight: bold; /* Make it bold */
-}
 
 /* Alternating Row Colors */
 table tr:nth-child(even) {
-    background-color: #743089; /* Lighter purple for alternating rows */
+    background-color: #6f42c1; /* Lighter purple for alternating rows */
 }
 
 #edit-button {
-    background-color: #743089;
+    background-color: #6f42c1;
     border: none;
     color: white;
     border-radius: 6px;
@@ -51,7 +44,7 @@ table tr:nth-child(even) {
 }
 
 #edit-button:hover {
-    background-color: #5e3b62;
+    background-color: #5a3795;
 }
 
 /* Manual Adjust Form */
@@ -68,19 +61,19 @@ table tr:nth-child(even) {
 .form-container h2 {
     margin-bottom: 20px;
     font-size: 28px;
-    color: #743089;
+    color: #6f42c1;
     text-align: center;
 }
 
 #manual-adjust-form button {
-    background-color: #743089;
+    background-color: #6f42c1;
     border: none;
     color: white;
     border-radius: 6px;
 }
 
 #manual-adjust-form button:hover {
-    background-color: #5e3b62;
+    background-color: #5a3795;
 }
 
 .hidden {
@@ -88,24 +81,24 @@ table tr:nth-child(even) {
 }
 
 #add-supplier-button {
-    background-color: #008425; /* Purple background */
-    color: white; /* White text */
-    font-weight: bold;
+    background-color: #6f42c1; /* Purple background */
+    color: white;
     border: none;
-    border-radius: 6px; /* Rounded edges */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
-    height: 50px;
-    width: 150px;
+    border-radius: 8px;
+    font-weight: 500;
+    padding: 0.5rem 1rem 0.5rem 0.5rem;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    width: 140px;
 }
 
 #add-supplier-button:hover {
-    background-color: #00691E; /* Darker purple on hover */
+    background-color: #5a3795; /* Darker purple on hover */
     color: white; /* Keep text white */
     cursor: pointer; /* Pointer cursor for better UX */
 }
 
 .edit-button {
-    background-color: #eeb32f; /* Light blue background */
+    background-color: #f0ad4e; /* Light blue background */
     color: #fff; /* White text */
     border: none;
     padding: 8px 16px;
@@ -113,14 +106,12 @@ table tr:nth-child(even) {
     border-radius: 4px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     transition: background-color 0.3s ease, transform 0.2s ease;
-    width: 100px;
+    
 }
 
 .edit-button:hover {
-    background-color: #D1A35A; /* Darker yellow on hover */
-    transform: scale(1.05); /* Slightly enlarge button on hover */
+    background-color: #e09c40; /* Darker blue on hover */
 }
-
 
 
 /* Adjust Heading and Button Layout */
@@ -145,7 +136,7 @@ table tr:nth-child(even) {
 
 /* Modal Header */
 .modal-header {
-    background-color: #743089; /* Purple background */
+    background-color: #6f42c1; /* Purple background */
     color: white;
     padding: 20px;
     text-align: center;
@@ -194,7 +185,7 @@ table tr:nth-child(even) {
 /* Focus States for Inputs */
 .modal-body .form-control:focus,
 .modal-body .form-select:focus {
-    border-color: #743089; /* Purple border when focused */
+    border-color: #6f42c1; /* Purple border when focused */
     box-shadow: 0 0 5px rgba(123, 78, 131, 0.5); /* Subtle purple glow */
 }
 
@@ -230,7 +221,7 @@ table tr:nth-child(even) {
 /* Add Material Button */
 .add-material-button {
     padding: 12px 20px;
-    background-color: #743089; /* Purple button */
+    background-color: #6f42c1; /* Purple button */
     color: white;
     border: none;
     border-radius: 6px;
@@ -241,7 +232,7 @@ table tr:nth-child(even) {
 }
 
 .add-material-button:hover {
-    background-color: #37063c; /* Darker purple on hover */
+    background-color: #5a3795; /* Darker purple on hover */
 }
 
 /* Dynamically Added Materials List */
@@ -255,7 +246,7 @@ table tr:nth-child(even) {
 /* Save Button */
 .modal-body .btn-primary {
     padding: 16px 24px;
-    background-color: #743089;
+    background-color: #6f42c1;
     color: white;
     border: none;
     border-radius: 6px;
@@ -265,5 +256,5 @@ table tr:nth-child(even) {
 }
 
 .modal-body .btn-primary:hover {
-    background-color: #37063c; /* Darker purple on hover */
+    background-color: #5a3795; /* Darker purple on hover */
 }

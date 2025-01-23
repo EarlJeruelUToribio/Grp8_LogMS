@@ -1,6 +1,6 @@
 /* Apply full-page layout to center everything */
 .container {
-    width: 1200px;    margin: 0 auto; /* Center the container horizontally */
+    width: 1100px;    margin: 0 auto; /* Center the container horizontally */
     padding: 20px; /* Padding inside the container */
     background-color: #fff; /* Background color */
     border-radius: 8px; /* Rounded corners */
@@ -27,7 +27,7 @@ body, html {
 /* Section Header */
 .resources-section h2 {
     font-size: 28px;
-    color: #743089; /* Purple heading */
+    color: #6f42c1; /* Purple heading */
     font-weight: 700;
     text-align: center;
 }
@@ -43,24 +43,20 @@ body, html {
 
 /* Add Resource Button */
 #add-resource-button {
-    background-color: #008425; /* Purple background */
+    background-color: #6f42c1; /* Purple background */
     color: white;
-    font-weight: bold;
     border: none;
-    border-radius: 6px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    height: 50px;
-    width: 180px;
-    text-align: center;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-decoration: none; /* Remove underline */
+    border-radius: 8px;
+    font-weight: 500;
+    padding: 0.5rem 1rem 0.5rem 0.5rem;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    width: 200px;/* Remove underline */
 }
 
 #add-resource-button:hover {
-    background-color: #00691E; /* Darker purple on hover */
-    cursor: pointer;
+    background-color: #5a3795; /* Darker purple on hover */
+    color: white; /* Keep text white */
+    cursor: pointer; /* Pointer cursor for better UX */
 }
 
 /* Resource Table */
@@ -78,7 +74,7 @@ body, html {
 }
 
 .resources-table th {
-    background-color: #743089;
+    background-color: #6f42c1;
     color: #fff;
 }
 
@@ -88,7 +84,7 @@ body, html {
 
 /* Modal Header */
 .modal-header {
-    background-color: #743089; /* Purple header */
+    background-color: #6f42c1; /* Purple header */
     color: white;  /* White text */
     border-radius: 8px 8px 0 0;  /* Rounded top corners */
     padding: 10px 20px;
@@ -126,7 +122,7 @@ body, html {
 
 /* Modal Header */
 .modal-header {
-    background-color: #743089; /* Purple header */
+    background-color: #6f42c1; /* Purple header */
     color: white;  /* White text */
     border-radius: 8px 8px 0 0;  /* Rounded top corners */
     padding: 10px 20px;  /* Add padding for better spacing */
@@ -171,7 +167,7 @@ body, html {
 /* Focus state for inputs */
 .form-select:focus,
 .form-control:focus {
-    border-color: #743089; /* Purple border when focused */
+    border-color: #6f42c1; /* Purple border when focused */
     box-shadow: 0 0 5px rgba(123, 78, 131, 0.5); /* Subtle purple glow */
 }
 
@@ -193,7 +189,7 @@ body, html {
 
 /* Save Button */
 .btn-primary {
-    background-color: #743089; /* Purple background */
+    background-color: #6f42c1; /* Purple background */
     color: white; /* White text */
     border: none;
     border-radius: 4px;
@@ -202,12 +198,12 @@ body, html {
 }
 
 .btn-primary:hover {
-    background-color: #743089; /* Darker purple on hover */
+    background-color: #5a3795; /* Darker purple on hover */
 }
 
 /* Edit Button Styles */
-.btn-edit {
-    background-color: #eeb32f; /* Light blue background */
+.edit-resource {
+    background-color: #f0ad4e; /* Light blue background */
     color: #fff; /* White text */
     border: none;
     padding: 8px 16px;
@@ -215,10 +211,10 @@ body, html {
     border-radius: 4px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     transition: background-color 0.3s ease, transform 0.2s ease;
-    width: 100px;
+    
 }
 
-.btn-edit:hover {
-    background-color: #D1A35A; /* Darker blue on hover */
+.edit-resource:hover {
+    background-color: #e09c40; /* Darker blue on hover */
 }
 

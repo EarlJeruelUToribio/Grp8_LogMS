@@ -9,10 +9,11 @@
 {% block content %}
 
 <!-- Material Table -->
-<section id="material-table" class="container table-container mt-5">
+
+    <div id="material-table" class="container table-container">
     <h2 class="text-center w-100">MATERIAL INVENTORY</h2>
     <div class="d-flex align-items-center justify-content-between mb-3">
-        <a href="#" id="add-category-button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#addCategoryModal">
+        <a href="#" id="add-category-button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#addCategoryModal"> 
             Add Category
         </a>             
     </div>
@@ -21,9 +22,9 @@
             Add Material
         </a>
     </div>
-
-    <table class="table table-striped product-table">
-        <thead>
+        <div class="table-responsive">
+        <table class="table table-bordered table-hover text-center">
+                <thead class="table-light"> 
             <tr>
                 <th>Item Name</th>
                 <th>Description</th>
@@ -75,19 +76,21 @@
                             data-reorder-level="{{ material.ReorderLevel }}" 
                             data-perishable="{{ material.Perishable }}" 
                             data-days-before-expiry="{{ material.DaysBeforeExpiry }}">
-                        Edit
+                            <i class="bi bi-pencil-square"></i>
+
                     </button>
                     <button type="button" class="btn btn-primary delete-material-button" 
                             data-item-id="{{ material.Inventory_ID }}" 
                             data-item-name="{{ material.ItemName }}">
-                        Delete
+                            <i class="bi bi-trash"></i>
+
                     </button>
                 </td>
             </tr>
             {% endfor %}
         </tbody>
     </table>
-</section>
+</d>
 
 <!-- Add Material Modal -->
 <div class="modal fade" id="addMaterialModal" tabindex="-1" aria-labelledby="addMaterialModalLabel" aria-hidden="true">

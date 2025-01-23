@@ -6,14 +6,15 @@
 {% endblock %}
 
 {% block content %}
-<section id="supplier-table" class="container table-container mt-5">
-    <h2 class="text-center">SUPPLIER MANAGEMENT</h2>
+<div id="supplier-table" class="container table-container">
+    <h2 class="text-center w-100">SUPPLIER MANAGEMENT</h2>
     <div class="d-flex align-items-center justify-content-between mb-3">
-        <a href="#" id="add-supplier-button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addSupplierModal">Add Supplier</a>
+        <a href="#" id="add-supplier-button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addSupplierModal">Add Supplier
+        </a>
     </div>
-
-    <table class="table table-striped supplier-table">
-        <thead>
+    <div class="table-responsive">
+        <table class="table table-bordered table-hover text-center">
+            <thead class="table-light"> 
             <tr>
                 <th>Supplier Name</th>
                 <th>Supplier Address</th>
@@ -42,13 +43,13 @@
                             data-contact-number="{{ supplier.contact_number }}" 
                             data-payment-terms="{{ supplier.PaymentTerms }}" 
                             data-bs-toggle="modal" 
-                            data-bs-target="#editSupplierModal">Edit</button>
+                            data-bs-target="#editSupplierModal"> <i class="bi bi-pencil-square"></i></button>
                 </td>
             </tr>
             {% endfor %}
         </tbody>
     </table>
-</section>
+</div>
 
 <!-- Modal for Add Supplier -->
 <div class="modal fade" id="addSupplierModal" tabindex="-1" aria-labelledby="addSupplierModalLabel" aria-hidden="true">

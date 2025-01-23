@@ -8,12 +8,13 @@
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     border: 1px solid #ffffff;
     margin-left: 290px;
+    margin-top: 80px;
 }
 
 .table-container h2 {
     margin-bottom: 20px;
     font-size: 28px;
-    color: #743089; /* Purple heading */
+    color: #6f42c1; /* Purple heading */
     font-weight: 700;
 }
 
@@ -21,28 +22,20 @@
 table {
     width: 100%;
     border-collapse: collapse;
-    background-color: #743089; /* Purple table background */
+    background-color: #6f42c1; /* Purple table background */
     color: white; /* White text for contrast */
     text-align: center; /* Center all text in the table */
 
 }
 
-/* Targeting table headers specifically */
-table th {
-    background-color: #743089 !important; /* Purple background */
-    color: white !important; /* White text */
-    padding: 10px;
-    text-align: center;
-    font-weight: bold; /* Make it bold */
-}
 
 /* Alternating Row Colors */
 table tr:nth-child(even) {
-    background-color: #743089; /* Lighter purple for alternating rows */
+    background-color: #6f42c1; /* Lighter purple for alternating rows */
 }
 
 #edit-button {
-    background-color: #743089;
+    background-color: #6f42c1;
     border: none;
     color: white;
     border-radius: 6px;
@@ -50,7 +43,7 @@ table tr:nth-child(even) {
 }
 
 #edit-button:hover {
-    background-color: #5e3b62;
+    background-color: #5a3795;
 }
 
 /* Manual Adjust Form */
@@ -67,19 +60,19 @@ table tr:nth-child(even) {
 .form-container h2 {
     margin-bottom: 20px;
     font-size: 28px;
-    color: #743089;
+    color: #5a3795;
     text-align: center;
 }
 
 #manual-adjust-form button {
-    background-color: #743089;
+    background-color: #6f42c1;
     border: none;
     color: white;
     border-radius: 6px;
 }
 
 #manual-adjust-form button:hover {
-    background-color: #5e3b62;
+    background-color: #5a3795;
 }
 
 .hidden {
@@ -88,36 +81,36 @@ table tr:nth-child(even) {
 
 /* Add Material Button */
 #add-material-button {
-    background-color: #008425; /* Purple background */
-    color: white; /* White text */
-    font-weight: bold;
+    background-color: #6f42c1; /* Purple background */
+    color: white;
     border: none;
-    border-radius: 6px; /* Rounded edges */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
-    height: 50px;
-    width: 150px;
+    border-radius: 8px;
+    font-weight: 500;
+    padding: 0.5rem 1rem 0.5rem 0.5rem;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    width: 140px;
 }
 
 #add-material-button:hover {
-    background-color: #00691E; /* Darker purple on hover */
+    background-color: #5a3795; /* Darker purple on hover */
     color: white; /* Keep text white */
     cursor: pointer; /* Pointer cursor for better UX */
 }
 
 /* Add Category Button */
 #add-category-button {
-    background-color: #008425; /* Purple background */
-    color: white; /* White text */
-    font-weight: bold;
+    background-color: #6f42c1; /* Purple background */
+    color: white;
     border: none;
-    border-radius: 6px; /* Rounded edges */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
-    height: 50px;
-    width: 150px;
+    border-radius: 8px;
+    font-weight: 500;
+    padding: 0.5rem 1rem 0.5rem 0.5rem;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    width: 140px;
 }
 
 #add-category-button:hover {
-    background-color: #00691E; /* Darker purple on hover */
+    background-color: #5a3795; /* Darker purple on hover */
     color: white; /* Keep text white */
     cursor: pointer; /* Pointer cursor for better UX */
 }
@@ -129,9 +122,8 @@ table tr:nth-child(even) {
     position: relative;
 }
 
-/* Edit Button Styles */
-.btn-primary {
-    background-color: #eeb32f; /* Light blue background */
+.edit-material-button {
+    background-color: #f0ad4e; /* Light blue background */
     color: #fff; /* White text */
     border: none;
     padding: 8px 16px;
@@ -139,13 +131,28 @@ table tr:nth-child(even) {
     border-radius: 4px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     transition: background-color 0.3s ease, transform 0.2s ease;
-    width: 100px;
+    
 }
 
-.btn-primary:hover {
-    background-color: #D1A35A; /* Darker blue on hover */
+.edit-material-button:hover {
+    background-color: #e09c40; /* Darker blue on hover */
 }
 
+/* Style for the Change Status button */
+.delete-material-button {
+    background-color: #d9534f; /* Light blue background */
+    color: #fff; /* White text */
+    border: none;
+    padding: 8px 16px;
+    font-size: 16px;
+    border-radius: 4px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.delete-material-button:hover {
+    background-color: #c9423f; /* Darker blue on hover */
+}
 
 /* Align action buttons in a row */
 .action-buttons {
@@ -171,7 +178,7 @@ table tr:nth-child(even) {
 
 /* Modal Header */
 .modal-header {
-    background-color: #743089; /* Purple header */
+    background-color: #6f42c1; /* Purple header */
     color: white;  /* White text */
     border-radius: 8px 8px 0 0;  /* Rounded top corners */
     padding: 15px;
@@ -218,7 +225,7 @@ table tr:nth-child(even) {
 /* Focus States for Inputs */
 .modal-body .form-select:focus,
 .modal-body .form-control:focus {
-    border-color: #743089;  /* Purple border when focused */
+    border-color: #6f42c1;  /* Purple border when focused */
     box-shadow: 0 0 5px rgba(123, 78, 131, 0.5);  /* Subtle purple glow */
 }
 
@@ -250,8 +257,8 @@ table tr:nth-child(even) {
 
 /* Checked State of the Radio Button */
 .perishable-option input[type="radio"]:checked {
-    background-color: #743089;  /* Fill color when selected */
-    border-color: #37063c;  /* Darker border when checked */
+    background-color: #6f42c1;  /* Fill color when selected */
+    border-color: #5a3795;  /* Darker border when checked */
 }
 
 /* Hover State for the Radio Button */
@@ -278,7 +285,7 @@ table tr:nth-child(even) {
 /* Button Styling in Footer */
 .modal-footer .btn {
     padding: 16px 24px;  /* Increase button padding */
-    background-color: #743089;  /* Purple background */
+    background-color: #6f42c1;  /* Purple background */
     color: white;
     border: none;
     border-radius: 6px;
@@ -296,18 +303,18 @@ table tr:nth-child(even) {
 .custom-swal-popup {
     background-color: white; /* Light purple background */
     border-radius: 8px; /* Rounded corners */
-    border: 1px solid #743089; /* Purple border */
+    border: 1px solid #6f42c1; /* Purple border */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
 }
 
 .custom-swal-title {
     font-size: 24px; /* Adjust title font size */
     font-weight: bold; /* Bold title */
-    color: #743089; /* Purple text color */
+    color: #6f42c1; /* Purple text color */
 }
 
 .custom-swal-confirm {
-    background-color: #743089; /* Purple background */
+    background-color: #6f42c1; /* Purple background */
     color: white; /* White text */
     border-radius: 6px; /* Rounded button */
     font-size: 16px; /* Adjust font size */
@@ -315,14 +322,14 @@ table tr:nth-child(even) {
 }
 
 .custom-swal-confirm:hover {
-    background-color: #5e3b62; /* Darker purple on hover */
+    background-color: #5a3795; /* Darker purple on hover */
 }
 
 
 
 /* Styling for the Save Category button */
 #saveAddCategory {
-    background-color: #743089; /* Purple background */
+    background-color: #6f42c1; /* Purple background */
     color: #ffffff; /* White text */
     border-radius: 6px; /* Rounded edges */
     padding: 10px 20px; /* Padding for better spacing */
@@ -337,7 +344,7 @@ table tr:nth-child(even) {
 
 #saveAddCategory:hover,
 #saveAddCategory:focus {
-    background-color: #5e3b62; /* Darker purple on hover/focus */
+    background-color: #5a3795; /* Darker purple on hover/focus */
 }
 
 .btn-close {

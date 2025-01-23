@@ -7,14 +7,15 @@
 {% endblock %}
 
 {% block content %}
-<section class="resources-section">
+<div class="resources-section">
     <h2 class="text-center mb-4">RESOURCES MAINTENANCE TRACKING</h2>  
     <div class="d-flex align-items-center justify-content-between mb-3">
         <input type="text" id="kitchen-search-bar" placeholder="Search Kitchen Resource" class="search-bar">
     </div>
 
-    <table class="table table-striped resources-table">
-        <thead>
+    <div class="table-responsive">
+        <table class="table table-bordered table-hover text-center">
+                <thead class="table-light">
             <tr>
                 <th>Item Name</th>
                 <th>Category</th>
@@ -33,7 +34,7 @@
                 <td id="quantity-to-repair-{{ resource.Resource_ID }}">{{ resource.QuantityToRepair }}</td>
                 <td id="status-{{ resource.Resource_ID }}">{{ resource.Status }}</td>
                 <td>
-                    <button class="btn btn-primary" onclick="openEditModal({{ resource.Resource_ID }})">Edit</button>
+                    <button class="btn btn-primary edit-button" onclick="openEditModal({{ resource.Resource_ID }})"> <i class="bi bi-pencil-square"></i></button>
                 </td>
             </tr>
             {% endfor %}
@@ -51,7 +52,7 @@
             {% endfor %}
         </tbody>
     </table>
-</section>
+</div>
 
 <!-- Edit Resource Modal -->
 <div class="modal fade" id="editResourceModal" tabindex="-1" aria-labelledby="editResourceModalLabel" aria-hidden="true">

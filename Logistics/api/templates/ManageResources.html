@@ -8,6 +8,7 @@
 {% endblock %}
 
 {% block content %}
+
 <div class="container">
 <section class="resources-section">
     <h2 class="text-center mb-4">CUSTOMER RESOURCES MANAGEMENT</h2>
@@ -24,8 +25,9 @@
         <input type="text" id="search-bar" placeholder="Search Resource" class="search-bar">
     </div>
 
-    <table class="table table-striped resources-table">
-        <thead>
+    <div class="table-responsive">
+        <table class="table table-bordered table-hover text-center">
+                <thead class="table-light">     
             <tr>
                 <th>Item Name</th>
                 <th>Category</th>
@@ -49,7 +51,7 @@
                             data-quantity="{{ resource.Current_Stock }}" 
                             data-reorder="{{ resource.ReorderLevel }}" 
                             data-bs-toggle="modal" 
-                            data-bs-target="#editResourcesModal">Edit</button>
+                            data-bs-target="#editResourcesModal"> <i class="bi bi-pencil-square"></i></button>
                 </td>
             </tr>
             {% endfor %}
@@ -62,7 +64,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <!-- Modal Header -->
-            <div class="modal-header" style="background-color: #7b4e83; color: white;">
+            <div class="modal-header" style="background-color: #6f42c1; color: white;">
                 <h5 class="modal-title" id="addResourcesModalLabel">Add Resources</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
