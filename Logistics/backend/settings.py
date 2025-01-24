@@ -32,7 +32,7 @@ SECRET_KEY = 'django-insecure-ss7f)bgp8f=91nqt6b2m&z*3tx*kq%p4$b+w1%t6kbu0w38hl!
 DEBUG = True
 
 # ALLOWED_HOSTS = ["*"]
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '192.168.100.7']
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '192.168.137.173']
 
 
 
@@ -66,7 +66,7 @@ MIDDLEWARE = [
 
 CORS_ALLOWED_ORIGINS = [
     'http://127.0.0.1:8002',
-    'http://192.168.100.31:8002',  # Reservation project's address
+    'http://192.168.137.25:800  2',  # Reservation project's address
 ]
 
 
