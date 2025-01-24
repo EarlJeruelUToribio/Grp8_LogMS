@@ -10,18 +10,23 @@
 
 <!-- Material Table -->
 
-    <div id="material-table" class="container table-container">
+
+<div id="material-table" class="container table-container">
     <h2 class="text-center w-100">MATERIAL INVENTORY</h2>
     <div class="d-flex align-items-center justify-content-between mb-3">
-        <a href="#" id="add-category-button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#addCategoryModal"> 
-            Add Category
-        </a>             
+        <div>
+            <a href="#" id="add-category-button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#addCategoryModal"> 
+                Add Category
+            </a>
+            <a href="#" id="add-material-button" class="btn btn-primary ms-2" data-bs-toggle="modal" data-bs-target="#addMaterialModal">
+                Add Material
+            </a>
+        </div>
+        <div class="d-flex align-items-center">
+            <input type="text" id="search-input" class="form-control me-2" placeholder="Search materials..." onkeyup="searchMaterials()" style="width: 300px;">
+        </div>
     </div>
-    <div class="d-flex align-items-center justify-content-between mb-3">
-        <a href="#" id="add-material-button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addMaterialModal">
-            Add Material
-        </a>
-    </div>
+    
         <div class="table-responsive">
         <table class="table table-bordered table-hover text-center">
                 <thead class="table-light"> 
@@ -91,6 +96,7 @@
         </tbody>
     </table>
 </d>
+
 
 <!-- Add Material Modal -->
 <div class="modal fade" id="addMaterialModal" tabindex="-1" aria-labelledby="addMaterialModalLabel" aria-hidden="true">
@@ -292,6 +298,7 @@
 {% endblock %}
 
 {% block extra_js %}
+<script src="{% static 'js/SearchMaterial.js' %}"></script>
 <script src="{% static 'js/ManageMaterial.js' %}"></script>
 <script src="{% static 'js/EditMaterial.js' %}"></script>
 <script src="{% static 'js/CategoryMaterial.js' %}"></script>

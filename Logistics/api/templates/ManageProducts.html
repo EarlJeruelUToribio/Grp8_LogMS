@@ -40,7 +40,6 @@
         <table class="table table-bordered table-hover text-center">
             <thead class="table-light">     
             <tr>
-                <th>Product ID</th>
                 <th>Name</th>
                 <th>Category</th>
                 <th>Description</th>
@@ -53,7 +52,6 @@
         <tbody>
             {% for product in products %}
             <tr data-product-id="{{ product.Product_ID }}" data-ingredients='{{ product.ingredients|json_script:"ingredients" }}'>
-                <td>{{ product.Product_ID }}</td>
                 <td>{{ product.ProductName }}</td>
                 <td>{{ product.ProductCategory.CategoryName }}</td>
                 <td>{{ product.ProductDescription }}</td>
