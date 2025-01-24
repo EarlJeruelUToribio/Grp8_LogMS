@@ -12,7 +12,7 @@
     justify-content: flex-start; /* Align content to the top */
     margin-top: 80px;
     margin-bottom: 50px; /* Bottom margin */
-    margin-left: 100px;
+    margin-left: 250px;
     height: auto; /* Adjust height based on content */
     overflow: visible; /* Allow content to overflow without scrolling */
     box-sizing: border-box; /* Include padding and border in dimensions */
