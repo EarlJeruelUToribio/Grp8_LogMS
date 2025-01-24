@@ -106,7 +106,6 @@ class Supplier(models.Model):
     def __str__(self):
         return self.SupplierName
 
-# Order Model
 class Order(models.Model):
     Order_ID = models.AutoField(primary_key=True)
     Items = models.ForeignKey(Inventory, on_delete=models.CASCADE)  # ForeignKey to Inventory
@@ -114,6 +113,12 @@ class Order(models.Model):
     OrderStatus = models.CharField(max_length=50)
     Supplier = models.ForeignKey(Supplier, on_delete=models.CASCADE)  # ForeignKey to Supplier
     Created_At = models.DateTimeField(auto_now_add=True)
+    CheckoutMethod = models.CharField(max_length=50, choices=[
+        ('cash_on_delivery', 'Cash-On-Delivery'),
+        ('gcash', 'Gcash'),
+        ('paymaya', 'PayMaya'),
+        ('credit_card', 'Debit/Credit Card'),
+    ], default='cash_on_delivery')  # Default value can be set as needed
 
 # ProductCategory Model    
 class ProductCategory(models.Model):

@@ -90,7 +90,7 @@
                             data-status="{{ order.OrderStatus }}">
                             <i class="fas fa-eye"></i> 
                         </button>
-                            <button 
+                                <button 
                                 type="button" 
                                 class="btn btn-warning change-status-btn" 
                                 data-bs-toggle="modal" 
@@ -98,7 +98,10 @@
                                 data-order-id="{{ order.Order_ID }}" 
                                 data-current-status="{{ order.OrderStatus }}"
                                 data-item-id="{{ order.Items.Inventory_ID }}"
-                                data-quantity="{{ order.Quantity }}">
+                                data-item-name="{{ order.Items.ItemName }}"
+                                data-quantity="{{ order.Quantity }}"
+                                data-checkout-method="{{ order.CheckoutMethod }}"
+                                data-base-price="{{ order.Items.PurchasePrice }}">  <!-- Add this line -->
                                 <i class="fas fa-edit"></i> 
                             </button>
                         </td>
@@ -205,6 +208,18 @@
                         <span id="unit-of-measure"></span>
                     </div>
 
+                    <!-- Checkout Method Selection -->
+                    <div class="col-12">
+                        <label for="checkout-method" class="form-label">Checkout Method:</label>
+                        <select id="checkout-method" name="checkout_method" class="form-select" required>
+                            <option value="" disabled selected>Select Checkout Method</option>
+                            <option value="cash_on_delivery">Cash-On-Delivery</option>
+                            <option value="gcash">Gcash</option>
+                            <option value="paymaya">PayMaya</option>
+                            <option value="credit_card">Debit/Credit Card</option>
+                        </select>
+                    </div>
+
                     <!-- Status and Price Info -->
                     <input type="hidden" id="status" name="status" value="Placed">
                     <div class="col-12">
@@ -227,5 +242,7 @@
 <script src="{% static 'js/OrderPricing.js' %}"></script>
 <script src="{% static 'js/OrderCount.js' %}"></script>
 <script src="{% static 'js/SearchOrders.js' %}"></script>
-<script src="{% static 'js/OrderShip.js' %}"></script>
+<script src="{% static 'js/OrderCompleted.js' %}"></script>
+<script src="{% static 'js/OrderShipped.js' %}"></script>
+<script src="{% static 'js/OrderShippedPGI.js' %}"></script> 
 {% endblock %}
