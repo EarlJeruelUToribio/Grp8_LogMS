@@ -30,6 +30,24 @@ def home_view(request):
 def Sidebar_view(request):
     return render(request, 'Sidebar.html')
 
+# THIS IS FOR DASHBOARD STUFF
+def inventory_chart_view(request):
+    # Get the top 10 items with the highest current stock
+    inventory_items = Inventory.objects.order_by('-Current_Stock')[:10]
+    
+    # Prepare data for Chart.js
+    item_names = [item.ItemName for item in inventory_items]
+    current_stocks = [item.Current_Stock for item in inventory_items]
+
+    context = {
+        'item_names': item_names,
+        'current_stocks': current_stocks,
+    }
+    return render(request, 'dashboard.html', context)
+
+# DASHBOARD
+
+
 def ManageProduct_view(request):
     """
     API endpoint to return product data in JSON format.
@@ -117,28 +135,6 @@ def order_counts_view(request):
         'cancelled': cancelled_count,
     })
 
-def increase_stock(item_id, amount):
-    material = get_object_or_404(Inventory, pk=item_id)
-    material.Current_Stock += amount
-    material.save()
-
-@require_http_methods(["POST"])
-def update_stock(request, item_id):
-    try:
-        data = json.loads(request.body)
-        quantity = data.get('quantity')
-
-        if quantity is None:
-            return JsonResponse({'success': False, 'error': 'Quantity is required.'}, status=400)
-
-        # Call the function to increase stock
-        increase_stock(item_id, quantity)  # Ensure this function is defined to handle stock increase
-        return JsonResponse({'success': True})
-
-    except Exception as e:
-        return JsonResponse({'success': False, 'error': str(e)}, status=400)
-    
-
 
 def get_materials_by_supplier(request):
     supplier_id = request.GET.get('supplier_id')
@@ -197,7 +193,10 @@ def AddMaterial_view(request):
     # If the request method is GET, redirect to ManageMaterial instead of rendering a non-existing template
     return redirect('ManageMaterial')
 
-
+def increase_stock(item_id, amount):
+    material = get_object_or_404(Inventory, pk=item_id)
+    material.Current_Stock += amount
+    material.save()
 
 def decrease_stock(material_id, amount):
     material = get_object_or_404(Inventory, pk=material_id)
@@ -221,6 +220,22 @@ def ManageMaterial_view(request):
             material.expiration_date = None
 
     return render(request, 'ManageMaterial.html', {'materials': materials, 'categories': categories})
+
+@require_http_methods(["POST"])
+def update_stock(request, item_id):
+    try:
+        data = json.loads(request.body)
+        quantity = data.get('quantity')
+
+        if quantity is None:
+            return JsonResponse({'success': False, 'error': 'Quantity is required.'}, status=400)
+
+        # Call the function to increase stock
+        increase_stock(item_id, quantity)  # Ensure this function is defined to handle stock increase
+        return JsonResponse({'success': True})
+
+    except Exception as e:
+        return JsonResponse({'success': False, 'error': str(e)}, status=400)
 
 @require_http_methods(["GET", "POST"])
 def edit_material(request, pk):

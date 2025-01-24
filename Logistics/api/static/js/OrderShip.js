@@ -12,6 +12,8 @@ document.addEventListener('DOMContentLoaded', function () {
             document.getElementById('modal-order-id').value = orderId;
             document.getElementById('modal-current-status').innerText = currentStatus;
             document.getElementById('item-id').value = itemId; // Set the item ID
+
+            // Display the order quantity in the modal
             document.getElementById('order-quantity').innerText = orderQuantity; // Set the quantity in the modal
 
             // Change the status when the form is submitted
@@ -49,7 +51,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 }
 
                 // Submit the form to change the order status
-                this.submit();
+                this.submit ();
             };
         });
     });
@@ -61,7 +63,6 @@ document.addEventListener('DOMContentLoaded', function () {
             const cookies = document.cookie.split(';');
             for (let i = 0; i < cookies.length; i++) {
                 const cookie = cookies[i].trim();
-                // Check if this cookie string begins with the name we want
                 if (cookie.substring(0, name.length + 1) === (name + '=')) {
                     cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
                     break;

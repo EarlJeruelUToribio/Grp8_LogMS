@@ -6,6 +6,7 @@ urlpatterns = [
     path('', views.Sidebar_view, name='home'),
     path('dashboard', views.Sidebar_view, name='home'),
     path('AddProduct/', views.AddProduct_view, name='AddProduct'),
+    path('inventory-chart/',views.inventory_chart_view, name='inventory-chart'),
 
     path('ManageOrder/', views.ManageOrder_view, name='ManageOrder'),
     path('PlaceOrder/', views.PlaceOrder_view, name='PlaceOrder'),
