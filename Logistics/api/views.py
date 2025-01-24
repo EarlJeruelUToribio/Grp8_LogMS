@@ -28,7 +28,7 @@ def home_view(request):
     return render(request, 'dashboard.html'),
 
 def Sidebar_view(request):
-    return render(request, 'Sidebar.html')
+    return render(request, 'sidebar.html')
 
 def dashboard_view(request):
     return render(request, 'dashboard.html')
