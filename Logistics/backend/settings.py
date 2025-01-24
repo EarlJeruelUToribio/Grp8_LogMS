@@ -32,9 +32,9 @@ SECRET_KEY = 'django-insecure-ss7f)bgp8f=91nqt6b2m&z*3tx*kq%p4$b+w1%t6kbu0w38hl!
 DEBUG = True
 
 # ALLOWED_HOSTS = ["*"]
+
 ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '192.168.137.173','logistics-5mci.onrender.com']
-
-
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '192.168.241.33']
 
 # Application definition
 
@@ -66,7 +66,7 @@ MIDDLEWARE = [
 
 CORS_ALLOWED_ORIGINS = [
     'http://127.0.0.1:8002',
-    'http://192.168.137.25:800  2',  # Reservation project's address
+    'http://192.168.241.140:8002',  # Reservation project's address
 ]
 
 
@@ -104,7 +104,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'logistic',
         'USER':'postgres',
-        'PASSWORD': 'password',
+        'PASSWORD': 'admin',
         'HOST': 'localhost',
         'PORT': '5432'
     }

@@ -14,7 +14,7 @@
         ]; // Pass materials to JavaScript
     </script>
     <script src="{% static 'js/ManageProduct.js' %}"></script> <!-- Include the new JS file -->
-    <script src="{% static 'js/EditProducts.js' %}"></script> <!-- Include the EditProduct.js file -->
+    <script src="{% static 'js/Editproduct.js' %}"></script> <!-- Include the EditProduct.js file -->
     <script src="{% static 'js/SearchProduct.js' %}"></script> <!-- Include the SearchProduct.js file -->
     <script src="{% static 'js/DeleteProduct.js' %}"></script> <!-- Include the DeleteProduct.js file -->
     <script src="{% static 'js/CategoryProduct.js' %}"></script>
@@ -332,7 +332,7 @@
                 <h5 class="modal-title" id="editProductModalLabel">EDIT PRODUCT</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal -body">
+            <div class="modal-body">
                 <form id="edit-product-form" method="POST" enctype="multipart/form-data">
                     {% csrf_token %}
                     <div class="row g-3">
@@ -381,22 +381,25 @@
                                         <input type="number" class="form-control" placeholder="Quantity" value="{{ ingredient.MeasureCount }}" required>
                                     </div>
                                     <div class="col-md-2">
-                                        <select class="form-select unit-select" required>
-                                            <option value="" disabled selected>Select Unit</option>
-                                            <!-- Smaller units will be populated here -->
-                                        </select>
-                                    </div>
-                                    <div class="col-md-1">
-                                        <button type="button" class="btn btn-danger remove-ingredient" onclick="removeIngredient(this)">Remove</button>
-                                    </div>
-                                </div>
+                                        <div class="unit-container">
+                                            <div class="unit-dropdown">
+                                                <label class="form-label">Unit:</label>
+                                                <select class="form-select unit-select" required>
+                                                    <option value="" disabled selected>Select Unit</option>
+                                                    <!-- Smaller units will be populated here -->
+                                                </select>
+                                            </div>
+                                            <div class="remove-button-container">
+                                                <button type="button" class="btn btn-danger" onclick="removeIngredient(this)">Remove</button>
+                                            </div>
+                                        </div>
+                                        
                             {% endfor %}
                         </div>
                         <button type="button" class="btn btn-primary" id="edit-add-ingredient-button">Add Ingredient</button>
                     </div>
 
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                         <button type="submit" class="btn btn-primary">Save Changes</button>
                     </div>
                 </form>
