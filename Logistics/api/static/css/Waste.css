@@ -7,7 +7,7 @@
     margin: 50px auto 20px;
     display: flex;
     flex-direction: column;
-    margin-left: 300px;
+    margin-left: 350px;
     margin-top: 100px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
@@ -312,4 +312,8 @@
     background-color: #f0f0f0; /* Light grey background on hover */
     color: #333; /* Darker color for the cross on hover */
   }
-  
+
+  /* Hide the first column (Transaction No.) */
+.table th:first-child, .table td:first-child {
+    display: none;
+}

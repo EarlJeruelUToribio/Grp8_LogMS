@@ -92,4 +92,8 @@
 
 }
 
+/* Hide the first column (Transaction No.) */
+.table th:first-child, .table td:first-child {
+    display: none;
+}
 
