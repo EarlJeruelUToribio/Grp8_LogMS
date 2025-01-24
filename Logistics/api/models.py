@@ -1,7 +1,16 @@
 from django.db import models
 from django.utils import timezone
 from datetime import timedelta
+from django.contrib.auth.models import User
 
+class Notification(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)  # Allow null values
+    message = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    is_read = models.BooleanField(default=False)
+
+    def __str__(self):
+        return f'Notification: {self.message}'
 
 class MaterialCategory(models.Model):
     Category_ID = models.AutoField(primary_key=True)
@@ -87,7 +96,7 @@ class Supplier(models.Model):
     SupplierName = models.CharField(max_length=255)
     SupplierDesc = models.TextField(blank=True, null=True)
     SupplierNumber = models.CharField(max_length=255, blank=True, null=True)
-    contact_number = models.CharField(max_length=15)
+    contact_number = models.CharField(max_length=11)
     Status = models.CharField(max_length=50, default='Active')
     MinOrderQty = models.IntegerField(default=0)
     PaymentTerms = models.CharField(max_length=100, blank=True, null=True)

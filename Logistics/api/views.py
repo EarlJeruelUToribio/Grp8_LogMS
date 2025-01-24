@@ -13,7 +13,7 @@ from rest_framework.response import Response
 from rest_framework import status
 from rest_framework import generics
 from decimal import Decimal
-from .models import Inventory, MaterialCategory, ProductCategory, Waste, Supplier, Order, ProductOrders, Product, Ingredient, Resource, KitchenResource
+from .models import Notification, Inventory, MaterialCategory, ProductCategory, Waste, Supplier, Order, ProductOrders, Product, Ingredient, Resource, KitchenResource
 from .serializers import (
     InventorySerializer, 
     SupplierSerializer, 
@@ -30,10 +30,44 @@ def home_view(request):
 def Sidebar_view(request):
     return render(request, 'sidebar.html')
 
+#THIS IS FOR NOTIFICATIONS
+
 def dashboard_view(request):
-    return render(request, 'dashboard.html')
+    notifications = Notification.objects.all().order_by('-created_at')  # Fetch all notifications
+
+    # Check inventory levels and create notifications if needed
+    check_inventory_levels()
+
+    return render(request, 'dashboard.html', {'notifications': notifications})
+
+def check_inventory_levels():
+    # Fetch all inventory items
+    inventory_items = Inventory.objects.all()
+
+    for item in inventory_items:
+        if item.Current_Stock < item.ReorderLevel:
+            # Create a notification message
+            message = f"{item.ItemName} has reached its reorder level and requires restocking."
+
+            # Check if the notification already exists
+            if not Notification.objects.filter(message=message).exists():
+                # Create a Notification object in the database
+                Notification.objects.create(message=message)
+
+def clear_notifications(request):
+    if request.method == 'POST':
+        Notification.objects.all().delete()  # This will delete all notifications
+        messages.success(request, 'All notifications cleared.')
+        return redirect('dashboard')  # Redirect to the dashboard or wherever appropriate
+
+def mark_as_read(request, notification_id):
+    notification = get_object_or_404(Notification, id=notification_id, user=request.user)
+    notification.is_read = True
+    notification.save()
+    return JsonResponse({'status': 'success'})
 
 # THIS IS FOR DASHBOARD STUFF
+
 def inventory_chart_view(request):
     # Get the top 10 items with the highest current stock
     inventory_items = Inventory.objects.order_by('-Current_Stock')[:10]
@@ -81,14 +115,21 @@ def PlaceOrder_view(request):
         material_instance = get_object_or_404(Inventory, Inventory_ID=material_id)
 
         # Process the order (e.g., save it to the database)
-        Order.objects.create(
+        order = Order.objects.create(
             Items=material_instance,  # Use the actual Inventory instance
             Quantity=quantity,
             OrderStatus=status,
             Supplier_id=supplier_name  # Save the supplier ID
         )
 
-        messages.success(request, 'Order submitted successfully!')
+        # Create a notification
+        message = "Order submitted successfully!"
+        if request.user.is_authenticated:
+            Notification.objects.create(user=request.user, message=message)
+        else:
+            Notification.objects.create(message=message)  # Create notification without user
+
+        messages.success(request, message)
         return redirect('ManageOrder')  # Redirect to ManageOrder after submission
 
     # If not a POST request, return the modal with materials and suppliers

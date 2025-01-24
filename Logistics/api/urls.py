@@ -5,8 +5,10 @@ urlpatterns = [
     # Base Route
     path('', views.dashboard_view, name='home'),
     # path('dashboard', views.Sidebar_view, name='home'),
-    path('AddProduct/', views.AddProduct_view, name='AddProduct'),
 	path('dashboard/', views.dashboard_view, name='dashboard'),
+    path('notifications/mark-as-read/<int:notification_id>/', views.mark_as_read, name='mark_as_read'),
+    path('clear-notifications/', views.clear_notifications, name='clear_notifications'),
+
 
     # path('inventory-chart/',views.inventory_chart_view, name='inventory-chart'),
 
@@ -70,11 +72,12 @@ urlpatterns = [
     path('productorders/', views.ProductOrdersListCreateView.as_view(), name='productorders-list'),
     path('productorders/<int:pk>/', views.ProductOrdersDetailView.as_view(), name='productorders-detail'),
 
+    path('AddProduct/', views.AddProduct_view, name='AddProduct'),
     path('products/', views.ProductListCreateView.as_view(), name='product-list'),
     path('api/products/', views.ProductListCreateView.as_view(), name='product-list'),
     path('products/<int:pk>/', views.ProductDetailView.as_view(), name='product-detail'),
     path('api/manage-product/', views.ManageProduct_view, name='manage_product'),
-    
+
     path('ingredients/', views.IngredientListCreateView.as_view(), name='ingredient-list'),
     path('send-ingredients/', views.send_ingredients, name='send-ingredients'),
     path('ingredients/<int:pk>/', views.IngredientDetailView.as_view(), name='ingredient-detail'),

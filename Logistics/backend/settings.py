@@ -148,9 +148,15 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 # URL to use when referring to static files (CSS, JavaScript, Images)
 
+
+# THIS IS FOR SCHEDULED TASKS
 CELERY_BEAT_SCHEDULE = {
     'update-expired-items-every-day': {
         'task': 'your_app.tasks.update_expired_items_task',
+        'schedule': crontab(hour=0, minute=0),  # Runs every day at midnight
+    },
+    'check-inventory-levels-every-day': {
+        'task': 'your_app.tasks.check_inventory_levels',  # Add your new task here
         'schedule': crontab(hour=0, minute=0),  # Runs every day at midnight
     },
 }
