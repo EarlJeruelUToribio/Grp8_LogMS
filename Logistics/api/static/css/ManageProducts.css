@@ -12,7 +12,7 @@
     justify-content: flex-start; /* Align content to the top */
     margin-top: 80px;
     margin-bottom: 50px; /* Bottom margin */
-    margin-left: 100px;
+    margin-left: 250px;
     height: auto; /* Adjust height based on content */
     overflow: visible; /* Allow content to overflow without scrolling */
     box-sizing: border-box; /* Include padding and border in dimensions */
@@ -109,30 +109,24 @@ body, html {
 
 
 .add-product-button {
-    background-color: #008425; /* Purple background */
-    color: white; /* White text */
-    font-weight: bold;
+    background-color: #6f42c1; /* Purple background */
+    color: white;
     border: none;
-    border-radius: 6px; /* Rounded edges */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
-    height: 50px;
-    width: 150px;
-    text-align: center;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-decoration: none; /* Remove underline */
-    margin-left: 30px;
+    border-radius: 8px;
+    font-weight: 500;
+    padding: 0.5rem 1rem 0.5rem 0.5rem;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    width: 140px;
 }
 
 .add-product-button:hover {
-    background-color: #00691E; /* Darker purple on hover */
+    background-color: #5a3795; /* Darker purple on hover */
     color: white; /* Keep text white */
     cursor: pointer; /* Pointer cursor for better UX */
 }
 
 #edit-button {
-    background-color: #eeb32f; /* Light blue background */
+    background-color: #f0ad4e; /* Light blue background */
     color: #fff; /* White text */
     border: none;
     padding: 8px 16px;
@@ -140,11 +134,10 @@ body, html {
     border-radius: 4px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     transition: background-color 0.3s ease, transform 0.2s ease;
-    width: 100px;
 }
 
 #edit-button:hover {
-    background-color: #D1A35A;
+    background-color: #e09c40; /* Darker blue on hover */
 }
 
 
@@ -412,17 +405,19 @@ margin-left: 60px;
 
 
 #ingredients-section .btn-danger {
-    background-color: #dc3545; /* Danger red */
-    color: #fff;
-    border-radius: 5px;
-    font-weight: bold;
+    background-color: #d9534f; /* Light blue background */
+    color: #fff; /* White text */
     border: none;
-    margin-left: 10px;
+    padding: 8px 16px;
+    font-size: 16px;
+    border-radius: 4px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s ease, transform 0.2s ease;
 
 }
 
 #ingredients-section .btn-danger:hover {
-    background-color: #a71d2a; /* Darker red on hover */
+    background-color: #c9423f; /* Darker blue on hover */
 }
 
 
@@ -474,3 +469,26 @@ margin-left: 60px;
 .custom-swal-confirm:hover {
     background-color: #5a3795; /* Darker purple on hover */
 }
+
+
+.action-buttons {
+    gap: 3px; /* Adds consistent spacing between buttons */
+}
+
+.action-buttons .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+.hidden-column {
+    display: none;
+}
+
+/* Hide the first column (Product ID) */
+.product-table th:nth-child(1),
+.product-table td:nth-child(1) {
+    display: none;
+}
+

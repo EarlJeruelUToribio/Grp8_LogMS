@@ -73,10 +73,11 @@
         </section>
     </main>
 </div>
+{% endblock %}
 
 {% block extra_js %}
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script src="{% static 'js/dahboard.js' %}"></script>
+<script src="{% static 'js/dashboard.js' %}"></script>
 <script>
     // Pass the data to the JavaScript file
     const itemNames = {{ item_names|safe }};
@@ -86,3 +87,4 @@
     createInventoryChart(itemNames, currentStocks);
 </script>
 {% endblock %}
+

@@ -20,7 +20,7 @@
                     <th>Item Name</th>
                     <th>Expiration Date</th>
                     <th>Expiry</th>
-                    <th>Manage Expiration</th>
+                    <!-- <th>Manage Expiration</th> -->
                 </tr>
             </thead>
             <tbody>
@@ -42,13 +42,13 @@
                             <span class="text-success">Active</span>
                         {% endif %}
                     </td>
-                    <td>
+                    <!-- <td>
                         <button class="manage-btn" onclick="toggleManageOptions(this)"> Manage</button>
                         <div class="manage-options" style="display:none;">
                             <button class="extend-btn" onclick="extendExpiration({{ item.Inventory_ID }})">Extend</button>
                             <button class="expired-btn" onclick="markAsExpired({{ item.Inventory_ID }})">Mark as Expired</button>
                         </div>
-                    </td>
+                    </td> -->
                 </tr>
                 {% endfor %}
             </tbody>
