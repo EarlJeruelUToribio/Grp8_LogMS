@@ -16,6 +16,8 @@ from dotenv import load_dotenv
 import dj_database_url
 import os
 from decouple import config
+from celery.schedules import crontab
+
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -146,7 +148,18 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 # URL to use when referring to static files (CSS, JavaScript, Images)
 
+CELERY_BEAT_SCHEDULE = {
+    'update-expired-items-every-day': {
+        'task': 'your_app.tasks.update_expired_items_task',
+        'schedule': crontab(hour=0, minute=0),  # Runs every day at midnight
+    },
+}
 
+
+
+CELERY_BROKER_URL = 'redis://localhost:6379/0'  # Adjust this based on your broker
+CELERY_ACCEPT_CONTENT = ['json']
+CELERY_TASK_SERIALIZER = 'json'
 
 # The directories where Django will search for static files
 

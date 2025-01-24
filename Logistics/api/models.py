@@ -1,5 +1,6 @@
 from django.db import models
 from django.utils import timezone
+from datetime import timedelta
 
 
 class MaterialCategory(models.Model):
@@ -37,6 +38,12 @@ class Inventory(models.Model):
 
     def __str__(self):
         return self.ItemName
+    
+    def is_expired(self):
+        if self.Perishable and self.DaysBeforeExpiry is not None:
+            expiration_date = self.Created_At + timedelta(days=self.DaysBeforeExpiry)
+            return timezone.now() > expiration_date
+        return False
 
 #for Customer Resources
 class Resource(models.Model):
