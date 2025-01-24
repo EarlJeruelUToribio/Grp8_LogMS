@@ -25,13 +25,10 @@ from .serializers import (
 
 
 def home_view(request):
-    return render(request, 'dashboard.html'),
+    return render(request, 'index.html'),
 
 def Sidebar_view(request):
     return render(request, 'Sidebar.html')
-
-def dashboard_view(request):
-    return render(request, 'dashboard.html')
 
 # THIS IS FOR DASHBOARD STUFF
 def inventory_chart_view(request):
