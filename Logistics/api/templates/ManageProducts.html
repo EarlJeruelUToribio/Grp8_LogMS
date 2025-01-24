@@ -14,10 +14,11 @@
         ]; // Pass materials to JavaScript
     </script>
     <script src="{% static 'js/ManageProduct.js' %}"></script> <!-- Include the new JS file -->
-    <script src="{% static 'js/EditProducts.js' %}"></script> <!-- Include the EditProduct.js file -->
+    <script src="{% static 'js/Editproduct.js' %}"></script> <!-- Include the EditProduct.js file -->
     <script src="{% static 'js/SearchProducts.js' %}"></script> <!-- Include the SearchProduct.js file -->
     <script src="{% static 'js/DeleteProduct.js' %}"></script> <!-- Include the DeleteProduct.js file -->
     <script src="{% static 'js/CategoryProduct.js' %}"></script>
+    
 {% endblock %}
 
 {% block content %}
@@ -25,14 +26,14 @@
 <section class="products-section">
     <h2 class="text-center mb-4">PRODUCT MANAGEMENT</h2>
     <div class="d-flex align-items-center justify-content-between mb-3">
-        <div class="d-flex flex-column align-items-center mb-3">
-            <button type="button" class="add-product-button mb-2" data-bs-toggle="modal" data-bs-target="#ProductCategoryModal">
+        <div class="d-flex flex-row align-items-center justify-content-center button-row">
+            <button type="button" class="add-product-button me-2" data-bs-toggle="modal" data-bs-target="#ProductCategoryModal">
                 Add Category
             </button>
             <button type="button" class="add-product-button" data-bs-toggle="modal" data-bs-target="#addProductModal">
                 Add Product
             </button>
-        </div>        
+        </div>
         <input type="text" id="search-bar" placeholder="Search Product" class="search-bar">
     </div>
 
@@ -78,7 +79,6 @@
         </button>
     </div>
 </td>
-
             </tr>
             {% endfor %}
         </tbody>
@@ -315,7 +315,7 @@
                         <label for="category-name" class="form-label">Category Name</label>
                         <input type="text" class="form-control" id="category-name" required>
                     </div>
-                    <button type="submit" class="btn btn-primary">Add Category</button>
+                    <button type="submit" class="btn btn-primary add-category">Add Category</button>
                 </form>
             </div>
         </div>

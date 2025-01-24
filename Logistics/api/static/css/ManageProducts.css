@@ -53,6 +53,7 @@ body, html {
 }
 
 
+
 .products-section h2 {
     font-size: 28px;
     color: #6f42c1; /* Purple heading */
@@ -117,9 +118,27 @@ body, html {
     padding: 0.5rem 1rem 0.5rem 0.5rem;
     transition: background-color 0.3s ease, color 0.3s ease;
     width: 140px;
+    margin-top: 50px;
 }
 
 .add-product-button:hover {
+    background-color: #5a3795; /* Darker purple on hover */
+    color: white; /* Keep text white */
+    cursor: pointer; /* Pointer cursor for better UX */
+}
+
+.add-category {
+    background-color: #6f42c1; /* Purple background */
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-weight: 500;
+    padding: 0.5rem 1rem 0.5rem 0.5rem;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    width: 140px;
+}
+
+.add-category:hover {
     background-color: #5a3795; /* Darker purple on hover */
     color: white; /* Keep text white */
     cursor: pointer; /* Pointer cursor for better UX */
