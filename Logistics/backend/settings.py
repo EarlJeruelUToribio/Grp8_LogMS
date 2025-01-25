@@ -36,7 +36,7 @@ DEBUG = True
 # ALLOWED_HOSTS = ["*"]
 
 ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '192.168.137.173','logistics-5mci.onrender.com']
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '192.168.241.33']
+ALLOWED_HOSTS = ['127.0.0.1','localhost','193.203.161.247','logistic.193.203.161.247.nip.io']
 
 # Application definition
 
