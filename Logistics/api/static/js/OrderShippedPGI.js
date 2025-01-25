@@ -62,7 +62,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
                     // Send POST request to payment microservice
                     try {
-                        const response = await fetch("https://127.0.0.1:8002/create-checkout-session/", {
+                        const response = await fetch("/create-checkout-session/", {
                             method: 'POST',
                             headers: {
                                 'Content-Type': 'application/json',
