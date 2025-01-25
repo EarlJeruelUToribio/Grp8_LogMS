@@ -103,6 +103,9 @@ def ManageProduct_view(request):
     ]
     return JsonResponse(product_list, safe=False)
 
+
+# Order Management
+
 def PlaceOrder_view(request):
     if request.method == 'POST':
         # Handle form submission
@@ -110,6 +113,7 @@ def PlaceOrder_view(request):
         quantity = request.POST.get('quantity')
         supplier_name = request.POST.get('supplier-name')
         status = request.POST.get('status')
+        checkout_method = request.POST.get('checkout_method')  # Get the checkout method
 
         # Retrieve the Inventory instance using the material_id
         material_instance = get_object_or_404(Inventory, Inventory_ID=material_id)
@@ -119,7 +123,8 @@ def PlaceOrder_view(request):
             Items=material_instance,  # Use the actual Inventory instance
             Quantity=quantity,
             OrderStatus=status,
-            Supplier_id=supplier_name  # Save the supplier ID
+            Supplier_id=supplier_name,  # Save the supplier ID
+            CheckoutMethod=checkout_method  # Save the checkout method
         )
 
         # Create a notification
@@ -179,6 +184,50 @@ def order_counts_view(request):
         'cancelled': cancelled_count,
     })
 
+# Integration test
+from django.views.decorators.csrf import csrf_exempt
+
+@csrf_exempt
+def payment_record_view(request):
+    if request.method == 'POST':
+        try:
+            data = json.loads(request.body)
+            # Log the received data for debugging
+            print("Received payment record data:", data)
+
+            # Process the data as needed (e.g., save it to the database)
+            # For example, you might want to create a PaymentRecord model instance here
+
+            return JsonResponse({
+                'success': True,
+                'message': 'Payment record saved successfully!',
+                'data': data  # Return the data that was sent
+            }, status=201)
+        except Exception as e:
+            return JsonResponse({'success': False, 'error': str(e)}, status=400)
+
+    return JsonResponse({'success': False, 'error': 'Invalid request method.'}, status=405)
+
+@csrf_exempt
+def create_checkout_session(request):
+    if request.method == 'POST':
+        try:
+            data = json.loads(request.body)
+            # Log the received data for debugging
+            print("Received data for checkout session:", data)
+
+            # Here you can process the data as needed, e.g., save it to the database
+            # For now, we will just return a success response
+
+            return JsonResponse({
+                'success': True,
+                'message': 'Checkout session created successfully!',
+                'data': data  # Return the data that was sent for verification
+            }, status=201)
+        except Exception as e:
+            return JsonResponse({'success': False, 'error': str(e)}, status=400)
+
+    return JsonResponse({'success': False, 'error': 'Invalid request method.'}, status=405)
 
 def get_materials_by_supplier(request):
     supplier_id = request.GET.get('supplier_id')
@@ -196,6 +245,12 @@ def get_min_order_qty(request):
     min_order_qty = ...  # Logic to determine minimum order quantity
     return JsonResponse({'minOrderQty': min_order_qty})
 
+class OrderDetailView(generics.RetrieveAPIView):
+    queryset = Order.objects.all()
+    serializer_class = OrderSerializer
+
+
+# Material Management
 
 @require_http_methods(["GET", "POST"])
 def AddMaterial_view(request):
@@ -346,6 +401,9 @@ def AddMaterialCategory_view(request):
         return JsonResponse({'success': False, 'error': 'An error occurred while adding the category.'}, status=500)
 
 
+# Product Management
+
+
 @require_http_methods(["POST"])
 def AddProductCategory_view(request):
     try:
@@ -460,7 +518,10 @@ def delete_product(request, product_id):
     
 def KitchenDisplay_view(request):
     return render(request, 'KitchenDisplay.html')
-    
+
+
+# Supplier Management
+
 def AddSupplier_view(request):
     if request.method == 'POST':
         try:
@@ -528,6 +589,9 @@ def edit_supplier(request, pk):
 
     return JsonResponse({'success': False, 'error': 'Invalid request method.'}, status=400)
 
+
+# Expiry
+
 @require_http_methods(["POST"])
 def mark_as_expired(request, item_id):
     inventory_item = get_object_or_404(Inventory, Inventory_ID=item_id)
@@ -560,6 +624,8 @@ def ExpiryDates_view(request):
             item.expiration_date = None  # Set to None if not applicable
     return render(request, 'ExpiryDates.html', {'perishable_items': perishable_items})
 
+
+# Loss and Waste
 
 @require_http_methods(["POST"])
 def AddWaste_view(request):
@@ -608,6 +674,8 @@ def ManageWaste_view(request):
     else:
         print("Rendering HTML template")  # Debugging line
         return render(request, 'ManageWaste.html')  # Render the HTML template for non-AJAX requests
+
+# Resources Management
 
 def KitchenResources_view(request):
     kitchen_resources = KitchenResource.objects.all()  # Fetch all kitchen resources
@@ -871,6 +939,7 @@ class OrderListCreateView(generics.ListCreateAPIView):
 class OrderDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Order.objects.all()
     serializer_class = OrderSerializer
+
 
 # ProductOrders Views
 class ProductOrdersListCreateView(generics.ListCreateAPIView):

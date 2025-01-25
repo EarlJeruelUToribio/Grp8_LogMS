@@ -10,6 +10,12 @@ urlpatterns = [
     path('clear-notifications/', views.clear_notifications, name='clear_notifications'),
 
 
+
+    #Integration test
+    path('payment-record/', views.payment_record_view, name='payment-record'),
+    path('create-checkout-session/', views.create_checkout_session, name='create-checkout-session'),
+
+
     # path('inventory-chart/',views.inventory_chart_view, name='inventory-chart'),
 
     path('ManageOrder/', views.ManageOrder_view, name='ManageOrder'),
