@@ -34,8 +34,6 @@ SECRET_KEY = 'django-insecure-ss7f)bgp8f=91nqt6b2m&z*3tx*kq%p4$b+w1%t6kbu0w38hl!
 DEBUG = False
 
 # ALLOWED_HOSTS = ["*"]
-
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '192.168.137.173','logistics-5mci.onrender.com']
 ALLOWED_HOSTS = ['127.0.0.1','localhost','193.203.161.247','logistic.193.203.161.247.nip.io']
 
 # Application definition
