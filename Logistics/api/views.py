@@ -7,6 +7,7 @@ from django.views.decorators.http import require_http_methods
 from django.http import JsonResponse
 from django.contrib import messages
 from django.utils import timezone
+from django.db.models import Sum
 from datetime import timedelta
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -15,7 +16,7 @@ from rest_framework import generics
 from django.utils.timezone import now
 from django.views.decorators.csrf import csrf_exempt
 from decimal import Decimal
-from .models import IncomingOrder, Notification, Inventory, MaterialCategory, ProductCategory, Waste, Supplier, Order, ProductOrders, Product, Ingredient, Resource, KitchenResource
+from .models import ProductSoldRecord, IncomingOrder, Notification, Inventory, MaterialCategory, ProductCategory, Waste, Supplier, Order, ProductOrders, Product, Ingredient, Resource, KitchenResource
 from .serializers import (
     InventorySerializer, 
     SupplierSerializer, 
@@ -84,6 +85,22 @@ def inventory_chart_view(request):
     }
     return render(request, 'dashboard.html', context)
 
+def highest_selling_product_view(request):
+    # Aggregate product sales data
+    sales_data = (
+        ProductSoldRecord.objects
+        .values('product__ProductName')  # Use related model field for product name
+        .annotate(total_quantity=Sum('quantity'))
+        .order_by('-total_quantity')[:10]  # Top 10 highest-selling products
+    )
+    
+    labels = [item['product__ProductName'] for item in sales_data]
+    data = [item['total_quantity'] for item in sales_data]
+
+    return JsonResponse({
+        'labels': labels,
+        'data': data,
+    })
 # DASHBOARD
 
 
@@ -742,10 +759,19 @@ def resolve_order_view(request, order_id):
                 return JsonResponse({"success": False, "error": f"Insufficient stock for {ingredient.IngredientName}"}, status=400)
             inventory_item.Current_Stock -= required_quantity
             inventory_item.save()
+
+        # Record the resolved order in ProductSoldRecord
+        ProductSoldRecord.objects.create(
+            product=order.product,
+            quantity=order.quantity,
+            created_at=timezone.now()
+        )
+
         order.delete()
         return JsonResponse({"success": True, "message": "Order resolved successfully."})
     except Exception as e:
         return JsonResponse({"success": False, "error": str(e)}, status=400)
+
 
 @require_http_methods(["POST"])
 def resolve_all_orders_view(request):
@@ -759,10 +785,19 @@ def resolve_all_orders_view(request):
                     return JsonResponse({"success": False, "error": f"Insufficient stock for {ingredient.IngredientName}"}, status=400)
                 inventory_item.Current_Stock -= required_quantity
                 inventory_item.save()
+
+            # Record the resolved orders in ProductSoldRecord
+            ProductSoldRecord.objects.create(
+                product=order.product,
+                quantity=order.quantity,
+                created_at=timezone.now()
+            )
+
             order.delete()
         return JsonResponse({"success": True, "message": "All orders resolved successfully."})
     except Exception as e:
         return JsonResponse({"success": False, "error": str(e)}, status=400)
+
 
 
 # Resources Management

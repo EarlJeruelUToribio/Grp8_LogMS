@@ -5,9 +5,12 @@ urlpatterns = [
     # Base Route
     path('', views.dashboard_view, name='home'),
     # path('dashboard', views.Sidebar_view, name='home'),
+
 	path('dashboard/', views.dashboard_view, name='dashboard'),
     path('notifications/mark-as-read/<int:notification_id>/', views.mark_as_read, name='mark_as_read'),
     path('clear-notifications/', views.clear_notifications, name='clear_notifications'),
+    path('api/highest-selling-product/', views.highest_selling_product_view, name='highest_selling_product'),
+
 
 
 

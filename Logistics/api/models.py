@@ -192,3 +192,14 @@ class Waste(models.Model):
 
     def __str__(self):
         return self.IngredientName
+    
+
+#Dashboard Models
+class ProductSoldRecord(models.Model):
+    record_id = models.AutoField(primary_key=True)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    quantity = models.PositiveIntegerField()
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.product.ProductName} - {self.quantity} sold"
