@@ -39,6 +39,8 @@ urlpatterns = [
     path('ManageProduct/', views.ManageProduct_view, name='ManageProducts'),
     path('edit_product/<int:pk>/', views.EditProduct_view, name='EditProduct'),
     path('delete-product/<int:product_id>/', views.delete_product, name='delete_product'),
+    path('toggle-product-availability/<int:product_id>/', views.toggle_product_availability, name='toggle_product_availability'),
+
 
     #Supplier
     path('KitchenDisplay/', views.KitchenDisplay_view, name='KitchenDisplay'),

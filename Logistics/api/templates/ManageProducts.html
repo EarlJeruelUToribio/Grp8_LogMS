@@ -18,6 +18,7 @@
     <script src="{% static 'js/SearchProducts.js' %}"></script> <!-- Include the SearchProduct.js file -->
     <script src="{% static 'js/DeleteProduct.js' %}"></script> <!-- Include the DeleteProduct.js file -->
     <script src="{% static 'js/CategoryProduct.js' %}"></script>
+    <script src="{% static 'js/ProductAvailable.js' %}"></script>
 {% endblock %}
 
 {% block content %}
@@ -64,10 +65,12 @@
                     {% endif %}
                 </td>
                 <td>
-                    <button class="btn btn-toggle-availability" data-available="{{ product.Status }}" onclick="toggleAvailability(this)">
-                        {{ product.Status }}
-                    </button>
+                    <input type="checkbox" 
+                           class="product-availability-toggle" 
+                           data-product-id="{{ product.Product_ID }}" 
+                           {% if product.is_available %} checked {% endif %} />
                 </td>
+                
 <td>
     <div class="action-buttons d-flex justify-content-center">
         <button type="button" class="btn btn-warning me-2" id="edit-button" data-bs-toggle="modal" data-bs-target="#editProductModal">

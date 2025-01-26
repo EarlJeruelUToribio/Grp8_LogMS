@@ -131,19 +131,20 @@ class ProductCategory(models.Model):
     def __str__(self):
         return self.CategoryName
 
-# Product Model
 class Product(models.Model):
     Product_ID = models.AutoField(primary_key=True)
     ProductName = models.CharField(max_length=255)
     ProductDescription = models.TextField()
-    ProductCategory = models.ForeignKey(ProductCategory, on_delete=models.CASCADE)  # Change this line
+    ProductCategory = models.ForeignKey(ProductCategory, on_delete=models.CASCADE)
     ProductImage = models.ImageField(upload_to='product_images/')
     PurchasePrice = models.DecimalField(max_digits=10, decimal_places=2)
-    Ingredients = models.ManyToManyField('Ingredient', blank=True)  # Changed to ManyToManyField
+    Ingredients = models.ManyToManyField('Ingredient', blank=True)
     Created_At = models.DateTimeField(auto_now_add=True)
+    is_available = models.BooleanField(default=True)
 
     def __str__(self):
         return self.ProductName
+
     
 # ProductOrders Model
 class ProductOrders(models.Model):

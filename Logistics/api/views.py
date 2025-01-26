@@ -580,9 +580,24 @@ def delete_product(request, product_id):
     product.delete()
     return JsonResponse({'message': 'Product deleted successfully.'}, status=204)
         
-    
+
+@csrf_exempt
+@require_http_methods(["POST"])
+def toggle_product_availability(request, product_id):
+    try:
+        product = get_object_or_404(Product, pk=product_id)
+        product.is_available = not product.is_available
+        product.save()
+        return JsonResponse({"success": True, "is_available": product.is_available})
+    except Exception as e:
+        return JsonResponse({"success": False, "error": str(e)}, status=400)
+
+
 def KitchenDisplay_view(request):
     return render(request, 'KitchenDisplay.html')
+
+
+
 
 
 # Supplier Management
