@@ -24,6 +24,7 @@ urlpatterns = [
     path('PlaceOrder/', views.PlaceOrder_view, name='PlaceOrder'),
     path('api/order-counts/', views.order_counts_view, name='order-counts'),
     path('update-stock/<int:item_id>/', views.update_stock, name='update_stock'),
+
     
     #Customer Order
     path('manage-customer-orders/', views.manage_customer_orders_view, name='manage_customer_orders'),
@@ -60,6 +61,8 @@ urlpatterns = [
     path('add-material/', views.AddMaterial_view, name='AddMaterial'),
     path('manage-material/', views.ManageMaterial_view, name='ManageMaterial'),
     path('edit-material/<int:pk>/', views.edit_material, name='edit_material'),
+    path('update-expiry/', views.update_expiry_view, name='update_expiry'),
+
     
     #Maintenance
     path('Maintenance/', views.Maintenance_view, name='Maintenance'),

@@ -12,6 +12,8 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework import generics
+from django.utils.timezone import now
+from django.views.decorators.csrf import csrf_exempt
 from decimal import Decimal
 from .models import IncomingOrder, Notification, Inventory, MaterialCategory, ProductCategory, Waste, Supplier, Order, ProductOrders, Product, Ingredient, Resource, KitchenResource
 from .serializers import (
@@ -400,6 +402,26 @@ def AddMaterialCategory_view(request):
         print(f"Error occurred: {str(e)}")  # Log the error for debugging
         return JsonResponse({'success': False, 'error': 'An error occurred while adding the category.'}, status=500)
 
+
+@require_http_methods(["POST"])
+def update_expiry_view(request):
+    try:
+        perishable_items = Inventory.objects.filter(Perishable=True, Expired=False)
+        expired_count = 0
+
+        for item in perishable_items:
+            if item.DaysBeforeExpiry is not None:
+                expiration_date = item.Created_At + timedelta(days=item.DaysBeforeExpiry)
+                if now() > expiration_date:
+                    item.Expired = True
+                    item.save()
+                    expired_count += 1
+
+        message = f"{expired_count} items marked as expired."
+        return JsonResponse({"success": True, "message": message})
+
+    except Exception as e:
+        return JsonResponse({"success": False, "error": str(e)})
 
 # Product Management
 
