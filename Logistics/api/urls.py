@@ -24,6 +24,7 @@ urlpatterns = [
     path('PlaceOrder/', views.PlaceOrder_view, name='PlaceOrder'),
     path('api/order-counts/', views.order_counts_view, name='order-counts'),
     path('update-stock/<int:item_id>/', views.update_stock, name='update_stock'),
+    path('extend-expiration/<int:item_id>/', views.extend_expiration, name='extend_expiration'),
 
     
     #Customer Order

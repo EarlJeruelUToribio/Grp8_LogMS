@@ -186,6 +186,32 @@ def order_counts_view(request):
         'cancelled': cancelled_count,
     })
 
+
+@require_http_methods(["POST"])
+def extend_expiration(request, item_id):
+    try:
+        inventory_item = get_object_or_404(Inventory, Inventory_ID=item_id)
+
+        if inventory_item.Perishable and inventory_item.DaysBeforeExpiry is not None:
+            # Calculate the new expiration date
+            new_expiration_date = timezone.now() + timedelta(days=inventory_item.DaysBeforeExpiry)
+            inventory_item.Created_At = timezone.now()  # Update created date to now
+            inventory_item.Expired = False  # Mark as active
+            inventory_item.save()
+
+            return JsonResponse({
+                'message': f"Expiration date updated to {new_expiration_date.strftime('%Y-%m-%d')}",
+                'new_expiration_date': new_expiration_date.strftime('%Y-%m-%d')
+            }, status=200)
+
+        return JsonResponse({'error': 'Item is not perishable or does not have valid expiry data.'}, status=400)
+
+    except Exception as e:
+        return JsonResponse({'error': str(e)}, status=500)
+
+
+
+
 # Integration test
 from django.views.decorators.csrf import csrf_exempt
 
