@@ -13,7 +13,7 @@ from rest_framework.response import Response
 from rest_framework import status
 from rest_framework import generics
 from decimal import Decimal
-from .models import Notification, Inventory, MaterialCategory, ProductCategory, Waste, Supplier, Order, ProductOrders, Product, Ingredient, Resource, KitchenResource
+from .models import IncomingOrder, Notification, Inventory, MaterialCategory, ProductCategory, Waste, Supplier, Order, ProductOrders, Product, Ingredient, Resource, KitchenResource
 from .serializers import (
     InventorySerializer, 
     SupplierSerializer, 
@@ -674,6 +674,48 @@ def ManageWaste_view(request):
     else:
         print("Rendering HTML template")  # Debugging line
         return render(request, 'ManageWaste.html')  # Render the HTML template for non-AJAX requests
+
+
+#Customer Order Management
+@require_http_methods(["GET"])
+def manage_customer_orders_view(request):
+    incoming_orders = IncomingOrder.objects.select_related('product').all()
+    context = {"incoming_orders": incoming_orders}
+    return render(request, "ManageCustomerOrder.html", context)
+
+@require_http_methods(["POST"])
+def resolve_order_view(request, order_id):
+    try:
+        order = get_object_or_404(IncomingOrder, pk=order_id)
+        for ingredient in order.product.Ingredients.all():
+            inventory_item = get_object_or_404(Inventory, pk=ingredient.Inventory_ID.Inventory_ID)
+            required_quantity = ingredient.MeasureCount * order.quantity
+            if inventory_item.Current_Stock < required_quantity:
+                return JsonResponse({"success": False, "error": f"Insufficient stock for {ingredient.IngredientName}"}, status=400)
+            inventory_item.Current_Stock -= required_quantity
+            inventory_item.save()
+        order.delete()
+        return JsonResponse({"success": True, "message": "Order resolved successfully."})
+    except Exception as e:
+        return JsonResponse({"success": False, "error": str(e)}, status=400)
+
+@require_http_methods(["POST"])
+def resolve_all_orders_view(request):
+    try:
+        incoming_orders = IncomingOrder.objects.select_related('product').all()
+        for order in incoming_orders:
+            for ingredient in order.product.Ingredients.all():
+                inventory_item = get_object_or_404(Inventory, pk=ingredient.Inventory_ID.Inventory_ID)
+                required_quantity = ingredient.MeasureCount * order.quantity
+                if inventory_item.Current_Stock < required_quantity:
+                    return JsonResponse({"success": False, "error": f"Insufficient stock for {ingredient.IngredientName}"}, status=400)
+                inventory_item.Current_Stock -= required_quantity
+                inventory_item.save()
+            order.delete()
+        return JsonResponse({"success": True, "message": "All orders resolved successfully."})
+    except Exception as e:
+        return JsonResponse({"success": False, "error": str(e)}, status=400)
+
 
 # Resources Management
 

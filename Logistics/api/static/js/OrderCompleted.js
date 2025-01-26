@@ -25,7 +25,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
                 // If the new status is "Completed", send an AJAX request to update stock
                 if (newStatus === "Completed") {
-                    const quantity = parseInt(orderQuantity); // Use the order quantity directly
+                    const quantity = parseFloat(orderQuantity); // Use parseFloat to handle decimal values
 
                     // Send AJAX request to update stock
                     fetch(`/update-stock/${itemId}/`, {
@@ -51,7 +51,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 }
 
                 // Submit the form to change the order status
-                this.submit ();
+                this.submit();
             };
         });
     });

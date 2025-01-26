@@ -18,24 +18,35 @@ urlpatterns = [
 
     # path('inventory-chart/',views.inventory_chart_view, name='inventory-chart'),
 
+
+    #Purchase Order
     path('ManageOrder/', views.ManageOrder_view, name='ManageOrder'),
     path('PlaceOrder/', views.PlaceOrder_view, name='PlaceOrder'),
     path('api/order-counts/', views.order_counts_view, name='order-counts'),
     path('update-stock/<int:item_id>/', views.update_stock, name='update_stock'),
     
+    #Customer Order
+    path('manage-customer-orders/', views.manage_customer_orders_view, name='manage_customer_orders'),
+    path('resolve-order/<int:order_id>/', views.resolve_order_view, name='resolve_order'),
+    path('resolve-all-orders/', views.resolve_all_orders_view, name='resolve_all_orders'),
+
+    #Product
     path('ManageProduct/', views.ManageProduct_view, name='ManageProducts'),
     path('edit_product/<int:pk>/', views.EditProduct_view, name='EditProduct'),
     path('delete-product/<int:product_id>/', views.delete_product, name='delete_product'),
 
+    #Supplier
     path('KitchenDisplay/', views.KitchenDisplay_view, name='KitchenDisplay'),
     path('add-supplier/', views.AddSupplier_view, name='AddSupplier'),
     path('manage-supplier/', views.ManageSupplier_view, name='ManageSupplier'),
     path('edit-supplier/<int:pk>/', views.edit_supplier, name='edit_supplier'),
     
+    #Expiry
     path('expiry-dates/', views.ExpiryDates_view, name='ExpiryDates'),
     path('mark-as-expired/<int:item_id>/', views.mark_as_expired, name='mark_as_expired'),
     path('extend-expiration/<int:item_id>/', views.extend_expiration, name='extend_expiration'),
 
+    #Resources
     path('ManageResources/', views.ManageResources_view, name='ManageResources'),
     path('AddResources/', views.AddResources_view, name='AddResources'),
     path('edit-resource/', views.edit_resource, name='edit_resource'),
@@ -44,18 +55,21 @@ urlpatterns = [
     path('add-kitchen-resource/', views.AddKitchenResource_view, name='AddKitchenResource'),
     path('edit-kitchen-resource/<int:pk>/', views.edit_kitchen_resource, name='edit_kitchen_resource'),
 
+    #Material
     path('delete-material/<int:material_id>/', views.delete_material, name='delete_material'),
     path('add-material/', views.AddMaterial_view, name='AddMaterial'),
     path('manage-material/', views.ManageMaterial_view, name='ManageMaterial'),
     path('edit-material/<int:pk>/', views.edit_material, name='edit_material'),
-
+    
+    #Maintenance
     path('Maintenance/', views.Maintenance_view, name='Maintenance'),
     path('edit-maintenance-resource/', views.edit_maintenance_resource, name='edit_maintenance_resource'),
 
-    
+    #Category
     path('add-material-category/', views.AddMaterialCategory_view, name='add-material-category'),
     path('add-product-category/', views.AddProductCategory_view, name='add-product-category'),
     
+    #Waste
     path('ManageWasteRecords/', views.ManageWaste_view, name='ManageWaste'),
     path('AddWasteRecord/', views.AddWaste_view, name='AddWaste'),  # New URL for adding waste
 
