@@ -2,53 +2,108 @@
 {% load static %}
 
 {% block extra_css %}
-<link rel="stylesheet" href="{% static 'css/ManageSuppliers.css' %}">
+<!-- <link rel="stylesheet" href="{% static 'css/ManageSuppliers.css' %}"> -->
 {% endblock %}
 
 {% block content %}
-<div id="supplier-table" class="container table-container">
-    <h2 class="text-center w-100">SUPPLIER MANAGEMENT</h2>
-    <div class="d-flex align-items-center justify-content-between mb-3">
-        <a href="#" id="add-supplier-button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addSupplierModal">Add Supplier</a>
-        <input type="text" id="search-bar" placeholder="Search Supplier" class="search-bar ms-2" style="width: 300px;">
+<div class="container mt-5">
+    <!-- Breadcrumb -->
+    <ol class="breadcrumb mt-2 mb-1">
+        <li class="breadcrumb-item d-flex align-items-center">
+            <span class="text-muted">Inventory Management</span>
+        </li>
+        <li class="breadcrumb-item active" aria-current="page">Supplier Management</li>
+    </ol>
+
+    <!-- Title and Description -->
+    <h1 class="text" style="color: #6f42c1;">Supplier Management</h1>
+    <p>Manage and organize all suppliers, their details, and payment terms.</p>
+
+    <!-- Card -->
+    <div class="card shadow-sm">
+        <div class="card-body">
+            <!-- Header -->
+            <div class="d-flex justify-content-between mb-3">
+                <!-- Search Bar -->
+                <div>
+                    <input
+                        type="text"
+                        id="search-bar"
+                        class="form-control"
+                        placeholder="Search Supplier"
+                        style="width: 300px;"
+                    >
+                </div>
+
+                <!-- Add Supplier Button -->
+                <div>
+                    <button
+                        class="btn btn-primary"
+                        style="
+                            background-color: #6f42c1;
+                            color: white;
+                            border: none;
+                            border-radius: 8px;
+                            font-weight: 500;
+                            padding: 0.5rem 1rem;
+                            transition: background-color 0.3s ease, color 0.3s ease;
+                        "
+                        onmouseover="this.style.backgroundColor='#5a3795';"
+                        onmouseout="this.style.backgroundColor='#6f42c1';"
+                        data-bs-toggle="modal"
+                        data-bs-target="#addSupplierModal">
+                        <i class="bi bi-plus"></i> Add Supplier
+                    </button>
+                </div>
+            </div>
+
+            <!-- Table -->
+            <div class="table-responsive">
+                <table class="table table-bordered table-hover text-center">
+                    <thead class="table-light">
+                        <tr>
+                            <th>Supplier Name</th>
+                            <th>Supplier Address</th>
+                            <th>Supplier Email</th>
+                            <th>Contact Number</th>
+                            <th>Payment Terms</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="supplier-table-body">
+                        {% for supplier in suppliers %}
+                        <tr>
+                            <td>{{ supplier.SupplierName }}</td>
+                            <td>{{ supplier.SupplierDesc }}</td>
+                            <td>{{ supplier.SupplierNumber }}</td>
+                            <td>{{ supplier.contact_number }}</td>
+                            <td>{{ supplier.PaymentTerms }}</td>
+                            <td>{{ supplier.Status }}</td>
+                            <td>
+                                <div class="action-buttons d-flex justify-content-center">
+                                    <button
+                                        type="button"
+                                        class="btn btn-warning me-2"
+                                        data-supplier-id="{{ supplier.Supplier_ID }}"
+                                        data-supplier-name="{{ supplier.SupplierName }}"
+                                        data-supplier-address="{{ supplier.SupplierDesc }}"
+                                        data-supplier-email="{{ supplier.SupplierNumber }}"
+                                        data-contact-number="{{ supplier.contact_number }}"
+                                        data-payment-terms="{{ supplier.PaymentTerms }}"
+                                        data-bs-toggle="modal"
+                                        data-bs-target="#editSupplierModal">
+                                        <i class="bi bi-pencil-square"></i>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
-    <div class="table-responsive">
-        <table class="table table-bordered table-hover text-center">
-            <thead class="table-light"> 
-            <tr>
-                <th>Supplier Name</th>
-                <th>Supplier Address</th>
-                <th>Supplier Email</th>
-                <th>Contact Number</th>
-                <th>Payment Terms</th>
-                <th>Status</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody id="supplier-table-body">
-            {% for supplier in suppliers %}
-            <tr>
-                <td>{{ supplier.SupplierName }}</td>
-                <td>{{ supplier.SupplierDesc }}</td>
-                <td>{{ supplier.SupplierNumber }}</td>
-                <td>{{ supplier.contact_number }}</td>
-                <td>{{ supplier.PaymentTerms }}</td>
-                <td>{{ supplier.Status }}</td>
-                <td>
-                    <button type="button" class="btn btn-secondary edit-button" 
-                            data-supplier-id="{{ supplier.Supplier_ID }}" 
-                            data-supplier-name="{{ supplier.SupplierName }}" 
-                            data-supplier-address="{{ supplier.SupplierDesc }}" 
-                            data-supplier-email="{{ supplier.SupplierNumber }}" 
-                            data-contact-number="{{ supplier.contact_number }}" 
-                            data-payment-terms="{{ supplier.PaymentTerms }}" 
-                            data-bs-toggle="modal" 
-                            data-bs-target="#editSupplierModal"> <i class="bi bi-pencil-square"></i></button>
-                </td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
 </div>
 
 <!-- Modal for Add Supplier -->
@@ -218,6 +273,9 @@
     </div>
 </div>
 
+{% endblock %}
+
+{% block extra_js %}
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> <!-- Include jQuery -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script> <!-- Include Bootstrap JS -->
 <script>

@@ -11,91 +11,155 @@
 <!-- Material Table -->
 
 
-<div id="material-table" class="container table-container">
-    <h2 class="text-center w-100">MATERIAL INVENTORY</h2>
-    <div class="d-flex align-items-center justify-content-between mb-3">
-        <div>
-            <a href="#" id="add-category-button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#addCategoryModal"> 
-                Add Category
-            </a>
-            <a href="#" id="add-material-button" class="btn btn-primary ms-2" data-bs-toggle="modal" data-bs-target="#addMaterialModal">
-                Add Material
-            </a>
-        </div>
-        <div class="d-flex align-items-center">
-            <input type="text" id="search-input" class="form-control me-2" placeholder="Search materials..." onkeyup="searchMaterials()" style="width: 300px;">
-        </div>
-    </div>
-    
-        <div class="table-responsive">
-        <table class="table table-bordered table-hover text-center">
-                <thead class="table-light"> 
-            <tr>
-                <th>Item Name</th>
-                <th>Description</th>
-                <th>Category</th>
-                <th>Unit of Measure</th> 
-                <th>Purchase Price</th>
-                <th>Current Stock</th>
-                <th>Reorder Level</th>
-                <th>Expiration Date</th>
-                <th>Expiry</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for material in materials %}
-            <tr>
-                <td>{{ material.ItemName }}</td>
-                <td>{{ material.ItemDescription }}</td>
-                <td>{{ material.ItemCategory }}</td>  <!-- Change this line -->
-                <td>{{ material.UnitOfMeasure }}</td>
-                <td>{{ material.PurchasePrice }}</td>
-                <td>{{ material.Current_Stock }}</td>
-                <td>{{ material.ReorderLevel }}</td>
-                <td>
-                    {% if material.expiration_date %}
-                        {{ material.expiration_date|date:"Y-m-d" }}
-                    {% else %}
-                        N/A
-                    {% endif %}
-                </td>
-                <td>
-                    {% if material.Expired %}
-                        <span class="text-danger">Expired</span>
-                    {% else %}
-                        <span class="text-success">Active</span>
-                    {% endif %}
-                </td>
-                <td>
-                    <div class="action-buttons">
-                    <button type="button" class="btn btn-primary edit-material-button" 
-                            data-bs-toggle="modal" 
-                            data-bs-target="#editMaterialModal"
-                            data-item-id="{{ material.Inventory_ID }}"
-                            data-item-name="{{ material.ItemName }}" 
-                            data-item-description="{{ material.ItemDescription }}" 
-                            data-item-category="{{ material.ItemCategory }}" 
-                            data-unit-of-measure="{{ material.UnitOfMeasure }}" 
-                            data-purchase-price="{{ material.PurchasePrice }}" 
-                            data-reorder-level="{{ material.ReorderLevel }}" 
-                            data-perishable="{{ material.Perishable }}" 
-                            data-days-before-expiry="{{ material.DaysBeforeExpiry }}">
-                            <i class="bi bi-pencil-square"></i>
+<div class="container mt-5">
+	<!-- Breadcrumb -->
+	<ol class="breadcrumb mt-2 mb-1">
+		<li class="breadcrumb-item d-flex align-items-center">
+			<span class="text-muted">Inventory Management</span>
+		</li>
+		<li class="breadcrumb-item active" aria-current="page">Material Inventory</li>
+	</ol>
 
-                    </button>
-                    <button type="button" class="btn btn-primary delete-material-button" 
-                            data-item-id="{{ material.Inventory_ID }}" 
-                            data-item-name="{{ material.ItemName }}">
-                            <i class="bi bi-trash"></i>
+	<!-- Title Description -->
+	<h1 class="text" style="color: #6f42c1;">Material Inventory</h1>
+	<p>Manage and track all materials, categories, and stock levels effectively.</p>
 
+	<!-- Card -->
+	<div class="card shadow-sm">
+		<!-- Card Body -->
+		<div class="card-body">
+			<!-- Header Buttons -->
+            <div class="d-flex justify-content-between mb-3">
+                <!-- Search Input -->
+                <div class="d-flex align-items-center">
+                    <input
+                    type="text"
+                    id="search-input"
+                    class="form-control  border-dark-subtle"
+                    placeholder="Search materials..."
+                    onkeyup="searchMaterials()"
+                    style="width: 300px;"
+                >
+                </div>
+            
+                <!-- Action Buttons -->
+                <div class="d-flex align-items-center">
+                    <!-- Add Category Button -->
+                    <button
+                        class="btn btn-secondary"
+                        style="
+                            background-color: #6c757d;
+                            color: white;
+                            border: none;
+                            border-radius: 8px;
+                            font-weight: 500;
+                            padding: 0.5rem 1rem 0.5rem 0.5rem;
+                            transition: background-color 0.3s ease, color 0.3s ease;
+                        "
+                        onmouseover="this.style.backgroundColor='#565e64';"
+                        onmouseout="this.style.backgroundColor='#6c757d';"
+                        data-bs-toggle="modal"
+                        data-bs-target="#addCategoryModal">
+                        <i class="bi bi-plus"></i> Add Category
                     </button>
-                </td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-</d>
+            
+                    <!-- Add Material Button -->
+                    <button
+                        class="btn btn-primary ms-2"
+                        style="
+                            background-color: #6f42c1;
+                            color: white;
+                            border: none;
+                            border-radius: 8px;
+                            font-weight: 500;
+                            padding: 0.5rem 1rem 0.5rem 0.5rem;
+                            transition: background-color 0.3s ease, color 0.3s ease;
+                        "
+                        onmouseover="this.style.backgroundColor='#5a3795';"
+                        onmouseout="this.style.backgroundColor='#6f42c1';"
+                        data-bs-toggle="modal"
+                        data-bs-target="#addMaterialModal">
+                        <i class="bi bi-plus"></i> Add Material
+                    </button>
+                </div>
+            </div>
+            
+			<!-- Table -->
+			<div class="table-responsive">
+				<table class="table table-bordered table-hover text-center">
+					<thead class="table-light">
+						<tr>
+							<th class="text-center">Item Name</th>
+							<th class="text-center">Description</th>
+							<th class="text-center">Category</th>
+							<th class="text-center">Unit of Measure</th>
+							<th class="text-center">Purchase Price</th>
+							<th class="text-center">Current Stock</th>
+							<th class="text-center">Reorder Level</th>
+							<th class="text-center">Expiration Date</th>
+							<th class="text-center">Expiry</th>
+							<th class="text-center">Actions</th>
+						</tr>
+					</thead>
+					<tbody>
+						{% for material in materials %}
+						<tr>
+							<td>{{ material.ItemName }}</td>
+							<td>{{ material.ItemDescription }}</td>
+							<td>{{ material.ItemCategory }}</td>
+							<td>{{ material.UnitOfMeasure }}</td>
+							<td>{{ material.PurchasePrice }}</td>
+							<td>{{ material.Current_Stock }}</td>
+							<td>{{ material.ReorderLevel }}</td>
+							<td>
+								{% if material.expiration_date %}
+									{{ material.expiration_date|date:"Y-m-d" }}
+								{% else %}
+									N/A
+								{% endif %}
+							</td>
+							<td>
+								{% if material.Expired %}
+									<span class="text-danger">Expired</span>
+								{% else %}
+									<span class="text-success">Active</span>
+								{% endif %}
+							</td>
+							<td class="text-center">
+								<!-- Edit Button -->
+								<button
+									class="btn btn-warning"
+									data-bs-toggle="modal"
+									data-bs-target="#editMaterialModal"
+									data-item-id="{{ material.Inventory_ID }}"
+									data-item-name="{{ material.ItemName }}"
+									data-item-description="{{ material.ItemDescription }}"
+									data-item-category="{{ material.ItemCategory }}"
+									data-unit-of-measure="{{ material.UnitOfMeasure }}"
+									data-purchase-price="{{ material.PurchasePrice }}"
+									data-reorder-level="{{ material.ReorderLevel }}"
+									data-perishable="{{ material.Perishable }}"
+									data-days-before-expiry="{{ material.DaysBeforeExpiry }}"
+                                    style="background-color: #ffc107; color: white; border-radius: 8px;">
+                                    
+									<i class="bi bi-pencil-square" ></i>
+								</button>
+								<!-- Delete Button -->
+								<button
+									class="btn btn-danger"
+									data-item-id="{{ material.Inventory_ID }}"
+									data-item-name="{{ material.ItemName }}">
+									<i class="bi bi-trash"></i>
+								</button>
+							</td>
+						</tr>
+						{% endfor %}
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+</div>
 
 
 <!-- Add Material Modal -->

@@ -6,38 +6,90 @@
 {% endblock %}
 
 {% block content %}
-<section class="waste-section">
-    <h2 class="text-center mb-4">WASTE MANAGEMENT</h2>
-    <div class="waste-header">
-        <button class="record-waste-btn" data-bs-toggle="modal" data-bs-target="#recordWasteModal">Record Waste</button>
-        <input type="text" id="search-bar" placeholder="Search by Waste ID" class="search-bar">
+<div class="container mt-5">
+    <!-- Breadcrumb -->
+    <ol class="breadcrumb mt-2 mb-1">
+        <li class="breadcrumb-item d-flex align-items-center">
+            <span class="text-muted">Inventory Management</span>
+        </li>
+        <li class="breadcrumb-item active" aria-current="page">Waste Management</li>
+    </ol>
+
+    <!-- Title and Description -->
+    <h1 class="text" style="color: #6f42c1;">Waste Management</h1>
+    <p>Track and manage records of wasted inventory items effectively.</p>
+
+    <!-- Card -->
+    <div class="card shadow-sm">
+        <div class="card-body">
+            <!-- Header -->
+            <div class="d-flex justify-content-between mb-3">
+                <!-- Search Bar -->
+                <div>
+                    <input
+                        type="text"
+                        id="search-bar"
+                        class="form-control"
+                        placeholder="Search by Waste ID"
+                        style="width: 300px;"
+                    >
+                </div>
+            
+                <!-- Action Buttons -->
+                <div>
+                    <button
+                        class="btn btn-primary"
+                        style="
+                            background-color: #6f42c1;
+                            color: white;
+                            border: none;
+                            border-radius: 8px;
+                            font-weight: 500;
+                            padding: 0.5rem 1rem;
+                            transition: background-color 0.3s ease, color 0.3s ease;
+                        "
+                        onmouseover="this.style.backgroundColor='#5a3795';"
+                        onmouseout="this.style.backgroundColor='#6f42c1';"
+                        data-bs-toggle="modal"
+                        data-bs-target="#recordWasteModal">
+                        <i class="bi bi-plus"></i> Record Waste
+                    </button>
+                </div>
+            </div>
+            
+                
+
+            <!-- Table -->
+            <div class="table-responsive">
+                <table class="table table-bordered table-hover text-center">
+                    <thead class="table-light">
+                        <tr>
+                            <th>Waste ID</th>
+                            <th>Ingredient Name</th>
+                            <th>Date & Time</th>
+                            <th>Quantity Lost</th>
+                            <th>Cause of Loss</th>
+                            <th>Action Taken</th>
+                        </tr>
+                    </thead>
+                    <tbody id="waste-table-body">
+                        {% for record in waste_records %}
+                        <tr class="waste-row">
+                            <td>{{ record.Waste_ID }}</td>
+                            <td>{{ record.IngredientName }}</td>
+                            <td>{{ record.DateOfIncident }}</td>
+                            <td>{{ record.QuantityLost }} {{ record.UnitOfMeasurement }}</td>
+                            <td>{{ record.CauseOfLoss }}</td>
+                            <td>{{ record.ActionTaken }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
-    <div class="table-responsive">
-        <table class="table table-bordered table-hover text-center">
-            <thead class="table-light"> 
-            <tr>
-                <th>Waste ID</th>
-                <th>Ingredient Name</th>
-                <th>Date & Time</th>
-                <th>Quantity Lost</th>
-                <th>Cause of Loss</th>
-                <th>Action Taken</th>
-            </tr>
-        </thead>
-        <tbody id="waste-table-body">
-            {% for record in waste_records %}
-            <tr class="waste-row">
-                <td>{{ record.Waste_ID }}</td>
-                <td>{{ record.IngredientName }}</td>
-                <td>{{ record.DateOfIncident }}</td>
-                <td>{{ record.QuantityLost }} {{ record.UnitOfMeasurement }}</td>
-                <td>{{ record.CauseOfLoss }}</td>
-                <td>{{ record.ActionTaken }}</td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-</section>
+</div>
+
 
 <!-- Modal for Record Waste -->
 <div class="modal fade" id="recordWasteModal" tabindex="-1" aria-labelledby="recordWasteModalLabel" aria-hidden="true">

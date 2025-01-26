@@ -3,114 +3,141 @@
 {% block extra_css %}
 <link rel="stylesheet" href="{% static 'css/ManageOrders.css' %}">
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<!-- <link rel="stylesheet" href="{% static 'css/global.css'%}"> -->
 
 {% endblock %}
 {% block content %}
-<section id="manage-order-section">
-    <div class="container mt-5">
-        <div class="order-status-container">
-            {% with placed=0 shipped=0 completed=0 cancelled=0 %}
-                {% for order in orders %}
-                    {% if order.OrderStatus == "Placed" %}
-                        {% with placed=placed|add:1 %}
-                        {% endwith %}
-                    {% elif order.OrderStatus == "Shipped" %}
-                        {% with shipped=shipped|add:1 %}
-                        {% endwith %}
-                    {% elif order.OrderStatus == "Completed" %}
-                        {% with completed=completed|add:1 %}
-                        {% endwith %}
-                    {% elif order.OrderStatus == "Cancelled" %}
-                        {% with cancelled=cancelled|add:1 %}
-                        {% endwith %}
-                    {% endif %}
-                {% endfor %}
-                <div class="order-status-box">Order Placed: {{ placed }}</div>
-                <div class="order-status-box">Order Shipped: {{ shipped }}</div>
-                <div class="order-status-box">Order Completed: {{ completed }}</div>
-                <div class="order-status-box">Order Cancelled: {{ cancelled }}</div>
-            {% endwith %}
-            
-        </div>
+<!-- Begin: Container -->
+<div class="container mt-5">
+    <!-- Begin: Breadcrumb -->
+    <ol class="breadcrumb mt-2 mb-1">
+        <li class="breadcrumb-item d-flex align-items-center">
+            <span class="text-muted">Orders Management</span>
+        </li>
+    </ol>
+    <!-- End: Breadcrumb -->
+
+    <!-- Begin: Title Description -->
+    <h1 id="manage-order-title" class="text" style="color: #6f42c1;">Orders Management</h1>
+    <p id="manage-order-description">Manage and track all your placed, shipped, completed, and canceled orders.</p>
+    <!-- End: Title Description -->
+    <div class="order-status-container">
+        {% with placed=0 shipped=0 completed=0 cancelled=0 %}
+            {% for order in orders %}
+                {% if order.OrderStatus == "Placed" %}
+                    {% with placed=placed|add:1 %}
+                    {% endwith %}
+                {% elif order.OrderStatus == "Shipped" %}
+                    {% with shipped=shipped|add:1 %}
+                    {% endwith %}
+                {% elif order.OrderStatus == "Completed" %}
+                    {% with completed=completed|add:1 %}
+                    {% endwith %}
+                {% elif order.OrderStatus == "Cancelled" %}
+                    {% with cancelled=cancelled|add:1 %}
+                    {% endwith %}
+                {% endif %}
+            {% endfor %}
+            <div class="order-status-box">Order Placed: {{ placed }}</div>
+            <div class="order-status-box">Order Shipped: {{ shipped }}</div>
+            <div class="order-status-box">Order Completed: {{ completed }}</div>
+            <div class="order-status-box">Order Cancelled: {{ cancelled }}</div>
+        {% endwith %}
         
-        <section class="orders-section">
-            <h2 class="text-center mb-4">ORDERS MANAGEMENT</h2>
-            <div class="orders-header">
-                <button
-                class="btn btn-primary"
-                style="
-                    background-color: #6f42c1;
-                    color: white;
-                    border: none;
-                    border-radius: 8px;
-                    font-weight: 500;
-                    padding: 0.5rem 1rem 0.5rem 0.5rem;
-                    transition: background-color 0.3s ease, color 0.3s ease;
-                "
-                onmouseover="this.style.backgroundColor='#5a3795';"
-                onmouseout="this.style.backgroundColor='#6f42c1';"
-                data-bs-toggle="modal"
-                data-bs-target="#placeOrderModal">
-                <!-- style="border-radius: 8px; font-weight: 600; font-size: 0.875rem; padding: 0.5rem 1rem; -->
-                Place Order
-            </button>
-                <input type="text" id="search-bar" placeholder="Search by Order ID" class="search-bar">
-            </div>
-            <div class="table-responsive">
-            <table class="table table-bordered table-hover text-center">
-                <thead class="table-light">
-                    <tr>
-                        <th>Transaction No.</th>
-                        <th>Item</th>
-                        <th>Quantity</th>
-                        <th>Supplier Name</th>
-                        <th>Status</th>
-                        <th>Action</th>
-                    </tr>
-                </thead>
-                <tbody id="orders-table-body">
-                    {% for order in orders %}
-                    <tr>
-                        <td>{{ order.Order_ID }}</td>
-                        <td>{{ order.Items.ItemName }}</td>
-                        <td>{{ order.Quantity }}</td>
-                        <td>{{ order.Supplier.SupplierName }}</td>
-                        <td>{{ order.OrderStatus }}</td>
-                        <td>
-                            <button 
-                            type="button" 
-                            class="btn btn-secondary view-order-btn" 
-                            data-bs-toggle="modal" 
-                            data-bs-target="#viewOrderModal" 
-                            data-order-id="{{ order.Order_ID }}"
-                            data-items="{{ order.Items.ItemName }}"
-                            data-quantity="{{ order.Quantity }}"
-                            data-supplier="{{ order.Supplier.SupplierName }}"
-                            data-status="{{ order.OrderStatus }}">
-                            <i class="fas fa-eye"></i> 
-                        </button>
-                                <button 
-                                type="button" 
-                                class="btn btn-warning change-status-btn" 
-                                data-bs-toggle="modal" 
-                                data-bs-target="#changeStatusModal" 
-                                data-order-id="{{ order.Order_ID }}" 
-                                data-current-status="{{ order.OrderStatus }}"
-                                data-item-id="{{ order.Items.Inventory_ID }}"
-                                data-item-name="{{ order.Items.ItemName }}"
-                                data-quantity="{{ order.Quantity }}"
-                                data-checkout-method="{{ order.CheckoutMethod }}"
-                                data-base-price="{{ order.Items.PurchasePrice }}">  <!-- Add this line -->
-                                <i class="fas fa-edit"></i> 
-                            </button>
-                        </td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-        </section>
     </div>
-</section>
+    <!-- Begin: Card -->
+    <div class="card shadow-sm">
+        <!-- Begin: Card Body -->
+        <div class="card-body" >
+            <!-- Begin: Header Buttons -->
+            <div class="d-flex justify-content-end mb-3">
+                <!-- Begin: Place Order Button -->
+                <button
+                    id="place-order-button"
+                    class="btn btn-primary"
+                    style="
+                        background-color: #6f42c1;
+                        color: white;
+                        border: none;
+                        border-radius: 8px;
+                        font-weight: 500;
+                        padding: 0.5rem 1rem;
+                        transition: background-color 0.3s ease, color 0.3s ease;
+                    "
+                    onmouseover="this.style.backgroundColor='#5a3795';"
+                    onmouseout="this.style.backgroundColor='#6f42c1';"
+                    data-bs-toggle="modal"
+                    data-bs-target="#placeOrderModal"
+                >
+                    <i class="bi bi-plus"></i> Place Order
+                </button>
+                <!-- End: Place Order Button -->
+            </div>
+            <!-- End: Header Buttons -->
+
+            <!-- Begin: Table -->
+            <div class="table-responsive">
+                <table id="orders-table" class="table table-bordered table-hover text-center" >
+                    <thead class="table-light">
+                        <tr>
+                            <th class="text-center">Transaction No.</th>
+                            <th class="text-center">Item</th>
+                            <th class="text-center">Quantity</th>
+                            <th class="text-center">Supplier Name</th>
+                            <th class="text-center">Status</th>
+                            <th class="text-center">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="orders-table-body">
+                        {% for order in orders %}
+                        <tr>
+                            <td>{{ order.Order_ID }}</td>
+                            <td>{{ order.Items.ItemName }}</td>
+                            <td>{{ order.Quantity }}</td>
+                            <td>{{ order.Supplier.SupplierName }}</td>
+                            <td>{{ order.OrderStatus }}</td>
+                            <td>
+                                <button
+                                    type="button"
+                                    class="btn btn-secondary view-order-btn"
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#viewOrderModal"
+                                    data-order-id="{{ order.Order_ID }}"
+                                    data-items="{{ order.Items.ItemName }}"
+                                    data-quantity="{{ order.Quantity }}"
+                                    data-supplier="{{ order.Supplier.SupplierName }}"
+                                    data-status="{{ order.OrderStatus }}"
+                                >
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                                <button
+                                    type="button"
+                                    class="btn btn-warning change-status-btn"
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#changeStatusModal"
+                                    data-order-id="{{ order.Order_ID }}"
+                                    data-current-status="{{ order.OrderStatus }}"
+                                    data-item-id="{{ order.Items.Inventory_ID }}"
+                                    data-item-name="{{ order.Items.ItemName }}"
+                                    data-quantity="{{ order.Quantity }}"
+                                    data-checkout-method="{{ order.CheckoutMethod }}"
+                                    data-base-price="{{ order.Items.PurchasePrice }}"
+                                >
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <!-- End: Table -->
+        </div>
+        <!-- End: Card Body -->
+    </div>
+    <!-- End: Card -->
+</div>
+<!-- End: Container -->
 
 <!-- Modal for Changing Status -->
 <div class="modal fade" id="changeStatusModal" tabindex="-1" aria-labelledby="changeStatusModalLabel" aria-hidden="true">
@@ -159,8 +186,6 @@
                 <p><strong>Status:</strong> <span id="view-order-status"></span></p>
                 <!-- <p><strong>Base Price:</strong> <span id="view-order-base-price"></span></p>
                 <p><strong>Total Cost:</strong> <span id="view-order-total-cost"></span></p>                 -->
-
-            </div>
             </div>
         </div>
     </div>

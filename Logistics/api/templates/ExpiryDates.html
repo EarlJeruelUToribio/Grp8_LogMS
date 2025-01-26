@@ -7,54 +7,71 @@
 
 {% block content %}
 <div class="container mt-5">
-    <section class="products-section">
-        <h2 class="text-center mb-5 ">ITEM EXPIRATION MANAGEMENT</h2>
-        <div class="product-header">
-            <input type="text" id="search-bar" placeholder="Search Item" class="search-bar">
+    <!-- Breadcrumb -->
+    <ol class="breadcrumb mt-2 mb-1">
+        <li class="breadcrumb-item d-flex align-items-center">
+            <span class="text-muted">Inventory Management</span>
+        </li>
+        <li class="breadcrumb-item active" aria-current="page">Item Expiration Management</li>
+    </ol>
+
+    <!-- Title and Description -->
+    <h1 class="text" style="color: #6f42c1;">Item Expiration Management</h1>
+    <p>Monitor and manage the expiration status of perishable inventory items.</p>
+
+    <!-- Card -->
+    <div class="card shadow-sm">
+        <div class="card-body">
+            <!-- Search Bar -->
+            <div class="d-flex justify-content-between mb-3">
+                <input
+                    type="text"
+                    id="search-bar"
+                    class="form-control"
+                    placeholder="Search Item"
+                    style="width: 300px;"
+                >
+            </div>
+
+            <!-- Table -->
+            <div class="table-responsive">
+                <table class="table table-bordered table-hover text-center">
+                    <thead class="table-light">
+                        <tr>
+                            <th>Item ID</th>
+                            <th>Item Name</th>
+                            <th>Expiration Date</th>
+                            <th>Expiry</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for item in perishable_items %}
+                        <tr data-item-id="{{ item.Inventory_ID }}">
+                            <td>{{ item.Inventory_ID }}</td>
+                            <td>{{ item.ItemName }}</td>
+                            <td>
+                                {% if item.expiration_date %}
+                                    {{ item.expiration_date|date:"Y-m-d" }}
+                                {% else %}
+                                    N/A
+                                {% endif %}
+                            </td>
+                            <td>
+                                {% if item.Expired %}
+                                    <span class="text-danger">Expired</span>
+                                {% else %}
+                                    <span class="text-success">Active</span>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
         </div>
-        <div class="table-responsive">
-            <table class="table table-bordered table-hover text-center">
-                <thead class="table-light">  
-                <tr>
-                    <th>Item ID</th>
-                    <th>Item Name</th>
-                    <th>Expiration Date</th>
-                    <th>Expiry</th>
-                    <!-- <th>Manage Expiration</th> -->
-                </tr>
-            </thead>
-            <tbody>
-                {% for item in perishable_items %}
-                <tr data-item-id="{{ item.Inventory_ID }}">
-                    <td>{{ item.Inventory_ID }}</td>
-                    <td>{{ item.ItemName }}</td>
-                    <td>
-                        {% if item.expiration_date %}
-                            {{ item.expiration_date|date:"Y-m-d" }}  <!-- Display the actual expiration date -->
-                        {% else %}
-                            N/A
-                        {% endif %}
-                    </td>
-                    <td>
-                        {% if item.Expired %}
-                            <span class="text-danger">Expired</span>
-                        {% else %}
-                            <span class="text-success">Active</span>
-                        {% endif %}
-                    </td>
-                    <!-- <td>
-                        <button class="manage-btn" onclick="toggleManageOptions(this)"> Manage</button>
-                        <div class="manage-options" style="display:none;">
-                            <button class="extend-btn" onclick="extendExpiration({{ item.Inventory_ID }})">Extend</button>
-                            <button class="expired-btn" onclick="markAsExpired({{ item.Inventory_ID }})">Mark as Expired</button>
-                        </div>
-                    </td> -->
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-    </section>
+    </div>
 </div>
+
 {% endblock %}
 
 {% block extra_js %}

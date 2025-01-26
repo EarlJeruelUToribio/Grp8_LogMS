@@ -20,15 +20,7 @@
 
 
 
-body, html {
-    height: 100%;
-    margin: 0;
-    background-color: #f9f9f9; /* Light background color */
-    display: flex;
-    flex-direction: column; /* Stack content */
-    justify-content: flex-start; /* Align to the top */
-    align-items: center; /* Center horizontally */
-}
+
 
 /* Adjust header layout */
 .product-header {

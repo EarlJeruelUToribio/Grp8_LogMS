@@ -39,7 +39,7 @@ body {
 
 /* Main content styles in sidebar always remember*/
 .main-content {
-    margin-left: 0;
+    margin-left: 500px;
     /* Default margin to make space for the sidebar */
     margin-top: 20px;
     padding: 20px;

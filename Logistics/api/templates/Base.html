@@ -1,57 +1,56 @@
 {% load static %}
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<!-- Iconscout CSS -->
+		<link href="https://unicons.iconscout.com/release/v4.0.0/css/line.css" rel="stylesheet" />
 
-     <!----===== Iconscout CSS ===== -->
-     <link href="https://unicons.iconscout.com/release/v4.0.0/css/line.css" rel="stylesheet">
-      <!-- Bootstrap CSS -->
-      <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+		<!-- Bootstrap CSS -->
+		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
 
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet">
+		<!-- Bootstrap Icons -->
+		<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
 
-    <!-- Font Awesome -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+		<!-- Google Fonts -->
+		<link href="https://fonts.googleapis.com/css?family=Poppins" rel="stylesheet" />
 
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css?family=Poppins" rel="stylesheet">
+		<!-- Font Awesome -->
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+		<!-- Custom CSS -->
+		<link rel="stylesheet" href="{% static 'css/static.css' %}" />
+		<link rel="stylesheet" href="{% static 'css/global.css' %}" />
 
-     <!-- Font Awesome -->
-     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-     
-    <!-- Custom CSS -->
-    <link rel="stylesheet" href="{% static 'css/static.css' %}">
-    <link rel="stylesheet" href="{% static 'css/global.css' %}">
-
-
-
-
-    <!-- Additional CSS for specific pages -->
-    {% block extra_css %}
-    {% endblock %}
-</head>
-<body>
-        
-     <!-- Sidebar -->
-    {% include 'sidebar.html' %}
-
-        <main>
-            {% block content %}
-            {% endblock %}
-        </main>
-    </div>
+        <link
+		rel="icon"
+		sizes="192x192"
+		href="https://static.wixstatic.com/media/967817_089802794d9a48e59cbefaaa7986aa66%7Emv2.png/v1
+		/fill/w_192%2Ch_192%2Clg_1%2Cusm_0.66_1.00_0.01/967817_089802794d9a48e59cbefaaa7986aa66%7Emv2.png"
+		type="image/png" />
 
 
-        
-    <!-- Bootstrap JS Bundle -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+		<!-- Additional CSS for specific pages -->
+		{% block extra_css %} 
+        {% endblock %}
+        <title>{% block title %}Logistics Management{% endblock %}</title>
 
-    <!-- Bootstrap JS (bundle includes both Bootstrap's JS and Popper.js) -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+	</head>
+	<body>
+		<!-- Sidebar -->
+		
+		<div class="container">{% include 'sidebar.html' %}</div>
 
-    {% block extra_js %}
-    {% endblock %}
+         <!-- Main content block -->
+		<div class="main-content">
+			{% block content %}
+			<!-- Default content goes here -->
+			{% endblock %}
+		</div>
 
+		<!-- Bootstrap JS Bundle -->
+		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
-</body>
+		<!-- Additional JavaScript for specific pages -->
+		{% block extra_js %} {% endblock %}
+	</body>
 </html>
