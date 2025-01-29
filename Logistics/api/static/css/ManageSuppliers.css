@@ -269,3 +269,9 @@ table tr:nth-child(even) {
     margin-right:30px;
     display: block; /* Ensures it's treated as a block element for centering */
 }
+
+/* Hide the Payment Terms column */
+th:nth-child(5), /* Adjust the number (5) to match the column's position in your table */
+td:nth-child(5) {
+    display: none;
+}
