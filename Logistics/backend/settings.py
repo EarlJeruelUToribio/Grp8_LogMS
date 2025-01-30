@@ -67,11 +67,8 @@ MIDDLEWARE = [
 ]
 
 CORS_ALLOWED_ORIGINS = [
-    "http://127.0.0.1:8002/",
-    "http://localhost:8002/",
-    "http://192.168.1.82:8002/", # Allow requests from the reservation service
     'http://127.0.0.1:8002',
-    'http://192.168.137.25:800  2',  # Reservation project's address
+    'http://192.168.137.25:8002',  # Reservation project's address
 ]
 
 CORS_ALLOW_HEADERS = [

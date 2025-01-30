@@ -17,6 +17,8 @@ urlpatterns = [
     #Integration test
     path('payment-record/', views.payment_record_view, name='payment-record'),
     path('create-checkout-session/', views.create_checkout_session, name='create-checkout-session'),
+    path('api/receive-order/', views.receive_order, name='receive_order'),
+
 
 
     # path('inventory-chart/',views.inventory_chart_view, name='inventory-chart'),

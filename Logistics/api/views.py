@@ -229,7 +229,7 @@ def extend_expiration(request, item_id):
 
 
 
-# Integration test
+# Integration
 from django.views.decorators.csrf import csrf_exempt
 
 @csrf_exempt
@@ -293,6 +293,39 @@ def get_min_order_qty(request):
 class OrderDetailView(generics.RetrieveAPIView):
     queryset = Order.objects.all()
     serializer_class = OrderSerializer
+
+@csrf_exempt
+def receive_order(request):
+    if request.method == 'POST':
+        try:
+            # Parse incoming JSON data
+            data = json.loads(request.body)
+
+            # Extract necessary fields
+            product_id = data.get('product_id')
+            quantity = data.get('quantity')
+
+            # Validate required fields
+            if not product_id or not quantity:
+                return JsonResponse({'success': False, 'error': 'Missing required fields.'}, status=400)
+
+            # Ensure product exists
+            product = get_object_or_404(Product, Product_ID=product_id)
+
+            # Create Incoming Order
+            new_order = IncomingOrder.objects.create(
+                product=product,
+                quantity=quantity
+            )
+
+            return JsonResponse({'success': True, 'message': 'Order received successfully!', 'order_id': new_order.order_id}, status=201)
+
+        except json.JSONDecodeError:
+            return JsonResponse({'success': False, 'error': 'Invalid JSON format.'}, status=400)
+        except Exception as e:
+            return JsonResponse({'success': False, 'error': str(e)}, status=500)
+
+    return JsonResponse({'success': False, 'error': 'Invalid request method.'}, status=405)
 
 
 # Material Management
