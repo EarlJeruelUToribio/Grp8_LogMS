@@ -1,0 +1,47 @@
+{% extends 'Base.html' %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/CustomerOrder.css' %}">
+{% endblock %}
+
+{% block content %}
+<section class="customer-order-section">
+    <h2 class="text-center mb-4">Manage Customer Orders</h2>
+    <div class="order-header">
+        <button class="btn btn-danger" id="resolve-all-btn">Resolve All</button>
+    </div>
+    <div class="table-responsive">
+        <table class="table table-bordered table-hover text-center">
+            <thead>
+                <tr>
+                    <th>Order ID</th>
+                    <th>Product Name</th>
+                    <th>Quantity</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for order in incoming_orders %}
+                <tr>
+                    <td>{{ order.order_id }}</td>
+                    <td>{{ order.product.ProductName }}</td>
+                    <td>{{ order.quantity }}</td>
+                    <td>
+                        <button class="btn btn-primary resolve-btn" data-order-id="{{ order.order_id }}">Resolve</button>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</section>
+<script src="{% static 'js/ResolveCustomerOrder.js' %}"></script>
+<script>
+    const csrfToken = "{{ csrf_token }}";
+</script>
+
+{% endblock %}
+
+
+

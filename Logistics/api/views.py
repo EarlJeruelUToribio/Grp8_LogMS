@@ -7,13 +7,16 @@ from django.views.decorators.http import require_http_methods
 from django.http import JsonResponse
 from django.contrib import messages
 from django.utils import timezone
+from django.db.models import Sum
 from datetime import timedelta
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework import generics
+from django.utils.timezone import now
+from django.views.decorators.csrf import csrf_exempt
 from decimal import Decimal
-from .models import Notification, Inventory, MaterialCategory, ProductCategory, Waste, Supplier, Order, ProductOrders, Product, Ingredient, Resource, KitchenResource
+from .models import ProductSoldRecord, IncomingOrder, Notification, Inventory, MaterialCategory, ProductCategory, Waste, Supplier, Order, ProductOrders, Product, Ingredient, Resource, KitchenResource
 from .serializers import (
     InventorySerializer, 
     SupplierSerializer, 
@@ -82,6 +85,22 @@ def inventory_chart_view(request):
     }
     return render(request, 'dashboard.html', context)
 
+def highest_selling_product_view(request):
+    # Aggregate product sales data
+    sales_data = (
+        ProductSoldRecord.objects
+        .values('product__ProductName')  # Use related model field for product name
+        .annotate(total_quantity=Sum('quantity'))
+        .order_by('-total_quantity')[:10]  # Top 10 highest-selling products
+    )
+    
+    labels = [item['product__ProductName'] for item in sales_data]
+    data = [item['total_quantity'] for item in sales_data]
+
+    return JsonResponse({
+        'labels': labels,
+        'data': data,
+    })
 # DASHBOARD
 
 
@@ -184,7 +203,33 @@ def order_counts_view(request):
         'cancelled': cancelled_count,
     })
 
-# Integration test
+
+@require_http_methods(["POST"])
+def extend_expiration(request, item_id):
+    try:
+        inventory_item = get_object_or_404(Inventory, Inventory_ID=item_id)
+
+        if inventory_item.Perishable and inventory_item.DaysBeforeExpiry is not None:
+            # Calculate the new expiration date
+            new_expiration_date = timezone.now() + timedelta(days=inventory_item.DaysBeforeExpiry)
+            inventory_item.Created_At = timezone.now()  # Update created date to now
+            inventory_item.Expired = False  # Mark as active
+            inventory_item.save()
+
+            return JsonResponse({
+                'message': f"Expiration date updated to {new_expiration_date.strftime('%Y-%m-%d')}",
+                'new_expiration_date': new_expiration_date.strftime('%Y-%m-%d')
+            }, status=200)
+
+        return JsonResponse({'error': 'Item is not perishable or does not have valid expiry data.'}, status=400)
+
+    except Exception as e:
+        return JsonResponse({'error': str(e)}, status=500)
+
+
+
+
+# Integration
 from django.views.decorators.csrf import csrf_exempt
 
 @csrf_exempt
@@ -248,6 +293,39 @@ def get_min_order_qty(request):
 class OrderDetailView(generics.RetrieveAPIView):
     queryset = Order.objects.all()
     serializer_class = OrderSerializer
+
+@csrf_exempt
+def receive_order(request):
+    if request.method == 'POST':
+        try:
+            # Parse incoming JSON data
+            data = json.loads(request.body)
+
+            # Extract necessary fields
+            product_id = data.get('product_id')
+            quantity = data.get('quantity')
+
+            # Validate required fields
+            if not product_id or not quantity:
+                return JsonResponse({'success': False, 'error': 'Missing required fields.'}, status=400)
+
+            # Ensure product exists
+            product = get_object_or_404(Product, Product_ID=product_id)
+
+            # Create Incoming Order
+            new_order = IncomingOrder.objects.create(
+                product=product,
+                quantity=quantity
+            )
+
+            return JsonResponse({'success': True, 'message': 'Order received successfully!', 'order_id': new_order.order_id}, status=201)
+
+        except json.JSONDecodeError:
+            return JsonResponse({'success': False, 'error': 'Invalid JSON format.'}, status=400)
+        except Exception as e:
+            return JsonResponse({'success': False, 'error': str(e)}, status=500)
+
+    return JsonResponse({'success': False, 'error': 'Invalid request method.'}, status=405)
 
 
 # Material Management
@@ -401,6 +479,26 @@ def AddMaterialCategory_view(request):
         return JsonResponse({'success': False, 'error': 'An error occurred while adding the category.'}, status=500)
 
 
+@require_http_methods(["POST"])
+def update_expiry_view(request):
+    try:
+        perishable_items = Inventory.objects.filter(Perishable=True, Expired=False)
+        expired_count = 0
+
+        for item in perishable_items:
+            if item.DaysBeforeExpiry is not None:
+                expiration_date = item.Created_At + timedelta(days=item.DaysBeforeExpiry)
+                if now() > expiration_date:
+                    item.Expired = True
+                    item.save()
+                    expired_count += 1
+
+        message = f"{expired_count} items marked as expired."
+        return JsonResponse({"success": True, "message": message})
+
+    except Exception as e:
+        return JsonResponse({"success": False, "error": str(e)})
+
 # Product Management
 
 
@@ -515,9 +613,24 @@ def delete_product(request, product_id):
     product.delete()
     return JsonResponse({'message': 'Product deleted successfully.'}, status=204)
         
-    
+
+@csrf_exempt
+@require_http_methods(["POST"])
+def toggle_product_availability(request, product_id):
+    try:
+        product = get_object_or_404(Product, pk=product_id)
+        product.is_available = not product.is_available
+        product.save()
+        return JsonResponse({"success": True, "is_available": product.is_available})
+    except Exception as e:
+        return JsonResponse({"success": False, "error": str(e)}, status=400)
+
+
 def KitchenDisplay_view(request):
     return render(request, 'KitchenDisplay.html')
+
+
+
 
 
 # Supplier Management
@@ -674,6 +787,66 @@ def ManageWaste_view(request):
     else:
         print("Rendering HTML template")  # Debugging line
         return render(request, 'ManageWaste.html')  # Render the HTML template for non-AJAX requests
+
+
+#Customer Order Management
+@require_http_methods(["GET"])
+def manage_customer_orders_view(request):
+    incoming_orders = IncomingOrder.objects.select_related('product').all()
+    context = {"incoming_orders": incoming_orders}
+    return render(request, "ManageCustomerOrder.html", context)
+
+@require_http_methods(["POST"])
+def resolve_order_view(request, order_id):
+    try:
+        order = get_object_or_404(IncomingOrder, pk=order_id)
+        for ingredient in order.product.Ingredients.all():
+            inventory_item = get_object_or_404(Inventory, pk=ingredient.Inventory_ID.Inventory_ID)
+            required_quantity = ingredient.MeasureCount * order.quantity
+            if inventory_item.Current_Stock < required_quantity:
+                return JsonResponse({"success": False, "error": f"Insufficient stock for {ingredient.IngredientName}"}, status=400)
+            inventory_item.Current_Stock -= required_quantity
+            inventory_item.save()
+
+        # Record the resolved order in ProductSoldRecord
+        ProductSoldRecord.objects.create(
+            product=order.product,
+            quantity=order.quantity,
+            created_at=timezone.now()
+        )
+
+        order.delete()
+        return JsonResponse({"success": True, "message": "Order resolved successfully."})
+    except Exception as e:
+        return JsonResponse({"success": False, "error": str(e)}, status=400)
+
+
+@require_http_methods(["POST"])
+def resolve_all_orders_view(request):
+    try:
+        incoming_orders = IncomingOrder.objects.select_related('product').all()
+        for order in incoming_orders:
+            for ingredient in order.product.Ingredients.all():
+                inventory_item = get_object_or_404(Inventory, pk=ingredient.Inventory_ID.Inventory_ID)
+                required_quantity = ingredient.MeasureCount * order.quantity
+                if inventory_item.Current_Stock < required_quantity:
+                    return JsonResponse({"success": False, "error": f"Insufficient stock for {ingredient.IngredientName}"}, status=400)
+                inventory_item.Current_Stock -= required_quantity
+                inventory_item.save()
+
+            # Record the resolved orders in ProductSoldRecord
+            ProductSoldRecord.objects.create(
+                product=order.product,
+                quantity=order.quantity,
+                created_at=timezone.now()
+            )
+
+            order.delete()
+        return JsonResponse({"success": True, "message": "All orders resolved successfully."})
+    except Exception as e:
+        return JsonResponse({"success": False, "error": str(e)}, status=400)
+
+
 
 # Resources Management
 

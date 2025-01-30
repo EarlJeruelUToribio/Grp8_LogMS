@@ -33,7 +33,7 @@ class Inventory(models.Model):
     Created_At = models.DateTimeField(auto_now_add=True)
     Perishable = models.BooleanField(default=False)
     DaysBeforeExpiry = models.IntegerField(null=True, blank=True)
-    Current_Stock = models.IntegerField(default=0)
+    Current_Stock = models.DecimalField(default=0, max_digits=10, decimal_places=2)
     Expired = models.BooleanField(default=False)
 
     class Meta:
@@ -131,19 +131,20 @@ class ProductCategory(models.Model):
     def __str__(self):
         return self.CategoryName
 
-# Product Model
 class Product(models.Model):
     Product_ID = models.AutoField(primary_key=True)
     ProductName = models.CharField(max_length=255)
     ProductDescription = models.TextField()
-    ProductCategory = models.ForeignKey(ProductCategory, on_delete=models.CASCADE)  # Change this line
+    ProductCategory = models.ForeignKey(ProductCategory, on_delete=models.CASCADE)
     ProductImage = models.ImageField(upload_to='product_images/')
     PurchasePrice = models.DecimalField(max_digits=10, decimal_places=2)
-    Ingredients = models.ManyToManyField('Ingredient', blank=True)  # Changed to ManyToManyField
+    Ingredients = models.ManyToManyField('Ingredient', blank=True)
     Created_At = models.DateTimeField(auto_now_add=True)
+    is_available = models.BooleanField(default=True)
 
     def __str__(self):
         return self.ProductName
+
     
 # ProductOrders Model
 class ProductOrders(models.Model):
@@ -164,6 +165,17 @@ class Ingredient(models.Model):
     Inventory_ID = models.ForeignKey(Inventory, models.DO_NOTHING, db_column='Inventory_ID')
     Created_At = models.DateTimeField(auto_now_add=True)
 
+
+# Incoming Order
+class IncomingOrder(models.Model):
+    order_id = models.AutoField(primary_key=True)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    quantity = models.IntegerField()
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"Incoming Order - {self.product.ProductName} ({self.quantity})"
+
 # Waste Model
 class Waste(models.Model):
     Waste_ID = models.AutoField(primary_key=True)
@@ -181,3 +193,14 @@ class Waste(models.Model):
 
     def __str__(self):
         return self.IngredientName
+    
+
+#Dashboard Models
+class ProductSoldRecord(models.Model):
+    record_id = models.AutoField(primary_key=True)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    quantity = models.PositiveIntegerField()
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.product.ProductName} - {self.quantity} sold"

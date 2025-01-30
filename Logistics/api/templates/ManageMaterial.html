@@ -21,6 +21,9 @@
             <a href="#" id="add-material-button" class="btn btn-primary ms-2" data-bs-toggle="modal" data-bs-target="#addMaterialModal">
                 Add Material
             </a>
+            <button id="update-expiry-button" class="btn btn-warning ms-2">
+                Update Expiry
+            </button>
         </div>
         <div class="d-flex align-items-center">
             <input type="text" id="search-input" class="form-control me-2" placeholder="Search materials..." onkeyup="searchMaterials()" style="width: 300px;">
@@ -298,6 +301,7 @@
 {% endblock %}
 
 {% block extra_js %}
+<script src="{% static 'js/UpdateExpiry.js' %}"></script>
 <script src="{% static 'js/SearchMaterial.js' %}"></script>
 <script src="{% static 'js/ManageMaterial.js' %}"></script>
 <script src="{% static 'js/EditMaterial.js' %}"></script>
