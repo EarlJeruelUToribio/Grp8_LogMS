@@ -38,24 +38,6 @@
             <h1 style="color: #6f42c1">Logistics Dashboard</h1>
             <p>Overview of Logistics Data</p>
 
-            <!-- Dashboard Content -->
-            <div class="row">
-                <!-- Line Graph -->
-                <div class="col-md-6 mb-4">
-                    <div class="card shadow">
-                        <div class="card-body">
-                            <canvas id="lineGraph"></canvas>
-                        </div>
-                    </div>
-                </div>
-                <!-- Bar Graph -->
-                <div class="col-md-6 mb-4">
-                    <div class="card shadow">
-                        <div class="card-body">
-                            <canvas id="barGraph"></canvas>
-                        </div>
-                    </div>
-                </div>
                 <!-- Pie Chart -->
                 <div class="col-md-6 mb-4">
                     <div class="card shadow">
@@ -68,74 +50,6 @@
         </div>
 
         <script>
-            // Fetch data for Line Graph
-            fetch('/api/orders-per-day/')
-                .then(response => response.json())
-                .then(data => {
-                    const lineCtx = document.getElementById('lineGraph').getContext('2d');
-                    new Chart(lineCtx, {
-                        type: 'line',
-                        data: {
-                            labels: data.labels,
-                            datasets: [{
-                                label: 'Orders Per Day',
-                                data: data.values,
-                                borderColor: 'blue',
-                                backgroundColor: 'rgba(0, 0, 255, 0.1)',
-                                fill: true,
-                            }]
-                        },
-                        options: {
-                            responsive: true,
-                            plugins: {
-                                legend: { display: true },
-                                title: { display: true, text: 'Order Trends (Line Graph)' },
-                            },
-                        },
-                    });
-                });
-
-            // Fetch data for Bar Graph
-            fetch('/api/product-sales/')
-                .then(response => response.json())
-                .then(data => {
-                    const barCtx = document.getElementById('barGraph').getContext('2d');
-                    new Chart(barCtx, {
-                        type: 'bar',
-                        data: {
-                            labels: data.labels,
-                            datasets: [{
-                                label: 'Sales (Units)',
-                                data: data.values,
-                                backgroundColor: [
-                                    'rgba(255, 99, 132, 0.2)',
-                                    'rgba(54, 162, 235, 0.2)',
-                                    'rgba(255, 206, 86, 0.2)',
-                                    'rgba(75, 192, 192, 0.2)',
-                                    'rgba(153, 102, 255, 0.2)',
-                                ],
-                                borderColor: [
-                                    'rgba(255, 99, 132, 1)',
-                                    'rgba(54, 162, 235, 1)',
-                                    'rgba(255, 206, 86, 1)',
-                                    'rgba(75, 192, 192, 1)',
-                                    'rgba(153, 102, 255, 1)',
-                                ],
-                                borderWidth: 1,
-                            }]
-                        },
-                        options: {
-                            responsive: true,
-                            plugins: {
-                                legend: { display: true },
-                                title: { display: true, text: 'Product Sales (Bar Graph)' },
-                            },
-                            scales: {
-                                y: { beginAtZero: true },
-                            },
-                        },
-                    });
-                });
 
             // Fetch data for Highest Selling Product (Pie Chart)
             fetch('/api/highest-selling-product/')
