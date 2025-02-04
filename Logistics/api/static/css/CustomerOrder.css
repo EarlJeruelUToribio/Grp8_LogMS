@@ -1,220 +1,123 @@
-/* Apply full-page layout to center everything */
-.container {
-    width: 1100px;    margin: 0 auto; /* Center the container horizontally */
-    padding: 20px; /* Padding inside the container */
-    background-color: #fff; /* Background color */
-    border-radius: 8px; /* Rounded corners */
+/* Customer Order Section Styling */
+.customer-order-section {
+    max-width: 1200px;
+    margin: 80px auto 20px 290px;
+    padding: 20px;
+    background: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     border: 1px solid #ffffff;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Shadow for some depth */
-    display: flex;
-    flex-direction: column; /* Stack content vertically */
-    justify-content: flex-start; /* Align content to the top (you can adjust as needed) */
-    margin-left: 230px;
-    margin-top: 20px;
-    margin-bottom: 250px;
-
 }
 
-body, html {
-    margin: 0;
-    display: flex;
-    justify-content: center;  /* Horizontally center the content */
-    align-items: center;  /* Vertically center the content */
-    background-color: #f9f9f9; /* Set a background color if needed */
-
-}
-
-/* Section Header */
-.resources-section h2 {
+.customer-order-section h2 {
+    margin-bottom: 20px;
     font-size: 28px;
-    color: #6f42c1; /* Purple heading */
+    color: #6f42c1;
     font-weight: 700;
-    text-align: center;
 }
 
-/* Search Bar */
-#search-bar {
-    padding: 10px;
-    width: 250px;
-    border: 2px solid #000000;
-    border-radius: 5px;
-    box-sizing: border-box;
+/* Order Header */
+.order-header {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 20px;
 }
 
-/* Add Resource Button */
-#add-resource-button {
-    background-color: #6f42c1; /* Purple background */
+#resolve-all-btn {
+    background-color: #d9534f;
     color: white;
     border: none;
     border-radius: 8px;
+    padding: 10px 20px;
     font-weight: 500;
-    padding: 0.5rem 1rem 0.5rem 0.5rem;
-    transition: background-color 0.3s ease, color 0.3s ease;
-    width: 200px;/* Remove underline */
+    transition: background-color 0.3s ease;
 }
 
-#add-resource-button:hover {
-    background-color: #5a3795; /* Darker purple on hover */
-    color: white; /* Keep text white */
-    cursor: pointer; /* Pointer cursor for better UX */
+#resolve-all-btn:hover {
+    background-color: #c9423f;
+    cursor: pointer;
 }
 
-/* Resource Table */
-.resources-table {
-    width: 1150px;  
-    margin-top: 20px;
+/* Table Styling */
+.table-responsive {
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
     border-collapse: collapse;
-    margin: 0 auto;
-}
-
-.resources-table th, .resources-table td {
-    padding: 15px;
-    text-align: center;
-    border-bottom: 1px solid #ddd;
-}
-
-.resources-table th {
     background-color: #6f42c1;
-    color: #fff;
+    color: white;
+    text-align: center;
+    border-radius: 8px;
+    overflow: hidden;
 }
 
-.resources-table tr:hover {
-    background-color: #f1f1f1;
+table th, table td {
+    padding: 15px;
+    border: 1px solid #ffffff;
 }
 
-/* Modal Header */
-.modal-header {
-    background-color: #6f42c1; /* Purple header */
-    color: white;  /* White text */
-    border-radius: 8px 8px 0 0;  /* Rounded top corners */
+table th {
+    background-color: #5a3795;
+    font-size: 18px;
+    font-weight: 600;
+}
+
+table tr:nth-child(even) {
+    background-color: #5a3795;
+}
+
+/* Resolve Button Styling */
+.resolve-btn {
+    background-color: #6f42c1;
+    border: none;
+    color: white;
+    border-radius: 6px;
     padding: 10px 20px;
-    display: flex;  /* Flexbox for alignment */
-    justify-content: space-between;  /* Space between the title and close button */
-    align-items: center;  /* Center the content vertically */
+    font-weight: 500;
+    transition: background-color 0.3s ease;
 }
 
-.modal-title {
-    font-size: 32px;  /* Increase font size for better readability */
-    font-weight: 900;  /* Bold font for the title */
-    margin: 0;
-}
-
-.btn-close {
-    border: none;
-    font-size: 1.5rem;
-    color: white;
-    cursor: pointer;
-    margin-left: 20px;
-}
-
-/* Modal Design */
-.modal-content {
-    width: 500px;  /* Ensure it takes 90% of the available width */
-    padding: 40px;  /* Increase padding for more space inside */
-    margin: 0 auto;
-    background: white;
-    border-radius: 8px;  /* Rounded corners */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);  /* Subtle shadow for depth */
-    border: 1px solid var(--dark-grey, #d3d3d3);  /* Border to match design */
-    background-image: linear-gradient(to bottom right, #fff, #f8f8f8); /* Background gradient */
-    box-sizing: border-box; /* Include padding and borders in width and height */
-}
-
-/* Modal Header */
-.modal-header {
-    background-color: #6f42c1; /* Purple header */
-    color: white;  /* White text */
-    border-radius: 8px 8px 0 0;  /* Rounded top corners */
-    padding: 10px 20px;  /* Add padding for better spacing */
-    display: flex;  /* Flexbox for alignment */
-    justify-content: space-between;  /* Space between title and close button */
-    align-items: center;  /* Center the content vertically */
-}
-
-.modal-title {
-    font-size: 32px;  /* Increase font size for better readability */
-    font-weight: 900;  /* Bold font for the title */
-    margin: 0;
-}
-
-.btn-close {
-    border: none;
-    font-size: 1.5rem;
-    color: white;
+.resolve-btn:hover {
+    background-color: #5a3795;
     cursor: pointer;
 }
 
-/* Modal Body */
-.modal-body {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);  /* Two equal-width columns */
-    gap: 20px;  /* Space between columns */
-    padding: 0;
+/* Media Queries for Responsiveness */
+@media (max-width: 768px) {
+    .customer-order-section {
+        margin: 20px;
+        padding: 15px;
+    }
+
+    .customer-order-section h2 {
+        font-size: 24px;
+    }
+
+    #resolve-all-btn, .resolve-btn {
+        padding: 8px 16px;
+        font-size: 14px;
+    }
+
+    table th, table td {
+        padding: 10px;
+        font-size: 14px;
+    }
 }
 
+@media (max-width: 480px) {
+    .customer-order-section h2 {
+        font-size: 20px;
+    }
 
-/* Form Controls (Input, Select, Textarea) */
-.form-select,
-.form-control {
-    border-radius: 6px; /* Rounded corners */
-    border: 2px solid black; /* Light border */
-    padding: 16px; /* Padding for inputs */
-    width: 400px;
-    margin-bottom: 20px; /* Space between form fields */
-    background: #f8f8f8;
-}
+    #resolve-all-btn, .resolve-btn {
+        padding: 6px 12px;
+        font-size: 12px;
+    }
 
-/* Focus state for inputs */
-.form-select:focus,
-.form-control:focus {
-    border-color: #6f42c1; /* Purple border when focused */
-    box-shadow: 0 0 5px rgba(123, 78, 131, 0.5); /* Subtle purple glow */
-}
-
-/* Modal Footer */
-.modal-footer {
-    border-radius: 0 0 8px 8px; /* Rounded bottom corners */
-    padding: 10px 15px; /* Adjusted padding to align with modal body */
-    border-top: 1px solid #e0e0e0; /* Subtle border to separate footer from body */
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-/* Footer Button Styles */
-.modal-footer button {
-    padding: 10px 20px;
-    font-weight: bold;
-}
-
-/* Save Button */
-.btn-primary {
-    background-color: #6f42c1; /* Purple background */
-    color: white; /* White text */
-    border: none;
-    border-radius: 4px;
-    font-weight: bold;
-    height: 50px;
-}
-
-.btn-primary:hover {
-    background-color: #5a3795; /* Darker purple on hover */
-}
-
-/* Edit Button Styles */
-.edit-resource {
-    background-color: #f0ad4e; /* Light blue background */
-    color: #fff; /* White text */
-    border: none;
-    padding: 8px 16px;
-    font-size: 16px;
-    border-radius: 4px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    transition: background-color 0.3s ease, transform 0.2s ease;
-    
-}
-
-.edit-resource:hover {
-    background-color: #e09c40; /* Darker blue on hover */
-}
-
+    table th, table td {
+        padding: 8px;
+        font-size: 12px;
+    }
+} 
