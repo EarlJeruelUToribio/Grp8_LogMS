@@ -1,5 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
     const changeStatusButtons = document.querySelectorAll('.change-status-btn');
+    
 
     changeStatusButtons.forEach(button => {
         button.addEventListener('click', (event) => {
@@ -46,7 +47,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
                         // Send POST request to finance URL
                         try {
-                            const response = await fetch("http://127.0.0.1:8001/payment-record/", {
+                            const response = await fetch("/payment-record/", {
                                 method: 'POST',
                                 headers: {
                                     'Content-Type': 'application/json',
@@ -99,7 +100,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
                         // Send POST request to payment microservice
                         try {
-                            const response = await fetch("http://127.0.0.1:8002/create-checkout-session/", {
+                            const response = await fetch("/create-checkout-session/", {
                                 method: 'POST',
                                 headers: {
                                     'Content-Type': 'application/json',
@@ -117,40 +118,6 @@ document.addEventListener('DOMContentLoaded', () => {
                             console.error('Error creating payment session:', error);
                         }
                     }
-                }
-
-                // If the new status is "Completed", send an AJAX request to update stock
-                if (newStatus === "Completed") {
-                    const quantityToUpdate = quantity; // Use the order quantity directly
-
-                    console.log(`Updating stock for item ID: ${itemId} with quantity: ${quantityToUpdate}`);
-
-                    // Send AJAX request to update stock
-                    console.log(`Updating stock for item ID: ${itemId} with quantity: ${quantityToUpdate}`);
-                    fetch(`/update-stock/${itemId}/`, {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'X-CSRFToken': getCookie('csrftoken'), // Get CSRF token
-                        },
-                        body: JSON.stringify({ quantity: quantityToUpdate })
-                    })
-                    .then(response => {
-                        console.log('Response from stock update:', response);
-                        return response.json();
-                    })
-                    .then(data => {
-                        console.log('Data from stock update:', data);
-                        if (data.success) {
-                            Swal.fire('Success', 'Stock updated successfully!', 'success');
-                        } else {
-                            Swal.fire('Error', 'Failed to update stock.', 'error');
-                        }
-                    })
-                    .catch(error => {
-                        console.error('Error:', error);
-                        Swal.fire('Error', 'An error occurred while updating stock.', 'error');
-                    });
                 }
 
                 // Now submit the form to change the order status
