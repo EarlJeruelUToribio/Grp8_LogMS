@@ -43,6 +43,10 @@ def dashboard_view(request):
 
     return render(request, 'dashboard.html', {'notifications': notifications})
 
+
+def ManageCustomerOrder_view(request):
+    return render(request, 'ManageCustomerOrder.html')
+
 def check_inventory_levels():
     # Fetch all inventory items
     inventory_items = Inventory.objects.all()
