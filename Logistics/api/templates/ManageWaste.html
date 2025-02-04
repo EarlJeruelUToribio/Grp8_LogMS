@@ -2,67 +2,148 @@
 {% load static %}
 
 {% block extra_css %}
-<link rel="stylesheet" href="{% static 'css/ManageWaste.css' %}">
+<link rel="stylesheet" href="{% static 'css/Waste.css' %}">
 {% endblock %}
 
 {% block content %}
-<section class="waste-section">
-    <h2 class="text-center mb-4">WASTE MANAGEMENT</h2>
-    <div class="waste-header">
-        <button class="sort-button">Sort by</button>
-        <button class="record-waste-btn">Record Waste</button>
-        <input type="text" id="search-bar" placeholder="Search by Waste ID" class="search-bar">
-    </div>
-    <table class="table table-striped waste-table">
-        <thead>
-            <tr>
-                <th>Waste ID</th>
-                <th>Item or Product</th>
-                <th>Estimated Date & Time</th>
-                <th>Quantity</th>
-                <th>Location</th>
-                <th>Action</th>
-            </tr>
-        </thead>
-        <tbody>
-            <!-- Example waste items -->
-            <tr class="waste-row">
-                <td>W1234</td>
-                <td>Spoiled Chicken</td>
-                <td>2024-10-20 10:00 AM</td>
-                <td>20 kg</td>
-                <td>Warehouse A</td>
-                <td><button class="edit-btn edit-button">Edit</button></td>
-            </tr>
-            <tr class="waste-row">
-                <td>W5678</td>
-                <td>Expired Pork</td>
-                <td>2024-10-19 11:00 AM</td>
-                <td>15 kg</td>
-                <td>Kitchen B</td>
-                <td><button class="edit-btn edit-button">Edit</button></td>
-            </tr>
-        </tbody>
-    </table>
-</section>
+<div class="container mt-5">
+    <!-- Breadcrumb -->
+    <ol class="breadcrumb mt-2 mb-1">
+        <li class="breadcrumb-item d-flex align-items-center">
+            <span class="text-muted">Inventory Management</span>
+        </li>
+        <li class="breadcrumb-item active" aria-current="page">Waste Management</li>
+    </ol>
 
+    <!-- Title and Description -->
+    <h1 class="text" style="color: #6f42c1;">Waste Management</h1>
+    <p>Track and manage records of wasted inventory items effectively.</p>
 
-<div class="waste-container">
-    <div id="waste-details-dropdown" class="dropdown-btn">Waste Details &#9662;</div>
-    <div class="waste-content">
-        <!-- Other waste content here -->
-    </div>
-    <div class="expanded-waste-details" style="display: none;">
-        <p>Waste ID: <span id="waste-id-summary"></span></p>
-        <p>Item or Product: <span id="waste-item-summary"></span></p>
-        <p>Estimated Date & Time: <span id="waste-datetime-summary"></span></p>
-        <p>Quantity: <span id="waste-quantity-summary"></span></p>
-        <p>Location: <span id="waste-location-summary"></span></p>
+    <!-- Card -->
+    <div class="card shadow-sm">
+        <div class="card-body">
+            <!-- Header -->
+            <div class="d-flex justify-content-between mb-3">
+                <!-- Search Bar -->
+                <div>
+                    <input
+                        type="text"
+                        id="search-bar"
+                        class="form-control"
+                        placeholder="Search by Waste ID"
+                        style="width: 300px;"
+                    >
+                </div>
+            
+                <!-- Action Buttons -->
+                <div>
+                    <button
+                        class="btn btn-primary"
+                        style="
+                            background-color: #6f42c1;
+                            color: white;
+                            border: none;
+                            border-radius: 8px;
+                            font-weight: 500;
+                            padding: 0.5rem 1rem;
+                            transition: background-color 0.3s ease, color 0.3s ease;
+                        "
+                        onmouseover="this.style.backgroundColor='#5a3795';"
+                        onmouseout="this.style.backgroundColor='#6f42c1';"
+                        data-bs-toggle="modal"
+                        data-bs-target="#recordWasteModal">
+                        <i class="bi bi-plus"></i> Record Waste
+                    </button>
+                </div>
+            </div>
+            
+                
+
+            <!-- Table -->
+            <div class="table-responsive">
+                <table class="table table-bordered table-hover text-center">
+                    <thead class="table-light">
+                        <tr>
+                            <th>Waste ID</th>
+                            <th>Ingredient Name</th>
+                            <th>Date & Time</th>
+                            <th>Quantity Lost</th>
+                            <th>Cause of Loss</th>
+                            <th>Action Taken</th>
+                        </tr>
+                    </thead>
+                    <tbody id="waste-table-body">
+                        {% for record in waste_records %}
+                        <tr class="waste-row">
+                            <td>{{ record.Waste_ID }}</td>
+                            <td>{{ record.IngredientName }}</td>
+                            <td>{{ record.DateOfIncident }}</td>
+                            <td>{{ record.QuantityLost }} {{ record.UnitOfMeasurement }}</td>
+                            <td>{{ record.CauseOfLoss }}</td>
+                            <td>{{ record.ActionTaken }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
 </div>
 
-{% endblock %}
 
-{% block extra_js %}
-<script src="{% static 'js/ManageWaste.js' %}"></script>
+<!-- Modal for Record Waste -->
+<div class="modal fade" id="recordWasteModal" tabindex="-1" aria-labelledby="recordWasteModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="recordWasteModalLabel">Record Waste</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="record-waste-form">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <label for="ingredient-name" class="form-label">Ingredient Name</label>
+                        <input type="text" class="form-control" id="ingredient-name" name="ingredient-name" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="quantity-lost" class="form-label">Quantity Lost</label>
+                        <input type="number" class="form-control" id="quantity-lost" name="quantity-lost" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="unit-of-measurement" class="form-label">Unit of Measurement</label> <!-- Removed leading space -->
+                        <input type="text" class="form-control" id="unit-of-measurement" name="unit-of-measurement" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="cause-of-loss" class="form-label">Cause of Loss</label>
+                        <input type="text" class="form-control" id="cause-of-loss" name="cause-of-loss" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="date-of-incident" class="form-label">Date of Incident</label>
+                        <input type="date" class="form-control" id="date-of-incident" name="date-of-incident" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="action-taken" class="form-label">Action Taken</label>
+                        <input type="text" class="form-control" id="action-taken" name="action-taken" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="associated-costs" class="form-label">Associated Costs</label>
+                        <input type="number" class="form-control" id="associated-costs" name="associated-costs" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    const csrfToken = '{{ csrf_token }}'; // Ensure this is set correctly
+    const manageWasteUrl = '/ManageWasteRecords/'; // Directly define the URL
+    console.log('Manage Waste URL:', manageWasteUrl); // Log the URL being used
+</script>
+
+<script src="{% static 'js/AddWaste.js' %}"></script>
+<script src="{% static 'js/Waste.js' %}"></script>
+<script src="{% static 'js/SearchWaste.js' %}"></script>
 {% endblock %}

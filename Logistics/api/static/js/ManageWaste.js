@@ -1,56 +1,42 @@
-document.addEventListener('DOMContentLoaded', function () {
-    const expandedDetails = document.querySelector('.expanded-waste-details');
-    const wasteDetailsDropdown = document.getElementById('waste-details-dropdown');
-    const wasteTableBody = document.querySelector('.waste-table tbody');
+// ManageWaste.js
+document.addEventListener('DOMContentLoaded', () => {
+    const wasteTableBody = document.getElementById('waste-table-body');
+    const manageWasteUrl = '/ManageWasteRecords/'; // URL for fetching waste records
 
-    expandedDetails.style.display = 'none';
-
-    wasteTableBody.addEventListener('click', function (e) {
-        const targetRow = e.target.closest('tr');
-
-        if (targetRow) {
-            const wasteId = targetRow.children[0].textContent;
-            const itemProduct = targetRow.children[1].textContent;
-            const estimatedDatetime = targetRow.children[2].textContent;
-            const quantity = targetRow.children[3].textContent;
-            const location = targetRow.children[4].textContent;
-
-            document.getElementById('waste-id-summary').textContent = wasteId;
-            document.getElementById('waste-item-summary').textContent = itemProduct;
-            document.getElementById('waste-datetime-summary').textContent = estimatedDatetime;
-            document.getElementById('waste-quantity-summary').textContent = quantity;
-            document.getElementById('waste-location-summary').textContent = location;
-
-            expandedDetails.style.display = 'block';
-            wasteDetailsDropdown.innerHTML = 'Waste Details &#9652;';
+    // Function to fetch waste records from the server
+    const fetchWasteRecords = async () => {
+        try {
+            console.log('Fetching from URL:', manageWasteUrl); // Log the URL being fetched
+            const response = await fetch(manageWasteUrl);
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            const data = await response.json();
+            if (data.waste_records) {
+                data.waste_records.forEach(addWasteRow);
+            } else {
+                console.error('No waste records found.');
+            }
+        } catch (error) {
+            console.error('Error fetching waste records:', error);
+            // Optionally, you can display an error message to the user
         }
-    });
+    };
 
-    wasteDetailsDropdown.addEventListener('click', function () {
-        if (expandedDetails.style.display === 'none' || expandedDetails.style.display === '') {
-            expandedDetails.style.display = 'block';
-            wasteDetailsDropdown.innerHTML = 'Waste Details &#9652;';
-        } else {
-            expandedDetails.style.display = 'none';
-            wasteDetailsDropdown.innerHTML = 'Waste Details &#9662;';
-        }
-    });
-});
+    // Function to add a new row to the waste table
+    const addWasteRow = (record) => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+            <td>${record.Waste_ID}</td>
+            <td>${record.IngredientName}</td>
+            <td>${record.DateOfIncident}</td>
+            <td>${record.QuantityLost} ${record.UnitOfMeasurement}</td>
+            <td>${record.CauseOfLoss}</td>
+            <td>${record.ActionTaken}</td>
+        `;
+        wasteTableBody.appendChild(row); // Append the new row to the table
+    };
 
-// Search functionality
-const searchBar = document.getElementById('search-bar');
-const wasteTableBody = document.querySelector('.waste-table tbody');
-
-searchBar.addEventListener('input', function () {
-    const searchTerm = searchBar.value.toLowerCase();
-    const rows = wasteTableBody.querySelectorAll('tr');
-
-    rows.forEach(row => {
-        const wasteId = row.children[0].textContent.toLowerCase();
-        if (wasteId.includes(searchTerm)) {
-            row.style.display = '';
-        } else {
-            row.style.display = 'none';
-        }
-    });
+    // Fetch waste records when the page loads
+    fetchWasteRecords();
 });

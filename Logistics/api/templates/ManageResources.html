@@ -1,0 +1,190 @@
+{% extends 'Base.html' %}
+{% load static %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'css/CustomerResource.css' %}">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+{% endblock %}
+
+{% block content %}
+
+<div class="container mt-5">
+    <!-- Breadcrumb -->
+    <ol class="breadcrumb mt-2 mb-1">
+        <li class="breadcrumb-item d-flex align-items-center">
+            <span class="text-muted">Inventory Management</span>
+        </li>
+        <li class="breadcrumb-item active" aria-current="page">Resources Management</li>
+    </ol>
+
+    <!-- Title and Description -->
+    <h1 class="text" style="color: #6f42c1;">Resources Management</h1>
+    <p>Manage and monitor inventory resources, including categories and reorder levels.</p>
+
+    <!-- Card -->
+    <div class="card shadow-sm">
+        <div class="card-body">
+            <!-- Header -->
+            <div class="d-flex justify-content-between mb-3">
+                <!-- Search Bar -->
+                <div>
+                    <input
+                        type="text"
+                        id="search-bar"
+                        class="form-control"
+                        placeholder="Search Resource"
+                        style="width: 300px;"
+                    >
+                </div>
+
+                <!-- Add Resources Button -->
+                <div>
+                    <button
+                        class="btn btn-primary"
+                        style="
+                            background-color: #6f42c1;
+                            color: white;
+                            border: none;
+                            border-radius: 8px;
+                            font-weight: 500;
+                            padding: 0.5rem 1rem;
+                            transition: background-color 0.3s ease, color 0.3s ease;
+                        "
+                        onmouseover="this.style.backgroundColor='#5a3795';"
+                        onmouseout="this.style.backgroundColor='#6f42c1';"
+                        id="add-resource-button"
+                        data-bs-toggle="modal"
+                        data-bs-target="#addResourcesModal">
+                        <i class="bi bi-plus"></i> Add New Resources
+                    </button>
+                </div>
+            </div>
+
+            <!-- Table -->
+            <div class="table-responsive">
+                <table class="table table-bordered table-hover text-center">
+                    <thead class="table-light">
+                        <tr>
+                            <th>Item Name</th>
+                            <th>Category</th>
+                            <th>Quantity</th>
+                            <th>Reorder Level</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for resource in resources %}
+                        <tr>
+                            <td>{{ resource.ItemName }}</td>
+                            <td>{{ resource.ItemCategory }}</td>
+                            <td>{{ resource.Current_Stock }}</td>
+                            <td>{{ resource.ReorderLevel }}</td>
+                            <td>
+                                <div class="action-buttons d-flex justify-content-center">
+                                    <button
+                                        class="btn btn-warning me-2 edit-resource"
+                                        data-id="{{ resource.Resource_ID }}"
+                                        data-name="{{ resource.ItemName }}"
+                                        data-category="{{ resource.ItemCategory }}"
+                                        data-quantity="{{ resource.Current_Stock }}"
+                                        data-reorder="{{ resource.ReorderLevel }}"
+                                        data-bs-toggle="modal"
+                                        data-bs-target="#editResourcesModal">
+                                        <i class="bi bi-pencil-square"></i>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Add Resources Modal -->
+<div class="modal fade" id="addResourcesModal" tabindex="-1" aria-labelledby="addResourcesModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header" style="background-color: #6f42c1; color: white;">
+                <h5 class="modal-title" id="addResourcesModalLabel">Add Resources</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            
+            <!-- Modal Body -->
+            <div class="modal-body">
+                <form method="POST" action="{% url 'AddResources' %}">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <label for="resource-name" class="form-label">Resource Name</label>
+                        <input type="text" class="form-control" id="resource-name" name="resource-name" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="resource-category" class="form-label">Category</label>
+                        <input type="text" class="form-control" id="resource-category" name="resource-category" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="quantity" class="form-label">Quantity</label>
+                        <input type="number" class="form-control" id="quantity" name="quantity" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="specification" class="form-label">Specification</label>
+                        <textarea class="form-control" id="specification" name="specification"></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label for="reorder-level" class="form-label">Reorder Level</label>
+                        <input type="number" class="form-control" id="reorder-level" name="reorder-level" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Add Resource</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Edit Resources Modal -->
+<div class="modal fade" id="editResourcesModal" tabindex="-1" aria-labelledby="editResourcesModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header" style="background-color: #7b4e83; color: white;">
+                <h5 class="modal-title" id="editResourcesModalLabel">Edit Resource</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="edit-resource-form" method="POST" action="{% url 'edit_resource' %}">
+                    {% csrf_token %}
+                    <input type="hidden" id="edit-resource-id" name="resource-id">
+                    <div class="mb-3">
+                        <label for="edit-resource-name" class="form-label">Resource Name</label>
+                        <input type="text" class="form-control" id="edit-resource-name" name="resource-name" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="edit-resource-category" class="form-label">Category</label>
+                        <input type="text" class="form-control" id="edit-resource-category" name="resource-category" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="edit-quantity" class="form-label">Quantity</label>
+                        <input type="number" class="form-control" id="edit-quantity" name="quantity" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="edit-reorder-level" class="form-label">Reorder Level</label>
+                        <input type="number" class="form-control" id="edit-reorder-level" name="reorder-level" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Update Resource</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block extra_js %}
+    <script src="{% static 'js/ManageResources.js' %}"></script>
+    <script src="{% static 'js/EditResources.js' %}"></script>
+    <script src="{% static 'js/SearchResource.js' %}"></script>
+{% endblock %}

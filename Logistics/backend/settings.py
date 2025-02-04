@@ -13,7 +13,12 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 from pathlib import Path
 from datetime import timedelta
 from dotenv import load_dotenv
+import dj_database_url
 import os
+from decouple import config
+from celery.schedules import crontab
+
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -28,8 +33,10 @@ SECRET_KEY = 'django-insecure-ss7f)bgp8f=91nqt6b2m&z*3tx*kq%p4$b+w1%t6kbu0w38hl!
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["*"]
+# ALLOWED_HOSTS = ["*"]
 
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '192.168.137.173','logistics-5mci.onrender.com']
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '192.168.241.33']
 
 # Application definition
 
@@ -40,20 +47,32 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'corsheaders',
     'crispy_forms',
     'rest_framework',   # for using rest framework
     'api',              # for the app "api"
+
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
 ]
+
+CORS_ALLOWED_ORIGINS = [
+    'http://127.0.0.1:8002',
+    'http://192.168.241.140:8002',  # Reservation project's address
+]
+
+
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 ROOT_URLCONF = 'backend.urls'
 
@@ -75,23 +94,21 @@ TEMPLATES = [
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'  # or 'bootstrap5' if you're using Bootstrap 5
 
+
 WSGI_APPLICATION = 'backend.wsgi.application'
 
 
-# Database
+# Databases
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
 DATABASES = {
     'default': {
-        # 'ENGINE': 'django.db.backends.postgresql',
-        # 'NAME': 'logistic',
-        # 'USER':'postgres',
-        # 'PASSWORD': 'jeffskieS21',
-        # 'HOST': 'localhost',
-        # 'PORT': '5432'
-
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME':BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'logistic',
+        'USER':'postgres',
+        'PASSWORD': 'admin',
+        'HOST': 'localhost',
+        'PORT': '5432'
     }
 }
 
@@ -130,13 +147,32 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 # URL to use when referring to static files (CSS, JavaScript, Images)
-STATIC_URL = '/static/'
 
+
+# THIS IS FOR SCHEDULED TASKS
+CELERY_BEAT_SCHEDULE = {
+    'update-expired-items-every-day': {
+        'task': 'your_app.tasks.update_expired_items_task',
+        'schedule': crontab(hour=0, minute=0),  # Runs every day at midnight
+    },
+    'check-inventory-levels-every-day': {
+        'task': 'your_app.tasks.check_inventory_levels',  # Add your new task here
+        'schedule': crontab(hour=0, minute=0),  # Runs every day at midnight
+    },
+}
+
+
+
+CELERY_BROKER_URL = 'redis://localhost:6379/0'  # Adjust this based on your broker
+CELERY_ACCEPT_CONTENT = ['json']
+CELERY_TASK_SERIALIZER = 'json'
 
 # The directories where Django will search for static files
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'static'),  # Assuming your static files are in the 'static' directory
-]
+
+STATIC_URL = '/static/'
+
+# Set the STATIC_ROOT to a directory that exists
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')  # or any directory you prefer
 
 
 # Default primary key field type

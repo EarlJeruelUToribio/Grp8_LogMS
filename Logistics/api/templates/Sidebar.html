@@ -1,86 +1,163 @@
-
-{% load static %}
-
+{% load static %} 
 {% block extra_css %}
-<link rel="stylesheet" href="{% static 'css/Sidebar.css' %}">
+<link rel="stylesheet" href="{% static 'css/Admin-Sidebar.css' %}" />
 
 {% endblock %}
 
+<nav class="sidebar-nav">	<!--begin: Logo Section-->
+	<!-- Logo -->
+	<div class="logo-name">
+		<span class="logo_name">Logistics</span>`
+	</div>
 
-<div class="wrapper">
-    {% block sidebar %}
-        <div class="sidebar-wrapper">
-            <div class="sidebar">
-                <div class="sidebar-header">
-                    <h2>LOGISTICS MANAGEMENT</h2>
-                    <button class="menu-btn" onclick="toggleSidebar()">
-                        <i class="fa fa-bars"></i>
-                    </button>
-                </div>
-                
-                <a class="active" href="{% url 'home' %}">
-                    <i class="fa fa-fw fa-home"></i><span>Dashboard</span>
-                </a>
+	<!-- Sidebar Menu -->
+	<div class="menu-items">
+		<ul class="nav-links">
+			<!-- Dashboard -->
+			<li>
+				<a href="{% url 'home' %}" >
+					<i class="uil uil-estate"></i>
+					<span class="link-name">Dashboard</span>
+				</a>
+			</li>
 
-                <button class="dropdown-btn">
-                    <i class="fa fa-fw fa-clipboard-list"></i> <span>Order Management</span> 
-                    <i class="fa fa-caret-down"></i> 
-                </button>
-                <div class="dropdown-container">
-                    <a href="{% url 'PlacedOrder' %}"><span>Place Order</span></a>
-                    <a href="{% url 'ManageOrder' %}"><span>Manage Order</span></a>
-                </div>
+			<!-- Order Management -->
+			<li class="dropdown">
+				<a href="{% url 'ManageOrder' %}" class="dropdown-toggle">
+					<i class="uil uil-clipboard-alt"></i>
+					<span class="link-name">Order</span>
+					<i class="uil uil-angle-down dropdown-arrow"></i>
+				</a>
+				<ul class="submenu">
+					<li><a href="{% url 'ManageOrder' %}">Manage Order</a></li>
+				</ul>
+			</li>
 
-                <button class="dropdown-btn">
-                    <i class="fa fa-fw fa-boxes"></i> <span>Material Management</span> 
-                    <i class="fa fa-caret-down"></i> 
-                </button>
-                <div class="dropdown-container">
-                    <a href="{% url 'AddMaterial' %}"><span>Add Material</span></a>
-                    <a href="{% url 'ManageMaterial' %}"><span>Manage Material</span></a>
-                    <a href="{#}"><span>Inventory Reports</span></a>
-                    <a href="{% url 'ExpiryDates' %}"><span>Expiry Dates</span></a>
-                    <a href="{% url 'ManageWaste' %}"><span>Loss and Waste Tracking</span></a>
-                </div>
+			<!-- Material Management -->
+			<li class="dropdown">
+				<a href="#" class="dropdown-toggle">
+					<i class="uil uil-box"></i>
+					<span class="link-name">Material</span>
+					<i class="uil uil-angle-down dropdown-arrow"></i>
+				</a>
+				<ul class="submenu">
+					<li><a href="{% url 'ManageMaterial' %}">Manage Material</a></li>
+					<li><a href="{% url 'ExpiryDates' %}">Expiry Dates</a></li>
+					<li><a href="{% url 'ManageWaste' %}">Loss and Waste Tracking</a></li>
+				</ul>
+			</li>
 
-                <button class="dropdown-btn">
-                    <i class="fa fa-fw fa-box"></i> <span>Product Management</span> 
-                    <i class="fa fa-caret-down"></i> 
-                </button>
-                <div class="dropdown-container">
-                    <a href="{% url 'AddProduct' %}"><span>Add Product</span></a>
-                    <a href="{% url 'ManageProducts' %}"><span>Manage Products</span></a>
-                    <a href="{#}"><span>Menu</span></a>
-                    <a href="{% url 'KitchenDisplay' %}"><span>Kitchen Display</span></a>
-                </div>
+			<!-- Product Management -->
+			<li class="dropdown">
+				<a href="#" class="dropdown-toggle">
+					<i class="uil uil-restaurant"></i>
+					<span class="link-name">Product</span>
+					<i class="uil uil-angle-down dropdown-arrow"></i>
+				</a>
+				<ul class="submenu">
+					<li><a href="{% url 'ManageProducts' %}">Manage Products</a></li>
+				</ul>
+			</li>
 
-                <button class="dropdown-btn">
-                    <i class="fa fa-fw fa-truck"></i> <span>Supplier Management</span> 
-                    <i class="fa fa-caret-down"></i>              
-                </button>
-                <div class="dropdown-container">
-                    <a href="{% url 'AddSupplier' %}"><span>Add Supplier</span></a>
-                    <a href="{% url 'ManageSupplier' %}"><span>Manage Supplier</span></a>
-                </div>
+			<!-- Supplier Management -->
+			<li class="dropdown">
+				<a href="#" class="dropdown-toggle">
+					<i class="uil uil-truck"></i>
+					<span class="link-name">Supplier</span>
+					<i class="uil uil-angle-down dropdown-arrow"></i>
+				</a>
+				<ul class="submenu">
+					<li><a href="{% url 'ManageSupplier' %}">Manage Supplier</a></li>
+				</ul>
+			</li>
 
-                <button class="dropdown-btn">
-                    <i class="fa fa-fw fa-chart-line"></i> <span>Analytics</span> 
-                    <i class="fa fa-caret-down"></i> 
-                </button>
-                <div class="dropdown-container">
-                    <a href="{#}"><span>Analytics</span></a>
-                </div>
+			<!-- Resources Management -->
+			<li class="dropdown">
+				<a href="#" class="dropdown-toggle">
+					<i class="uil uil-utensils"></i> 
+					<span class="link-name">Resources</span>
+					<i class="uil uil-angle-down dropdown-arrow"></i>
+				</a>
+				<ul class="submenu">
+					<li><a href="{% url 'ManageResources' %}">Manage Resources</a></li>
 
-                <div class="sidebar-footer">
-                    <img src="{% static 'images/tikme.png' %}" alt="Logo">
-                    <p>v1.0.0</p>
-                </div>
-            </div>
-        </div>
-</div>
-{% endblock %}
+					<!-- <li><a href="{% url 'KitchenResources' %}">Kitchen Resources</a></li> -->
+
+					<li><a href="{% url 'Maintenance' %}">Resources Maintenance</a></li>
+				</ul>
+			</li>
+		</ul>
+
+		<!-- Logout and Dark Mode -->
+		<ul class="logout-mode">
+			<!-- Logout -->
+			<li>
+				<a href="#">
+					<i class="uil uil-signout"></i>
+					<span class="link-name">Logout</span>
+				</a>
+			</li>
+
+			<!-- Dark Mode -->
+			<li class="mode">
+				<a href="#">
+					<i class="uil uil-moon"></i>
+					<span class="link-name">Dark Mode</span>
+				</a>
+				<div class="mode-toggle">
+					<span class="switch"></span>
+				</div>
+			</li>
+		</ul>
+	</div>
+</nav>
+
+<!--begin: Main Dashboard Section-->
+<section class="dashboard">
+	<!--begin: Top Section-->
+	<div class="top"  >
+		<i class="uil uil-bars sidebar-toggle"></i>
+		<!--begin: Profile and Notification Section-->
+		<div class="top-right-section d-flex align-items-center" style="position: relative">
+			<!-- Notification Icon -->
+			<div class="notification-section me-3 position-relative">
+				<i class="uil uil-bell notification-icon" style="font-size: 1.5rem; cursor: pointer" data-bs-toggle="dropdown" aria-expanded="false"></i>
+				<span class="notification-badge badge bg-danger" style="position: absolute; top: -5px; right: -10px; font-size: 0.75rem">{{ notifications.count }}</span>
+				<div class="dropdown-menu dropdown-menu-end">
+					{% for notification in notifications %}
+						<a class="dropdown-item" href="#">{{ notification.message }} <small>{{ notification.created_at }}</small></a>
+					{% empty %}
+						<a class="dropdown-item" href="#">No notifications</a>
+					{% endfor %}
+					<form action="{% url 'clear_notifications' %}" method="post">
+						{% csrf_token %}
+						<button type="submit" class="btn btn-danger">Clear All Notifications</button>
+					</form>
+				</div>
+			</div>
+
+			<!-- Profile Section -->
+			<div class="profile-section dropdown">
+				<img
+					src="{% static 'images/prof.png' %}"
+					alt="Profile"
+					class="profile-img rounded-circle"
+					style="width: 40px; height: 40px; cursor: pointer"
+					data-bs-toggle="dropdown" />
+    				<!-- <ul class="dropdown-menu dropdown-menu-end">
+    					<li><a href="#" class="dropdown-item">View Profile</a></li>
+    					<li><a href="#" class="dropdown-item">Account Settings</a></li>
+    					<li><a href="#" class="dropdown-item">Activity Logs</a></li> -->
+				</ul>
+			</div>
+		</div>
+		<!--end: Profile and Notification Section-->
+		<!--end: Main Dashboard Section-->
+	</div>
+</section>
+
 
 {% block extra_js %}
-<script src="{% static 'js/Sidebar.js' %}"></script>
+<script src="{% static 'js/AdminSidebar.js' %}"></script>
 
 {% endblock %}

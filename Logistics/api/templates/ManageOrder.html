@@ -1,81 +1,270 @@
 {% extends 'Base.html' %}
 {% load static %}
-
 {% block extra_css %}
-<link rel="stylesheet" href="{% static 'css/ManageOrder.css' %}">
+<link rel="stylesheet" href="{% static 'css/ManageOrders.css' %}">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<!-- <link rel="stylesheet" href="{% static 'css/global.css'%}"> -->
+
 {% endblock %}
-
 {% block content %}
-<section id="manage-order-section">
-    <div class="container mt-5">
-        <div class="order-status-container">
-            {% with placed=0 shipped=0 completed=0 cancelled=0 %}
-                {% for order in orders %}
-                    {% if order.OrderStatus == "Placed" %}
-                        {% with placed=placed|add:1 %}
-                        {% endwith %}
-                    {% elif order.OrderStatus == "Shipped" %}
-                        {% with shipped=shipped|add:1 %}
-                        {% endwith %}
-                    {% elif order.OrderStatus == "Completed" %}
-                        {% with completed=completed|add:1 %}
-                        {% endwith %}
-                    {% elif order.OrderStatus == "Cancelled" %}
-                        {% with cancelled=cancelled|add:1 %}
-                        {% endwith %}
-                    {% endif %}
-                {% endfor %}
-                <div class="order-status-box">Order Placed: {{ placed }}</div>
-                <div class="order-status-box">Order Shipped: {{ shipped }}</div>
-                <div class="order-status-box">Order Completed: {{ completed }}</div>
-                <div class="order-status-box">Order Cancelled: {{ cancelled }}</div>
-            {% endwith %}
-        </div>
+<!-- Begin: Container -->
+<div class="container mt-5">
+    <!-- Begin: Breadcrumb -->
+    <ol class="breadcrumb mt-2 mb-1">
+        <li class="breadcrumb-item d-flex align-items-center">
+            <span class="text-muted">Orders Management</span>
+        </li>
+    </ol>
+    <!-- End: Breadcrumb -->
 
-        <section class="orders-section">
-            <h2 class="text-center mb-4">ORDERS MANAGEMENT</h2>
-            <div class="orders-header">
-                <button class="sort-button">Sort by</button>
-                <input type="text" id="search-bar" placeholder="Search by Order ID" class="search-bar">
-            </div>
-            <table class="table table-striped orders-table">
-                <thead>
-                    <tr>
-                        <th>Order ID</th>
-                        <th>Item</th>
-                        <th>Quantity</th>
-                        <th>Supplier Name</th>
-                        <th>Status</th>
-                        <th>Action</th>
-                    </tr>
-                </thead>
-                <tbody id="orders-table-body">
-                    {% for order in orders %}
-                    <tr>
-                        <td>{{ order.Order_ID }}</td>
-                        <td>{{ order.Items.ItemName }}</td>  <!-- Display item name -->
-                        <td>{{ order.Quantity }}</td>
-                        <td>{{ order.Supplier.SupplierName }}</td>  <!-- Display supplier name -->
-                        <td>{{ order.OrderStatus }}</td>  <!-- Display status -->
-                        <td>
-                            <form method="POST" action="{% url 'ManageOrder' %}">
-                                {% csrf_token %}
-                                <input type="hidden" name="order_id" value="{{ order.Order_ID }}">
-                                <input type="hidden" name="new_status" value="{% if order.OrderStatus == 'Placed' %}Shipped{% elif order.OrderStatus == 'Shipped' %}Completed{% else %}Placed{% endif %}">
-                                <button type="submit" class="btn btn-primary">Change Status</button>
-                            </form>
-                        </td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-        </section>
+    <!-- Begin: Title Description -->
+    <h1 id="manage-order-title" class="text" style="color: #6f42c1;">Orders Management</h1>
+    <p id="manage-order-description">Manage and track all your placed, shipped, completed, and canceled orders.</p>
+    <!-- End: Title Description -->
+    <div class="order-status-container">
+        {% with placed=0 shipped=0 completed=0 cancelled=0 %}
+            {% for order in orders %}
+                {% if order.OrderStatus == "Placed" %}
+                    {% with placed=placed|add:1 %}
+                    {% endwith %}
+                {% elif order.OrderStatus == "Shipped" %}
+                    {% with shipped=shipped|add:1 %}
+                    {% endwith %}
+                {% elif order.OrderStatus == "Completed" %}
+                    {% with completed=completed|add:1 %}
+                    {% endwith %}
+                {% elif order.OrderStatus == "Cancelled" %}
+                    {% with cancelled=cancelled|add:1 %}
+                    {% endwith %}
+                {% endif %}
+            {% endfor %}
+            <div class="order-status-box">Order Placed: {{ placed }}</div>
+            <div class="order-status-box">Order Shipped: {{ shipped }}</div>
+            <div class="order-status-box">Order Completed: {{ completed }}</div>
+            <div class="order-status-box">Order Cancelled: {{ cancelled }}</div>
+        {% endwith %}
+        
     </div>
-</section>
+    <!-- Begin: Card -->
+    <div class="card shadow-sm">
+        <!-- Begin: Card Body -->
+        <div class="card-body" >
+            <!-- Begin: Header Buttons -->
+            <div class="d-flex justify-content-end mb-3">
+                <!-- Begin: Place Order Button -->
+                <button
+                    id="place-order-button"
+                    class="btn btn-primary"
+                    style="
+                        background-color: #6f42c1;
+                        color: white;
+                        border: none;
+                        border-radius: 8px;
+                        font-weight: 500;
+                        padding: 0.5rem 1rem;
+                        transition: background-color 0.3s ease, color 0.3s ease;
+                    "
+                    onmouseover="this.style.backgroundColor='#5a3795';"
+                    onmouseout="this.style.backgroundColor='#6f42c1';"
+                    data-bs-toggle="modal"
+                    data-bs-target="#placeOrderModal"
+                >
+                    <i class="bi bi-plus"></i> Place Order
+                </button>
+                <!-- End: Place Order Button -->
+            </div>
+            <!-- End: Header Buttons -->
 
-<div id="success-popup" class="popup" style="display:none;">
-    <p>Order submitted successfully!</p>
-    <button onclick="document.getElementById('success-popup').style.display='none'">Close</button>
+            <!-- Begin: Table -->
+            <div class="table-responsive">
+                <table id="orders-table" class="table table-bordered table-hover text-center" >
+                    <thead class="table-light">
+                        <tr>
+                            <th class="text-center">Transaction No.</th>
+                            <th class="text-center">Item</th>
+                            <th class="text-center">Quantity</th>
+                            <th class="text-center">Supplier Name</th>
+                            <th class="text-center">Status</th>
+                            <th class="text-center">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="orders-table-body">
+                        {% for order in orders %}
+                        <tr>
+                            <td>{{ order.Order_ID }}</td>
+                            <td>{{ order.Items.ItemName }}</td>
+                            <td>{{ order.Quantity }}</td>
+                            <td>{{ order.Supplier.SupplierName }}</td>
+                            <td>{{ order.OrderStatus }}</td>
+                            <td>
+                                <button
+                                    type="button"
+                                    class="btn btn-secondary view-order-btn"
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#viewOrderModal"
+                                    data-order-id="{{ order.Order_ID }}"
+                                    data-items="{{ order.Items.ItemName }}"
+                                    data-quantity="{{ order.Quantity }}"
+                                    data-supplier="{{ order.Supplier.SupplierName }}"
+                                    data-status="{{ order.OrderStatus }}"
+                                >
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                                <button
+                                    type="button"
+                                    class="btn btn-warning change-status-btn"
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#changeStatusModal"
+                                    data-order-id="{{ order.Order_ID }}"
+                                    data-current-status="{{ order.OrderStatus }}"
+                                    data-item-id="{{ order.Items.Inventory_ID }}"
+                                    data-item-name="{{ order.Items.ItemName }}"
+                                    data-quantity="{{ order.Quantity }}"
+                                    data-checkout-method="{{ order.CheckoutMethod }}"
+                                    data-base-price="{{ order.Items.PurchasePrice }}"
+                                >
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <!-- End: Table -->
+        </div>
+        <!-- End: Card Body -->
+    </div>
+    <!-- End: Card -->
+</div>
+<!-- End: Container -->
+
+<!-- Modal for Changing Status -->
+<div class="modal fade" id="changeStatusModal" tabindex="-1" aria-labelledby="changeStatusModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form method="POST" action="{% url 'ManageOrder' %}">
+                {% csrf_token %}
+                <div class="modal-header">
+                    <h5 class="modal-title" id="changeStatusModalLabel">Change Order Status</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" name="order_id" id="modal-order-id">
+                    <p>Current Status: <strong id="modal-current-status"></strong></p>
+                    <label for="new-status">Select New Status:</label>
+                    <select name="new_status" id="new-status" class="form-select">
+                        <option value="Placed">Placed</option>
+                        <option value="Shipped">Shipped</option>
+                        <option value="Completed">Completed</option>
+                        <option value="Cancelled">Cancelled</option>
+                    </select>
+                    <input type="hidden" id="item-id"> <!-- Hidden input for item ID -->
+                    <p>Order Quantity: <span id="order-quantity"></span></p> <!-- Display order quantity -->
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">Save Changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
 </div>
 
+<!-- View Order Modal -->
+<div class="modal fade" id="viewOrderModal" tabindex="-1" aria-labelledby="viewOrderModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="viewOrderModalLabel">Order Details</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p><strong>Order ID:</strong> <span id="view-order-id"></span></p>
+                <p><strong>Items:</strong> <span id="view-order-items"></span></p>
+                <p><strong>Quantity:</strong> <span id="view-order-quantity"></span></p>
+                <p><strong>Supplier:</strong> <span id="view-order-supplier"></span></p>
+                <p><strong>Status:</strong> <span id="view-order-status"></span></p>
+                <!-- <p><strong>Base Price:</strong> <span id="view-order-base-price"></span></p>
+                <p><strong>Total Cost:</strong> <span id="view-order-total-cost"></span></p>                 -->
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Modal for Place Order -->
+<div class="modal fade" id="placeOrderModal" tabindex="-1" aria-labelledby="placeOrderModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form method="POST" id="place-order-form" class="row g-3" action="{% url 'PlaceOrder' %}">
+                {% csrf_token %}
+                <div class="modal-header">
+                    <h5 class="modal-title" id="placeOrderModalLabel">Place Order</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <!-- Supplier Selection -->
+                    <div class="col-12">
+                        <label for="supplier-name" class="form-label">Supplier Name:</label>
+                        <select id="supplier-name" name="supplier-name" class="form-select" required>
+                            <option value="" disabled selected>Select Supplier</option>
+                            {% for supplier in suppliers %}
+                                <option value="{{ supplier.Supplier_ID }}">{{ supplier.SupplierName }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    
+                    <!-- Material Selection -->
+                    <div class="col-12">
+                        <label for="material" class="form-label">Material:</label>
+                        <select id="material" name="material" class="form-select" required>
+                            <option value="" disabled selected>Select Material</option>
+                            {% for material in materials %}
+                                <option value="{{ material.Inventory_ID }}" data-price="{{ material.PurchasePrice }}">{{ material.ItemName }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <!-- Quantity Input -->
+                    <div class="col-12">
+                        <label for="quantity" class="form-label">Quantity:</label>
+                        <input type="number" class="form-control" id="quantity" name="quantity" required>
+                        <span id="unit-of-measure"></span>
+                    </div>
+
+                    <!-- Checkout Method Selection -->
+                    <div class="col-12">
+                        <label for="checkout-method" class="form-label">Checkout Method:</label>
+                        <select id="checkout-method" name="checkout_method" class="form-select" required>
+                            <option value="" disabled selected>Select Checkout Method</option>
+                            <option value="cash_on_delivery">Cash-On-Delivery</option>
+                            <option value="gcash">Gcash</option>
+                            <option value="paymaya">PayMaya</option>
+                            <option value="credit_card">Debit/Credit Card</option>
+                        </select>
+                    </div>
+
+                    <!-- Status and Price Info -->
+                    <input type="hidden" id="status" name="status" value="Placed">
+                    <div class="col-12">
+                        <p>Base Price: <span id="base-price">0.00</span></p>
+                        <p>Total Cost: <span id="total-cost">0.00</span></p>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">Submit Order</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+{% block extra_js %}
+{% endblock %}
+<script src="{% static 'js/ManageOrder.js' %}"></script>
+<script src="{% static 'js/OrderPricing.js' %}"></script>
+<script src="{% static 'js/OrderCount.js' %}"></script>
+<script src="{% static 'js/SearchOrders.js' %}"></script>
+<script src="{% static 'js/OrderShipping.js' %}"></script>
 {% endblock %}

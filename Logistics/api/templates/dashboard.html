@@ -1,0 +1,118 @@
+{% extends 'Base.html' %}
+{% load static %}
+{% block extra_css %}
+<!-- <link rel="stylesheet" href="{% static 'css/dashboard.css' %}"> -->
+<link rel="stylesheet" href="{% static 'css/global.css'%}">
+<style>
+    .main-content {
+        margin-left: 0;
+        margin-top: 20px;
+        padding: 20px;
+        position: relative;
+    }
+    .card {
+        padding: 1rem;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <!-- Breadcrumbs -->
+    <ol class="breadcrumb mt-2 mb-1">
+        <li class="breadcrumb-item d-flex align-items-center">
+            <span class="text-muted">Analytics</span>
+        </li>
+    </ol>
+
+    <!-- Header -->
+    <h1 style="color: #6f42c1">Logistics Dashboard</h1>
+    <p>Overview of Logistics Data</p>
+
+    <!-- Dashboard Content -->
+    <div class="row">
+        <!-- Line Graph -->
+        <div class="col-md-6 mb-4">
+            <div class="card shadow">
+                <div class="card-body">
+                    <canvas id="lineGraph"></canvas>
+                </div>
+            </div>
+        </div>
+        <!-- Bar Graph -->
+        <div class="col-md-6 mb-4">
+            <div class="card shadow">
+                <div class="card-body">
+                    <canvas id="barGraph"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        // Data for Line Graph
+        const lineData = {
+            labels: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
+            datasets: [
+                {
+                    label: "Orders Per Day",
+                    data: [50, 70, 60, 80, 90, 120, 150],
+                    borderColor: "blue",
+                    backgroundColor: "rgba(0, 0, 255, 0.1)",
+                    fill: true,
+                },
+            ],
+        };
+
+        // Data for Bar Graph
+        const barData = {
+            labels: ["Pizza", "Burger", "Pasta", "Salad", "Fries"],
+            datasets: [
+                {
+                    label: "Sales (Units)",
+                    data: [120, 80, 60, 40, 100],
+                    backgroundColor: ["red", "green", "blue", "yellow", "purple"],
+                    borderColor: ["red", "green", "blue", "yellow", "purple"],
+                    borderWidth: 1,
+                },
+            ],
+        };
+
+        // Configuration for Line Graph
+        const lineGraph = document.getElementById("lineGraph").getContext("2d");
+        new Chart(lineGraph, {
+            type: "line",
+            data: lineData,
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: { display: true },
+                    title: { display: true, text: "Order Trends (Line Graph)" },
+                },
+            },
+        });
+
+        // Configuration for Bar Graph
+        const barGraph = document.getElementById("barGraph").getContext("2d");
+        new Chart(barGraph, {
+            type: "bar",
+            data: barData,
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: { display: true },
+                    title: { display: true, text: "Product Sales (Bar Graph)" },
+                },
+                scales: {
+                    y: { beginAtZero: true },
+                },
+            },
+        });
+    });
+</script>
+{% endblock %}
