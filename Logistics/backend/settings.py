@@ -34,7 +34,7 @@ SECRET_KEY = 'django-insecure-ss7f)bgp8f=91nqt6b2m&z*3tx*kq%p4$b+w1%t6kbu0w38hl!
 DEBUG = True
 
 # ALLOWED_HOSTS = ["*"]
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '192.168.137.173','logistics-5mci.onrender.com']
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '192.168.1.49','logistics-5mci.onrender.com']
 
 
 
@@ -111,7 +111,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'logistic',
         'USER':'postgres',
-        'PASSWORD': 'hayaanmuna01',
+        'PASSWORD': 'password',
         'HOST': 'localhost',
         'PORT': '5432'
     }

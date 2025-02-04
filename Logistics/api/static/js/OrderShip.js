@@ -126,6 +126,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     console.log(`Updating stock for item ID: ${itemId} with quantity: ${quantityToUpdate}`);
 
                     // Send AJAX request to update stock
+                    console.log(`Updating stock for item ID: ${itemId} with quantity: ${quantityToUpdate}`);
                     fetch(`/update-stock/${itemId}/`, {
                         method: 'POST',
                         headers: {

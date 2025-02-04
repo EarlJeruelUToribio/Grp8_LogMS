@@ -26,7 +26,6 @@ from .serializers import (
     IngredientSerializer
 )
 
-
 def home_view(request):
     return render(request, 'dashboard.html'),
 
@@ -229,8 +228,7 @@ def extend_expiration(request, item_id):
 
 
 
-# Integration
-from django.views.decorators.csrf import csrf_exempt
+
 
 @csrf_exempt
 def payment_record_view(request):
@@ -398,6 +396,10 @@ def ManageMaterial_view(request):
 
     return render(request, 'ManageMaterial.html', {'materials': materials, 'categories': categories})
 
+import logging
+
+logger = logging.getLogger(__name__)
+
 @require_http_methods(["POST"])
 def update_stock(request, item_id):
     try:
@@ -407,8 +409,11 @@ def update_stock(request, item_id):
         if quantity is None:
             return JsonResponse({'success': False, 'error': 'Quantity is required.'}, status=400)
 
-        # Call the function to increase stock
-        increase_stock(item_id, quantity)  # Ensure this function is defined to handle stock increase
+        # Get the inventory item and update the stock
+        inventory_item = Inventory.objects.get(pk=item_id)
+        inventory_item.Current_Stock += int(quantity)
+        inventory_item.save()
+
         return JsonResponse({'success': True})
 
     except Exception as e:
