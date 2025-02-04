@@ -405,18 +405,28 @@ def update_stock(request, item_id):
     try:
         data = json.loads(request.body)
         quantity = data.get('quantity')
+        quantity = int(data.get('quantity'))
+
+        logger.info(f"Received request to update stock for item ID: {item_id} with quantity: {quantity}")
 
         if quantity is None:
+            logger.error("Quantity is required.")
             return JsonResponse({'success': False, 'error': 'Quantity is required.'}, status=400)
 
         # Get the inventory item and update the stock
         inventory_item = Inventory.objects.get(pk=item_id)
+        logger.info(f"Current stock before update: {inventory_item.Current_Stock}")
         inventory_item.Current_Stock += int(quantity)
         inventory_item.save()
+        logger.info(f"Current stock after update: {inventory_item.Current_Stock}")
 
         return JsonResponse({'success': True})
 
+    except Inventory.DoesNotExist:
+        logger.error(f"Inventory item with ID {item_id} does not exist.")
+        return JsonResponse({'success': False, 'error': 'Inventory item not found.'}, status=404)
     except Exception as e:
+        logger.error(f"Error updating stock: {str(e)}")
         return JsonResponse({'success': False, 'error': str(e)}, status=400)
     
 @require_http_methods(["GET", "POST"])
