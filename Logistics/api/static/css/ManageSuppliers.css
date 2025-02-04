@@ -258,3 +258,20 @@ table tr:nth-child(even) {
 .modal-body .btn-primary:hover {
     background-color: #5a3795; /* Darker purple on hover */
 }
+
+#search-bar {
+    padding: 10px;
+    width: 250px; /* Adjusted width */
+    border: 2px solid #000000; /* Black border */
+    border-radius: 5px;
+    box-sizing: border-box;
+    margin-left: auto;
+    margin-right:30px;
+    display: block; /* Ensures it's treated as a block element for centering */
+}
+
+/* Hide the Payment Terms column */
+th:nth-child(5), /* Adjust the number (5) to match the column's position in your table */
+td:nth-child(5) {
+    display: none;
+}

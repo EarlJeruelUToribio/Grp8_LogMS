@@ -84,11 +84,15 @@ body.dark .activity-data::-webkit-scrollbar-thumb:hover{
 }
 
 .dropdown .submenu {
-    display: none;
-    /* Initially hidden */
+    display: none; /* Hidden by default */
     list-style: none;
     margin: 0;
     justify-content: center;
+}
+
+/* Show the submenu when the dropdown is active */
+.dropdown.active .submenu {
+    display: block;
 }
 
 .dropdown .submenu li a {
@@ -104,25 +108,31 @@ body.dark .activity-data::-webkit-scrollbar-thumb:hover{
     color: var(--primary-color);
 }
 
+/* Adjust dropdown icon rotation for opened state */
+.dropdown-toggle::after {
+    content: none !important; /* Remove the default arrow icon */
+    display: none !important; /* Hide default arrow */
+}
+
 /* Dropdown icon rotation */
 .dropdown .dropdown-toggle {
     display: flex;
-    align-items: center;
+    justify-content: space-between; /* Space between the text and arrow */
+    align-items: center; /* Vertically center */
+    width: 100%;
 
 }
 
 
 /* Default state */
 .dropdown-arrow {
-    display: inline-block;
+    margin-left: 10px; /* Adds space between the link and the arrow */
     transition: transform 0.3s ease;
-    transform: rotate(90deg);
-    /* Default rotation */
 }
 
 /* Rotated state when dropdown is active */
 .dropdown.active .dropdown-arrow {
-    transform: rotate(0deg);
+    transform: rotate(180deg); /* Rotate when active */
     /* Rotate down when active */
 }
 

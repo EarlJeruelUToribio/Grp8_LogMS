@@ -11,15 +11,10 @@ urlpatterns = [
     path('clear-notifications/', views.clear_notifications, name='clear_notifications'),
     path('api/highest-selling-product/', views.highest_selling_product_view, name='highest_selling_product'),
 
-
-
-
     #Integration test
     path('payment-record/', views.payment_record_view, name='payment-record'),
     path('create-checkout-session/', views.create_checkout_session, name='create-checkout-session'),
     path('api/receive-order/', views.receive_order, name='receive_order'),
-
-
 
     # path('inventory-chart/',views.inventory_chart_view, name='inventory-chart'),
 
@@ -36,6 +31,8 @@ urlpatterns = [
     path('manage-customer-orders/', views.manage_customer_orders_view, name='manage_customer_orders'),
     path('resolve-order/<int:order_id>/', views.resolve_order_view, name='resolve_order'),
     path('resolve-all-orders/', views.resolve_all_orders_view, name='resolve_all_orders'),
+    path('ManageCustomerOrder/', views.ManageCustomerOrder_view, name='ManageCustomerOrder'),
+
 
     #Product
     path('ManageProduct/', views.ManageProduct_view, name='ManageProducts'),

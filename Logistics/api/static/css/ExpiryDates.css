@@ -22,6 +22,8 @@
     padding: 10px;
     border-radius: 4px;
     border: 2px solid #000000;
+    margin-left: auto;
+
 }
 
 /* Products Section Header */
@@ -90,4 +92,8 @@
 
 }
 
+/* Hide the first column (Transaction No.) */
+.table th:first-child, .table td:first-child {
+    display: none;
+}
 
