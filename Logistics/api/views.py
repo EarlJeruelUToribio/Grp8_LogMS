@@ -1106,6 +1106,9 @@ def send_inventory_data(request):
 
     return JsonResponse({'success': False, 'error': 'Invalid request method.'}, status=405)
 
+
+
+
 #Inventory Views
 class InventoryListCreateView(generics.ListCreateAPIView):
     queryset = Inventory.objects.all()
