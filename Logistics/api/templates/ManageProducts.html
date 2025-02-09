@@ -16,7 +16,7 @@
     <script src="{% static 'js/ManageProduct.js' %}"></script> <!-- Include the new JS file -->
     <script src="{% static 'js/Editproduct.js' %}"></script> <!-- Include the EditProduct.js file -->
     <script src="{% static 'js/SearchProducts.js' %}"></script> <!-- Include the SearchProduct.js file -->
-    <script src="{% static 'js/DeleteProduct.js' %}"></script> <!-- Include the DeleteProduct.js file -->
+    <!-- <script src="{% static 'js/DeleteProduct.js' %}"></script> Include the DeleteProduct.js file -->
     <script src="{% static 'js/CategoryProduct.js' %}"></script>
     <script src="{% static 'js/ProductAvailable.js' %}"></script>
 {% endblock %}
@@ -44,7 +44,7 @@
                 <th>Name</th>
                 <th>Category</th>
                 <th>Description</th>
-                <th>Unit Price ₱</th>
+                <th>UnitPrice</th>
                 <th>Image</th>
                 <th>Availability</th>
                 <th>Action</th>
@@ -76,9 +76,9 @@
         <button type="button" class="btn btn-warning me-2" id="edit-button" data-bs-toggle="modal" data-bs-target="#editProductModal">
             <i class="bi bi-pencil-square"></i>
         </button>
-        <button type="button" class="btn btn-danger delete-button" data-product-id="{{ product.Product_ID }}">
+        <!-- <button type="button" class="btn btn-danger delete-button" data-product-id="{{ product.Product_ID }}">
             <i class="bi bi-trash"></i>
-        </button>
+        </button> -->
     </div>
 </td>
             </tr>
