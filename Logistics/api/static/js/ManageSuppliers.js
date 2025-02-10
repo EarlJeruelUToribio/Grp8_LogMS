@@ -3,14 +3,15 @@ document.addEventListener('DOMContentLoaded', () => {
         const materialSelect = document.querySelector('.material-select');
         const selectedMaterialId = materialSelect.value;
         const selectedMaterialText = materialSelect.options[materialSelect.selectedIndex].text;
-        const quantityInput = document.querySelector('.material-quantity').value;
+        // Remove the quantity input reference
+        // const quantityInput = document.querySelector('.material-quantity').value;
 
-        if (selectedMaterialId && quantityInput) {
+        if (selectedMaterialId) {
             const materialsList = document.getElementById('materials-list');
             const newMaterialSection = document.createElement('div');
             newMaterialSection.className = 'list-group-item d-flex justify-content-between align-items-center';
             newMaterialSection.dataset.materialId = selectedMaterialId;
-            newMaterialSection.textContent = `${selectedMaterialText} - Qty: ${quantityInput}`;
+            newMaterialSection.textContent = `${selectedMaterialText}`;
 
             const removeButton = document.createElement('button');
             removeButton.className = 'btn btn-danger btn-sm remove-material';
@@ -22,7 +23,7 @@ document.addEventListener('DOMContentLoaded', () => {
             materialsList.appendChild(newMaterialSection);
 
             materialSelect.value = '';
-            document.querySelector('.material-quantity').value = '';
+            // document.querySelector('.material-quantity').value = '';
         } else {
             alert('Please select a material and enter a quantity.');
         }
@@ -70,9 +71,10 @@ document.addEventListener('DOMContentLoaded', () => {
             'supplier-address': document.getElementById('supplier-address').value,
             'supplier-email': document.getElementById('supplier-email').value,
             'contact-number': document.getElementById('contact-number').value,
-            'payment-terms': document.getElementById('payment-terms').value,
+            // Remove payment-terms
+            // 'payment-terms': document.getElementById('payment-terms').value,
             'material_name[]': Array.from(document.querySelectorAll('#materials-list .list-group-item')).map(item => item.dataset.materialId),
-            'material_min_order_qty[]': Array.from(document.querySelectorAll('#materials-list .list-group-item')).map(item => item.textContent.split(' - Qty: ')[1])
+            //'material_min_order_qty[]': Array.from(document.querySelectorAll('#materials-list .list-group-item')).map(item => item.textContent.split(' - Qty: ')[1])
         };
 
         // Call the function to add the supplier

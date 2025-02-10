@@ -88,16 +88,17 @@
                         <input type="text" id="contact-number" name="contact-number" class="form-control" required>
                     </div>
 
-                    <!-- Payment Terms -->
-                    <div class="col-md- 6">
-                        <label for="payment-terms" class="form-label">Payment Terms:</label>
-                        <select id="payment-terms" name="payment-terms" class="form-select" required>
-                            <option value="cash-on-delivery">Cash on Delivery</option>
-                            <option value="gcash">Gcash</option>
-                            <option value="paymaya">Paymaya</option>
-                            <option value="bank-transfer">Bank Transfer</option>
-                        </select>
-                    </div>
+                <!-- Payment Terms -->
+                <!-- Remove this section -->
+                <!-- <div class="col-md-6">
+                    <label for="payment-terms" class="form-label">Payment Terms:</label>
+                    <select id="payment-terms" name="payment-terms" class="form-select" required>
+                        <option value="cash-on-delivery">Cash on Delivery</option>
+                        <option value="gcash">Gcash</option>
+                        <option value="paymaya">Paymaya</option>
+                        <option value="bank-transfer">Bank Transfer</option>
+                    </select>
+                </div> -->
 
                     <!-- Materials Section -->
                     <div class="col-md-12">
@@ -112,9 +113,10 @@
                                         {% endfor %}
                                     </select>
                                 </div>
-                                <div class="col-md-5">
-                                    <input type="number" class="form-control material-quantity" placeholder="Min Order Qty" required>
-                                </div>
+                                    <!-- Remove the minimum order quantity input -->
+                                    <!-- <div class="col-md-5">
+                                        <input type="number" class="form-control material-quantity" placeholder="Min Order Qty" required>
+                                    </div> -->
                                 <div class="col-md-2">
                                     <button type="button" class="btn btn-secondary add-material-button">➕ Add Material</button>
                                 </div>
@@ -173,7 +175,8 @@
                     </div>
 
                     <!-- Payment Terms -->
-                    <div class="col-md-6">
+                    <!-- Remove this section -->
+                    <!-- <div class="col-md-6">
                         <label for="edit-payment-terms" class="form-label">Payment Terms:</label>
                         <select id="edit-payment-terms" name="payment-terms" class="form-select" required>
                             <option value="cash-on-delivery">Cash on Delivery</option>
@@ -181,7 +184,7 @@
                             <option value="paymaya">Paymaya</option>
                             <option value="bank-transfer">Bank Transfer</option>
                         </select>
-                    </div>
+                    </div> -->
 
                     <!-- Materials Section -->
                     <div class="col-md-12">
@@ -196,9 +199,10 @@
                                         {% endfor %}
                                     </select>
                                 </div>
-                                <div class="col-md-5">
-                                    <input type="number" class="form-control edit-material-quantity" placeholder="Min Order Qty" required>
-                                </div>
+                                    <!-- Remove the minimum order quantity input -->
+                                    <!-- <div class="col-md-5">
+                                        <input type="number" class="form-control material-quantity" placeholder="Min Order Qty" required>
+                                    </div> -->
                                 <div class="col-md-2">
                                     <button type="button" class="btn btn-secondary add-edit-material-button">➕ Add Material</button>
                                 </div>
@@ -225,7 +229,7 @@
     const addSupplierUrl = '{% url "AddSupplier" %}'; // Get the URL for adding a supplier
     const editSupplierUrl = '{% url "edit_supplier" 0 %}';
 </script>
-<script src="{% static 'js/Suppliers.js' %}"></script>
-<script src="{% static 'js/EditSupplier.js' %}"></script>
+<script src="{% static 'js/ManageSuppliers.js' %}"></script>
+<script src="{% static 'js/SuppliersEdit.js' %}"></script>
 <script src="{% static 'js/SearchSupplier.js' %}"></script>
 {% endblock %}
