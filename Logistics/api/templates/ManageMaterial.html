@@ -58,7 +58,7 @@
                 <td>{{ material.ReorderLevel }}</td>
                 <td>
                     {% if material.expiration_date %}
-                        {{ material.expiration_date|date:"Y-m-d" }}
+                        {{ material.expiration_date|date:"F j, Y" }}
                     {% else %}
                         N/A
                     {% endif %}

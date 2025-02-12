@@ -30,7 +30,7 @@
                     <td>{{ item.ItemName }}</td>
                     <td>
                         {% if item.expiration_date %}
-                            {{ item.expiration_date|date:"Y-m-d" }}  <!-- Display the actual expiration date -->
+                            {{ item.expiration_date|date:"F j, Y" }}  <!-- Display the actual expiration date -->
                         {% else %}
                             N/A
                         {% endif %}
