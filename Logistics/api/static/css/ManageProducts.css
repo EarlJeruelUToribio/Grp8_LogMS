@@ -502,3 +502,8 @@ margin-left: 60px;
 .custom-swal-confirm:hover {
     background-color: #5a3795; /* Darker purple on hover */
 }
+
+.unit-select {
+    margin-left: 12px;
+    width: auto;
+}
