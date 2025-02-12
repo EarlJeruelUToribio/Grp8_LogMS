@@ -31,7 +31,6 @@ function getIngredientRowHTML() {
                 ${options} <!-- Insert the options here -->
             </select>
         </div>
-        <div class="col-md-4">
             <input type="number" class="form-control" placeholder="Quantity" required>
         </div>
         <div class="col-md-2">
