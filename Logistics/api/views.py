@@ -673,7 +673,8 @@ def AddSupplier_view(request):
                 SupplierName=supplier_name,
                 SupplierDesc=supplier_address,
                 SupplierNumber=supplier_email,
-                PaymentTerms=payment_terms,
+                # Remove PaymentTerms assignment
+                # PaymentTerms=payment_terms,
                 contact_number=contact_number,  # Correct field name
             )
             supplier.save()
@@ -712,7 +713,7 @@ def edit_supplier(request, pk):
             supplier.SupplierDesc = request.POST.get('supplier-address')
             supplier.SupplierNumber = request.POST.get('supplier-email')
             supplier.contact_number = request.POST.get('contact-number')
-            supplier.PaymentTerms = request.POST.get('payment-terms')
+            #supplier.PaymentTerms = request.POST.get('payment-terms')
             supplier.save()
 
             return JsonResponse({'success': True})
