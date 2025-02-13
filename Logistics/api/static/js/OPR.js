@@ -20,37 +20,37 @@ document.addEventListener('DOMContentLoaded', () => {
             document.getElementById('order-quantity').textContent = quantity;
             document.getElementById('item-id').value = itemId;
 
-        // Prepare payment data
-        function formatDateToYMD(date) {
-            const year = date.getFullYear();
-            const month = String(date.getMonth() + 1).padStart(2, '0'); // Months are 0-based, so add 1
-            const day = String(date.getDate()).padStart(2, '0'); // Ensure two digits
-            return `${year}-${month}-${day}`; // Correct format: YYYY-MM-DD
-        }
+            // Prepare payment data
+            function formatDateToYDM(date) {
+                const year = date.getFullYear();
+                const day = String(date.getDate()).padStart(2, '0'); // Ensure two digits
+                const month = String(date.getMonth() + 1).padStart(2, '0'); // Months are 0-based, so add 1
+                return `${year}-${day}-${month}`;
+            }
 
-        function generateTransactionID() {
-            const now = new Date();
-            const year = now.getFullYear();
-            const month = String(now.getMonth() + 1).padStart(2, '0'); // Months are 0-based
-            const day = String(now.getDate()).padStart(2, '0');
-            const hours = String(now.getHours()).padStart(2, '0');
-            const minutes = String(now.getMinutes()).padStart(2, '0');
-            const seconds = String(now.getSeconds()).padStart(2, '0');
+            function generateTransactionID() {
+                const now = new Date();
+                const year = now.getFullYear();
+                const month = String(now.getMonth() + 1).padStart(2, '0'); // Months are 0-based
+                const day = String(now.getDate()).padStart(2, '0');
+                const hours = String(now.getHours()).padStart(2, '0');
+                const minutes = String(now.getMinutes()).padStart(2, '0');
+                const seconds = String(now.getSeconds()).padStart(2, '0');
 
-            return `LOG - ${year}${month}${day}${hours}${minutes}${seconds}`; // Format: LOG - YYYYMMDDHHMMSS
-        }
+                return `LOG - ${year}${month}${day}${hours}${minutes}${seconds}`; // Format: LOG - YYYYMMDDHHMMSS
+            }
+            
+            const totalPrice = (quantity * basePrice).toFixed(2);
+            paymentData = {
+                transaction_id: generateTransactionID(),
+                PaymentDate: formatDateToYDM(new Date()), // Use the custom date format
+                Amount: parseFloat(totalPrice),
+                PaymentMethod: checkoutMethod,
+                Description: "Logistics Purchase"
+            };
 
-        const totalPrice = (quantity * basePrice).toFixed(2);
-        paymentData = {
-            transaction_id: generateTransactionID(),
-            PaymentDate: formatDateToYMD(new Date()), // Use the corrected date format
-            Amount: parseFloat(totalPrice),
-            PaymentMethod: checkoutMethod,
-            Description: "Logistics Purchase"
-        };
-
-        console.log('Button clicked for order:', orderId);
-        console.log('Payment Data prepared:', paymentData);
+            console.log('Button clicked for order:', orderId);
+            console.log('Payment Data prepared:', paymentData);
         });
     });
 
@@ -75,8 +75,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
         const success_url = "http://127.0.0.1:8000/"; // ✅ Correct format
-
-
 
     // Function to send test data to PayMongo
     async function sendTestData() {

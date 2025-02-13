@@ -39,6 +39,47 @@
             <p>Overview of Logistics Data</p>
 
             <!-- Dashboard Content -->
+             <!-- Cost of Goods Sold Card -->
+             <div class="col-lg-3 col-md-6 col-sm-12 mb-4">                        
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col mt-0">
+                                <h5 class="card-title">Cost of Goods Sold</h5>
+                            </div>
+                            <div class="col-auto">
+                                <div class="stat text-primary">
+                                    <i class="align-middle" data-feather="shopping-cart"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <h1 id="totalCOGS" class="mt-1 mb-3">₱0</h1> <!-- COGS Data will be inserted here -->
+                        <div class="mb-0">
+                            <span class="text-muted">Total Cost of Goods Sold</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+                <!-- Total Inventory -->
+                <div class="col-lg-3 col-md-6 col-sm-12 mb-4">                        
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col mt-0">
+                                    <h5 class="card-title">Inventory Purchases</h5>
+                                </div>
+                                <div class="col-auto">
+                                    <div class="stat text-primary">
+                                        <i class="align-middle" data-feather="shopping-cart"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <h1 id="totalInventoryPurchases" class="mt-1 mb-3">₱0</h1> <!-- COGS Data will be inserted here -->
+                        </div>
+                    </div>
+                </div>
+
             <div class="row">
                 <!-- Line Graph -->
                 <div class="col-md-6 mb-4">
@@ -68,6 +109,21 @@
         </div>
 
         <script>
+            // Fetch Cost of Goods Sold (COGS)
+            fetch('http://192.168.1.24:8005/total-cogs/')
+            .then(response => response.json())
+            .then(data => {
+                const cogsElement = document.getElementById('totalCOGS');
+                if (data.total_cogs !== undefined) {
+                    cogsElement.innerText = `₱${Number(data.total_cogs).toLocaleString("en-US", {
+                        minimumFractionDigits: 2,
+                        maximumFractionDigits: 2
+                    })}`;
+                } else {
+                    cogsElement.innerText = "₱0.00";
+                }
+            })
+            .catch(error => console.error('Error fetching total COGS:', error));
             // Fetch data for Line Graph
             fetch('/api/orders-per-day/')
                 .then(response => response.json())
@@ -94,6 +150,25 @@
                         },
                     });
                 });
+
+                document.addEventListener("DOMContentLoaded", function () {
+                    fetch("http://192.168.1.24:8005/total-inventory-purchase/", {
+                        method: "GET",
+                        headers: { "X-Requested-With": "XMLHttpRequest" }
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        console.log("Inventory Purchases:", data);
+                        document.getElementById("totalInventoryPurchases").textContent =
+                            data.total_inventory_purchases ? formatCurrency(data.total_inventory_purchases) : "₱0.00";
+                    })
+                    .catch(error => console.error("Error fetching inventory purchases:", error));
+                });
+                
+                // Format currency
+                function formatCurrency(amount) {
+                    return new Intl.NumberFormat("en-PH", { style: "currency", currency: "PHP" }).format(amount);
+                }
 
             // Fetch data for Bar Graph
             fetch('/api/product-sales/')
