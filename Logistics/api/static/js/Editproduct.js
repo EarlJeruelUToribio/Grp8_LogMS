@@ -5,10 +5,10 @@ document.addEventListener('DOMContentLoaded', function () {
         button.addEventListener('click', function () {
             const row = this.closest('tr');
             const productId = row.getAttribute('data-product-id');
-            const productName = row.cells[1].innerText;
-            const productCategory = row.cells[2].innerText;
-            const productDescription = row.cells[3].innerText;
-            const productPrice = row.cells[4].innerText.replace('₱', '').trim();
+            const productName = row.cells[0].innerText;
+            const productCategory = row.cells[1].innerText;
+            const productDescription = row.cells[2].innerText;
+            const productPrice = row.cells[3].innerText.replace('₱', '').trim();
 
             // Populate the edit modal with the product data
             document.getElementById('edit-product-name').value = productName;
