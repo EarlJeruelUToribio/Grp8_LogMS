@@ -129,7 +129,7 @@ class ProductCategory(models.Model):
         db_table = 'product_categories'
 
     def __str__(self):
-        return self.CategoryName
+        return self.CategoryName    
 
 class Product(models.Model):
     Product_ID = models.AutoField(primary_key=True)

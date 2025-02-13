@@ -188,10 +188,15 @@
             case 'm':
                 smallerUnits = ['centimeters', 'millimeters'];
                 break;
-            case 'pcs':
             case 'box':
-                smallerUnits = []; // No smaller units
-                break;
+            smallerUnits = ['pieces']; // A box contains multiple pieces
+            break;
+        case 'tray':
+            smallerUnits = ['pieces']; // A tray contains multiple pieces
+            break;
+        case 'pcs':
+            smallerUnits = ['pieces']; // No smaller units for pieces
+            break;
         }
 
         // Populate smaller units
@@ -296,6 +301,12 @@
                 return quantity / 100; // Convert centimeters to meters
             case 'millimeters':
                 return quantity / 1000; // Convert millimeters to meters
+            case 'box':
+                return quantity * 12; // Convert box to pieces (Assuming 1 box = 12 pcs)
+            case 'tray':
+                return quantity * 30; // Convert tray to pieces (Assuming 1 tray = 30 pcs)
+            case 'pcs':
+                return quantity; // Pieces are the base unit, no conversion needed
             default:
                 return quantity; // No conversion needed
         }
