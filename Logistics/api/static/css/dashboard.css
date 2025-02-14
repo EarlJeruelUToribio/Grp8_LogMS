@@ -39,13 +39,20 @@ p {
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     transition: transform 0.3s ease-in-out;
-	margin-left: 150px;
 }
 
+.card:hover {
+    transform: translateY(-5px);
+}
 
 .card-body {
     padding: 20px;
 }
+
+.stat i {
+    color: #6f42c1;
+}
+
 
 /* Pie Chart Container */
 #highestSellingProductChart {
@@ -67,22 +74,46 @@ p {
 }
 
 /* Mobile Responsive Design */
+@media (max-width: 1000px) {
+
+
+    #highestSellingProductChart {
+        max-height: 500px;
+    }
+}
+
+/* Ensure both cards are aligned properly */
+.row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+/* Ensure uniform card styling */
+.card {
+    background: #ffffff;
+    border: none;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 10px;
+    margin-left: 150px;
+}
+
+/* Align the amount (₱0) to the left */
+.amount {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #6f42c1;
+    text-align: left; /* Aligns text to the left */
+}
+
+/* Responsive styling */
 @media (max-width: 768px) {
+    .row {
+        flex-direction: column;
+    }
 
     .card {
         margin-bottom: 15px;
-		margin-left: 150px;
-    }
-
-    h1 {
-        font-size: 24px;
-    }
-
-    p {
-        font-size: 14px;
-    }
-
-    #highestSellingProductChart {
-        max-height: 250px;
     }
 }
