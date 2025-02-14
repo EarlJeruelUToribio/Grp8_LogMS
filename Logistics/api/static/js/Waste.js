@@ -29,19 +29,24 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
-    // Function to add a new row to the waste table
+    const formatDate = (dateString) => {
+        const options = { year: 'numeric', month: 'long', day: 'numeric' };
+        return new Date(dateString).toLocaleDateString('en-US', options);
+    };
+    
     const addWasteRow = (record) => {
         const row = document.createElement('tr');
         row.innerHTML = `
             <td>${record.Waste_ID}</td>
             <td>${record.IngredientName}</td>
-            <td>${record.DateOfIncident}</td>
+            <td>${formatDate(record.DateOfIncident)}</td> <!-- Format Date -->
             <td>${record.QuantityLost} ${record.UnitOfMeasurement}</td>
             <td>${record.CauseOfLoss}</td>
             <td>${record.ActionTaken}</td>
         `;
-        wasteTableBody.appendChild(row); // Append the new row to the table
+        wasteTableBody.appendChild(row);
     };
+    
 
     // Fetch waste records when the page loads
     fetchWasteRecords();

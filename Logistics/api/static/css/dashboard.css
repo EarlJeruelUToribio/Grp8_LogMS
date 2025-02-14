@@ -1,0 +1,88 @@
+.container {
+    max-width: 1100px;
+    padding: 20px;
+    background: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Breadcrumbs */
+.breadcrumb {
+    background-color: transparent;
+    font-size: 14px;
+    font-weight: 500;
+    color: #6c757d;
+	margin-left: 150px;
+}
+
+/* Dashboard Header */
+h1 {
+    font-size: 28px;
+    font-weight: bold;
+    color: #6f42c1; /* Purple Color */
+    margin-bottom: 10px;
+	margin-left: 150px;
+
+}
+
+p {
+    font-size: 16px;
+    color: #6c757d;
+    margin-bottom: 20px;
+	margin-left: 150px;
+}
+
+/* Card Styling */
+.card {
+    background: #ffffff;
+    border: none;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease-in-out;
+	margin-left: 150px;
+}
+
+
+.card-body {
+    padding: 20px;
+}
+
+/* Pie Chart Container */
+#highestSellingProductChart {
+    width: 100%;
+    max-height: 300px;
+	
+}
+
+/* Bootstrap Overrides */
+.btn-primary {
+    background-color: #6f42c1;
+    border: none;
+    font-weight: bold;
+    transition: background-color 0.3s ease-in-out;
+}
+
+.btn-primary:hover {
+    background-color: #5a3795;
+}
+
+/* Mobile Responsive Design */
+@media (max-width: 768px) {
+
+    .card {
+        margin-bottom: 15px;
+		margin-left: 150px;
+    }
+
+    h1 {
+        font-size: 24px;
+    }
+
+    p {
+        font-size: 14px;
+    }
+
+    #highestSellingProductChart {
+        max-height: 250px;
+    }
+}

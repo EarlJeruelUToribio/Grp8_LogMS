@@ -31,7 +31,7 @@ urlpatterns = [
     path('manage-customer-orders/', views.manage_customer_orders_view, name='manage_customer_orders'),
     path('resolve-order/<int:order_id>/', views.resolve_order_view, name='resolve_order'),
     path('resolve-all-orders/', views.resolve_all_orders_view, name='resolve_all_orders'),
-    path('ManageCustomerOrder/', views.ManageCustomerOrder_view, name='ManageCustomerOrder'),
+    path('ManageCustomerOrder/', views.manage_customer_orders_view, name='ManageCustomerOrder'),
 
 
     #Product

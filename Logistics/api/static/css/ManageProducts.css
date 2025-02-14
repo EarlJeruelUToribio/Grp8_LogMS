@@ -422,15 +422,15 @@ body, html {
 }
 
 #ingredients-section .form-control {
-    width:250px;
+    width:350px;
     padding: 16px;
     margin-bottom: 20px;
     border: 2px solid black; /* Black border */
     border-radius: 6px; /* Rounded corners */
     background: #f8f8f8; /* Light background */
     color: black;
-margin-left: 60px;
-}
+    margin-left: 60px;
+    }
 
 #ingredients-section .form-control:focus {
     border-color: #5a3795; /* Purple border on focus */
@@ -452,6 +452,39 @@ margin-left: 60px;
 #ingredients-section .btn-danger:hover {
     background-color: #a71d2a; /* Darker red on hover */
 }
+
+#edit-ingredients-section .form-control {
+    width:350px;
+    padding: 16px;
+    margin-bottom: 20px;
+    border: 2px solid black; /* Black border */
+    border-radius: 6px; /* Rounded corners */
+    background: #f8f8f8; /* Light background */
+    color: black;
+    margin-left: 70px;
+    }
+
+#edit-ingredients-section .form-control:focus {
+    border-color: #5a3795; /* Purple border on focus */
+    box-shadow: 0 0 5px rgba(123, 78, 131, 0.5); /* Subtle glow */
+}
+
+
+
+#edit-ingredients-section .btn-danger {
+    background-color: #dc3545; /* Danger red */
+    color: #fff;
+    border-radius: 5px;
+    font-weight: bold;
+    border: none;
+    margin-left: 10px;
+
+}
+
+#edit-ingredients-section .btn-danger:hover {
+    background-color: #a71d2a; /* Darker red on hover */
+}
+
 
 
 #add-ingredient-button {
@@ -501,4 +534,28 @@ margin-left: 60px;
 
 .custom-swal-confirm:hover {
     background-color: #5a3795; /* Darker purple on hover */
+}
+
+.unit-select {
+    margin-left: 12px;
+    width: auto;
+}
+
+
+.remove-ingredient {
+    background-color: #d9534f; /* Light blue background */
+    color: #fff; /* White text */
+    border: none;
+    padding: 8px 16px;
+    font-size: 16px;
+    border-radius: 4px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    width: 50px;
+    height: 40px;
+    margin-bottom: 7px;
+}
+
+.remove-ingredient:hover {
+    background-color: #c9423f; /* Darker blue on hover */
 }

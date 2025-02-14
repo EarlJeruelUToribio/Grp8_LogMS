@@ -16,7 +16,7 @@
     <script src="{% static 'js/ManageProduct.js' %}"></script> <!-- Include the new JS file -->
     <script src="{% static 'js/Editproduct.js' %}"></script> <!-- Include the EditProduct.js file -->
     <script src="{% static 'js/SearchProducts.js' %}"></script> <!-- Include the SearchProduct.js file -->
-    <script src="{% static 'js/DeleteProduct.js' %}"></script> <!-- Include the DeleteProduct.js file -->
+    <!-- <script src="{% static 'js/DeleteProduct.js' %}"></script> Include the DeleteProduct.js file -->
     <script src="{% static 'js/CategoryProduct.js' %}"></script>
     <script src="{% static 'js/ProductAvailable.js' %}"></script>
 {% endblock %}
@@ -44,7 +44,7 @@
                 <th>Name</th>
                 <th>Category</th>
                 <th>Description</th>
-                <th>Unit Price ₱</th>
+                <th>Unit Price</th>
                 <th>Availability</th>
                 <th>Action</th>
             </tr>
@@ -76,9 +76,9 @@
         <button type="button" class="btn btn-warning me-2" id="edit-button" data-bs-toggle="modal" data-bs-target="#editProductModal">
             <i class="bi bi-pencil-square"></i>
         </button>
-        <button type="button" class="btn btn-danger delete-button" data-product-id="{{ product.Product_ID }}">
+        <!-- <button type="button" class="btn btn-danger delete-button" data-product-id="{{ product.Product_ID }}">
             <i class="bi bi-trash"></i>
-        </button>
+        </button> -->
     </div>
 </td>
             </tr>
@@ -143,14 +143,13 @@
                                 <div class="col-md-4">
                                     <input type="number" class="form-control" placeholder="Quantity" required>
                                 </div>
-                                <div class="col-md-2">
                                     <select class="form-select unit-select" required>
                                         <option value="" disabled selected>Select Unit</option>
-                                        <!-- Smaller units will be populated here -->
                                     </select>
-                                </div>
                                 <div class="col-md-1">
-                                    <button type="button" class="btn btn-danger remove-ingredient" onclick="removeIngredient(this)">Remove</button>
+                                    <button type="button" class="btn btn-danger remove-ingredient" onclick="removeIngredient(this)">
+                                    <i class="fas fa-trash"></i>
+                                    </button>
                                 </div>
                             </div>
                         </div>
@@ -189,10 +188,15 @@
             case 'm':
                 smallerUnits = ['centimeters', 'millimeters'];
                 break;
-            case 'pcs':
             case 'box':
-                smallerUnits = []; // No smaller units
-                break;
+            smallerUnits = ['pieces']; // A box contains multiple pieces
+            break;
+        case 'tray':
+            smallerUnits = ['pieces']; // A tray contains multiple pieces
+            break;
+        case 'pcs':
+            smallerUnits = ['pieces']; // No smaller units for pieces
+            break;
         }
 
         // Populate smaller units
@@ -297,6 +301,12 @@
                 return quantity / 100; // Convert centimeters to meters
             case 'millimeters':
                 return quantity / 1000; // Convert millimeters to meters
+            case 'box':
+                return quantity * 12; // Convert box to pieces (Assuming 1 box = 12 pcs)
+            case 'tray':
+                return quantity * 30; // Convert tray to pieces (Assuming 1 tray = 30 pcs)
+            case 'pcs':
+                return quantity; // Pieces are the base unit, no conversion needed
             default:
                 return quantity; // No conversion needed
         }
@@ -354,11 +364,6 @@
                                 {% endfor %}
                             </select>
                         </div>
-                       <!-- <div class="col-md-6">
-                            <label for="edit-product-image" class="form-label">Product Image:</label>
-                            <input type="file" id="edit-product-image" name="product-image" class="form-control">
-                        </div>
-                        -->
                         <div class="col-md-6">
                             <label for="edit-product-price" class="form-label">Product Price:</label>
                             <input type="number" id="edit-product-price" name="product-price" class="form-control" value="{{ product.PurchasePrice }}" required>
@@ -379,8 +384,8 @@
                                             {% endfor %}
                                         </select>
                                     </div>
-                                    <div class="col-md-4">
-                                        <input type="number" class="form-control" placeholder="Quantity" value="{{ ingredient.MeasureCount }}" required>
+                                    <div class="col-md-1">
+                                        <input type="number" class="edit-quantity" placeholder="Quantity" value="{{ ingredient.MeasureCount }}" required>
                                     </div>
                                     <div class="col-md-2">
                                         <div class="unit-container">
@@ -388,7 +393,6 @@
                                                 <label class="form-label">Unit:</label>
                                                 <select class="form-select unit-select" required>
                                                     <option value="" disabled selected>Select Unit</option>
-                                                    <!-- Smaller units will be populated here -->
                                                 </select>
                                             </div>
                                             <div class="remove-button-container">
@@ -437,16 +441,14 @@ function getIngredientRowHTML(selectedId = '', selectedQuantity = '') {
                 ${options} <!-- Insert the options here -->
             </select>
         </div>
-        <div class="col-md-4">
             <input type="number" class="form-control" placeholder="Quantity" value="${selectedQuantity}" required>
-        </div>
-        <div class="col-md-2">
             <select class="form-select unit-select" required>
                 <option value="" disabled selected>Select Unit</option>
             </select>
-        </div>
         <div class="col-md-1">
-            <button type="button" class="btn btn-danger remove-ingredient" onclick="removeIngredient(this)">Remove</button>
+        <button type="button" class="btn btn-danger remove-ingredient" onclick="removeIngredient(this)">
+        <i class="fas fa-trash"></i> 
+        </button>
         </div>
     `;
 }

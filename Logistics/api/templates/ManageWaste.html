@@ -18,7 +18,7 @@
             <tr>
                 <th>Waste ID</th>
                 <th>Ingredient Name</th>
-                <th>Date & Time</th>
+                <th>Date</th>
                 <th>Quantity Lost</th>
                 <th>Cause of Loss</th>
                 <th>Action Taken</th>
@@ -29,7 +29,7 @@
             <tr class="waste-row">
                 <td>{{ record.Waste_ID }}</td>
                 <td>{{ record.IngredientName }}</td>
-                <td>{{ record.DateOfIncident }}</td>
+                <td>{{ record.DateOfIncident|date:"F d, Y" }}</td>
                 <td>{{ record.QuantityLost }} {{ record.UnitOfMeasurement }}</td>
                 <td>{{ record.CauseOfLoss }}</td>
                 <td>{{ record.ActionTaken }}</td>
