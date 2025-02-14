@@ -119,7 +119,7 @@ document.addEventListener('DOMContentLoaded', () => {
         console.log("Test Payload to PayMongo:", testPayload);
     
         try {
-            const response = await fetch("http://192.168.1.84:8006/create-checkout-session/", {
+            const response = await fetch("http://127.0.0.1:8006/create-checkout-session/", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
@@ -157,6 +157,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     
     // Call the function to send test data
+
 
     async function sendPaymentRecord(paymentData) {
         console.log('Sending payment data:', JSON.stringify(paymentData)); // Log the payment data before sending
