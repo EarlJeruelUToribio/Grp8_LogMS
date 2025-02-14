@@ -4,7 +4,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const selectedMaterialId = materialSelect.value;
         const selectedMaterialText = materialSelect.options[materialSelect.selectedIndex].text;
         // Remove the quantity input reference
-        // const quantityInput = document.querySelector('.material-quantity').value;
+         const quantityInput = document.querySelector('.material-quantity').value;
 
         if (selectedMaterialId) {
             const materialsList = document.getElementById('materials-list');
@@ -23,7 +23,7 @@ document.addEventListener('DOMContentLoaded', () => {
             materialsList.appendChild(newMaterialSection);
 
             materialSelect.value = '';
-            // document.querySelector('.material-quantity').value = '';
+             document.querySelector('.material-quantity').value = '';
         } else {
             alert('Please select a material and enter a quantity.');
         }
@@ -74,7 +74,7 @@ document.addEventListener('DOMContentLoaded', () => {
             // Remove payment-terms
             // 'payment-terms': document.getElementById('payment-terms').value,
             'material_name[]': Array.from(document.querySelectorAll('#materials-list .list-group-item')).map(item => item.dataset.materialId),
-            //'material_min_order_qty[]': Array.from(document.querySelectorAll('#materials-list .list-group-item')).map(item => item.textContent.split(' - Qty: ')[1])
+            'material_min_order_qty[]': Array.from(document.querySelectorAll('#materials-list .list-group-item')).map(item => item.textContent.split(' - Qty: ')[1])
         };
 
         // Call the function to add the supplier
