@@ -107,11 +107,14 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
 DATABASES = {
-    'default': dj_database_url.config(
-        default=os.getenv('DATABASE_URL')
-    )
+    "default": {
+        "ENGINE": "django.db.backends.sqlite3",
+        "NAME": BASE_DIR / "db.sqlite3",
+
+    }
 }
 
+DATABASES["default"] = dj_database_url.parse("postgresql://logistic_q6cs_user:NwbFLgZx1nYVqy8RTbcnQlQM67i1KrnO@dpg-cunltn8gph6c73evdu8g-a.oregon-postgres.render.com/logistic_q6cs")
 
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
