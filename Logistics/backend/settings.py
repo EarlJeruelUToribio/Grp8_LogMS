@@ -69,6 +69,13 @@ MIDDLEWARE = [
 CORS_ALLOWED_ORIGINS = [
     'http://127.0.0.1:8002',
     'http://192.168.1.84:8002',  # Reservation project's address
+    
+    'https://tikme-portal-krfg.onrender.com/',
+    'http://auth.193.203.161.247.nip.io/'
+    'https://capstone-financemanagement.onrender.com/'
+    'https://tikme-dine.onrender.com/',
+    'https://capstone-reservation.onrender.com/',
+    'https://capstone-paymentgateway.onrender.com/',
 ]
 
 CORS_ALLOW_HEADERS = [
