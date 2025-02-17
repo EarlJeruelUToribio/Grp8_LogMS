@@ -1,0 +1,123 @@
+/* Customer Order Section Styling */
+.customer-order-section {
+    max-width: 1200px;
+    margin: 80px auto 20px 290px;
+    padding: 20px;
+    background: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border: 1px solid #ffffff;
+}
+
+.customer-order-section h2 {
+    margin-bottom: 20px;
+    font-size: 28px;
+    color: #6f42c1;
+    font-weight: 700;
+}
+
+/* Order Header */
+.order-header {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 20px;
+}
+
+#resolve-all-btn {
+    background-color: #d9534f;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 20px;
+    font-weight: 500;
+    transition: background-color 0.3s ease;
+}
+
+#resolve-all-btn:hover {
+    background-color: #c9423f;
+    cursor: pointer;
+}
+
+/* Table Styling */
+.table-responsive {
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #6f42c1;
+    color: white;
+    text-align: center;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+table th, table td {
+    padding: 15px;
+    border: 1px solid #ffffff;
+}
+
+table th {
+    background-color: #5a3795;
+    font-size: 18px;
+    font-weight: 600;
+}
+
+table tr:nth-child(even) {
+    background-color: #5a3795;
+}
+
+/* Resolve Button Styling */
+.resolve-btn {
+    background-color: #6f42c1;
+    border: none;
+    color: white;
+    border-radius: 6px;
+    padding: 10px 20px;
+    font-weight: 500;
+    transition: background-color 0.3s ease;
+}
+
+.resolve-btn:hover {
+    background-color: #5a3795;
+    cursor: pointer;
+}
+
+/* Media Queries for Responsiveness */
+@media (max-width: 768px) {
+    .customer-order-section {
+        margin: 20px;
+        padding: 15px;
+    }
+
+    .customer-order-section h2 {
+        font-size: 24px;
+    }
+
+    #resolve-all-btn, .resolve-btn {
+        padding: 8px 16px;
+        font-size: 14px;
+    }
+
+    table th, table td {
+        padding: 10px;
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 480px) {
+    .customer-order-section h2 {
+        font-size: 20px;
+    }
+
+    #resolve-all-btn, .resolve-btn {
+        padding: 6px 12px;
+        font-size: 12px;
+    }
+
+    table th, table td {
+        padding: 8px;
+        font-size: 12px;
+    }
+} 

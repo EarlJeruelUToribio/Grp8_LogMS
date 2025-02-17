@@ -1,0 +1,101 @@
+/* General Page Layout */
+
+body, html {
+    margin: 0;
+    display: flex;
+    justify-content: center; /* Horizontally center the content */
+    align-items: center; /* Vertically center the content */
+    background-color: #f9f9f9; /* Set a background color if needed */
+}
+
+/* Resources Section Container */
+.resources-section {
+    background-color: #fff; /* White background for the section */
+    padding: 20px;
+    border-radius: 8px; /* Rounded corners */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+    width: 1100px;
+    margin: 20px auto;
+    margin-bottom: 200px;
+    margin-left: 200px;
+}
+
+/* Title Styling */
+.resources-section h2 {
+    font-size: 28px;
+    color: #6f42c1; /* Purple text for the header */
+    font-weight: 700;
+    text-align: center;
+}
+
+/* Search Bar */
+.search-bar {
+    width: 250px;
+    padding: 10px;
+    border: 2px solid #000;
+    border-radius: 5px;
+    box-sizing: border-box;
+    margin-left: auto;
+
+}
+
+/* Table Styles */
+.resources-table {
+    width: 1200px; 
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.resources-table th, 
+.resources-table td {
+    padding: 15px;
+    text-align: center;
+    border-bottom: 1px solid #ddd;
+}
+
+.resources-table th {
+    background-color: #6f42c1; /* Purple header */
+    color: #fff; /* White text */
+}
+
+.resources-table tr:hover {
+    background-color: #f1f1f1; /* Light gray on hover */
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .resources-section {
+        padding: 10px;
+    }
+
+    .search-bar {
+        width: 100%; /* Full width search bar for smaller screens */
+    }
+
+    .resources-table {
+        font-size: 12px; /* Smaller font for smaller screens */
+    }
+
+    .resources-table th, 
+    .resources-table td {
+        padding: 10px;
+    }
+}
+
+
+.edit-button {
+    background-color: #f0ad4e; /* Light blue background */
+    color: #fff; /* White text */
+    border: none;
+    padding: 8px 16px;
+    font-size: 16px;
+    border-radius: 4px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    
+}
+
+.edit-button:hover {
+    background-color: #e09c40; 
+}
+

@@ -1,0 +1,119 @@
+.container {
+    max-width: 1100px;
+    padding: 20px;
+    background: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Breadcrumbs */
+.breadcrumb {
+    background-color: transparent;
+    font-size: 14px;
+    font-weight: 500;
+    color: #6c757d;
+	margin-left: 150px;
+}
+
+/* Dashboard Header */
+h1 {
+    font-size: 28px;
+    font-weight: bold;
+    color: #6f42c1; /* Purple Color */
+    margin-bottom: 10px;
+	margin-left: 150px;
+
+}
+
+p {
+    font-size: 16px;
+    color: #6c757d;
+    margin-bottom: 20px;
+	margin-left: 150px;
+}
+
+/* Card Styling */
+.card {
+    background: #ffffff;
+    border: none;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease-in-out;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+}
+
+.card-body {
+    padding: 20px;
+}
+
+.stat i {
+    color: #6f42c1;
+}
+
+
+/* Pie Chart Container */
+#highestSellingProductChart {
+    width: 100%;
+    max-height: 300px;
+	
+}
+
+/* Bootstrap Overrides */
+.btn-primary {
+    background-color: #6f42c1;
+    border: none;
+    font-weight: bold;
+    transition: background-color 0.3s ease-in-out;
+}
+
+.btn-primary:hover {
+    background-color: #5a3795;
+}
+
+/* Mobile Responsive Design */
+@media (max-width: 1000px) {
+
+
+    #highestSellingProductChart {
+        max-height: 500px;
+    }
+}
+
+/* Ensure both cards are aligned properly */
+.row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+/* Ensure uniform card styling */
+.card {
+    background: #ffffff;
+    border: none;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 10px;
+    margin-left: 150px;
+}
+
+/* Align the amount (₱0) to the left */
+.amount {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #6f42c1;
+    text-align: left; /* Aligns text to the left */
+}
+
+/* Responsive styling */
+@media (max-width: 768px) {
+    .row {
+        flex-direction: column;
+    }
+
+    .card {
+        margin-bottom: 15px;
+    }
+}
