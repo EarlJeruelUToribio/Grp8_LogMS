@@ -74,7 +74,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
 
-        const success_url = "http://127.0.0.1:8000/"; // ✅ Correct format
+        const success_url = "https://logistics-5mci.onrender.com/"; // ✅ Correct format
 
 
 
@@ -119,7 +119,7 @@ document.addEventListener('DOMContentLoaded', () => {
         console.log("Test Payload to PayMongo:", testPayload);
     
         try {
-            const response = await fetch("http://127.0.0.1:8006/create-checkout-session/", {
+            const response = await fetch("https://capstone-paymentgateway.onrender.com/create-checkout-session/", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
@@ -163,7 +163,7 @@ document.addEventListener('DOMContentLoaded', () => {
         console.log('Sending payment data:', JSON.stringify(paymentData)); // Log the payment data before sending
 
         try {
-            const response = await fetch('http://192.168.1.24:8005/payment-record/', {
+            const response = await fetch('https://capstone-financemanagement.onrender.com/payment-record/', {
                 method: 'POST',
                 headers: {  
                     'Content-Type': 'application/json',
