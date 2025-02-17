@@ -44,12 +44,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Check if the new status is "Shipped" and payment method is one of the accepted methods
         const acceptedPaymentMethods = ["gcash", "paymaya", "credit_card"];
-        if (newStatus === "Shipped" && paymentData?.PaymentMethod === "gcash") {
+        if (newStatus === "Shipped" && paymentData?.PaymentMethod === "gcash" || "paymaya" || "credit_card") {
             console.log('Sending payment record as status is "Shipped"...');
             const paymentSuccess = await sendPaymentRecord(paymentData);
             if (!paymentSuccess) {
                 console.log('Payment process failed, form will not be submitted.');
-                return; // Stop form submission if payment failed
+                return; // Stop form submission if payment faileds
             }
         } else {
             console.log('No action required for this status or payment method.');
@@ -103,7 +103,7 @@ document.addEventListener('DOMContentLoaded', () => {
         console.log("Test Payload to PayMongo:", testPayload);
     
         try {
-            const response = await fetch("http://192.168.1.84:8006/create-checkout-session/", {
+            const response = await fetch("http://192.168.1.15:8006/create-checkout-session/", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
@@ -181,7 +181,7 @@ document.addEventListener('DOMContentLoaded', () => {
             console.log("Test Payload to PayMongo:", testPayload);
         
             try {
-                const response = await fetch("http://192.168.1.84:8006/create-checkout-session/", {
+                const response = await fetch("http://192.168.1.15:8006/create-checkout-session/", {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json"
@@ -217,7 +217,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 Swal.fire("Error", "Failed to process test payment. Please try again.", "error");
             }
         }
-        
+
     
     function getCookie(name) {
         let cookieValue = null;
