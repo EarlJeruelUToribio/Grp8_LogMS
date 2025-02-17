@@ -34,7 +34,7 @@ SECRET_KEY = 'django-insecure-ss7f)bgp8f=91nqt6b2m&z*3tx*kq%p4$b+w1%t6kbu0w38hl!
 DEBUG = True
 
 # ALLOWED_HOSTS = ["*"]
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '192.168.1.53','logistics-5mci.onrender.com']
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '192.168.241.22','logistics-5mci.onrender.com']
 
 
 
@@ -68,14 +68,7 @@ MIDDLEWARE = [
 
 CORS_ALLOWED_ORIGINS = [
     'http://127.0.0.1:8002',
-    'http://192.168.1.84:8002',  # Reservation project's address
-    
-    'https://tikme-portal-krfg.onrender.com/',
-    'http://auth.193.203.161.247.nip.io/'
-    'https://capstone-financemanagement.onrender.com/'
-    'https://tikme-dine.onrender.com/',
-    'https://capstone-reservation.onrender.com/',
-    'https://capstone-paymentgateway.onrender.com/',
+    'http://192.168.241.131:8002',  # Reservation project's address
 ]
 
 CORS_ALLOW_HEADERS = [
@@ -114,14 +107,16 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
 DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
-
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'logistic',
+        'USER':'postgres',
+        'PASSWORD': 'admin',
+        'HOST': 'localhost',
+        'PORT': '5432'
     }
 }
 
-DATABASES["default"] = dj_database_url.parse("postgresql://logistic_q6cs_user:NwbFLgZx1nYVqy8RTbcnQlQM67i1KrnO@dpg-cunltn8gph6c73evdu8g-a.oregon-postgres.render.com/logistic_q6cs")
 
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
