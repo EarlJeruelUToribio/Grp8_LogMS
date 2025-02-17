@@ -22,7 +22,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 cancelButtonText: "Cancel"
             }).then((result) => {
                 if (result.isConfirmed) {
-                    // Proceed with updating the availability in your system
+                    // Proceed with updating the availability
                     fetch(`/toggle-product-availability/${productId}/`, {
                         method: "POST",
                         headers: {
@@ -34,45 +34,16 @@ document.addEventListener("DOMContentLoaded", function () {
                     .then(response => response.json())
                     .then(data => {
                         if (data.success) {
-                            // Notify integrated system about the availability change
-                            fetch(`/integrated-system/update-product-availability/${productId}/`, {
-                                method: "POST",
-                                headers: {
-                                    "Content-Type": "application/json",
-                                },
-                                body: JSON.stringify({ is_available: isChecked })
-                            })
-                            .then(integratedResponse => integratedResponse.json())
-                            .then(integratedData => {
-                                if (integratedData.success) {
-                                    Swal.fire({
-                                        icon: "success",
-                                        title: "Availability Updated",
-                                        text: `Product is now ${isChecked ? "available" : "unavailable"}.`,
-                                    });
-                                } else {
-                                    Swal.fire({
-                                        icon: "error",
-                                        title: "Error",
-                                        text: "Failed to update product availability in the integrated system.",
-                                    });
-                                    currentCheckbox.checked = !isChecked; // Revert checkbox if update fails
-                                }
-                            })
-                            .catch(error => {
-                                console.error("Error:", error);
-                                Swal.fire({
-                                    icon: "error",
-                                    title: "Error",
-                                    text: "An unexpected error occurred while updating the integrated system.",
-                                });
-                                currentCheckbox.checked = !isChecked; // Revert checkbox on error
+                            Swal.fire({
+                                icon: "success",
+                                title: "Availability Updated",
+                                text: `Product is now ${isChecked ? "available" : "unavailable"}.`,
                             });
                         } else {
                             Swal.fire({
                                 icon: "error",
                                 title: "Error",
-                                text: "Failed to update product availability in our system.",
+                                text: "Failed to update product availability.",
                             });
                             currentCheckbox.checked = !isChecked; // Revert checkbox if update fails
                         }
@@ -94,7 +65,6 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     });
 
-    // Helper function to get the CSRF token from the cookie
     function getCookie(name) {
         let cookieValue = null;
         if (document.cookie && document.cookie !== "") {

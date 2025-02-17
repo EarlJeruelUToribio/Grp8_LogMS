@@ -68,7 +68,7 @@
                     </div>
                     <div class="mb-3">
                         <label for="date-of-incident" class="form-label">Date of Incident</label>
-                        <input type="date" class="form-control" id="date-of-incident" name="date-of-incident" required>
+                        <input type="date" id="reservation-date" name="reservation_date" value="{{ today_date }}" readonly>
                     </div>
                     <div class="mb-3">
                         <label for="action-taken" class="form-label">Action Taken</label>
@@ -89,6 +89,10 @@
     const csrfToken = '{{ csrf_token }}'; // Ensure this is set correctly
     const manageWasteUrl = '/ManageWasteRecords/'; // Directly define the URL
     console.log('Manage Waste URL:', manageWasteUrl); // Log the URL being used
+
+    const today = new Date().toISOString().split('T')[0];
+    document.getElementById("reservation-date").value = today;
+
 </script>
 
 <script src="{% static 'js/AddWaste.js' %}"></script>
