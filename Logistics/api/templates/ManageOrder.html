@@ -195,9 +195,24 @@
                         <select id="material" name="material" class="form-select" required>
                             <option value="" disabled selected>Select Material</option>
                             {% for material in materials %}
-                                <option value="{{ material.Inventory_ID }}" data-price="{{ material.PurchasePrice }}">{{ material.ItemName }}</option>
-                            {% endfor %}
+                            <option value="{{ material.Inventory_ID }}" data-price="{{ material.PurchasePrice }}" data-unit-of-measure="{{ material.UnitOfMeasure }}">
+                                {{ material.ItemName }}
+                            </option>
+                                {% endfor %}
                         </select>
+                    </div>
+                    <!-- Unit of Measure Selection -->
+                    <div class="col-12">
+                    <label for="unit-of-measure" class="form-label">Unit of Measure:</label>
+                    <select id="unit-of-measure" name="unit_of_measure" class="form-select" required>
+                    <option value="" disabled selected>Select Unit of Measure</option>
+                    <option value="kg">Kilogram (kg)</option>
+                    <option value="kl">Kiloliter (kl)</option>
+                    <option value="m">Meter (m)</option>
+                    <option value="pcs">Pieces (pcs)</option>
+                    <option value="box">Box (box)</option>
+                    <option value="tray">Tray (tray)</option>
+                    </select>
                     </div>
 
                     <!-- Quantity Input -->
