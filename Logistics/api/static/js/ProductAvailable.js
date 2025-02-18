@@ -39,18 +39,6 @@ document.addEventListener("DOMContentLoaded", function () {
                                 title: "Availability Updated",
                                 text: `Product is now ${isChecked ? "available" : "unavailable"}.`,
                             });
-
-                            // Update the UI to reflect the new availability
-                            if (!isChecked) {
-                                // If the product is unavailable, you can hide it or modify its display
-                                // Example: Add a class to visually show it's unavailable
-                                const productRow = currentCheckbox.closest(".product-row"); // Assuming each product is in a row
-                                productRow.style.display = 'none'; // Hides the product row (you can choose another approach)
-                            } else {
-                                // If the product is available, ensure it's visible
-                                const productRow = currentCheckbox.closest(".product-row");
-                                productRow.style.display = ''; // Resets the display property (make it visible again)
-                            }
                         } else {
                             Swal.fire({
                                 icon: "error",
