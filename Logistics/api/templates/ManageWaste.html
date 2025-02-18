@@ -3,6 +3,7 @@
 
 {% block extra_css %}
 <link rel="stylesheet" href="{% static 'css/Waste.css' %}">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 {% endblock %}
 
 {% block content %}
@@ -30,7 +31,7 @@
                 <td>{{ record.Waste_ID }}</td>
                 <td>{{ record.IngredientName }}</td>
                 <td>{{ record.DateOfIncident|date:"F d, Y" }}</td>
-                <td>{{ record.QuantityLost }} {{ record.UnitOfMeasurement }}</td>
+                <td>{{ record.QuantityLost|floatformat:0 }} {{ record.UnitOfMeasurement }}</td>
                 <td>{{ record.CauseOfLoss }}</td>
                 <td>{{ record.ActionTaken }}</td>
             </tr>
@@ -59,17 +60,40 @@
                         <input type="number" class="form-control" id="quantity-lost" name="quantity-lost" required>
                     </div>
                     <div class="mb-3">
-                        <label for="unit-of-measurement" class="form-label">Unit of Measurement</label> <!-- Removed leading space -->
-                        <input type="text" class="form-control" id="unit-of-measurement" name="unit-of-measurement" required>
+                        <label for="unit-of-measurement" class="form-label">Unit of Measurement</label>
+                        <select class="form-control" id="unit-of-measurement" name="unit-of-measurement" required>
+                            <option value="">Select Unit</option>
+                            <option value="kg">Kilograms (kg)</option>
+                            <option value="g">Grams (g)</option>
+                            <option value="L">Liters (L)</option>
+                            <option value="ml">Milliliters (ml)</option>
+                            <option value="pcs">Pieces (pcs)</option>
+                        </select>
                     </div>
+                    
                     <div class="mb-3">
                         <label for="cause-of-loss" class="form-label">Cause of Loss</label>
-                        <input type="text" class="form-control" id="cause-of-loss" name="cause-of-loss" required>
+                        <select class="form-control" id="cause-of-loss" name="cause-of-loss" required>
+                            <option value="">Select Cause</option>
+                            <option value="Expired">Expired</option>
+                            <option value="Spoiled">Spoiled</option>
+                            <option value="Contaminated">Contaminated</option>
+                            <option value="Overcooked">Overcooked</option>
+                            <option value="Dropped">Dropped</option>
+                            <option value="Others">Others</option>
+                        </select>
                     </div>
                     <div class="mb-3">
                         <label for="date-of-incident" class="form-label">Date of Incident</label>
-                        <input type="date" class="form-control" id="date-of-incident" name="date-of-incident" required>
+                        <input type="date" class="form-control" id="date-of-incident" name="date-of-incident" required readonly>
                     </div>
+                    <script>
+                        // Get today's date in YYYY-MM-DD format
+                        let today = new Date().toISOString().split('T')[0];
+                    
+                        // Set the input value to today's date
+                        document.getElementById("date-of-incident").value = today;
+                    </script>                    
                     <div class="mb-3">
                         <label for="action-taken" class="form-label">Action Taken</label>
                         <input type="text" class="form-control" id="action-taken" name="action-taken" required>
