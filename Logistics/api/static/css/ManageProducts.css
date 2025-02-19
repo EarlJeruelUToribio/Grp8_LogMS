@@ -559,3 +559,50 @@ body, html {
 .remove-ingredient:hover {
     background-color: #c9423f; /* Darker blue on hover */
 }
+
+/* Container for the toggle switch */
+.product-availability-toggle {
+    appearance: none;
+    width: 50px;
+    height: 24px;
+    background-color: #d3d3d3;
+    border-radius: 50px;
+    position: relative;
+    cursor: pointer;
+    outline: none;
+    transition: background-color 0.3s ease;
+  }
+  
+  /* Toggle knob */
+  .product-availability-toggle::before {
+    content: '';
+    width: 20px;
+    height: 20px;
+    background-color: #fff;
+    border-radius: 50%;
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    transition: transform 0.3s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  }
+  
+  /* Checked state */
+  .product-availability-toggle:checked {
+    background-color: #7c3aed; /* Purple background when active */
+  }
+  
+  .product-availability-toggle:checked::before {
+    transform: translateX(26px); /* Move knob to the right when checked */
+  }
+  
+  /* Hover effect */
+  .product-availability-toggle:hover {
+    background-color: #a78bfa; /* Lighter purple on hover */
+  }
+  
+  /* Focus effect */
+  .product-availability-toggle:focus {
+    box-shadow: 0 0 4px 2px rgba(124, 58, 237, 0.5); /* Purple glow on focus */
+  }
+  
