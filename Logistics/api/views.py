@@ -812,9 +812,10 @@ def ManageWaste_view(request):
 #Customer Order Management
 @require_http_methods(["GET"])
 def manage_customer_orders_view(request):
-    incoming_orders = IncomingOrder.objects.select_related('product').all()
+    incoming_orders = IncomingOrder.objects.select_related('product').order_by('-created_at')
     context = {"incoming_orders": incoming_orders}
     return render(request, "ManageCustomerOrder.html", context)
+
 
 @require_http_methods(["POST"])
 def resolve_order_view(request, order_id):

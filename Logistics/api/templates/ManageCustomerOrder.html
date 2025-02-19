@@ -9,7 +9,7 @@
 <section class="customer-order-section">
     <h2 class="text-center mb-4">Manage Customer Orders</h2>
     <div class="order-header">
-        <button class="btn btn-danger" id="resolve-all-btn">Resolve All</button>
+        <button class="btn btn-danger" id="resolve-all-btn">Apply All</button>
     </div>
     <div class="table-responsive">
         <table class="table table-bordered table-hover text-center">
@@ -28,8 +28,12 @@
                     <td>{{ order.product.ProductName }}</td>
                     <td>{{ order.quantity }}</td>
                     <td>
-                        <button class="btn btn-primary resolve-btn" data-order-id="{{ order.order_id }}">Resolve</button>
+                        <button class="btn btn-primary resolve-btn" data-order-id="{{ order.order_id }}">Apply</button>
                     </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="4">No orders available.</td>
                 </tr>
                 {% endfor %}
             </tbody>
