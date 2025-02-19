@@ -547,11 +547,15 @@ def AddProductCategory_view(request):
         print(f"Error occurred: {str(e)}")  # Log the error for debugging
         return JsonResponse({'success': False, 'error': 'An error occurred while adding the category.'}, status=500)
 
+from django.http import JsonResponse
+from django.shortcuts import get_object_or_404
+from .models import Product, ProductCategory, Inventory, Ingredient
+
 def AddProduct_view(request):
     if request.method == 'POST':
-        product_name = request.POST.get('product-name')
+        product_name = request.POST.get('product-name').strip()
         product_description = request.POST.get('product-description')
-        product_category_id = request.POST.get('product-category')  # Get the category ID
+        product_category_id = request.POST.get('product-category')
         product_image = request.FILES.get('product-image')
         product_price = request.POST.get('product-price')
         material_ids = request.POST.getlist('material_name[]')
@@ -559,46 +563,48 @@ def AddProduct_view(request):
 
         print(f"Received data: {product_name}, {product_description}, {product_category_id}, {product_price}, {material_ids}, {material_quantities}")
 
+        # ✅ **Check if product already exists**
+        if Product.objects.filter(ProductName__iexact=product_name, ProductCategory__Category_ID=product_category_id).exists():
+            return JsonResponse({'success': False, 'message': 'Product already exists!'})
+
         try:
-            # Retrieve the ProductCategory instance using the ID
             product_category = get_object_or_404(ProductCategory, pk=product_category_id)
 
-            # Create and save the Product instance
+            # ✅ **Save Product**
             product = Product(
                 ProductName=product_name,
                 ProductDescription=product_description,
-                ProductCategory=product_category,  # Assign the ProductCategory instance
+                ProductCategory=product_category,
                 ProductImage=product_image,
                 PurchasePrice=product_price
             )
             product.save()
             print(f"Product saved: {product}")
 
-            # Check that the length of material_ids and material_quantities match
+            # ✅ **Save Ingredients**
             for i in range(len(material_ids)):
-                if i < len(material_quantities):  # Prevent index out of range
+                if i < len(material_quantities):
                     material_id = material_ids[i]
                     material_quantity = material_quantities[i]
-
-                    # Get the material instance
                     material = get_object_or_404(Inventory, pk=material_id)
 
-                    # Create and save the Ingredient instance
                     ingredient = Ingredient(
-                        IngredientName=material.ItemName,  # Correctly set the name
-                        ItemUnitMeasure=material.UnitOfMeasure,  # Set the unit of measure
-                        MeasureCount=material_quantity,  # Set the quantity
-                        Inventory_ID=material  # Pass the actual Inventory instance
+                        IngredientName=material.ItemName,
+                        ItemUnitMeasure=material.UnitOfMeasure,
+                        MeasureCount=material_quantity,
+                        Inventory_ID=material
                     )
                     ingredient.save()
                     product.Ingredients.add(ingredient)
 
             return JsonResponse({'success': True})
+
         except Exception as e:
-            print(f"Error: {str(e)}")  # Log the error
+            print(f"Error: {str(e)}")
             return JsonResponse({'success': False, 'error': str(e)})
 
     return JsonResponse({'success': False, 'error': 'Invalid request method.'})
+
 
 def ManageProduct_view(request):
     products = Product.objects.all()  # Fetch all products
@@ -809,13 +815,30 @@ def ManageWaste_view(request):
         return render(request, 'ManageWaste.html')  # Render the HTML template for non-AJAX requests
 
 
+def check_duplicate_product(request):
+    product_name = request.GET.get("product_name", "").strip().lower()
+    product_category_id = request.GET.get("product_category", "").strip()
+
+    try:
+        # Ensure category is fetched correctly
+        category = ProductCategory.objects.get(pk=product_category_id)
+
+        # Check for existing product with same name and category
+        exists = Product.objects.filter(
+            ProductName__iexact=product_name,
+            ProductCategory=category
+        ).exists()
+
+        return JsonResponse({"exists": exists})
+    except ProductCategory.DoesNotExist:
+        return JsonResponse({"exists": False, "error": "Category not found"}, status=400)
+
 #Customer Order Management
 @require_http_methods(["GET"])
 def manage_customer_orders_view(request):
-    incoming_orders = IncomingOrder.objects.select_related('product').order_by('-created_at')
+    incoming_orders = IncomingOrder.objects.select_related('product').all()
     context = {"incoming_orders": incoming_orders}
     return render(request, "ManageCustomerOrder.html", context)
-
 
 @require_http_methods(["POST"])
 def resolve_order_view(request, order_id):

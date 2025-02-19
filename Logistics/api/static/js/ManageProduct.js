@@ -86,54 +86,70 @@ function removeIngredient(button) {
     button.closest('.row').remove();
 }
 
-// Function to handle the form submission for adding a product
-function handleAddProductSubmit(event) {
-    event.preventDefault(); // Prevent default form submission
+async function handleAddProductSubmit(event) {
+    event.preventDefault(); // Prevent default submission
 
-    const formData = new FormData(this); // Create FormData object
-    const materials = collectIngredientsData();
+    const formData = new FormData(this);
+    const productName = formData.get("product_name").trim();
+    const productCategory = formData.get("product_category");
 
-    // Append materials to FormData
-    materials.forEach(material => {
-        const convertedQuantity = convertToStandardUnit(material.quantity, material.unit);
-        formData.append(`material_name[]`, material.id);
-        formData.append(`material_quantity[]`, convertedQuantity);
-    });
+    try {
+        console.log("🔍 Checking for duplicate...");
 
-    // Send data to the server
-    fetch(addProductUrl, { // Use the variable defined in the template
-        method: 'POST',
-        body: formData,
-    })
-    .then(response => response.json())
-    .then(data => {
-        if (data.success) {
-            // Show SweetAlert for successful product addition
-            Swal.fire({
-                icon: 'success',
-                title: 'Product Added!',
-                text: 'The product has been successfully added.',
-            }).then(() => {
-                // Optionally, refresh the product list or close the modal
-                location.reload(); // Reload the page to see the new product
+        // 🔍 Send API request to check for duplicates
+        const checkResponse = await fetch(`/api/check-duplicate-product/?product_name=${encodeURIComponent(productName)}&product_category=${encodeURIComponent(productCategory)}`);
+
+        if (!checkResponse.ok) {
+            console.error("❌ API Request Failed:", checkResponse.status);
+            return;
+        }
+
+        const checkData = await checkResponse.json();
+        console.log("🛠 Duplicate Check Response:", checkData);
+
+        if (checkData.exists) {
+            console.warn("🚨 Duplicate detected! Product not added.");
+            await Swal.fire({
+                icon: "error",
+                title: "Duplicate Product",
+                text: "A product with the same name and category already exists!",
             });
+            return; // 🚫 STOP execution
+        }
+
+        console.log("✅ No duplicate found. Proceeding...");
+
+        // ✅ Send Add Product request
+        const addResponse = await fetch(addProductUrl, {
+            method: "POST",
+            body: formData,
+        });
+
+        const data = await addResponse.json();
+        console.log("✅ Product Added Response:", data);
+
+        if (data.success) {
+            await Swal.fire({
+                icon: "success",
+                title: "Product Added!",
+                text: "The product has been successfully added.",
+            });
+            location.reload();
         } else {
-            // Handle errors
             Swal.fire({
-                icon: 'error',
-                title: 'Oops...',
-                text: data.message || 'Something went wrong!',
+                icon: "error",
+                title: "Oops...",
+                text: data.message || "Something went wrong!",
             });
         }
-    })
-    .catch(error => {
-        console.error('Error:', error);
+    } catch (error) {
+        console.error("❌ Error:", error);
         Swal.fire({
-            icon: 'error',
-            title: 'Oops...',
-            text: 'An error occurred while adding the product.',
+            icon: "error",
+            title: "Oops...",
+            text: "An error occurred while adding the product.",
         });
-    });
+    }
 }
 
 // Function to collect ingredients data from the form

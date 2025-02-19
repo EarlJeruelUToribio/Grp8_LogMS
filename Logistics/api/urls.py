@@ -25,6 +25,7 @@ urlpatterns = [
     path('update-stock/<int:item_id>/', views.update_stock, name='update_stock'),
     path('api/order-counts/', views.order_counts_view, name='order-counts'),
     path('extend-expiration/<int:item_id>/', views.extend_expiration, name='extend_expiration'),
+	path("api/check-duplicate-product/", views.check_duplicate_product, name="check-duplicate-product"),
 
     
     #Customer Order

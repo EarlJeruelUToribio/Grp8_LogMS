@@ -34,7 +34,7 @@ SECRET_KEY = 'django-insecure-ss7f)bgp8f=91nqt6b2m&z*3tx*kq%p4$b+w1%t6kbu0w38hl!
 DEBUG = True
 
 # ALLOWED_HOSTS = ["*"]
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '192.168.1.53','logistics-5mci.onrender.com']
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '192.168.1.3','logistics-5mci.onrender.com']
 
 
 
@@ -70,11 +70,11 @@ CORS_ALLOW_ALL_ORIGINS = True
 CORS_ALLOW_CREDENTIALS = True
 
 CORS_ALLOWED_ORIGINS = [
-     # Reservation project's address
+# Reservation project's address
+
     'http://auth.193.203.161.247.nip.io/',
     'https://capstone-financemanagement.onrender.com/',
     'https://tikme-dine.onrender.com/',
-   
     
 ]
 
