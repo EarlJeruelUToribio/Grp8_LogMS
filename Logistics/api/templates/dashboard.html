@@ -65,7 +65,7 @@
                             <div class="row align-items-center">
                                 <div class="col">
                                     <h5 class="card-title">Inventory Purchases</h5>
-                                    <h1 id="totalInventoryPurchases" class="amount">₱0</h1>
+                                    <h1 id="totalInventory" class="amount">₱0</h1>
                                     <span class="text-muted">Total Inventory Purchases</span>
                                 </div>
                                 <div class="col-auto">
@@ -91,76 +91,80 @@
             </div>
         </div>
 
+
         <script>
             // Fetch Cost of Goods Sold (COGS)
-            fetch("https://capstone-financemanagement.onrender.com/total-cogs/")
-            .then(response => response.json())
-            .then(data => {
-                const cogsElement = document.getElementById('totalCOGS');
-                if (data.total_cogs !== undefined) {
-                    cogsElement.innerText = `₱${Number(data.total_cogs).toLocaleString("en-US", {
-                        minimumFractionDigits: 2,
-                        maximumFractionDigits: 2
-                    })}`;
-                } else {
-                    cogsElement.innerText = "₱0.00";
-                }
-            })
-            .catch(error => console.error('Error fetching total COGS:', error));
-            // Fetch data for Line Graph
-            fetch('/api/orders-per-day/')
-                .then(response => response.json() )
-                .then(data => {
-                    const lineCtx = document.getElementById('lineGraph').getContext('2d');
-                    new Chart(lineCtx, {
-                        type: 'line',
-                        data: {
-                            labels: data.labels,
-                            datasets: [{
-                                label: 'Orders Per Day',
-                                data: data.values,
-                                borderColor: 'blue',
-                                backgroundColor: 'rgba(0, 0, 255, 0.1)',
-                                fill: true,
-                            }]
-                        },
-                        options: {
-                            responsive: true,
-                            plugins: {
-                                legend: { display: true },
-                                title: { display: true, text: 'Order Trends (Line Graph)' },
-                            },
-                        },
-                    });
-                });
+           document.addEventListener('DOMContentLoaded', function () {
+    // Fetch Cost of Goods Sold (COGS)
+    fetch("https://capstone-financemanagement.onrender.com/total-cogs/")
+        .then(response => response.json())
+        .then(data => {
+            const cogsElement = document.getElementById('totalCOGS');
+            if (data.total_cogs !== undefined) {
+                cogsElement.innerText = `₱${Number(data.total_cogs).toLocaleString("en-US", {
+                    minimumFractionDigits: 2,
+                    maximumFractionDigits: 2
+                })}`;
+            } else {
+                cogsElement.innerText = "₱0.00";
+            }
+        })
+        .catch(error => console.error('Error fetching total COGS:', error));
+    // Fetch data for Line Graph
+    fetch('/api/orders-per-day/')
+        .then(response => response.json() )
+        .then(data => {
+            const lineCtx = document.getElementById('lineGraph').getContext('2d');
+            new Chart(lineCtx, {
+                type: 'line',
+                data: {
+                    labels: data.labels,
+                    datasets: [{
+                        label: 'Orders Per Day',
+                        data: data.values,
+                        borderColor: 'blue',
+                        backgroundColor: 'rgba(0, 0, 255, 0.1)',
+                        fill: true,
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: { display: true },
+                        title: { display: true, text: 'Order Trends (Line Graph)' },
+                    },
+                },
+            });
+        });
 
-                document.addEventListener("DOMContentLoaded", function () {
-                    fetch("https://capstone-financemanagement.onrender.com/total-inventory-purchase/", {
-                        method: "GET",
-                        headers: { "X-Requested-With": "XMLHttpRequest" }
-                    })
-                    .then(response => response.json())
-                    .then(data => {
-                        console.log("Inventory Purchases:", data);
-                        document.getElementById("totalInventoryPurchases").textContent =
-                            data.total_inventory_purchases ? formatCurrency(data.total_inventory_purchases) : "₱0.00";
-                    })
-                    .catch(error => console.error("Error fetching inventory purchases:", error));
-                });
-                
-                // Format currency
-                function formatCurrency(amount) {
-                    return new Intl.NumberFormat("en-PH", { style: "currency", currency: "PHP" }).format(amount);
-                }
+    // Fetch Total Inventory Purchases (Same format as COGS)
+    fetch("https://capstone-financemanagement.onrender.com/total-purchase/")
+        .then(response => response.json())
+        .then(data => {
+            const purchasesElement = document.getElementById('totalInventory');
+            if (data.total_inventory_purchase !== undefined) {
+                purchasesElement.innerText = `₱${Number(data.total_inventory_purchase).toLocaleString("en-US", {
+                    minimumFractionDigits: 2,
+                    maximumFractionDigits: 2
+                })}`;
+            } else {
+                purchasesElement.innerText = "₱0.00";
+            }
+        })
+        .catch(error => console.error('Error fetching total inventory purchases:', error));
+        
+        // Format currency
+        function formatCurrency(amount) {
+            return new Intl.NumberFormat("en-PH", { style: "currency", currency: "PHP" }).format(amount);
+        }
 
-
-            // Fetch data for Highest Selling Product (Pie Chart)
-            fetch('/api/highest-selling-product/')
-    .then(response => response.json())
-    .then(data => {
+    // Fetch data for Highest Selling Product (Pie Chart)
+    fetch('/api/highest-selling-product/')
+        .then(response => response.json())
+        .then(data => {
         const barCtx = document.getElementById('highestSellingProductChart').getContext('2d');
         new Chart(barCtx, {
-            type: 'bar',
+        type: 'bar',
             data: {
                 labels: data.labels,
                 datasets: [{
@@ -191,6 +195,7 @@
             },
         });
     });
+});
         </script>
 
         <!-- Bootstrap JS (Optional for additional interactivity) -->
