@@ -93,7 +93,7 @@
 
         <script>
             // Fetch Cost of Goods Sold (COGS)
-            fetch('http://192.168.1.24:8005/total-cogs/')
+            fetch("https://capstone-financemanagement.onrender.com/total-cogs/")
             .then(response => response.json())
             .then(data => {
                 const cogsElement = document.getElementById('totalCOGS');
@@ -135,7 +135,7 @@
                 });
 
                 document.addEventListener("DOMContentLoaded", function () {
-                    fetch("http://192.168.1.24:8005/total-inventory-purchase/", {
+                    fetch("https://capstone-financemanagement.onrender.com/total-inventory-purchase/", {
                         method: "GET",
                         headers: { "X-Requested-With": "XMLHttpRequest" }
                     })
