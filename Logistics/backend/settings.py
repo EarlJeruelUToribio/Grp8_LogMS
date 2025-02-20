@@ -72,9 +72,9 @@ CORS_ALLOW_CREDENTIALS = True
 CORS_ALLOWED_ORIGINS = [
 # Reservation project's address
 
-    'http://auth.193.203.161.247.nip.io/',
-    'https://capstone-financemanagement.onrender.com/',
-    'https://tikme-dine.onrender.com/',
+    'http://auth.193.203.161.247.nip.io',
+    'https://capstone-financemanagement.onrender.com',
+    'https://tikme-dine.onrender.com',
     
 ]
 
