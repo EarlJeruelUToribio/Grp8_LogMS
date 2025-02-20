@@ -389,3 +389,8 @@ table tr:nth-child(even) {
     color: #333; /* Darker color for the cross on hover */
   }
   
+/* Hide the 'Expiry' column in the table */
+table tr th:nth-child(9),
+table tr td:nth-child(9) {
+    display: none;
+}
