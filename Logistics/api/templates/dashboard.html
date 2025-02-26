@@ -33,21 +33,21 @@
                     <span class="text-muted">Analytics</span>
                 </li>
             </ol>
-            
             <!-- Header -->
             <h1 style="color: #6f42c1">Logistics Dashboard</h1>
-            <p>Overview of Logistics Data for <span id="currentMonth"></span></p>
-        
+            <p>Overview of Logistics Data for February 2025  </p>
+
             <div class="row">
-                <!-- Total Sales Card -->
-                <div class="col-lg-6 col-md-6 col-sm-12 mb-4">
+                <!-- Cost of Goods Sold Card -->
+                <div class="col-lg-6 col-md-6 col-sm-12 mb-4">                        
                     <div class="card">
                         <div class="card-body">
                             <div class="row align-items-center">
                                 <div class="col">
                                     <h5 class="card-title">Total Sales</h5>
-                                    <h1 id="totalCOGS" class="amount">₱0.00</h1>
-                                    <span class="text-muted">Total Sales for the Month of <span id="salesMonth"></span></span>
+                                    <h1 id="totalCOGS" class="amount">₱0</h1>
+                                    <span class="text-muted">Total Sales for the Month of February
+                                    </span>
                                 </div>
                                 <div class="col-auto">
                                     <div class="stat text-primary">
@@ -58,20 +58,21 @@
                         </div>
                     </div>
                 </div>
-        
+            
                 <!-- Inventory Purchases Card -->
-                <div class="col-lg-6 col-md-6 col-sm-12 mb-4">
+                <div class="col-lg-6 col-md-6 col-sm-12 mb-4">                        
                     <div class="card">
                         <div class="card-body">
                             <div class="row align-items-center">
                                 <div class="col">
                                     <h5 class="card-title">Inventory Purchases</h5>
-                                    <h1 id="totalInventory" class="amount">₱0.00</h1>
-                                    <span class="text-muted">Total Purchases for the Month of <span id="purchasesMonth"></span></span>
+                                    <h1 id="totalInventory" class="amount">₱0</h1>
+                                    <span class="text-muted">Total Inventory Purchases for the Month of February
+                                    </span>
                                 </div>
                                 <div class="col-auto">
                                     <div class="stat text-primary">
-                                        <i class="align-middle" data-feather="truck"></i>
+                                        <i class="align-middle" data-feather="shopping-cart"></i>
                                     </div>
                                 </div>
                             </div>
@@ -79,37 +80,27 @@
                     </div>
                 </div>
             </div>
-        
-        
-                <!-- Highest Selling Product Bar Chart -->
+            
+
+                <!-- Pie Chart -->
                 <div class="col-md-6 mb-4">
                     <div class="card shadow">
                         <div class="card-body">
-                            <h5 class="card-title text-center">Highest Selling Products</span></h5>
                             <canvas id="highestSellingProductChart"></canvas>
-                            <span class="text-muted">The Highest Selling Products for the Month of February <span id="currentMonth"></span></span>
+                            <span class="text-muted">Highest Selling Products for the Month of February
+                            </span>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        {% endblock %}
-        
-        {% block extra_js %}
-        <script src="{% static 'js/dashboard.js' %}"></script>
-        <script src="{% static 'js/DashboardInteg.js' %}"></script>
-        <script>
-            document.addEventListener('DOMContentLoaded', function() {
-                const currentDate = new Date();
-                const monthName = currentDate.toLocaleString('default', { month: 'long' });
-                const year = currentDate.getFullYear();
-        
-                document.getElementById('currentMonth').innerText = `${monthName} ${year}`;
-                document.getElementById('salesMonth').innerText = monthName;
-                document.getElementById('purchasesMonth').innerText = monthName;
-                document.getElementById('lineChartMonth').innerText = monthName;
-                document.getElementById('productChartMonth').innerText = monthName;
-            });
-        </script>
-        {% endblock %}
-        
+
+        <!-- Bootstrap JS (Optional for additional interactivity) -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
+    </body>
+</html>
+{% endblock %}
+{% block extra_js %}
+<script src="{% static 'js/dashboard.js' %}"></script>
+<script src="{% static 'js/DashboardInteg.js' %}"></script>
+{% endblock %}
