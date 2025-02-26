@@ -56,7 +56,7 @@ p {
 
 /* Pie Chart Container */
 #highestSellingProductChart {
-    width: 100%;
+    width: 500px;
     max-height: 300px;
 	
 }
@@ -117,3 +117,4 @@ p {
         margin-bottom: 15px;
     }
 }
+
