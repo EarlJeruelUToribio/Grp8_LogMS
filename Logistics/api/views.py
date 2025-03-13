@@ -104,6 +104,29 @@ def highest_selling_product_view(request):
         'labels': labels,
         'data': data,
     })
+
+from django.db.models import Max, Min
+
+def stock_chart_view(request):
+    # Get the top 5 materials with the highest current stock
+    highest_stock = Inventory.objects.order_by('-Current_Stock')[:5]
+    lowest_stock = Inventory.objects.order_by('Current_Stock')[:5]
+
+    highest_stock_data = {
+        'labels': [item.ItemName for item in highest_stock],
+        'data': [item.Current_Stock for item in highest_stock],
+    }   
+
+    lowest_stock_data = {
+        'labels': [item.ItemName for item in lowest_stock],
+        'data': [item.Current_Stock for item in lowest_stock],
+    }
+
+    return JsonResponse({
+        'highest_stock': highest_stock_data,
+        'lowest_stock': lowest_stock_data,
+    })
+
 # DASHBOARD
 
 
