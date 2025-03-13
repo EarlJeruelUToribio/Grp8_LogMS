@@ -10,6 +10,7 @@ urlpatterns = [
     path('notifications/mark-as-read/<int:notification_id>/', views.mark_as_read, name='mark_as_read'),
     path('clear-notifications/', views.clear_notifications, name='clear_notifications'),
     path('api/highest-selling-product/', views.highest_selling_product_view, name='highest_selling_product'),
+    path('api/stock-chart/', views.stock_chart_view, name='stock_chart'),
 
     #Integration test
     path('payment-record/', views.payment_record_view, name='payment-record'),
