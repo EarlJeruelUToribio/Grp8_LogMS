@@ -41,37 +41,24 @@
                         },
                     });
                 });
-        
+                
                 //fetch data for stocks graph
-                fetch('api/stock-chart/')
+                // Fetch data for Highest Stock Chart
+                fetch('/api/stock-chart/')
                 .then(response => response.json())
                 .then(data => {
-                    const highestLabels = data.highest_stock.labels;
-                    const highestData = data.highest_stock.data;
-                    const lowestLabels = data.lowest_stock.labels;
-                    const lowestData = data.lowest_stock.data;
-    
-                    const ctx = document.getElementById('stockChart').getContext('2d');
-                    const stockChart = new Chart(ctx, {
+                    const highestCtx = document.getElementById('highestStockChart').getContext('2d');
+                    new Chart(highestCtx, {
                         type: 'bar',
                         data: {
-                            labels: [...highestLabels, ...lowestLabels],
-                            datasets: [
-                                {
-                                    label: 'Highest Stock',
-                                    data: highestData,
-                                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                                    borderColor: 'rgba(75, 192, 192, 1)',
-                                    borderWidth: 1,
-                                },
-                                {
-                                    label: 'Lowest Stock',
-                                    data: lowestData,
-                                    backgroundColor: 'rgba(255, 99, 132, 0.2)',
-                                    borderColor: 'rgba(255, 99, 132, 1)',
-                                    borderWidth: 1,
-                                },
-                            ],
+                            labels: data.highest_stock.labels,
+                            datasets: [{
+                                label: 'Highest Stock',
+                                data: data.highest_stock.data,
+                                backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                                borderColor: 'rgba(75, 192, 192, 1)',
+                                borderWidth: 1,
+                            }]
                         },
                         options: {
                             responsive: true,
@@ -83,7 +70,37 @@
                         },
                     });
                 })
-                .catch(error => console.error('Error fetching stock data:', error));
+                .catch(error => console.error('Error fetching highest stock data:', error));
+
+                // Fetch data for Lowest Stock Chart
+                fetch('/api/stock-chart/')
+                .then(response => response.json())
+                .then(data => {
+                    const lowestCtx = document.getElementById('lowestStockChart').getContext('2d');
+                    new Chart(lowestCtx, {
+                        type: 'bar',
+                        data: {
+                            labels: data.lowest_stock.labels,
+                            datasets: [{
+                                label: 'Lowest Stock',
+                                data: data.lowest_stock.data,
+                                backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                                borderColor: 'rgba(255, 99, 132, 1)',
+                                borderWidth: 1,
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            scales: {
+                                y: {
+                                    beginAtZero: true,
+                                },
+                            },
+                        },
+                    });
+                })
+                .catch(error => console.error('Error fetching lowest stock data:', error));
+
 
 
             // Fetch Total Inventory Purchases (Same format as COGS)
