@@ -43,7 +43,7 @@
                 });
         
                 //fetch data for stocks graph
-                fetch('http://your-django-server/api/stock-chart/')
+                fetch('api/stock-chart/')
                 .then(response => response.json())
                 .then(data => {
                     const highestLabels = data.highest_stock.labels;
