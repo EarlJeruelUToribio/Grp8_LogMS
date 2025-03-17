@@ -114,18 +114,14 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'logistics_tzrk',  # Replace with your new database name
-        'USER': 'logistics',        # Replace with your new username
-        'PASSWORD': 'ara2q9dacyTzyNygeUJLGmDS2evvCRAl',    # Replace with your new password
-        'HOST': 'dpg-cvc0cepc1ekc73b7en60-a',            # Replace with your new host
-        'PORT': '5432',            # Usually 5432 for PostgreSQL
+    "default": {
+        "ENGINE": "django.db.backends.sqlite3",
+        "NAME": BASE_DIR / "db.sqlite3",
+
     }
 }
 
-# Alternatively, if you are using dj_database_url
-#DATABASES['default'] = dj_database_url.parse("postgresql://logistics:ara2q9dacyTzyNygeUJLGmDS2evvCRAl@dpg-cvc0cepc1ekc73b7en60-a/logistics_tzrk")
+DATABASES["default"] = dj_database_url.parse("postgresql://logistic_q6cs_user:NwbFLgZx1nYVqy8RTbcnQlQM67i1KrnO@dpg-cunltn8gph6c73evdu8g-a/logistic_q6cs")
 
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
