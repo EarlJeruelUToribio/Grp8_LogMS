@@ -42,12 +42,6 @@ class Inventory(models.Model):
     def __str__(self):
         return self.ItemName
 
-    class Meta:
-        db_table = 'api_inventory'
-
-    def __str__(self):
-        return self.ItemName
-    
     def is_expired(self):
         if self.Perishable and self.DaysBeforeExpiry is not None:
             expiration_date = self.Created_At + timedelta(days=self.DaysBeforeExpiry)

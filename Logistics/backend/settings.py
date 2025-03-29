@@ -52,7 +52,7 @@ CORS_ALLOW_CREDENTIALS = True
 CORS_ALLOWED_ORIGINS = [
 # Reservation project's address
 
-    'https://authentication-oabi.onrender.com/',
+    'https://authentication-oabi.onrender.com',
     'https://capstone-financemanagement.onrender.com',
     'https://tikme-dine.onrender.com',
     
